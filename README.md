@@ -1,5 +1,7 @@
 # Oversteer - Steering Wheel Manager for Linux
 
+https://github.com/berarma/oversteer
+
 Graphical application to configure Logitech Wheels.
 
 This software uses the Linux driver for Logitech HID++ devices and thus it
@@ -14,5 +16,8 @@ Please, use at your own risk. Suggestions, bugs and pull requests welcome.
 
 For now, it lacks a convenient installation method.
 
-Download and run ```./oversteer.py```.
+Download this repository and run ```./oversteer.py```.
 
+```gksudo``` is required and used when only root has permissions to configure the device.
+
+```jstest-gtk``` is launched when the test button is clicked.
