@@ -104,6 +104,8 @@ class OversteerUi:
 
     def on_device_changed(self, combobox):
         device_id = combobox.get_active_id()
+        if device_id == None:
+            return
         model = self.emulation_mode_combobox.get_model()
         if model == None:
             model = Gtk.ListStore(str, str)
@@ -131,6 +133,7 @@ class OversteerUi:
             self.save_profile_entry.set_text(os.path.splitext(os.path.basename(profile_path))[0])
 
     def on_update_clicked(self, button):
+        self.wheels = Wheels()
         self.refresh_window()
 
     def on_test_clicked(self, button):
