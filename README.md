@@ -23,7 +23,22 @@ For now, it lacks a convenient installation method.
 
 Download this repository and run ```./oversteer.py```.
 
+### Dependencies
+
+There's some required Python dependencies. Please, install the following
+Python3 packages in case they're not installed already:
+
+ - gi
+ - pyudev
+ - xdg
+
 ```gksudo``` is used to request privileges when the user running Oversteer
 doesn't have permissions to send the configuration to the driver.
 
 ```jstest-gtk``` is launched when the test button is clicked.
+
+On Debian derived distros you can use the following command to install them:
+```apt install python3 python3-gi python3-pyudev python3-xdg gksudo jstest-gtk```
+
+Other distros may use slightly different names for the same packages.
+
