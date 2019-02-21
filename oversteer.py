@@ -10,10 +10,6 @@ import sys
 from wheels import Wheels
 from xdg.BaseDirectory import *
 
-gi.require_version('Gtk', '3.0')
-
-from gi.repository import Gtk
-
 class OversteerUi:
 
     def __init__(self):
@@ -146,10 +142,8 @@ class OversteerUi:
         combine_pedals = self.combine_pedals.get_state()
         if self.wheels.is_read_only(device_id):
             subprocess.call([
-                'gksudo',
-                '--description', 'Wheel Manager',
-                '--',
-                sys.argv[0],
+                'pkexec',
+                os.path.abspath(sys.argv[0]),
                 '--mode', mode,
                 '--range', str(range),
                 '--combine-pedals' if combine_pedals else '--no-combine-pedals',
@@ -178,6 +172,8 @@ class OversteerUi:
         self.device_combobox.set_active_id(device_id)
 
 if len(sys.argv) == 1:
+    gi.require_version('Gtk', '3.0')
+    from gi.repository import Gtk
     OversteerUi()
 else:
     parser = argparse.ArgumentParser(description="Oversteer - Steering Wheel Manager")
