@@ -40,3 +40,22 @@ On Debian derived distros you can use the following command to install them:
 
 Other distros may use slightly different names for the same packages.
 
+### Permissions
+
+The app will ask for an administrator password if it doesn't have permissions
+to write to the device driver.
+
+You can make the driver files writable by anyone using udev rules. It will
+allow using this app without administrator privileges and also make some driver
+features available to games.
+
+Install the udev rules file:
+
+```cp udev/99-logitech-wheel-perms.rules```
+
+Reload udev rules (or reboot your computer):
+
+```sudo udevadm control --reload-rules && sudo udevadm trigger```
+
+The changes will take effect next time the device is plugged.
+

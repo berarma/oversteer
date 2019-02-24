@@ -1,0 +1,23 @@
+# Match kernel name of device, rather than ATTRS{idProduct} and ATTRS{idVendor}
+# so we can access the range file and leds directory. Set rw access to these 
+# files for everyone.
+# Avoid blanket matching all Logitech devices, as that causes issues with mice,
+# keyboards, and other non-wheel devices.
+
+# Logitech G920 Driving Force Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C262.????", DRIVERS=="logitech-hidpp-device", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../alternate_modes; chmod 666 %S%p/../../../combine_pedals; chmod 666 %S%p/../../../range'"
+
+# Logitech G29 Driving Force Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../alternate_modes; chmod 666 %S%p/../../../combine_pedals; chmod 666 %S%p/../../../range; chmod 777 %S%p/../../../leds/ %S%p/../../../leds/*; chmod 666 %S%p/../../../leds/*/brightness'"
+
+# Logitech G27 Driving Force Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C29B.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../alternate_modes; chmod 666 %S%p/../../../combine_pedals; chmod 666 %S%p/../../../range; chmod 777 %S%p/../../../leds/ %S%p/../../../leds/*; chmod 666 %S%p/../../../leds/*/brightness'"
+
+# Logitech G25 Driving Force Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C299.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../alternate_modes; chmod 666 %S%p/../../../combine_pedals; chmod 666 %S%p/../../../range'"
+
+# Logitech Driving Force GT Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C29A.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../alternate_modes; chmod 666 %S%p/../../../combine_pedals; chmod 666 %S%p/../../../range'"
+
+# Logitech Driving Force Pro Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C298.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../alternate_modes; chmod 666 %S%p/../../../combine_pedals; chmod 666 %S%p/../../../range'"
