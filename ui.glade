@@ -124,7 +124,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="label" translatable="yes">Emulation mode</property>
+                        <property name="label" translatable="yes">Compatibility mode</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -167,7 +167,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="label" translatable="yes">Wheel range</property>
+                        <property name="label" translatable="yes">Rotation range</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
