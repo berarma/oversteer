@@ -177,12 +177,12 @@ if len(sys.argv) == 1:
     OversteerUi()
 else:
     parser = argparse.ArgumentParser(description="Oversteer - Steering Wheel Manager")
-    parser.add_argument('device_id', help="Device id")
+    parser.add_argument('device_id', nargs='?', help="Device id")
     parser.add_argument('--list', action='store_true', help="List devices")
     parser.add_argument('--mode', help="Wheel mode")
     parser.add_argument('--range', type=int, help="Rotation range")
-    parser.add_argument('--combine-pedals', action='store_true', help="Combine pedals")
-    parser.add_argument('--no-combine-pedals', action='store_false')
+    parser.add_argument('--combine-pedals', dest='combine_pedals', default=None, action='store_true', help="combine pedals")
+    parser.add_argument('--no-combine-pedals', dest='combine_pedals', action='store_false')
 
     args = parser.parse_args()
 
@@ -190,6 +190,11 @@ else:
 
     device_id = args.device_id
 
+    if args.list != None:
+        devices = wheels.get_devices()
+        print("Devices found:")
+        for key, name in devices:
+            print("    {} ({})".format(name, key))
     if args.mode != None:
         wheels.set_mode(device_id, args.mode)
     if args.range != None:
