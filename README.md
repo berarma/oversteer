@@ -51,7 +51,7 @@ features available to games.
 
 Install the udev rules file:
 
-```cp udev/99-logitech-wheel-perms.rules```
+```cp udev/99-logitech-wheel-perms.rules /etc/udev/rules.d/```
 
 Reload udev rules (or reboot your computer):
 
