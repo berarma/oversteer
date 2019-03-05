@@ -1,0 +1,91 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-26 01:54+0100\n"
+"PO-Revision-Date: 2019-02-27 12:46+0100\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language: gl_ES\n"
+
+#: ../oversteer.py:183
+msgid "Oversteer - Steering Wheel Manager"
+msgstr "Oversteer - Configurador de Volantes"
+
+#: ../oversteer.py:184
+msgid "Device id"
+msgstr "Id do dispositivo"
+
+#: ../oversteer.py:185
+msgid "list connected devices"
+msgstr "lista dispositivos conectados"
+
+#: ../oversteer.py:186
+msgid "set the compatibility mode"
+msgstr "configure o modo de compatibilidade"
+
+#: ../oversteer.py:187
+msgid "set the rotation range"
+msgstr "configure o rango de xiro"
+
+#: ../oversteer.py:188
+msgid "combine pedals"
+msgstr "combina pedais"
+
+#: ../oversteer.py:199
+msgid "Devices found:"
+msgstr "Dispositivos Atopados:"
+
+#: ../ui.glade.h:1
+msgid "Selected Device"
+msgstr "Dispositivo Seleccionado"
+
+#: ../ui.glade.h:2
+msgid "Profile"
+msgstr "Perfil"
+
+#: ../ui.glade.h:3
+msgid "Compatibility mode"
+msgstr "Modo de Compatibilidade"
+
+#: ../ui.glade.h:4
+msgid "Rotation range"
+msgstr "Rango de Rotación"
+
+#: ../ui.glade.h:5
+msgid "Combine pedals"
+msgstr "Combina Pedais"
+
+#: ../ui.glade.h:6
+msgid "Save as"
+msgstr "Garda como"
+
+#: ../ui.glade.h:7
+msgid "Test"
+msgstr "Proba"
+
+#: ../ui.glade.h:8
+msgid "(c) 2019 Bernat Arlandis"
+msgstr "(c) 2019 Bernat Arlandis"
+
+msgid "List devices"
+msgstr "Lista dispositivos"
+
+msgid "Emulation mode"
+msgstr "Modo de emulación"
+
+msgid "Wheel mode"
+msgstr "Modo del volante"
+
+msgid "Wheel range"
+msgstr "Rango de giro"
