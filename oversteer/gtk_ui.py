@@ -1,18 +1,19 @@
-#!/usr/bin/python3
-
-import argparse
 import configparser
 import gi
 import glob
 import locale
 from locale import gettext as _
+from pkg_resources import resource_string
 import signal
 import subprocess
 import sys
-from wheels import Wheels
+from oversteer.wheels import Wheels
 from xdg.BaseDirectory import *
 
-class OversteerUi:
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+class GtkUi:
 
     def __init__(self):
         signal.signal(signal.SIGINT, self.sig_int_handler)
@@ -25,7 +26,7 @@ class OversteerUi:
 
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain('oversteer')
-        self.builder.add_from_file('ui.glade')
+        self.builder.add_from_string(resource_string(__name__, 'main.ui').decode('utf-8'))
         self.builder.connect_signals(self)
         self.window = self.builder.get_object('main_window')
         self.window.show_all()
@@ -173,42 +174,4 @@ class OversteerUi:
         self.refresh_window()
 
         self.device_combobox.set_active_id(device_id)
-
-if __name__ == "__main__":
-    locale.bindtextdomain('oversteer', 'po')
-    locale.textdomain('oversteer')
-    locale.setlocale(locale.LC_ALL, '')
-
-    if len(sys.argv) == 1:
-        gi.require_version('Gtk', '3.0')
-        from gi.repository import Gtk
-        OversteerUi()
-    else:
-        parser = argparse.ArgumentParser(description=_("Oversteer - Steering Wheel Manager"))
-        parser.add_argument('device_id', nargs='?', help=_("Device id"))
-        parser.add_argument('--list', action='store_true', help=_("list connected devices"))
-        parser.add_argument('--mode', help=_("set the compatibility mode"))
-        parser.add_argument('--range', type=int, help=_("set the rotation range"))
-        parser.add_argument('--combine-pedals', dest='combine_pedals', default=None, action='store_true', help=_("combine pedals"))
-        parser.add_argument('--no-combine-pedals', dest='combine_pedals', action='store_false')
-
-        args = parser.parse_args()
-
-        wheels = Wheels()
-
-        device_id = args.device_id
-
-        if args.list != None:
-            devices = wheels.get_devices()
-            print(_("Devices found:"))
-            for key, name in devices:
-                print("    {} ({})".format(name, key))
-        if args.mode != None:
-            wheels.set_mode(device_id, args.mode)
-        if args.range != None:
-            wheels.set_range(device_id, args.range)
-        if args.combine_pedals != None:
-            wheels.set_combine_pedals(device_id, args.combine_pedals)
-
-        sys.exit(0)
 

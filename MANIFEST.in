@@ -1,0 +1,8 @@
+recursive-include locale *.po
+include data/org.berarma.Oversteer.desktop.in
+include data/org.berarma.Oversteer.appdata.xml.in
+include data/org.berarma.Oversteer.svg
+include oversteer/*.ui
+include COPYING
+include README.md
+

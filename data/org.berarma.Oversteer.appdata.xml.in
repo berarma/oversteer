@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>org.berarma.Oversteer.desktop</id>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
+  <name>Oversteer</name>
+  <summary>Steering Wheel Manager</summary>
+  <description>
+    <p translatable="yes">Oversteer allows configuration of supported steering wheels.</p>
+  </description>
+  <launchable type="desktop-id">org.berarma.Oversteer.desktop</launchable>
+  <url type="homepage">https://github.com/berarma/oversteer</url>
+  <url type="bugtracker">https://github.com/berarma/oversteer/issues</url>
+  <update_contact>berarma@hotmail.com</update_contact>
+  <translation type="gettext">oversteer</translation>
+</component>

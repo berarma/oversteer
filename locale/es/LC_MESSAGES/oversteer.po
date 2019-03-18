@@ -6,77 +6,101 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-26 01:54+0100\n"
-"PO-Revision-Date: 2019-02-26 01:56+0100\n"
+"Report-Msgid-Bugs-To: berarma@hotmail.com\n"
+"POT-Creation-Date: 2019-03-18 13:05+0100\n"
+"PO-Revision-Date: 2019-03-18 13:35+0100\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../oversteer.py:183
+#: oversteer/__main__.py:17
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Configurador de volantes"
 
-#: ../oversteer.py:184
+#: oversteer/__main__.py:18
 msgid "Device id"
 msgstr "Id de dispositivo"
 
-#: ../oversteer.py:185
+#: oversteer/__main__.py:19
 msgid "list connected devices"
 msgstr "lista dispositivo conectados"
 
-#: ../oversteer.py:186
+#: oversteer/__main__.py:20
 msgid "set the compatibility mode"
 msgstr "establece el modo de compatibilidad"
 
-#: ../oversteer.py:187
+#: oversteer/__main__.py:21
 msgid "set the rotation range"
 msgstr "establece el rango de giro"
 
-#: ../oversteer.py:188
+#: oversteer/__main__.py:22
 msgid "combine pedals"
 msgstr "combina pedales"
 
-#: ../oversteer.py:199
+#: oversteer/__main__.py:33
 msgid "Devices found:"
 msgstr "Dispositivos encontrados:"
 
-#: ../ui.glade.h:1
+#: oversteer/main.ui:34
 msgid "Selected Device"
 msgstr "Dispositivo seleccionado"
 
-#: ../ui.glade.h:2
+#: oversteer/main.ui:72
 msgid "Profile"
 msgstr "Perfil"
 
-#: ../ui.glade.h:3
+#: oversteer/main.ui:127
 msgid "Compatibility mode"
 msgstr "Modo de compatibilidad"
 
-#: ../ui.glade.h:4
+#: oversteer/main.ui:170
 msgid "Rotation range"
 msgstr "Rango de giro"
 
-#: ../ui.glade.h:5
+#: oversteer/main.ui:220
 msgid "Combine pedals"
 msgstr "Combina pedales"
 
-#: ../ui.glade.h:6
+#: oversteer/main.ui:260
 msgid "Save as"
 msgstr "Guardar cómo"
 
-#: ../ui.glade.h:7
+#: oversteer/main.ui:311
 msgid "Test"
 msgstr "Probar"
 
-#: ../ui.glade.h:8
+#: oversteer/main.ui:377
 msgid "(c) 2019 Bernat Arlandis"
 msgstr "(c) 2019 Bernat Arlandis"
+
+#: data/org.berarma.Oversteer.appdata.xml.in:9
+msgid "Oversteer allows configuration of supported steering wheels."
+msgstr "Oversteer permite configurar los volantes soportados."
+
+#. Name
+#: data/org.berarma.Oversteer.desktop.in:2
+msgid "Oversteer"
+msgstr "Oversteer"
+
+#. Comment
+#: data/org.berarma.Oversteer.desktop.in:3
+msgid "Steering Wheel Manager"
+msgstr "Configurador de volantes"
+
+#. Icon
+#: data/org.berarma.Oversteer.desktop.in:8
+msgid "org.berarma.Oversteer"
+msgstr ""
+
+#. Keywords
+#: data/org.berarma.Oversteer.desktop.in:10
+msgid "games;racing;wheels"
+msgstr "juegos;carreras;volantes"
 
 #~ msgid "List devices"
 #~ msgstr "Lista dispositivos"

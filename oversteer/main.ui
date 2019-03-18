@@ -373,10 +373,10 @@
     <property name="type_hint">dialog</property>
     <property name="transient_for">main_window</property>
     <property name="program_name">Oversteer - Steering Wheel Manager</property>
-    <property name="version">0.1</property>
+    <property name="version">0.1.3</property>
     <property name="copyright" translatable="yes">(c) 2019 Bernat Arlandis</property>
     <property name="authors">Bernat Arlandis</property>
-    <property name="logo_icon_name">image-missing</property>
+    <property name="logo_icon_name"/>
     <property name="license_type">gpl-3-0</property>
     <signal name="response" handler="on_about_window_response" swapped="no"/>
     <child internal-child="vbox">

@@ -19,22 +19,15 @@ Please, use at your own risk. Suggestions, bugs and pull requests welcome.
 
 ## Installation
 
-For now, it lacks a convenient installation method.
+Installing with Python package manager:
 
-Download this repository and run ```./oversteer.py```.
+```pip install oversteer```
 
 ### Dependencies
 
-There's some required Python dependencies. Please, install the following
-Python3 packages in case they're not installed already:
-
- - gi
- - pyudev
- - xdg
-
 ```jstest-gtk``` is launched when the test button is clicked.
 
-On Debian derived distros you can use the following command to install them:
+You can install all dependencies on Debian systems with the following command:
 
 ```apt install python3 python3-gi python3-pyudev python3-xdg jstest-gtk```
 
@@ -51,7 +44,7 @@ features available to games.
 
 Install the udev rules file:
 
-```cp udev/99-logitech-wheel-perms.rules /etc/udev/rules.d/```
+```cp /usr/local/share/oversteer/99-logitech-wheel-perms.rules /etc/udev/rules.d/```
 
 Reload udev rules (or reboot your computer):
 

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Oversteer
+Comment=Steering Wheel Manager
+Exec=python3 -m oversteer
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=org.berarma.Oversteer
+Categories=Games;Utility;
+Keywords=games;racing;wheels
