@@ -11,8 +11,11 @@ locale.bindtextdomain('oversteer', 'po')
 locale.textdomain('oversteer')
 locale.setlocale(locale.LC_ALL, '')
 
+import pkg_resources
+version = pkg_resources.require('oversteer')[0].version
+
 if len(sys.argv) == 1:
-    GtkUi()
+    GtkUi(version)
 else:
     parser = argparse.ArgumentParser(description=_("Oversteer - Steering Wheel Manager"))
     parser.add_argument('device_id', nargs='?', help=_("Device id"))

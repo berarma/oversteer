@@ -17,21 +17,15 @@ models but it's untested.
 
 Please, use at your own risk. Suggestions, bugs and pull requests welcome.
 
-## Installation
-
-Installing with Python package manager:
-
-```pip install oversteer```
-
-### Dependencies
-
-```jstest-gtk``` is launched when the test button is clicked.
+## Requirements
 
 You can install all dependencies on Debian systems with the following command:
 
-```apt install python3 python3-gi python3-pyudev python3-xdg jstest-gtk```
+```apt install python3 python3-gi python3-pyudev python3-xdg meson appstream-util desktop-file-utils jstest-gtk```
 
 Other distros may use slightly different names for the same packages.
+
+```jstest-gtk``` is launched when the test button is clicked.
 
 ### Permissions
 
@@ -44,11 +38,32 @@ features available to games.
 
 Install the udev rules file:
 
-```cp /usr/local/share/oversteer/99-logitech-wheel-perms.rules /etc/udev/rules.d/```
+```cp data/udev/99-logitech-wheel-perms.rules /etc/udev/rules.d/```
 
 Reload udev rules (or reboot your computer):
 
 ```sudo udevadm control --reload-rules && sudo udevadm trigger```
 
 The changes will take effect next time the device is plugged.
+
+## Build and install
+
+Build:
+
+```
+meson build
+ninja -C build
+```
+
+Trying it without installing:
+
+```ninja -C build run```
+
+Installing:
+
+```ninja -C build install```
+
+Uninstalling:
+
+```ninja -C build uninstall```
 

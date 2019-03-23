@@ -1,13 +1,10 @@
 import configparser
 import gi
 import glob
-import locale
-from locale import gettext as _
-from pkg_resources import resource_string
 import signal
 import subprocess
 import sys
-from oversteer.wheels import Wheels
+from .wheels import Wheels
 from xdg.BaseDirectory import *
 
 gi.require_version('Gtk', '3.0')
@@ -15,7 +12,7 @@ from gi.repository import Gtk
 
 class GtkUi:
 
-    def __init__(self):
+    def __init__(self, version, datadir):
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
         self.config_path = save_config_path('oversteer')
@@ -26,8 +23,9 @@ class GtkUi:
 
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain('oversteer')
-        self.builder.add_from_string(resource_string(__name__, 'main.ui').decode('utf-8'))
+        self.builder.add_from_file(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.ui'))
         self.builder.connect_signals(self)
+        self.builder.get_object('about_window').set_version(version)
         self.window = self.builder.get_object('main_window')
         self.window.show_all()
 

@@ -1,9 +1,3 @@
 /build
-/dist
-/data/org.berarma.Oversteer.appdata.xml
-/data/org.berarma.Oversteer.desktop
-/locale/oversteer.pot
-/locale/**/*.mo
-/oversteer.egg-info
-/venv
+/po/oversteer.pot
 __pycache__

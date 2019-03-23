@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Oversteer
 Comment=Steering Wheel Manager
-Exec=python3 -m oversteer
+Exec=@bindir@/oversteer
 Terminal=false
 Type=Application
 StartupNotify=true
