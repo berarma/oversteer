@@ -32,7 +32,7 @@ class GtkUi:
         config = configparser.ConfigParser()
         config_file = os.path.join(self.config_path, 'config.ini')
         config.read(config_file)
-        if 'locale' in config['base'] and config['base']['locale'] != '':
+        if 'base' in config and 'locale' in config['base'] and config['base']['locale'] != '':
             locale.setlocale(locale.LC_ALL, (config['base']['locale'], 'UTF-8'))
 
         self.profile_path = os.path.join(self.config_path, 'profiles')
@@ -60,7 +60,10 @@ class GtkUi:
         for pair in self.languages:
             model.append(pair)
         self.languages_combobox.set_model(model)
-        self.languages_combobox.set_active_id(config['base']['locale'])
+        if 'base' in config and 'locale' in config['base']:
+            self.languages_combobox.set_active_id(config['base']['locale'])
+        else:
+            self.languages_combobox.set_active_id('')
 
         self.device_combobox = self.builder.get_object('device')
         self.profile_combobox = self.builder.get_object('profile')
