@@ -1,6 +1,8 @@
+from locale import gettext as _
 import configparser
 import gi
 import glob
+import locale
 import signal
 import subprocess
 import sys
@@ -12,10 +14,27 @@ from gi.repository import Gtk
 
 class GtkUi:
 
+    languages = [
+        ('', _('System default')),
+        ('en_US', _('English')),
+        ('es_ES', _('Spanish')),
+        ('gl_ES', _('Galician')),
+    ]
+
     def __init__(self, version, datadir):
+
+        self.datadir = datadir
+
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
         self.config_path = save_config_path('oversteer')
+
+        config = configparser.ConfigParser()
+        config_file = os.path.join(self.config_path, 'config.ini')
+        config.read(config_file)
+        if 'locale' in config['base'] and config['base']['locale'] != '':
+            locale.setlocale(locale.LC_ALL, (config['base']['locale'], 'UTF-8'))
+
         self.profile_path = os.path.join(self.config_path, 'profiles')
         if not os.path.isdir(self.profile_path):
             os.makedirs(self.profile_path, 0o700)
@@ -24,10 +43,24 @@ class GtkUi:
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain('oversteer')
         self.builder.add_from_file(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.ui'))
-        self.builder.connect_signals(self)
-        self.builder.get_object('about_window').set_version(version)
+
         self.window = self.builder.get_object('main_window')
-        self.window.show_all()
+        self.about_window = self.builder.get_object("about_window")
+        self.preferences_window = self.builder.get_object("preferences_window")
+
+        self.about_window.set_version(version)
+
+        cell_renderer = Gtk.CellRendererText()
+        self.languages_combobox = self.builder.get_object('languages')
+        self.languages_combobox.pack_start(cell_renderer, True)
+        self.languages_combobox.add_attribute(cell_renderer, 'text', 1)
+        self.languages_combobox.set_id_column(0)
+        model = self.languages_combobox.get_model()
+        model = Gtk.ListStore(str, str)
+        for pair in self.languages:
+            model.append(pair)
+        self.languages_combobox.set_model(model)
+        self.languages_combobox.set_active_id(config['base']['locale'])
 
         self.device_combobox = self.builder.get_object('device')
         self.profile_combobox = self.builder.get_object('profile')
@@ -52,7 +85,12 @@ class GtkUi:
         self.emulation_mode_combobox.set_id_column(0)
 
         self.wheels = Wheels()
+
+        self.builder.connect_signals(self)
+
         self.refresh_window()
+
+        self.window.show_all()
 
         Gtk.main()
 
@@ -91,7 +129,6 @@ class GtkUi:
         sys.exit(0)
 
     def on_about_clicked(self, *args):
-        self.about_window = self.builder.get_object("about_window")
         self.about_window.show()
 
     def on_about_window_response(self, *args):
@@ -172,4 +209,32 @@ class GtkUi:
         self.refresh_window()
 
         self.device_combobox.set_active_id(device_id)
+
+    def on_preferences_clicked(self, *args):
+        self.preferences_window.show()
+
+    def on_cancel_preferences_clicked(self, *args):
+        self.preferences_window.hide()
+
+    def on_apply_preferences_clicked(self, *args):
+        language = self.languages_combobox.get_active_id()
+        config = configparser.ConfigParser()
+        config['base'] = {
+            'locale': language,
+        }
+        config_file = os.path.join(self.config_path, 'config.ini')
+        with open(config_file, 'w') as file:
+            config.write(file)
+        if language != '':
+            locale.setlocale(locale.LC_ALL, (language, 'UTF-8'))
+        fix_permissions = self.builder.get_object('fix_permissions').get_state()
+        if fix_permissions:
+            subprocess.call([
+                'pkexec',
+                '/bin/sh',
+                '-c',
+                'cp ' + self.datadir + '/udev/99-logitech-wheel-perms.rules /etc/udev/rules.d/ && ' +
+                'udevadm control --reload-rules && udevadm trigger',
+            ])
+        self.preferences_window.hide()
 

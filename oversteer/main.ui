@@ -2,6 +2,139 @@
 <!-- Generated with glade 3.20.4 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkDialog" id="preferences_window">
+    <property name="can_focus">False</property>
+    <property name="border_width">20</property>
+    <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="destroy_with_parent">True</property>
+    <property name="type_hint">dialog</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">20</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <signal name="clicked" handler="on_cancel_preferences_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton">
+                <property name="label">gtk-apply</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_apply_preferences_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Change the interface language. Applied after app restart. Only language locales supported by your system.</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Language</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBox" id="languages">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Change device permissions permanently.</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Allow user access</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="fix_permissions">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="halign">end</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
   <object class="GtkAdjustment" id="wheel_range_setup">
     <property name="lower">5</property>
     <property name="upper">90</property>
@@ -26,6 +159,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Select the wheel controller you want to configure.</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkLabel">
@@ -64,6 +198,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Select a profile to load the saved settings.</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkLabel">
@@ -117,6 +252,7 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Select an emulation mode from the ones supported.</property>
                     <property name="valign">center</property>
                     <property name="homogeneous">True</property>
                     <child>
@@ -160,6 +296,7 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Range in degrees that the wheel will be able to rotate both ways. It will affect the sensitivity.</property>
                     <property name="valign">center</property>
                     <property name="homogeneous">True</property>
                     <child>
@@ -210,6 +347,7 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Combine the gas and break pedals into one axe for games that use controller actions up/down.</property>
                     <property name="valign">center</property>
                     <property name="homogeneous">True</property>
                     <child>
@@ -252,6 +390,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Type the name of a profile if you want to save this settings.</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkLabel">
@@ -296,6 +435,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Search for wheel devices.</property>
                 <property name="use_stock">True</property>
                 <property name="always_show_image">True</property>
                 <signal name="clicked" handler="on_update_clicked" swapped="no"/>
@@ -312,6 +452,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Test the wheel using an external application.</property>
                 <signal name="clicked" handler="on_test_clicked" swapped="no"/>
               </object>
               <packing>
@@ -326,6 +467,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="tooltip_text" translatable="yes">Apply changes  (the wheel may move when changing the emulation mode).</property>
                 <property name="use_stock">True</property>
                 <property name="always_show_image">True</property>
                 <signal name="clicked" handler="on_apply_clicked" swapped="no"/>
@@ -363,17 +505,33 @@
             <signal name="clicked" handler="on_about_clicked" swapped="no"/>
           </object>
         </child>
+        <child>
+          <object class="GtkButton">
+            <property name="label">gtk-preferences</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_stock">True</property>
+            <property name="always_show_image">True</property>
+            <signal name="clicked" handler="on_preferences_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
   <object class="GtkAboutDialog" id="about_window">
     <property name="can_focus">False</property>
     <property name="type">popup</property>
+    <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
     <property name="transient_for">main_window</property>
     <property name="program_name">Oversteer - Steering Wheel Manager</property>
-    <property name="version">0.1.3</property>
+    <property name="version">0.0.0</property>
     <property name="copyright" translatable="yes">(c) 2019 Bernat Arlandis</property>
     <property name="authors">Bernat Arlandis</property>
     <property name="logo_icon_name"/>

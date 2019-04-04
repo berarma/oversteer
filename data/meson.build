@@ -31,6 +31,10 @@ install_data(app_id + '.svg',
   install_dir: join_paths(icondir, 'scalable/apps')
 )
 
+install_subdir('udev',
+  install_dir: pkgdatadir
+)
+
 # ---- Tests ----
 
 appstream_util = find_program('appstream-util', required: false)
