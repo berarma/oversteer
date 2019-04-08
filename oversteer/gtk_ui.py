@@ -14,6 +14,8 @@ from gi.repository import Gtk
 
 class GtkUi:
 
+    udev_file_path = '/etc/udev/rules.d/99-logitech-wheel-perms.rules'
+
     languages = [
         ('', _('System default')),
         ('en_US', _('English')),
@@ -64,6 +66,8 @@ class GtkUi:
             self.languages_combobox.set_active_id(config['base']['locale'])
         else:
             self.languages_combobox.set_active_id('')
+
+        self.fix_permissions = self.builder.get_object('fix_permissions')
 
         self.device_combobox = self.builder.get_object('device')
         self.profile_combobox = self.builder.get_object('profile')
@@ -214,6 +218,7 @@ class GtkUi:
         self.device_combobox.set_active_id(device_id)
 
     def on_preferences_clicked(self, *args):
+        self.fix_permissions.set_state(os.path.isfile(self.udev_file_path))
         self.preferences_window.show()
 
     def on_cancel_preferences_clicked(self, *args):
@@ -230,14 +235,50 @@ class GtkUi:
             config.write(file)
         if language != '':
             locale.setlocale(locale.LC_ALL, (language, 'UTF-8'))
-        fix_permissions = self.builder.get_object('fix_permissions').get_state()
-        if fix_permissions:
-            subprocess.call([
-                'pkexec',
-                '/bin/sh',
-                '-c',
-                'cp ' + self.datadir + '/udev/99-logitech-wheel-perms.rules /etc/udev/rules.d/ && ' +
-                'udevadm control --reload-rules && udevadm trigger',
-            ])
+        fix_permissions = self.fix_permissions.get_state()
+
+        if os.path.isfile(self.udev_file_path):
+            if not fix_permissions:
+                dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.WARNING,
+                        Gtk.ButtonsType.OK_CANCEL, _("You've asked to remove custom permissions rules."))
+                response = dialog.run()
+                dialog.destroy()
+                if response == Gtk.ResponseType.OK:
+                    return_code = subprocess.call([
+                        'pkexec',
+                        '/bin/sh',
+                        '-c',
+                        'rm ' + self.udev_file_path + ' && ' +
+                        'udevadm control --reload-rules && udevadm trigger',
+                    ])
+                    if return_code == 0:
+                        dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.INFO,
+                                Gtk.ButtonsType.OK, _("Permissions rules removed."))
+                        dialog.format_secondary_text(
+                                _("Changes will take effect after reconnecting the device."))
+                        dialog.run()
+                        dialog.destroy()
+        else:
+            if fix_permissions:
+                dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.WARNING,
+                        Gtk.ButtonsType.OK_CANCEL, _("You've asked to install our custom permissions rules."))
+                response = dialog.run()
+                dialog.destroy()
+                if response == Gtk.ResponseType.OK:
+                    return_code = subprocess.call([
+                        'pkexec',
+                        '/bin/sh',
+                        '-c',
+                        'cp ' + self.datadir + '/udev/99-logitech-wheel-perms.rules /etc/udev/rules.d/ && ' +
+                        'udevadm control --reload-rules && udevadm trigger',
+                    ])
+                    if return_code == 0:
+                        dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.INFO,
+                                Gtk.ButtonsType.OK, _("Permissions rules added."))
+                        dialog.format_secondary_text(
+                                _("Changes will take effect after reconnecting the device."))
+                        dialog.run()
+                        dialog.destroy()
+
         self.preferences_window.hide()
 

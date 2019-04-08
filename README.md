@@ -29,22 +29,11 @@ Other distros may use slightly different names for the same packages.
 
 ### Permissions
 
-The app will ask for an administrator password if it doesn't have permissions
-to write to the device driver.
+The access to some device features might be restricted by permissions. The app
+will ask for an administrator password when needed.
 
-You can make the driver files writable by anyone using udev rules. It will
-allow using this app without administrator privileges and also make some driver
-features available to games.
-
-Install the udev rules file:
-
-```cp data/udev/99-logitech-wheel-perms.rules /etc/udev/rules.d/```
-
-Reload udev rules (or reboot your computer):
-
-```sudo udevadm control --reload-rules && sudo udevadm trigger```
-
-The changes will take effect next time the device is plugged.
+Device access can be permanently allowed to any user and application from the
+preferences window. It will install a udev rule file for the Logitech wheels.
 
 ## Build and install
 
