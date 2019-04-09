@@ -240,7 +240,7 @@ class GtkUi:
         if os.path.isfile(self.udev_file_path):
             if not fix_permissions:
                 dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.WARNING,
-                        Gtk.ButtonsType.OK_CANCEL, _("You've asked to remove custom permissions rules."))
+                        Gtk.ButtonsType.OK_CANCEL, _("You've asked to remove the custom permissions rules."))
                 response = dialog.run()
                 dialog.destroy()
                 if response == Gtk.ResponseType.OK:
@@ -261,7 +261,7 @@ class GtkUi:
         else:
             if fix_permissions:
                 dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.WARNING,
-                        Gtk.ButtonsType.OK_CANCEL, _("You've asked to install our custom permissions rules."))
+                        Gtk.ButtonsType.OK_CANCEL, _("You've asked to install our custom permissions rules that would allow any user and application to access the device."))
                 response = dialog.run()
                 dialog.destroy()
                 if response == Gtk.ResponseType.OK:
@@ -274,7 +274,7 @@ class GtkUi:
                     ])
                     if return_code == 0:
                         dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.INFO,
-                                Gtk.ButtonsType.OK, _("Permissions rules added."))
+                                Gtk.ButtonsType.OK, _("Permissions rules installed."))
                         dialog.format_secondary_text(
                                 _("Changes will take effect after reconnecting the device."))
                         dialog.run()

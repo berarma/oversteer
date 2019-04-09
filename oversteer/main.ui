@@ -96,13 +96,13 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="tooltip_text" translatable="yes">Change device permissions permanently.</property>
+            <property name="tooltip_text" translatable="yes">Make the device accessible to any user. No more asking for administrator password to change settings. Some games need this to handle the leds in some wheels.</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Allow user access</property>
+                <property name="label" translatable="yes">Allow access to the device</property>
               </object>
               <packing>
                 <property name="expand">False</property>
