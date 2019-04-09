@@ -7,85 +7,201 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-26 01:54+0100\n"
+"POT-Creation-Date: 2019-04-10 00:09+0200\n"
 "PO-Revision-Date: 2019-02-27 12:46+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language: gl_ES\n"
 
-#: ../oversteer.py:183
+#: oversteer/application.py:15
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Configurador de Volantes"
 
-#: ../oversteer.py:184
+#: oversteer/application.py:16
 msgid "Device id"
 msgstr "Id do dispositivo"
 
-#: ../oversteer.py:185
+#: oversteer/application.py:17
 msgid "list connected devices"
 msgstr "lista dispositivos conectados"
 
-#: ../oversteer.py:186
+#: oversteer/application.py:18
 msgid "set the compatibility mode"
 msgstr "configure o modo de compatibilidade"
 
-#: ../oversteer.py:187
+#: oversteer/application.py:19
 msgid "set the rotation range"
 msgstr "configure o rango de xiro"
 
-#: ../oversteer.py:188
+#: oversteer/application.py:20
 msgid "combine pedals"
 msgstr "combina pedais"
 
-#: ../oversteer.py:199
+#: oversteer/application.py:32
 msgid "Devices found:"
 msgstr "Dispositivos Atopados:"
 
-#: ../ui.glade.h:1
+#: oversteer/gtk_ui.py:20
+msgid "System default"
+msgstr ""
+
+#: oversteer/gtk_ui.py:21
+msgid "English"
+msgstr ""
+
+#: oversteer/gtk_ui.py:22
+msgid "Spanish"
+msgstr ""
+
+#: oversteer/gtk_ui.py:23
+msgid "Galician"
+msgstr ""
+
+#: oversteer/gtk_ui.py:243
+msgid "You've asked to remove the custom permissions rules."
+msgstr ""
+
+#: oversteer/gtk_ui.py:256
+msgid "Permissions rules removed."
+msgstr ""
+
+#: oversteer/gtk_ui.py:258 oversteer/gtk_ui.py:279
+msgid "Changes will take effect after reconnecting the device."
+msgstr ""
+
+#: oversteer/gtk_ui.py:264
+msgid ""
+"You've asked to install our custom permissions rules that would allow any "
+"user and application to access the device."
+msgstr ""
+
+#: oversteer/gtk_ui.py:277
+msgid "Permissions rules installed."
+msgstr ""
+
+#: oversteer/main.ui:63
+msgid ""
+"Change the interface language. Applied after app restart. Only language "
+"locales supported by your system."
+msgstr ""
+
+#: oversteer/main.ui:69
+msgid "Language"
+msgstr ""
+
+#: oversteer/main.ui:99
+msgid ""
+"Make the device accessible to any user. No more asking for administrator "
+"password to change settings. Some games need this to handle the leds in some "
+"wheels."
+msgstr ""
+
+#: oversteer/main.ui:105
+msgid "Allow access to the device"
+msgstr ""
+
+#: oversteer/main.ui:162
+msgid "Select the wheel controller you want to configure."
+msgstr ""
+
+#: oversteer/main.ui:168
 msgid "Selected Device"
 msgstr "Dispositivo Seleccionado"
 
-#: ../ui.glade.h:2
+#: oversteer/main.ui:201
+msgid "Select a profile to load the saved settings."
+msgstr ""
+
+#: oversteer/main.ui:207
 msgid "Profile"
 msgstr "Perfil"
 
-#: ../ui.glade.h:3
+#: oversteer/main.ui:255
+msgid "Select an emulation mode from the ones supported."
+msgstr ""
+
+#: oversteer/main.ui:263
 msgid "Compatibility mode"
 msgstr "Modo de Compatibilidade"
 
-#: ../ui.glade.h:4
+#: oversteer/main.ui:299
+msgid ""
+"Range in degrees that the wheel will be able to rotate both ways. It will "
+"affect the sensitivity."
+msgstr ""
+
+#: oversteer/main.ui:307
 msgid "Rotation range"
 msgstr "Rango de Rotación"
 
-#: ../ui.glade.h:5
+#: oversteer/main.ui:350
+msgid ""
+"Combine the gas and break pedals into one axe for games that use controller "
+"actions up/down."
+msgstr ""
+
+#: oversteer/main.ui:358
 msgid "Combine pedals"
 msgstr "Combina Pedais"
 
-#: ../ui.glade.h:6
+#: oversteer/main.ui:393
+msgid "Type the name of a profile if you want to save this settings."
+msgstr ""
+
+#: oversteer/main.ui:399
 msgid "Save as"
 msgstr "Garda como"
 
-#: ../ui.glade.h:7
+#: oversteer/main.ui:438
+msgid "Search for wheel devices."
+msgstr ""
+
+#: oversteer/main.ui:451
 msgid "Test"
 msgstr "Proba"
 
-#: ../ui.glade.h:8
+#: oversteer/main.ui:455
+msgid "Test the wheel using an external application."
+msgstr ""
+
+#: oversteer/main.ui:470
+msgid "Apply changes  (the wheel may move when changing the emulation mode)."
+msgstr ""
+
+#: oversteer/main.ui:535
 msgid "(c) 2019 Bernat Arlandis"
 msgstr "(c) 2019 Bernat Arlandis"
 
-msgid "List devices"
-msgstr "Lista dispositivos"
+#: data/org.berarma.Oversteer.desktop.in:3
+msgid "Oversteer"
+msgstr ""
 
-msgid "Emulation mode"
-msgstr "Modo de emulación"
+#: data/org.berarma.Oversteer.desktop.in:4
+#, fuzzy
+msgid "Steering Wheel Manager"
+msgstr "Oversteer - Configurador de Volantes"
 
-msgid "Wheel mode"
-msgstr "Modo del volante"
+#: data/org.berarma.Oversteer.desktop.in:9
+msgid "org.berarma.Oversteer"
+msgstr ""
 
-msgid "Wheel range"
-msgstr "Rango de giro"
+#: data/org.berarma.Oversteer.desktop.in:11
+msgid "game;racing;cars;wheels"
+msgstr ""
+
+#~ msgid "List devices"
+#~ msgstr "Lista dispositivos"
+
+#~ msgid "Emulation mode"
+#~ msgstr "Modo de emulación"
+
+#~ msgid "Wheel mode"
+#~ msgstr "Modo del volante"
+
+#~ msgid "Wheel range"
+#~ msgstr "Rango de giro"
