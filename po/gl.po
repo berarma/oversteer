@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-10 00:09+0200\n"
-"PO-Revision-Date: 2019-02-27 12:46+0100\n"
+"PO-Revision-Date: 2019-04-10 11:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: gl_ES\n"
@@ -48,51 +48,55 @@ msgstr "Dispositivos Atopados:"
 
 #: oversteer/gtk_ui.py:20
 msgid "System default"
-msgstr ""
+msgstr "Predeterminados do sistema"
 
 #: oversteer/gtk_ui.py:21
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: oversteer/gtk_ui.py:22
 msgid "Spanish"
-msgstr ""
+msgstr "Castelán"
 
 #: oversteer/gtk_ui.py:23
 msgid "Galician"
-msgstr ""
+msgstr "Galego"
 
 #: oversteer/gtk_ui.py:243
 msgid "You've asked to remove the custom permissions rules."
-msgstr ""
+msgstr "Vai eliminar as regras de permisos personalizadas."
 
 #: oversteer/gtk_ui.py:256
 msgid "Permissions rules removed."
-msgstr ""
+msgstr "Regras de permisos borradas."
 
 #: oversteer/gtk_ui.py:258 oversteer/gtk_ui.py:279
 msgid "Changes will take effect after reconnecting the device."
-msgstr ""
+msgstr "Os trocos terán efecto cando volva conectar o dispositivo."
 
 #: oversteer/gtk_ui.py:264
 msgid ""
 "You've asked to install our custom permissions rules that would allow any "
 "user and application to access the device."
 msgstr ""
+"Instalarás regras de permisos personalizadas que permitirán o acceso ao "
+"dispositivo a calquera usuario e aplicación."
 
 #: oversteer/gtk_ui.py:277
 msgid "Permissions rules installed."
-msgstr ""
+msgstr "Regras de permisos instalados."
 
 #: oversteer/main.ui:63
 msgid ""
 "Change the interface language. Applied after app restart. Only language "
 "locales supported by your system."
 msgstr ""
+"Troca a linguaxe da interface. Aplicarase o reiniciar a apliación. So as "
+"linguaxes permitidas polo sistema."
 
 #: oversteer/main.ui:69
 msgid "Language"
-msgstr ""
+msgstr "Linguaxe"
 
 #: oversteer/main.ui:99
 msgid ""
@@ -100,14 +104,17 @@ msgid ""
 "password to change settings. Some games need this to handle the leds in some "
 "wheels."
 msgstr ""
+"Fai o dispositivo accesible a calquera usuario. Non se pedirá mais o "
+"contrasinal de administrador para trocar os axustes. Algúns xogos precisan "
+"isto para poder controlar os leds de algúns volantes."
 
 #: oversteer/main.ui:105
 msgid "Allow access to the device"
-msgstr ""
+msgstr "Permitir o acceso a o dispositivo"
 
 #: oversteer/main.ui:162
 msgid "Select the wheel controller you want to configure."
-msgstr ""
+msgstr "Selecciona o volante que queres configurar."
 
 #: oversteer/main.ui:168
 msgid "Selected Device"
@@ -115,7 +122,7 @@ msgstr "Dispositivo Seleccionado"
 
 #: oversteer/main.ui:201
 msgid "Select a profile to load the saved settings."
-msgstr ""
+msgstr "Selecciona o perfil para cargar os axustes gardados."
 
 #: oversteer/main.ui:207
 msgid "Profile"
@@ -123,7 +130,7 @@ msgstr "Perfil"
 
 #: oversteer/main.ui:255
 msgid "Select an emulation mode from the ones supported."
-msgstr ""
+msgstr "Selecciona un modo de emulación entre os admitidos."
 
 #: oversteer/main.ui:263
 msgid "Compatibility mode"
@@ -134,6 +141,8 @@ msgid ""
 "Range in degrees that the wheel will be able to rotate both ways. It will "
 "affect the sensitivity."
 msgstr ""
+"Rango de xiro do volante en grados en ambos sentidos. Afectará a "
+"sensibilidade. "
 
 #: oversteer/main.ui:307
 msgid "Rotation range"
@@ -144,6 +153,8 @@ msgid ""
 "Combine the gas and break pedals into one axe for games that use controller "
 "actions up/down."
 msgstr ""
+"Combina os pedais do acelerador e o freo nun so eixe para xogos que usan as "
+"acción de arriba/abaixo do controlador."
 
 #: oversteer/main.ui:358
 msgid "Combine pedals"
@@ -151,7 +162,7 @@ msgstr "Combina Pedais"
 
 #: oversteer/main.ui:393
 msgid "Type the name of a profile if you want to save this settings."
-msgstr ""
+msgstr "Escribe o nome do perfil se queres gardar estes axustes."
 
 #: oversteer/main.ui:399
 msgid "Save as"
@@ -159,7 +170,7 @@ msgstr "Garda como"
 
 #: oversteer/main.ui:438
 msgid "Search for wheel devices."
-msgstr ""
+msgstr "Procura dispositivos que sexan volantes."
 
 #: oversteer/main.ui:451
 msgid "Test"
@@ -167,11 +178,13 @@ msgstr "Proba"
 
 #: oversteer/main.ui:455
 msgid "Test the wheel using an external application."
-msgstr ""
+msgstr "Proba o volante usando unha aplicación externa."
 
 #: oversteer/main.ui:470
 msgid "Apply changes  (the wheel may move when changing the emulation mode)."
 msgstr ""
+"Aplica os trocos (o volante pode moverse cando se cambia o modo de "
+"emulación)."
 
 #: oversteer/main.ui:535
 msgid "(c) 2019 Bernat Arlandis"
@@ -179,12 +192,11 @@ msgstr "(c) 2019 Bernat Arlandis"
 
 #: data/org.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
-msgstr ""
+msgstr "Oversteer"
 
 #: data/org.berarma.Oversteer.desktop.in:4
-#, fuzzy
 msgid "Steering Wheel Manager"
-msgstr "Oversteer - Configurador de Volantes"
+msgstr "Configurador de Volantes"
 
 #: data/org.berarma.Oversteer.desktop.in:9
 msgid "org.berarma.Oversteer"
@@ -192,7 +204,7 @@ msgstr ""
 
 #: data/org.berarma.Oversteer.desktop.in:11
 msgid "game;racing;cars;wheels"
-msgstr ""
+msgstr "xogo;carreiras;coches;volantes"
 
 #~ msgid "List devices"
 #~ msgstr "Lista dispositivos"
