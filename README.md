@@ -21,7 +21,7 @@ Please, use at your own risk. Suggestions, bugs and pull requests welcome.
 
 You can install all dependencies on Debian systems with the following command:
 
-```apt install python3 python3-gi python3-pyudev python3-xdg meson appstream-util desktop-file-utils jstest-gtk```
+```apt install python3 python3-gi python3-pyudev python3-xdg gettext meson appstream-util desktop-file-utils jstest-gtk```
 
 Other distros may use slightly different names for the same packages.
 
@@ -48,11 +48,11 @@ Trying it without installing:
 
 ```ninja -C build run```
 
-Installing:
+Installing (needs administration rights):
 
-```ninja -C build install```
+```sudo ninja -C build install```
 
-Uninstalling:
+Uninstalling (needs administration rights):
 
-```ninja -C build uninstall```
+```sudo ninja -C build uninstall```
 
