@@ -20,7 +20,7 @@ class Application:
             parser.add_argument('--combine-pedals', dest='combine_pedals', default=None, action='store_true', help=_("combine pedals"))
             parser.add_argument('--no-combine-pedals', dest='combine_pedals', action='store_false')
 
-            args = parser.parse_args(argv)
+            args = parser.parse_args(argv[1:])
 
             from .wheels import Wheels
             wheels = Wheels()
