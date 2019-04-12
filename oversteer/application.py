@@ -27,7 +27,7 @@ class Application:
 
             device_id = args.device_id
 
-            if args.list != None:
+            if args.list == True:
                 devices = wheels.get_devices()
                 print(_("Devices found:"))
                 for key, name in devices:
