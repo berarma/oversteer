@@ -12,7 +12,7 @@ class Application:
             from .gtk_ui import GtkUi
             GtkUi(self.version, self.datadir)
         else:
-            parser = argparse.ArgumentParser(description=_("Oversteer - Steering Wheel Manager"))
+            parser = argparse.ArgumentParser(prog=argv[0], description=_("Oversteer - Steering Wheel Manager"))
             parser.add_argument('device_id', nargs='?', help=_("Device id"))
             parser.add_argument('--list', action='store_true', help=_("list connected devices"))
             parser.add_argument('--mode', help=_("set the compatibility mode"))
