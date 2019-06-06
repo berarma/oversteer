@@ -6,7 +6,17 @@ import re
 
 class Wheels:
 
-    supported_models = ['c24f', 'c262', 'c294', 'c295', 'c298', 'c299', 'c29a', 'c29b', 'c29c']
+    supported_models = [
+        'c24f', # G29
+        'c262', # G920
+        'c294', # Driving Force / Formula EX
+        'c295', # MOMO
+        'c298', # Driving Force pro
+        'c299', # G25
+        'c29a', # Driving Force GT
+        'c29b', # G27
+        'c29c', # Wii
+    ]
 
     def __init__(self):
         self.devices = {}
