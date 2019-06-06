@@ -8,12 +8,20 @@ Features supported:
  - Setting the emulation mode.
  - Setting the rotation range.
  - Combine pedals for games that use just one axis for gas/brake.
+ - Change system configuration to allow user access to all device features.
 
 This software uses the Linux driver for Logitech HID++ devices and thus it
-could work on any model supported by said driver.
+could work on any model supported by said driver:
 
-It's only been tested on the Logitech G29 Driving Force. It could work on other
-models but it's untested.
+ - Driving Force / Formula EX
+ - Driving Force Pro
+ - Driving Force GT
+ - G25 Racing Wheel
+ - G27 Racing Wheel
+ - G29 Driving Force Racing Wheel
+
+I can test only on a Logitech G29 Driving Force. Please, report on your results
+with different devices.
 
 Please, use at your own risk. Suggestions, bugs and pull requests welcome.
 
