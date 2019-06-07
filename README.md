@@ -5,10 +5,11 @@ https://github.com/berarma/oversteer
 Graphical application to configure Logitech Wheels.
 
 Features supported:
- - Setting the emulation mode.
- - Setting the rotation range.
- - Combine pedals for games that use just one axis for gas/brake.
- - Change system configuration to allow user access to all device features.
+ - Emulation mode setting.
+ - Rotation range setting.
+ - Combine pedals setting for games that use just one axis for gas/brake.
+ - Settings profiles.
+ - System configuration allowing user access to all device features.
 
 This software uses the Linux driver for Logitech HID++ devices and thus it
 could work on any model supported by said driver:
