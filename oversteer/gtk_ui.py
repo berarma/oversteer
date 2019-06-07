@@ -129,6 +129,8 @@ class GtkUi:
             self.profile_combobox.set_active_id(self.saved_profile)
             self.saved_profile = None
 
+        self.window.queue_draw()
+
     def on_destroy(self, *args):
         Gtk.main_quit()
 
@@ -172,7 +174,7 @@ class GtkUi:
             self.emulation_mode_combobox.set_active_id(config['default']['mode'])
             self.wheel_range.set_value(int(config['default']['range']) / 10)
             self.combine_pedals.set_state(True if config['default']['combine_pedals'] == 'True' else False)
-            self.save_profile_entry.set_text(os.path.splitext(os.path.basename(profile_path))[0])
+            self.save_profile_entry.set_text('')
 
     def on_update_clicked(self, button):
         self.wheels = Wheels()
@@ -200,14 +202,18 @@ class GtkUi:
             self.wheels.set_combine_pedals(device_id, combine_pedals)
 
         profile_name = self.save_profile_entry.get_text()
-        if profile_name != '':
+        if profile_name == '':
+            profile_file = self.profile_combobox.get_active_id()
+        else:
+            profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+
+        if profile_file != '':
             config = configparser.ConfigParser()
             config['default'] = {
                 'mode': mode,
                 'range': range,
                 'combine_pedals': combine_pedals
             }
-            profile_file = os.path.join(self.profile_path, profile_name + '.ini')
             with open(profile_file, 'w') as configfile:
                 config.write(configfile)
             self.saved_profile = profile_file;
@@ -216,6 +222,17 @@ class GtkUi:
         self.refresh_window()
 
         self.device_combobox.set_active_id(device_id)
+
+    def on_delete_clicked(self, button):
+        profile_file = self.profile_combobox.get_active_id()
+        if profile_file != '' and profile_file != None:
+            dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.WARNING,
+                Gtk.ButtonsType.OK_CANCEL, _("This profile will be deleted, are you sure?"))
+            response = dialog.run()
+            dialog.destroy()
+            if response == Gtk.ResponseType.OK:
+                os.remove(profile_file)
+                self.refresh_window()
 
     def on_preferences_clicked(self, *args):
         self.fix_permissions.set_state(os.path.isfile(self.udev_file_path))
