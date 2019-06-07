@@ -17,9 +17,13 @@ could work on any model supported by said driver:
  - Driving Force / Formula EX
  - Driving Force Pro
  - Driving Force GT
+ - Momo Force
+ - Momo Racing Force
+ - Speed Force Wireless
  - G25 Racing Wheel
  - G27 Racing Wheel
  - G29 Driving Force Racing Wheel
+ - G920 Driving Force Racing Wheel
 
 I can test only on a Logitech G29 Driving Force. Please, report on your results
 with different devices.
