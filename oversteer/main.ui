@@ -62,15 +62,17 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="tooltip_text" translatable="yes">Change the interface language. Applied after app restart. Only language locales supported by your system.</property>
+            <property name="spacing">20</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Language</property>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
@@ -90,7 +92,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child>
@@ -98,15 +100,17 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="tooltip_text" translatable="yes">Make the device accessible to any user. No more asking for administrator password to change settings. Some games need this to handle the leds in some wheels.</property>
+            <property name="spacing">20</property>
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Allow access to the device</property>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">0</property>
               </packing>
@@ -127,7 +131,18 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">2</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </object>
@@ -166,6 +181,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Selected Device</property>
               </object>
               <packing>
@@ -205,6 +221,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="halign">start</property>
                 <property name="label" translatable="yes">Profile</property>
               </object>
               <packing>
@@ -243,10 +260,10 @@
               <object class="GtkListBoxRow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="margin_left">8</property>
-                <property name="margin_right">8</property>
-                <property name="margin_top">8</property>
-                <property name="margin_bottom">10</property>
+                <property name="margin_left">16</property>
+                <property name="margin_right">16</property>
+                <property name="margin_top">12</property>
+                <property name="margin_bottom">12</property>
                 <property name="activatable">False</property>
                 <property name="selectable">False</property>
                 <child>
@@ -288,9 +305,9 @@
               <object class="GtkListBoxRow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="margin_left">8</property>
-                <property name="margin_right">8</property>
-                <property name="margin_bottom">10</property>
+                <property name="margin_left">16</property>
+                <property name="margin_right">16</property>
+                <property name="margin_bottom">12</property>
                 <property name="activatable">False</property>
                 <property name="selectable">False</property>
                 <child>
@@ -339,9 +356,9 @@
               <object class="GtkListBoxRow">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="margin_left">8</property>
-                <property name="margin_right">8</property>
-                <property name="margin_bottom">8</property>
+                <property name="margin_left">16</property>
+                <property name="margin_right">16</property>
+                <property name="margin_bottom">12</property>
                 <property name="activatable">False</property>
                 <property name="selectable">False</property>
                 <child>
@@ -380,10 +397,14 @@
                 </child>
               </object>
             </child>
+            <style>
+              <class name="list"/>
+            </style>
           </object>
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
+            <property name="padding">12</property>
             <property name="position">2</property>
           </packing>
         </child>
@@ -424,11 +445,24 @@
           </packing>
         </child>
         <child>
+          <object class="GtkSeparator">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="padding">8</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkButtonBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">end</property>
-            <property name="spacing">6</property>
+            <property name="spacing">8</property>
+            <property name="homogeneous">True</property>
             <property name="layout_style">start</property>
             <child>
               <object class="GtkButton" id="test_button">

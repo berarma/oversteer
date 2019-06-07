@@ -10,7 +10,7 @@ from .wheels import Wheels
 from xdg.BaseDirectory import *
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk, Gdk
 
 class GtkUi:
 
@@ -41,6 +41,14 @@ class GtkUi:
         if not os.path.isdir(self.profile_path):
             os.makedirs(self.profile_path, 0o700)
         self.saved_profile = None
+
+        style_provider = Gtk.CssProvider()
+        style_provider.load_from_path(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.css'))
+        Gtk.StyleContext.add_provider_for_screen(
+            Gdk.Screen.get_default(),
+            style_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
 
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain('oversteer')
@@ -257,7 +265,7 @@ class GtkUi:
         if os.path.isfile(self.udev_file_path):
             if not fix_permissions:
                 dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.WARNING,
-                        Gtk.ButtonsType.OK_CANCEL, _("You've asked to remove the custom permissions rules."))
+                    Gtk.ButtonsType.OK_CANCEL, _("You've asked to remove the custom permissions rules."))
                 response = dialog.run()
                 dialog.destroy()
                 if response == Gtk.ResponseType.OK:
