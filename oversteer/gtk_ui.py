@@ -299,3 +299,7 @@ class GtkUi:
 
         self.preferences_window.hide()
 
+    def on_delete_preferences(self, *args):
+        self.preferences_window.hide()
+        return True
+
