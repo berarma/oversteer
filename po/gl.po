@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-13 00:13+0200\n"
-"PO-Revision-Date: 2019-04-10 11:07+0200\n"
+"PO-Revision-Date: 2019-06-13 11:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: oversteer/application.py:15
@@ -64,7 +64,7 @@ msgstr "Galego"
 
 #: oversteer/gtk_ui.py:238
 msgid "This profile will be deleted, are you sure?"
-msgstr ""
+msgstr "Este perfil eliminarase, ¿estás seguro?"
 
 #: oversteer/gtk_ui.py:268
 msgid "You've asked to remove the custom permissions rules."
@@ -146,7 +146,7 @@ msgid ""
 "affect the sensitivity."
 msgstr ""
 "Rango de xiro do volante en grados en ambos sentidos. Afectará a "
-"sensibilidade. "
+"sensibilidade."
 
 #: oversteer/main.ui:325
 msgid "Rotation range"
@@ -170,7 +170,7 @@ msgstr "Escribe o nome do perfil se queres gardar estes axustes."
 
 #: oversteer/main.ui:421
 msgid "Save as new profile"
-msgstr ""
+msgstr "Salva coma novo perfil"
 
 #: oversteer/main.ui:469
 msgid "Test"

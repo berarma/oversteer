@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-06-13 00:13+0200\n"
-"PO-Revision-Date: 2019-04-10 00:05+0200\n"
+"PO-Revision-Date: 2019-06-14 23:48+0200\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -64,7 +64,7 @@ msgstr "Gallego"
 
 #: oversteer/gtk_ui.py:238
 msgid "This profile will be deleted, are you sure?"
-msgstr ""
+msgstr "Se va a borrar este perfil, ¿estás seguro?"
 
 #: oversteer/gtk_ui.py:268
 msgid "You've asked to remove the custom permissions rules."
@@ -170,7 +170,7 @@ msgstr "Escribe el nombre de un perfil si quieres guardar los ajustes."
 
 #: oversteer/main.ui:421
 msgid "Save as new profile"
-msgstr ""
+msgstr "Guardar como perfil nuevo"
 
 #: oversteer/main.ui:469
 msgid "Test"
