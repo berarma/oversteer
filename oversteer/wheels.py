@@ -1,8 +1,11 @@
 import functools
 import glob
+import logging
 import os
 import pyudev
 import re
+
+logging.basicConfig(level=logging.DEBUG)
 
 class Wheels:
 
@@ -105,6 +108,7 @@ class Wheels:
         path = self.device_file(device_id, "alternate_modes")
         if not os.path.isfile(path):
             return
+        logging.debug("Setting mode: " + str(emulation_mode))
         with open(path, "w") as file:
             file.write(emulation_mode)
         self.wait_for_device(device_id)
@@ -113,6 +117,7 @@ class Wheels:
         path = self.device_file(device_id, "range")
         if not os.path.isfile(path):
             return
+        logging.debug("Setting range: " + str(range))
         with open(path, "w") as file:
             file.write(str(range))
 
@@ -120,6 +125,7 @@ class Wheels:
         path = self.device_file(device_id, "combine_pedals")
         if not os.path.isfile(path):
             return
+        logging.debug("Setting combined pedals: " + str(combine_pedals))
         with open(path, "w") as file:
             file.write("1" if combine_pedals else "0")
 
