@@ -215,7 +215,7 @@ class GtkUi:
         else:
             profile_file = os.path.join(self.profile_path, profile_name + '.ini')
 
-        if profile_file != '':
+        if profile_file != None and profile_file != '':
             config = configparser.ConfigParser()
             config['default'] = {
                 'mode': mode,
