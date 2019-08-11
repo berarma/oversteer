@@ -4,6 +4,7 @@ import logging
 import os
 import pyudev
 import re
+import time
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -112,6 +113,7 @@ class Wheels:
         with open(path, "w") as file:
             file.write(emulation_mode)
         self.wait_for_device(device_id)
+        time.sleep(3)
 
     def set_range(self, device_id, range):
         path = self.device_file(device_id, "range")
