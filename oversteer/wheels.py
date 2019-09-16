@@ -1,3 +1,4 @@
+from evdev import ecodes, InputDevice
 import functools
 import glob
 import logging
@@ -30,6 +31,8 @@ class Wheels:
         for device in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
             if device.get('ID_VENDOR_ID') == '046d' and device.get('ID_MODEL_ID') in self.supported_models:
                 self.register_device(device)
+
+        logging.debug('Devices:' + str(self.devices))
 
     def register_device(self, device):
         device_id = device.get('ID_FOR_SEAT')
@@ -130,6 +133,18 @@ class Wheels:
         logging.debug("Setting combined pedals: " + str(combine_pedals))
         with open(path, "w") as file:
             file.write("1" if combine_pedals else "0")
+
+    def set_autocenter_strength(self, device_id, strength):
+        dev = InputDevice(self.devices[device_id]['devName'])
+        autocenter_strength = int(65535 * strength / 100)
+        dev.write(ecodes.EV_FF, ecodes.FF_AUTOCENTER, autocenter_strength)
+        logging.debug("Setting autocenter strength: " + str(autocenter_strength))
+
+    def set_ff_gain(self, device_id, gain):
+        dev = InputDevice(self.devices[device_id]['devName'])
+        ff_gain = int(65535 * gain / 100)
+        dev.write(ecodes.EV_FF, ecodes.FF_GAIN, ff_gain)
+        logging.debug("Setting FF gain: " + str(ff_gain))
 
     def is_read_only(self, device_id):
         if not self.check_file_permissions(self.device_file(device_id, 'alternate_modes')):

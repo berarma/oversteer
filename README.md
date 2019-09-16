@@ -8,6 +8,8 @@ Features (when supported by the device):
  - Change emulation mode.
  - Change rotation range.
  - Combine accelerator/brakes pedals for games that use just one axis.
+ - Change autocentering force strength.
+ - Change force feedback gain.
  - Device configuration profiles.
  - Fix system permissions to access all device features.
 
@@ -44,7 +46,7 @@ There's an AUR package kindly created by DNModder.
 
 You can install all dependencies on Debian systems with the following command:
 
-```apt install python3 python3-gi python3-pyudev python3-xdg gettext meson appstream-util desktop-file-utils jstest-gtk```
+```apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils jstest-gtk```
 
 Other distros may use slightly different names for the same packages.
 
@@ -78,6 +80,13 @@ Installing (needs administration rights):
 Uninstalling (needs administration rights):
 
 ```sudo ninja -C build uninstall```
+
+## Updating translations (for translators)
+
+```
+ninja -C build oversteer-pot
+ninja -C build oversteer-update-po
+```
 
 ## Collaboration
 

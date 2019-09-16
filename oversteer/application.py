@@ -19,6 +19,8 @@ class Application:
             parser.add_argument('--range', type=int, help=_("set the rotation range"))
             parser.add_argument('--combine-pedals', dest='combine_pedals', default=None, action='store_true', help=_("combine pedals"))
             parser.add_argument('--no-combine-pedals', dest='combine_pedals', action='store_false')
+            parser.add_argument('--autocenter-strength', type=int, help=_("set the autocenter strength"))
+            parser.add_argument('--ff-gain', type=int, help=_("set the FF gain"))
 
             args = parser.parse_args(argv[1:])
 
@@ -38,6 +40,10 @@ class Application:
                 wheels.set_range(device_id, args.range)
             if args.combine_pedals != None:
                 wheels.set_combine_pedals(device_id, args.combine_pedals)
+            if args.autocenter_strength != None:
+                wheels.set_autocenter_strength(device_id, args.autocenter_strength)
+            if args.ff_gain != None:
+                wheels.set_ff_gain(device_id, args.ff_gain)
 
             sys.exit(0)
 

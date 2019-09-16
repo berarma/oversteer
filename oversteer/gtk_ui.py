@@ -83,6 +83,26 @@ class GtkUi:
         self.emulation_mode_combobox = self.builder.get_object('emulation_mode')
         self.wheel_range = self.builder.get_object('wheel_range')
         self.combine_pedals = self.builder.get_object('combine_pedals')
+        self.autocenter_strength = self.builder.get_object('autocenter_strength')
+        self.ff_gain = self.builder.get_object('ff_gain')
+
+        self.wheel_range.add_mark(18, Gtk.PositionType.TOP, '180')
+        self.wheel_range.add_mark(27, Gtk.PositionType.TOP, '270')
+        self.wheel_range.add_mark(36, Gtk.PositionType.TOP, '360')
+        self.wheel_range.add_mark(45, Gtk.PositionType.TOP, '450')
+        self.wheel_range.add_mark(54, Gtk.PositionType.TOP, '540')
+        self.wheel_range.add_mark(72, Gtk.PositionType.TOP, '720')
+        self.wheel_range.add_mark(90, Gtk.PositionType.TOP, '900')
+        self.autocenter_strength.add_mark(20, Gtk.PositionType.TOP, '20')
+        self.autocenter_strength.add_mark(40, Gtk.PositionType.TOP, '40')
+        self.autocenter_strength.add_mark(60, Gtk.PositionType.TOP, '60')
+        self.autocenter_strength.add_mark(80, Gtk.PositionType.TOP, '80')
+        self.autocenter_strength.add_mark(100, Gtk.PositionType.TOP, '100')
+        self.ff_gain.add_mark(20, Gtk.PositionType.TOP, '20')
+        self.ff_gain.add_mark(40, Gtk.PositionType.TOP, '40')
+        self.ff_gain.add_mark(60, Gtk.PositionType.TOP, '60')
+        self.ff_gain.add_mark(80, Gtk.PositionType.TOP, '80')
+        self.ff_gain.add_mark(100, Gtk.PositionType.TOP, '100')
 
         cell_renderer = Gtk.CellRendererText()
         self.device_combobox.pack_start(cell_renderer, True)
@@ -177,11 +197,17 @@ class GtkUi:
     def on_profile_changed(self, combobox):
         profile_path = combobox.get_active_id()
         if profile_path != '':
-            config = configparser.ConfigParser()
+            defaults = {
+                'autocenter_strength': 0,
+                'ff_gain': 0,
+            }
+            config = configparser.ConfigParser(defaults)
             config.read(profile_path)
-            self.emulation_mode_combobox.set_active_id(config['default']['mode'])
-            self.wheel_range.set_value(int(config['default']['range']) / 10)
-            self.combine_pedals.set_state(True if config['default']['combine_pedals'] == 'True' else False)
+            self.emulation_mode_combobox.set_active_id(config.get('default', 'mode'))
+            self.wheel_range.set_value(int(config.get('default', 'range')) / 10)
+            self.combine_pedals.set_state(True if config.get('default', 'combine_pedals') == 'True' else False)
+            self.autocenter_strength.set_value(int(config.get('default', 'autocenter_strength')))
+            self.ff_gain.set_value(int(config.get('default', 'ff_gain')))
             self.save_profile_entry.set_text('')
 
     def on_update_clicked(self, button):
@@ -196,6 +222,8 @@ class GtkUi:
         mode = self.emulation_mode_combobox.get_active_id()
         range = int(self.wheel_range.get_value() * 10)
         combine_pedals = self.combine_pedals.get_state()
+        autocenter_strength = int(self.autocenter_strength.get_value())
+        ff_gain = int(self.ff_gain.get_value())
         if self.wheels.is_read_only(device_id):
             subprocess.call([
                 'pkexec',
@@ -203,11 +231,15 @@ class GtkUi:
                 '--mode', mode,
                 '--range', str(range),
                 '--combine-pedals' if combine_pedals else '--no-combine-pedals',
+                '--autocenter-strength', str(autocenter_strength),
+                '--ff-gain', str(ff_gain),
                  str(device_id)])
         else:
             self.wheels.set_mode(device_id, mode)
             self.wheels.set_range(device_id, range)
             self.wheels.set_combine_pedals(device_id, combine_pedals)
+            self.wheels.set_autocenter_strength(device_id, autocenter_strength)
+            self.wheels.set_ff_gain(device_id, ff_gain)
 
         profile_name = self.save_profile_entry.get_text()
         if profile_name == '':
@@ -220,7 +252,9 @@ class GtkUi:
             config['default'] = {
                 'mode': mode,
                 'range': range,
-                'combine_pedals': combine_pedals
+                'combine_pedals': combine_pedals,
+                'autocenter_strength': autocenter_strength,
+                'ff_gain': ff_gain
             }
             with open(profile_file, 'w') as configfile:
                 config.write(configfile)

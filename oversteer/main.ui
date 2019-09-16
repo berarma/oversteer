@@ -2,6 +2,16 @@
 <!-- Generated with glade 3.20.4 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <object class="GtkAdjustment" id="autocenter_strengt">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="ff_gai">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
   <object class="GtkDialog" id="preferences_window">
     <property name="can_focus">False</property>
     <property name="border_width">20</property>
@@ -152,7 +162,7 @@
     </child>
   </object>
   <object class="GtkAdjustment" id="wheel_range_setup">
-    <property name="lower">5</property>
+    <property name="lower">4</property>
     <property name="upper">90</property>
     <property name="value">90</property>
     <property name="step_increment">1</property>
@@ -258,12 +268,9 @@
             <property name="activate_on_single_click">False</property>
             <child>
               <object class="GtkListBoxRow">
+                <property name="height_request">80</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="margin_left">16</property>
-                <property name="margin_right">16</property>
-                <property name="margin_top">12</property>
-                <property name="margin_bottom">12</property>
                 <property name="activatable">False</property>
                 <property name="selectable">False</property>
                 <child>
@@ -272,7 +279,9 @@
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Select an emulation mode from the ones supported.</property>
                     <property name="valign">center</property>
-                    <property name="homogeneous">True</property>
+                    <property name="margin_left">16</property>
+                    <property name="margin_right">16</property>
+                    <property name="spacing">64</property>
                     <child>
                       <object class="GtkLabel">
                         <property name="visible">True</property>
@@ -303,11 +312,9 @@
             </child>
             <child>
               <object class="GtkListBoxRow">
+                <property name="height_request">80</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="margin_left">16</property>
-                <property name="margin_right">16</property>
-                <property name="margin_bottom">12</property>
                 <property name="activatable">False</property>
                 <property name="selectable">False</property>
                 <child>
@@ -316,7 +323,9 @@
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Range in degrees that the wheel will be able to rotate both ways. It will affect the sensitivity.</property>
                     <property name="valign">center</property>
-                    <property name="homogeneous">True</property>
+                    <property name="margin_left">16</property>
+                    <property name="margin_right">16</property>
+                    <property name="spacing">64</property>
                     <child>
                       <object class="GtkLabel">
                         <property name="visible">True</property>
@@ -332,6 +341,7 @@
                     </child>
                     <child>
                       <object class="GtkScale" id="wheel_range">
+                        <property name="width_request">600</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
@@ -339,11 +349,11 @@
                         <property name="fill_level">90</property>
                         <property name="round_digits">0</property>
                         <property name="digits">0</property>
-                        <property name="value_pos">right</property>
+                        <property name="value_pos">bottom</property>
                         <signal name="format-value" handler="format_wheel_range_value" swapped="no"/>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
+                        <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">1</property>
                       </packing>
@@ -354,11 +364,111 @@
             </child>
             <child>
               <object class="GtkListBoxRow">
+                <property name="height_request">80</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="margin_left">16</property>
-                <property name="margin_right">16</property>
-                <property name="margin_bottom">12</property>
+                <property name="activatable">False</property>
+                <property name="selectable">False</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Strength of autocenter force.</property>
+                    <property name="valign">center</property>
+                    <property name="margin_left">16</property>
+                    <property name="margin_right">16</property>
+                    <property name="spacing">64</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes">Autocenter strength</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="autocenter_strength">
+                        <property name="width_request">600</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="valign">center</property>
+                        <property name="adjustment">autocenter_strengt</property>
+                        <property name="fill_level">100</property>
+                        <property name="round_digits">0</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkListBoxRow">
+                <property name="height_request">80</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="activatable">False</property>
+                <property name="selectable">False</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Global strength of force feedback effects.</property>
+                    <property name="valign">center</property>
+                    <property name="margin_left">16</property>
+                    <property name="margin_right">16</property>
+                    <property name="spacing">64</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="label" translatable="yes">Force feedback gain</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScale" id="ff_gain">
+                        <property name="width_request">600</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="valign">center</property>
+                        <property name="adjustment">ff_gai</property>
+                        <property name="fill_level">100</property>
+                        <property name="round_digits">0</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkListBoxRow">
+                <property name="height_request">80</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
                 <property name="activatable">False</property>
                 <property name="selectable">False</property>
                 <child>
@@ -367,7 +477,9 @@
                     <property name="can_focus">False</property>
                     <property name="tooltip_text" translatable="yes">Combine the gas and break pedals into one axe for games that use controller actions up/down.</property>
                     <property name="valign">center</property>
-                    <property name="homogeneous">True</property>
+                    <property name="margin_left">16</property>
+                    <property name="margin_right">16</property>
+                    <property name="spacing">64</property>
                     <child>
                       <object class="GtkLabel">
                         <property name="visible">True</property>
@@ -376,7 +488,7 @@
                         <property name="label" translatable="yes">Combine pedals</property>
                       </object>
                       <packing>
-                        <property name="expand">True</property>
+                        <property name="expand">False</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
@@ -393,6 +505,22 @@
                         <property name="position">1</property>
                       </packing>
                     </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkListBoxRow">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="activatable">False</property>
+                <property name="selectable">False</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="xpad">16</property>
+                    <property name="label" translatable="yes">Note: games can override some or all of these settings.</property>
                   </object>
                 </child>
               </object>
@@ -441,7 +569,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
         <child>
@@ -453,7 +581,7 @@
             <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="padding">8</property>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <child>
@@ -533,7 +661,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">5</property>
+            <property name="position">6</property>
           </packing>
         </child>
       </object>
