@@ -2,13 +2,14 @@
 <!-- Generated with glade 3.20.4 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkAdjustment" id="autocenter_strengt">
+  <object class="GtkAdjustment" id="autocenter_strength_setup">
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="ff_gai">
+  <object class="GtkAdjustment" id="ff_gain_setup">
     <property name="upper">100</property>
+    <property name="value">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -373,7 +374,7 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="tooltip_text" translatable="yes">Strength of autocenter force.</property>
+                    <property name="tooltip_text" translatable="yes">Global strength of force feedback effects.</property>
                     <property name="valign">center</property>
                     <property name="margin_left">16</property>
                     <property name="margin_right">16</property>
@@ -383,7 +384,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="label" translatable="yes">Autocenter strength</property>
+                        <property name="label" translatable="yes">Force feedback gain</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -392,12 +393,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScale" id="autocenter_strength">
+                      <object class="GtkScale" id="ff_gain">
                         <property name="width_request">600</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
-                        <property name="adjustment">autocenter_strengt</property>
+                        <property name="adjustment">ff_gain_setup</property>
                         <property name="fill_level">100</property>
                         <property name="round_digits">0</property>
                         <property name="digits">0</property>
@@ -424,7 +425,7 @@
                   <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="tooltip_text" translatable="yes">Global strength of force feedback effects.</property>
+                    <property name="tooltip_text" translatable="yes">Strength of autocenter force.</property>
                     <property name="valign">center</property>
                     <property name="margin_left">16</property>
                     <property name="margin_right">16</property>
@@ -434,7 +435,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">start</property>
-                        <property name="label" translatable="yes">Force feedback gain</property>
+                        <property name="label" translatable="yes">Autocenter strength</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -443,12 +444,12 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScale" id="ff_gain">
+                      <object class="GtkScale" id="autocenter_strength">
                         <property name="width_request">600</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="valign">center</property>
-                        <property name="adjustment">ff_gai</property>
+                        <property name="adjustment">autocenter_strength_setup</property>
                         <property name="fill_level">100</property>
                         <property name="round_digits">0</property>
                         <property name="digits">0</property>
