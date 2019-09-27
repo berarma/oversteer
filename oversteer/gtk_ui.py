@@ -194,6 +194,12 @@ class GtkUi:
 
         self.combine_pedals.set_state(self.wheels.get_combine_pedals(device_id))
 
+        autocenter_strength = int(self.autocenter_strength.get_value())
+        self.wheels.set_autocenter_strength(device_id, autocenter_strength)
+
+        ff_gain = int(self.ff_gain.get_value())
+        self.wheels.set_ff_gain(device_id, ff_gain)
+
     def on_profile_changed(self, combobox):
         profile_path = combobox.get_active_id()
         if profile_path != '':
