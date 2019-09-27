@@ -717,6 +717,7 @@
 Leandro Vergara</property>
     <property name="logo_icon_name"/>
     <property name="license_type">gpl-3-0</property>
+    <signal name="delete-event" handler="on_delete_about" swapped="no"/>
     <signal name="response" handler="on_about_window_response" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox">

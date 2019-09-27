@@ -171,6 +171,10 @@ class GtkUi:
     def on_about_window_response(self, *args):
         self.about_window.hide()
 
+    def on_delete_about(self, *args):
+        self.about_window.hide()
+        return True
+
     def format_wheel_range_value(self, scale, value):
         return round(value * 10)
 
