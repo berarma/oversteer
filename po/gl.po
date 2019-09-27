@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-09-16 15:20+0200\n"
-"PO-Revision-Date: 2019-06-13 11:09+0200\n"
+"PO-Revision-Date: 2019-09-26 18:39+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: gl_ES\n"
@@ -43,13 +43,12 @@ msgid "combine pedals"
 msgstr "combina pedais"
 
 #: oversteer/application.py:22
-#, fuzzy
 msgid "set the autocenter strength"
-msgstr "configure o rango de xiro"
+msgstr "configure a forza de Autocentrado"
 
 #: oversteer/application.py:23
 msgid "set the FF gain"
-msgstr ""
+msgstr "configure a ganancia do FF"
 
 #: oversteer/application.py:34
 msgid "Devices found:"
@@ -163,19 +162,19 @@ msgstr "Rango de Rotación"
 
 #: oversteer/main.ui:376
 msgid "Strength of autocenter force."
-msgstr ""
+msgstr "Dureza da forza de Autocentrado."
 
 #: oversteer/main.ui:386
 msgid "Autocenter strength"
-msgstr ""
+msgstr "Dureza de Autocentrado"
 
 #: oversteer/main.ui:427
 msgid "Global strength of force feedback effects."
-msgstr ""
+msgstr "Dureza Global dos efectos de Force Feedback."
 
 #: oversteer/main.ui:437
 msgid "Force feedback gain"
-msgstr ""
+msgstr "Ganancia do Force Feedback"
 
 #: oversteer/main.ui:478
 msgid ""
@@ -191,7 +190,7 @@ msgstr "Combina Pedais"
 
 #: oversteer/main.ui:523
 msgid "Note: games can override some or all of these settings."
-msgstr ""
+msgstr "Nota: os xogos poden anular algúns ou todos estes axustes."
 
 #: oversteer/main.ui:543
 msgid "Type the name of a profile if you want to save this settings."
