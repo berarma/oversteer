@@ -1,5 +1,6 @@
 import argparse
 from locale import gettext as _
+import os
 import sys
 
 class Application:
@@ -27,7 +28,10 @@ class Application:
             from .wheels import Wheels
             wheels = Wheels()
 
-            device_id = args.device_id
+            if args.device_id != None:
+                device_id = args.device_id
+                if os.path.exists(device_id):
+                    device_id = wheels.device_name_to_id(os.path.realpath(device_id))
 
             if args.list == True:
                 devices = wheels.get_devices()

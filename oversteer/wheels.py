@@ -50,6 +50,12 @@ class Wheels:
             data['devicePath'] = os.path.join(device.sys_path, 'device')
             data['name'] = device.get('NAME').strip('"')
 
+    def device_name_to_id(self, device_name):
+        for device_id in self.devices:
+            if self.devices[device_id]['devName'] == device_name:
+                return device_id
+        return None
+
     def device_file(self, device_id, filename):
         return os.path.join(self.devices[device_id]['devicePath'], filename)
 
