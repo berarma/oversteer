@@ -96,6 +96,24 @@ class Wheels:
             alternate_modes.append([id, name, selected])
         return alternate_modes
 
+    def get_current_mode(self, device_id):
+        path = self.device_file(device_id, "alternate_modes")
+        if not os.path.isfile(path):
+            return []
+        with open(path, "r") as file:
+            data = file.read()
+        lines = data.splitlines()
+        reg = re.compile("([^:]+): (.*)")
+        for line in lines:
+            matches = reg.match(line)
+            id = matches.group(1)
+            if id == "native":
+                continue
+            name = matches.group(2)
+            if name.endswith("*"):
+                return id
+        return id
+
     def get_range(self, device_id):
         path = self.device_file(device_id, "range")
         if not os.path.isfile(path):
@@ -118,10 +136,14 @@ class Wheels:
         path = self.device_file(device_id, "alternate_modes")
         if not os.path.isfile(path):
             return
+        old_mode = self.get_current_mode(device_id)
+        if old_mode == emulation_mode:
+            return
         logging.debug("Setting mode: " + str(emulation_mode))
         with open(path, "w") as file:
             file.write(emulation_mode)
         self.wait_for_device(device_id)
+        # Wait for self-calibration to finish
         time.sleep(3)
 
     def set_range(self, device_id, range):

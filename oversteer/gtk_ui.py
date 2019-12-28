@@ -129,18 +129,7 @@ class GtkUi:
 
         Gtk.main()
 
-    def refresh_window(self):
-        model = self.device_combobox.get_model()
-        if model == None:
-            model = Gtk.ListStore(str, str)
-        else:
-            self.device_combobox.set_model(None)
-            model.clear()
-        for pair in self.wheels.get_devices():
-            model.append(pair)
-        self.device_combobox.set_model(model)
-        self.device_combobox.set_active(0)
-
+    def refresh_profiles(self):
         model = self.profile_combobox.get_model()
         if model == None:
             model = Gtk.ListStore(str, str)
@@ -157,6 +146,21 @@ class GtkUi:
             self.profile_combobox.set_active_id(self.saved_profile)
             self.saved_profile = None
 
+    def refresh_devices(self):
+        model = self.device_combobox.get_model()
+        if model == None:
+            model = Gtk.ListStore(str, str)
+        else:
+            self.device_combobox.set_model(None)
+            model.clear()
+        for pair in self.wheels.get_devices():
+            model.append(pair)
+        self.device_combobox.set_model(model)
+        self.device_combobox.set_active(0)
+
+    def refresh_window(self):
+        self.refresh_devices()
+        self.refresh_profiles()
         self.window.queue_draw()
 
     def on_destroy(self, *args):
@@ -178,10 +182,7 @@ class GtkUi:
     def format_wheel_range_value(self, scale, value):
         return round(value * 10)
 
-    def on_device_changed(self, combobox):
-        device_id = combobox.get_active_id()
-        if device_id == None:
-            return
+    def refresh_settings(self, device_id):
         model = self.emulation_mode_combobox.get_model()
         if model == None:
             model = Gtk.ListStore(str, str)
@@ -197,6 +198,13 @@ class GtkUi:
         self.wheel_range.set_value(self.wheels.get_range(device_id) / 10)
 
         self.combine_pedals.set_state(self.wheels.get_combine_pedals(device_id))
+
+    def on_device_changed(self, combobox):
+        device_id = combobox.get_active_id()
+        if device_id == None:
+            return
+
+        self.refresh_settings(device_id)
 
         autocenter_strength = int(self.autocenter_strength.get_value())
         self.wheels.set_autocenter_strength(device_id, autocenter_strength)
@@ -270,10 +278,10 @@ class GtkUi:
                 config.write(configfile)
             self.saved_profile = profile_file;
 
-        self.wheels = Wheels()
-        self.refresh_window()
-
         self.device_combobox.set_active_id(device_id)
+
+        self.refresh_profiles()
+        self.refresh_settings(device_id)
 
     def on_delete_clicked(self, button):
         profile_file = self.profile_combobox.get_active_id()
