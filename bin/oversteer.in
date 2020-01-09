@@ -24,14 +24,20 @@ import locale
 
 sys.path.insert(1, '@pythondir@')
 
-VERSION = '@VERSION@'
+version = '@VERSION@'
 pkgdatadir = '@pkgdatadir@'
 localedir = '@localedir@'
+icondir = '@icondir@'
 builddir = os.environ.get('MESON_BUILD_ROOT')
 if builddir:
+    srcdir = os.environ['MESON_SOURCE_ROOT']
     pkgdatadir = os.path.join(builddir, 'data')
     sys.dont_write_bytecode = True
-    sys.path.insert(1, os.environ['MESON_SOURCE_ROOT'])
+    sys.path.insert(1, srcdir)
+    icondir = os.path.join(srcdir, 'data')
+    if not os.path.exists(os.path.join(builddir, 'data/udev')):
+        os.symlink(os.path.join(srcdir, 'data/udev'),
+                os.path.join(builddir, 'data/udev'))
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
@@ -40,6 +46,6 @@ locale.textdomain('oversteer')
 locale.setlocale(locale.LC_ALL, '')
 
 if __name__ == '__main__':
-    from oversteer import application
-    app = application.Application(VERSION, pkgdatadir)
+    from oversteer.application import Application
+    app = Application(version, pkgdatadir, icondir)
     sys.exit(app.run(sys.argv))

@@ -1,3 +1,27 @@
-.list {
+list.list {
     border: 1px solid #ccc;
+}
+list.list > row {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+levelbar block.filled {
+    background-color: #3584e4;
+}
+stacksidebar list row {
+    padding-right: 40px;
+}
+.overlay-leds levelbar:nth-child(1) block.filled,
+.overlay-leds levelbar:nth-child(2) block.filled {
+    border-color: #00e000;
+    background-color: #00e000;
+}
+.overlay-leds levelbar:nth-child(3) block.filled,
+.overlay-leds levelbar:nth-child(4) block.filled {
+    border-color: #e0e000;
+    background-color: #e0e000;
+}
+.overlay-leds levelbar:nth-child(5) block.filled {
+    border-color: #e00000;
+    background-color: #e00000;
 }

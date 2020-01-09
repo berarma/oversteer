@@ -26,9 +26,9 @@ appstream_file = i18n.merge_file(
   install_dir: join_paths(get_option('datadir'), 'appdata')
 )
 
-icondir = join_paths(get_option('datadir'), 'icons/hicolor')
+icondir = join_paths(get_option('datadir'), 'icons/hicolor/scalable/apps')
 install_data(app_id + '.svg',
-  install_dir: join_paths(icondir, 'scalable/apps')
+  install_dir: icondir
 )
 
 install_subdir('udev',
