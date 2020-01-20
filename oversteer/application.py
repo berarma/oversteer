@@ -52,29 +52,40 @@ class Application:
             device_id = wheels.first_device_id()
             args.device_id = device_id
 
+        nothing_done = True
         if args.list == True:
             devices = wheels.get_devices()
             print(_("Devices found:"))
             for key, name in devices:
                 print("  {}: {} ({})".format(wheels.id_to_dev(key), name, key))
+            nothing_done = False
         if args.mode != None:
             wheels.set_mode(device_id, args.mode)
+            nothing_done = False
         if args.range != None:
             wheels.set_range(device_id, args.range)
+            nothing_done = False
         if args.combine_pedals != None:
             wheels.set_combine_pedals(device_id, args.combine_pedals)
+            nothing_done = False
         if args.autocenter != None:
             wheels.set_autocenter(device_id, args.autocenter)
+            nothing_done = False
         if args.ff_gain != None:
             wheels.set_ff_gain(device_id, args.ff_gain)
+            nothing_done = False
         if args.spring_level != None:
             wheels.set_spring_level(device_id, args.spring_level)
+            nothing_done = False
         if args.damper_level != None:
             wheels.set_damper_level(device_id, args.damper_level)
+            nothing_done = False
         if args.friction_level != None:
             wheels.set_friction_level(device_id, args.friction_level)
+            nothing_done = False
         if args.ffb_leds != None and args.ffb_leds:
             wheels.set_ffb_leds(device_id, 1)
+            nothing_done = False
         if args.ffb_overlay != None and args.ffb_overlay:
             args.interactive = True
         if args.range_overlay != None and args.range_overlay:
@@ -92,7 +103,8 @@ class Application:
             wheels.set_damper_level(device_id, profile.get_damper_level())
             wheels.set_friction_level(device_id, profile.get_friction_level())
             wheels.set_ffb_leds(device_id, profile.get_ffbmeter_leds())
-        if args.interactive or len(sys.argv) == 1:
+            nothing_done = False
+        if args.interactive or nothing_done:
             self.args = args
             self.wheels = wheels
             from oversteer.gui import Gui
