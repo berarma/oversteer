@@ -87,7 +87,7 @@ class Gui:
             affirmative = self.ui.confirmation_dialog(_("You don't have the " +
                 "required permissions to change your wheel settings. You can " +
                 "fix it yourself by copying the {} file to the {} directory " +
-                "and rebooting.".format(udev_file, target_dir)) + "\n\n" +
+                "and rebooting.").format(udev_file, target_dir) + "\n\n" +
                 _("Do you want us to make this change for you?"))
             if affirmative:
                 return_code = subprocess.call([
