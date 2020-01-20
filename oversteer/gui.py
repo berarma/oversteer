@@ -331,10 +331,14 @@ class Gui:
                 elif event.code == ecodes.ABS_HAT0Y:
                     self.ui.set_haty_input(event.value)
             if event.type == ecodes.EV_KEY:
+                if event.value == 0:
+                    delay = 100
+                else:
+                    delay = 0
                 if event.code >= 288 and event.code <= 303:
-                    self.ui.set_btn_input(event.code - 288, event.value)
+                    self.ui.set_btn_input(event.code - 288, event.value, delay)
                 if event.code >= 704 and event.code <= 712:
-                    self.ui.set_btn_input(event.code - 704 + 16, event.value)
+                    self.ui.set_btn_input(event.code - 704 + 16, event.value, delay)
 
     def input_thread(self):
         while 1:

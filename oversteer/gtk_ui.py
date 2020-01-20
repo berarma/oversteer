@@ -317,8 +317,11 @@ class GtkUi:
             GLib.idle_add(self.hat_up_input.set_value, 0)
             GLib.idle_add(self.hat_down_input.set_value, value)
 
-    def set_btn_input(self, index, value):
-        GLib.idle_add(self.btn_input[index].set_value, value)
+    def set_btn_input(self, index, value, wait = None):
+        if wait != None:
+            GLib.timeout_add(wait, lambda index=index, value=value: GLib.idle_add(self.set_btn_input, index, value) & False)
+        else:
+            GLib.idle_add(self.btn_input[index].set_value, value)
 
     def set_range_overlay_visibility(self, state):
         self.enable_range_overlay.set_sensitive(state)
