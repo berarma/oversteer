@@ -131,12 +131,14 @@ class Gui:
         self.populate_profiles()
         self.ui.update()
 
-    def read_settings(self, device_id):
+    def read_settings(self, device_id, ignore_emulation_mode = False):
         alternate_modes = self.wheels.get_alternate_modes(device_id);
         self.ui.set_emulation_modes(alternate_modes)
 
         emulation_mode = self.wheels.get_current_mode(device_id)
-        self.ui.set_emulation_mode(emulation_mode)
+        if not ignore_emulation_mode:
+            self.ui.set_emulation_mode(emulation_mode)
+            self.ui.change_emulation_mode(emulation_mode)
 
         if emulation_mode == 'G29':
             self.steering_input_multiplier = 1
@@ -175,12 +177,13 @@ class Gui:
             self.device = None
             return
 
-        self.read_settings(device_id)
-
         self.device = InputDevice(self.wheels.id_to_dev(device_id))
 
         if not self.wheels.check_permissions(device_id):
             self.install_udev_file()
+
+        self.read_settings(device_id)
+
 
     def load_profile(self, profile_file):
         if profile_file == '':
@@ -246,7 +249,8 @@ class Gui:
         self.device = None
         self.wheels.set_mode(device_id, mode)
         self.device = InputDevice(self.wheels.id_to_dev(device_id))
-        self.read_settings(device_id)
+        self.ui.set_device_id(device_id)
+        self.read_settings(device_id, True)
 
     def change_range(self, device_id, range):
         self.wheels.set_range(device_id, range)

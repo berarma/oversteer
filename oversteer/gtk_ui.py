@@ -158,7 +158,6 @@ class GtkUi:
     def change_emulation_mode(self, mode):
         device_id = self.get_device_id()
         self.gui.set_emulation_mode(device_id, mode)
-        self.set_device_id(device_id)
         self.change_emulation_mode_button.set_sensitive(False)
 
     def set_range(self, range):
@@ -432,7 +431,7 @@ class GtkUi:
         self.gui.update()
 
     def on_change_emulation_mode_clicked(self, widget):
-        mode = self.emulation_mode_combobox.get_active_id()
+        mode = self.get_emulation_mode()
         self.change_emulation_mode(mode)
 
     def on_emulation_mode_changed(self, widget):
