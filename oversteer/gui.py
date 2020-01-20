@@ -142,7 +142,10 @@ class Gui:
 
         range = self.wheels.get_range(device_id)
         self.ui.set_range(range)
-        self.ui.set_range_overlay_visibility(True if range else False)
+        self.ui.set_range_overlay_visibility(True if range != None else False)
+        if range != None:
+            # The range returned by the driver after an emulation mode change can be wrong
+            self.wheels.set_range(device_id, range)
 
         combine_pedals = self.wheels.get_combine_pedals(device_id)
         self.ui.set_combine_pedals(combine_pedals)
