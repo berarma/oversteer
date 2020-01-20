@@ -140,11 +140,6 @@ class Gui:
             self.ui.set_emulation_mode(emulation_mode)
             self.ui.change_emulation_mode(emulation_mode)
 
-        if emulation_mode == 'G29':
-            self.steering_input_multiplier = 1
-        else:
-            self.steering_input_multiplier = 4
-
         range = self.wheels.get_range(device_id)
         self.ui.set_range(range)
         self.ui.set_range_overlay_visibility(True if range else False)
@@ -248,6 +243,7 @@ class Gui:
     def set_emulation_mode(self, device_id, mode):
         self.device = None
         self.wheels.set_mode(device_id, mode)
+        self.emulation_mode = mode
         self.device = InputDevice(self.wheels.id_to_dev(device_id))
         self.ui.set_device_id(device_id)
         self.read_settings(device_id, True)
@@ -318,12 +314,21 @@ class Gui:
         for event in device.read():
             if event.type == ecodes.EV_ABS:
                 if event.code == ecodes.ABS_X:
-                    value = event.value * self.steering_input_multiplier
+                    if self.emulation_mode != 'G29':
+                        value = event.value * 4
+                    else:
+                        value = event.value
                     self.ui.set_steering_input(value)
                 elif event.code == ecodes.ABS_Y:
-                    self.ui.set_clutch_input(event.value)
+                    if self.emulation_mode == 'DFGT' or self.emulation_mode == 'DFP':
+                        self.ui.set_accelerator_input(event.value)
+                    else:
+                        self.ui.set_clutch_input(event.value)
                 elif event.code == ecodes.ABS_Z:
-                    self.ui.set_accelerator_input(event.value)
+                    if self.emulation_mode == 'DFGT' or self.emulation_mode == 'DFP':
+                        self.ui.set_brakes_input(event.value)
+                    else:
+                        self.ui.set_accelerator_input(event.value)
                 elif event.code == ecodes.ABS_RZ:
                     self.ui.set_brakes_input(event.value)
                 elif event.code == ecodes.ABS_HAT0X:
