@@ -18,6 +18,8 @@ class Gui:
 
     device = None
 
+    grab_input = False
+
     languages = [
         ('', _('System default')),
         ('en_US', _('English')),
@@ -335,14 +337,40 @@ class Gui:
                 elif event.code == ecodes.ABS_RZ:
                     self.ui.set_brakes_input(event.value)
                 elif event.code == ecodes.ABS_HAT0X:
+                    if self.grab_input:
+                        if event.value == -1:
+                            self.ui.set_range(self.ui.get_range() - 10)
+                        elif event.value == 1:
+                            self.ui.set_range(self.ui.get_range() + 10)
                     self.ui.set_hatx_input(event.value)
                 elif event.code == ecodes.ABS_HAT0Y:
+                    if self.grab_input:
+                        if event.value == -1:
+                            self.ui.set_range(self.ui.get_range() + 90)
+                        elif event.value == 1:
+                            self.ui.set_range(self.ui.get_range() - 90)
                     self.ui.set_haty_input(event.value)
             if event.type == ecodes.EV_KEY:
                 if event.value == 0:
                     delay = 100
                 else:
                     delay = 0
+                if event.code == 712 and self.ui.get_range_buttons_enabled():
+                    if event.value:
+                        device.grab()
+                        self.grab_input = True
+                    else:
+                        self.grab_input = False
+                        device.ungrab()
+                if self.grab_input and event.value == 1:
+                    if event.code == 288:
+                        self.ui.set_range(180)
+                    if event.code == 289:
+                        self.ui.set_range(360)
+                    if event.code == 290:
+                        self.ui.set_range(540)
+                    if event.code == 291:
+                        self.ui.set_range(720)
                 if event.code >= 288 and event.code <= 303:
                     self.ui.set_btn_input(event.code - 288, event.value, delay)
                 if event.code >= 704 and event.code <= 712:

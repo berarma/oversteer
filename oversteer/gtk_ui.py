@@ -333,6 +333,9 @@ class GtkUi:
         if not state:
             self.enable_ffbmeter_overlay.set_state(False)
 
+    def get_range_buttons_enabled(self):
+        return self.enable_range_buttons.get_state()
+
     def round_input(self, value, decimals = 0):
         multiplier = 10 ** decimals
         return math.floor(value * multiplier) / multiplier
@@ -453,7 +456,6 @@ class GtkUi:
         self.wheel_range.set_value(self.wheel_range.get_value() - step);
         range = self.format_range(self.wheel_range.get_value())
         self.overlay_range.set_label(range)
-        self.gui.change_range(device_id, int(range))
 
     def on_overlay_incrange_clicked(self, widget):
         device_id = self.get_device_id()
@@ -462,7 +464,6 @@ class GtkUi:
         self.wheel_range.set_value(self.wheel_range.get_value() + step);
         range = self.format_range(self.wheel_range.get_value())
         self.overlay_range.set_label(range)
-        self.gui.change_range(device_id, int(range))
 
     def on_combine_none_clicked(self, widget):
         device_id = self.get_device_id()
@@ -572,6 +573,7 @@ class GtkUi:
         self.overlay_led_2 = self.builder.get_object('overlay_led_2')
         self.overlay_led_3 = self.builder.get_object('overlay_led_3')
         self.overlay_led_4 = self.builder.get_object('overlay_led_4')
+        self.enable_range_buttons = self.builder.get_object('enable_range_buttons')
 
         self.steering_left_input = self.builder.get_object('steering_left_input')
         self.steering_right_input = self.builder.get_object('steering_right_input')
