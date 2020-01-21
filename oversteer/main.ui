@@ -346,6 +346,7 @@
   </object>
   <object class="GtkApplicationWindow" id="main_window">
     <property name="can_focus">False</property>
+    <property name="resizable">False</property>
     <property name="window_position">center</property>
     <property name="default_width">600</property>
     <property name="show_menubar">False</property>
@@ -361,7 +362,7 @@
             <property name="stack">stack1</property>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
@@ -596,7 +597,7 @@
                         <property name="activate_on_single_click">False</property>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -669,7 +670,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -708,7 +709,6 @@
                                         <property name="fill_level">90</property>
                                         <property name="round_digits">0</property>
                                         <property name="digits">0</property>
-                                        <property name="value_pos">bottom</property>
                                         <signal name="format-value" handler="format_wheel_range_value" swapped="no"/>
                                         <signal name="value-changed" handler="on_wheel_range_value_changed" swapped="no"/>
                                       </object>
@@ -731,7 +731,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -1135,6 +1135,7 @@
                         </child>
                         <child>
                           <object class="GtkBox">
+                            <property name="height_request">80</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="orientation">vertical</property>
@@ -1902,10 +1903,9 @@
                         <property name="activate_on_single_click">False</property>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="margin_top">16</property>
                             <property name="activatable">False</property>
                             <property name="selectable">False</property>
                             <child>
@@ -1938,7 +1938,6 @@
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
-                                    <property name="value_pos">bottom</property>
                                     <signal name="value-changed" handler="on_ff_gain_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
@@ -1953,7 +1952,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -1988,7 +1987,6 @@
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
-                                    <property name="value_pos">bottom</property>
                                     <signal name="value-changed" handler="on_autocenter_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
@@ -2003,7 +2001,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -2038,7 +2036,6 @@
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
-                                    <property name="value_pos">bottom</property>
                                     <signal name="value-changed" handler="on_ff_spring_level_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
@@ -2053,7 +2050,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -2088,7 +2085,6 @@
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
-                                    <property name="value_pos">bottom</property>
                                     <signal name="value-changed" handler="on_ff_damper_level_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
@@ -2103,7 +2099,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -2138,7 +2134,6 @@
                                     <property name="fill_level">100</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
-                                    <property name="value_pos">bottom</property>
                                     <signal name="value-changed" handler="on_ff_friction_level_value_changed" swapped="no"/>
                                   </object>
                                   <packing>
@@ -2153,8 +2148,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -2223,8 +2217,7 @@
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -2268,8 +2261,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -2312,8 +2304,7 @@
                         </child>
                         <child>
                           <object class="GtkListBoxRow">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
+                            <property name="height_request">70</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="activatable">False</property>
@@ -2401,7 +2392,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
