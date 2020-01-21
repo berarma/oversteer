@@ -184,6 +184,7 @@
     </child>
   </object>
   <object class="GtkDialog" id="preferences_window">
+    <property name="width_request">500</property>
     <property name="can_focus">False</property>
     <property name="border_width">20</property>
     <property name="modal">True</property>
@@ -242,7 +243,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="tooltip_text" translatable="yes">Change the interface language. Applied after app restart. Only language locales supported by your system.</property>
+            <property name="tooltip_text" translatable="yes">Change the interface language. You'll need to restart the application to apply.</property>
             <property name="spacing">20</property>
             <property name="homogeneous">True</property>
             <child>
@@ -280,7 +281,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="tooltip_text" translatable="yes">Make the device accessible to any user. No more asking for administrator password to change settings. Some games need this to handle the leds in some wheels.</property>
+            <property name="tooltip_text" translatable="yes">Check permissions to read/write device settings. It's recommended to accept the proposed changes to make the device settings available to normal users.</property>
             <property name="spacing">20</property>
             <property name="homogeneous">True</property>
             <child>
@@ -288,7 +289,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">start</property>
-                <property name="label" translatable="yes">Check permissions dialog</property>
+                <property name="label" translatable="yes">Check permissions</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -740,7 +741,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Combine the gas and break pedals into one axe for games that use controller actions up/down.</property>
+                                <property name="tooltip_text" translatable="yes">Combine two pedals into one axe. Useful for old games and flight simulators.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2110,7 +2111,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Amount of friction force</property>
+                                <property name="tooltip_text" translatable="yes">Amount of friction force.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2159,7 +2160,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Use wheel leds as FFBmeter</property>
+                                <property name="tooltip_text" translatable="yes">Use wheel leds as FFBmeter.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2228,7 +2229,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Enable game overlay</property>
+                                <property name="tooltip_text" translatable="yes">Enable game overlay.</property>
                                 <property name="spacing">64</property>
                                 <child>
                                   <object class="GtkLabel">
@@ -2272,7 +2273,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Enable FFBmeter in overlay</property>
+                                <property name="tooltip_text" translatable="yes">Enable FFBmeter in overlay.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2315,7 +2316,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Enable wheel range settings in overlay</property>
+                                <property name="tooltip_text" translatable="yes">Enable wheel range settings in overlay.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
