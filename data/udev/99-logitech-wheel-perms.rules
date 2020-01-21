@@ -5,7 +5,7 @@
 # keyboards, and other non-wheel devices.
 
 # Logitech G920 Driving Force Racing Wheel
-SUBSYSTEMS=="hid", KERNELS=="0003:046D:C262.????", DRIVERS=="logitech-hidpp-device", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 alternate_modes combine_pedals range'"
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C262.????", DRIVERS=="logitech-hidpp-device", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
 
 # Logitech G29 Driving Force Racing Wheel
 SUBSYSTEMS=="hid", KERNELS=="0003:046D:C24F.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level leds/*/brightness; chmod 777 leds/ leds/*'"
@@ -21,3 +21,24 @@ SUBSYSTEMS=="hid", KERNELS=="0003:046D:C29A.????", DRIVERS=="logitech", RUN+="/b
 
 # Logitech Driving Force Pro Racing Wheel
 SUBSYSTEMS=="hid", KERNELS=="0003:046D:C298.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
+
+# Logitech Driving Force Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C294.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
+
+# Logitech Momo Force Racing Wheel
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C295.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
+
+# Logitech MOMO Racing USB
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:CA03.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
+
+# Logitech WingMan Formula Force GP USB
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C293.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
+
+# Logitech Racing Wheel USB
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:CA04.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../range'"
+
+# Logitech WingMan Formula GP
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C20E.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../range'"
+
+# Logitech WingMan Formula (Yellow) (USB)
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C202.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../range'"
