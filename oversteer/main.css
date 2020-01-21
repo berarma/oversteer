@@ -25,3 +25,25 @@ stacksidebar list row {
     border-color: #e00000;
     background-color: #e00000;
 }
+levelbar#steering-input-left trough {
+    padding-right: 0;
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+}
+levelbar#steering-input-left block.filled,
+levelbar#steering-input-left block.empty {
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+    border-right-width:0;
+}
+levelbar#steering-input-right trough {
+    padding-left: 0;
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
+}
+levelbar#steering-input-right block.filled,
+levelbar#steering-input-right block.empty {
+    border-top-left-radius:0;
+    border-bottom-left-radius:0;
+    border-left-width:0;
+}
