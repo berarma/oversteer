@@ -275,6 +275,12 @@ class GtkUi:
     def get_range_overlay(self):
         return int(self.enable_range_overlay.get_state())
 
+    def set_range_buttons(self, state):
+        return self.enable_range_buttons.set_state(state)
+
+    def get_range_buttons(self):
+        return int(self.enable_range_buttons.get_state())
+
     def set_overlay(self, state):
         self.enable_overlay.set_state(state)
 

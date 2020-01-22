@@ -46,6 +46,9 @@ class Profile:
     def set_range_overlay(self, state):
         self.set('range_overlay', state)
 
+    def set_range_buttons(self, state):
+        self.set('range_buttons', state)
+
     def set_overlay(self, state):
         self.set('overlay', state)
 
@@ -89,6 +92,9 @@ class Profile:
 
     def get_range_overlay(self):
         return self.get_int('range_overlay')
+
+    def get_range_buttons(self):
+        return self.get_int('range_buttons')
 
     def get_overlay(self):
         return self.get_int('overlay')

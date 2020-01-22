@@ -213,6 +213,8 @@ class Gui:
             self.ui.set_ffbmeter_overlay(profile.get_ffbmeter_overlay())
         if profile.get_range_overlay() != None:
             self.ui.set_range_overlay(profile.get_range_overlay())
+        if profile.get_range_buttons() != None:
+            self.ui.set_range_buttons(profile.get_range_buttons())
         if profile.get_overlay() != None:
             self.ui.set_overlay(profile.get_overlay())
         self.ui.set_new_profile_name('')
@@ -233,6 +235,7 @@ class Gui:
         profile.set_ffbmeter_leds(self.ui.get_ffbmeter_leds())
         profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
         profile.set_range_overlay(self.ui.get_range_overlay())
+        profile.set_range_buttons(self.ui.get_range_buttons())
         profile.set_overlay(self.ui.get_overlay())
         profile.save(profile_file)
         self.populate_profiles()
@@ -315,6 +318,15 @@ class Gui:
             self.wheels.set_peak_ffb_level(device_id, 0)
         return level
 
+    def add_range(self, delta):
+        range = self.ui.get_range()
+        range = range + delta
+        if range < 40:
+            range = 40
+        if range > 900:
+            range = 900
+        self.ui.set_range(range)
+
     def read_events(self, device):
         for event in device.read():
             if event.type == ecodes.EV_ABS:
@@ -336,19 +348,19 @@ class Gui:
                         self.ui.set_accelerator_input(event.value)
                 elif event.code == ecodes.ABS_RZ:
                     self.ui.set_brakes_input(event.value)
-                elif event.code == ecodes.ABS_HAT0X:
+                elif event.code == ecodes.ABS_HAT0X and event.value:
                     if self.grab_input:
                         if event.value == -1:
-                            self.ui.set_range(self.ui.get_range() - 10)
-                        elif event.value == 1:
-                            self.ui.set_range(self.ui.get_range() + 10)
+                            self.add_range(-10)
+                        else:
+                            self.add_range(10)
                     self.ui.set_hatx_input(event.value)
                 elif event.code == ecodes.ABS_HAT0Y:
-                    if self.grab_input:
+                    if self.grab_input and event.value:
                         if event.value == -1:
-                            self.ui.set_range(self.ui.get_range() + 90)
-                        elif event.value == 1:
-                            self.ui.set_range(self.ui.get_range() - 90)
+                            self.add_range(90)
+                        else:
+                            self.add_range(-90)
                     self.ui.set_haty_input(event.value)
             if event.type == ecodes.EV_KEY:
                 if event.value == 0:
@@ -364,13 +376,13 @@ class Gui:
                         device.ungrab()
                 if self.grab_input and event.value == 1:
                     if event.code == 288:
-                        self.ui.set_range(180)
+                        self.ui.set_range(270)
                     if event.code == 289:
                         self.ui.set_range(360)
                     if event.code == 290:
                         self.ui.set_range(540)
                     if event.code == 291:
-                        self.ui.set_range(720)
+                        self.ui.set_range(900)
                 if event.code >= 288 and event.code <= 303:
                     self.ui.set_btn_input(event.code - 288, event.value, delay)
                 if event.code >= 704 and event.code <= 712:
