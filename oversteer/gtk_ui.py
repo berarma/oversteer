@@ -48,6 +48,9 @@ class GtkUi:
     def main(self):
         Gtk.main()
 
+    def iconify(self):
+        self.window.iconify()
+
     def update(self):
         self.window.queue_draw()
 
@@ -263,29 +266,24 @@ class GtkUi:
 
     def set_ffbmeter_overlay(self, state):
         self.enable_ffbmeter_overlay.set_state(state)
+        self.on_enable_ffbmeter_overlay_state_set(self.enable_ffbmeter_overlay, state)
 
     def get_ffbmeter_overlay(self):
         if not self.enable_ffbmeter_overlay.get_sensitive():
             return None
         return int(self.enable_ffbmeter_overlay.get_state())
 
-    def set_range_overlay(self, state):
-        return self.enable_range_overlay.set_state(state)
+    def set_range_overlay(self, id):
+        return self.enable_range_overlay.set_active_id(id)
 
     def get_range_overlay(self):
-        return int(self.enable_range_overlay.get_state())
+        return self.enable_range_overlay.get_active_id()
 
     def set_range_buttons(self, state):
         return self.enable_range_buttons.set_state(state)
 
     def get_range_buttons(self):
         return int(self.enable_range_buttons.get_state())
-
-    def set_overlay(self, state):
-        self.enable_overlay.set_state(state)
-
-    def get_overlay(self):
-        return int(self.enable_overlay.get_state())
 
     def set_new_profile_name(self, name):
         self.new_profile_name.set_text(name)
@@ -331,13 +329,9 @@ class GtkUi:
 
     def set_range_overlay_visibility(self, state):
         self.enable_range_overlay.set_sensitive(state)
-        if not state:
-            self.enable_range_overlay.set_state(False)
 
     def set_ffbmeter_overlay_visibility(self, state):
         self.enable_ffbmeter_overlay.set_sensitive(state)
-        if not state:
-            self.enable_ffbmeter_overlay.set_state(False)
 
     def get_range_buttons_enabled(self):
         return self.enable_range_buttons.get_state()
@@ -352,26 +346,22 @@ class GtkUi:
     def format_range(self, value):
         return str(round(value * 10))
 
-    def update_overlay(self):
-        if self.enable_overlay.get_state() and (self.enable_ffbmeter_overlay.get_state() or self.enable_range_overlay.get_state()):
+    def update_overlay(self, auto = False):
+        GLib.idle_add(self._update_overlay, auto)
+
+    def _update_overlay(self, auto = False):
+        enable_ffbmeter_overlay = self.enable_ffbmeter_overlay.get_state()
+        enable_range_overlay = self.enable_range_overlay.get_active_id()
+        if enable_ffbmeter_overlay or enable_range_overlay == 'always' or (enable_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
-                if self.enable_ffbmeter_overlay.get_state():
-                    self.ffbmeter_overlay.show()
-                else:
-                    self.ffbmeter_overlay.hide()
-                if self.enable_range_overlay.get_state():
-                    self.range_overlay.show()
-                else:
-                    self.range_overlay.hide()
-                if self.enable_ffbmeter_overlay.get_state():
+                if enable_ffbmeter_overlay:
                     GLib.timeout_add(250, self.update_ffbmeter_overlay)
-
         else:
             self.overlay_window.hide()
 
     def update_ffbmeter_overlay(self):
-        if not self.overlay_window.props.visible:
+        if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
             return False
         device_id = self.get_device_id()
         level = self.gui.read_ffbmeter(device_id)
@@ -519,25 +509,20 @@ class GtkUi:
 
     def on_enable_ffbmeter_overlay_state_set(self, widget, state):
         device_id = self.get_device_id()
-        widget.set_state(state)
         if state:
             self.ffbmeter_overlay.show()
         else:
             self.ffbmeter_overlay.hide()
-        self.update_overlay()
+        GLib.idle_add(self._update_overlay)
 
-    def on_enable_range_overlay_state_set(self, widget, state):
+    def on_enable_range_overlay_changed(self, widget):
         device_id = self.get_device_id()
-        widget.set_state(state)
-        if state:
+        id = widget.get_active_id()
+        if id == 'always' or id == 'auto':
             self.range_overlay.show()
         else:
             self.range_overlay.hide()
-        self.update_overlay()
-
-    def on_enable_overlay_state_set(self, widget, state):
-        widget.set_state(state)
-        self.update_overlay()
+        GLib.idle_add(self._update_overlay)
 
     def _set_builder_objects(self):
         self.builder = Gtk.Builder()
@@ -568,7 +553,6 @@ class GtkUi:
         self.ff_damper_level = self.builder.get_object('ff_damper_level')
         self.ff_friction_level = self.builder.get_object('ff_friction_level')
         self.ffbmeter_leds = self.builder.get_object('ffbmeter_leds')
-        self.enable_overlay = self.builder.get_object('enable_overlay')
         self.enable_ffbmeter_overlay = self.builder.get_object('enable_ffbmeter_overlay')
         self.enable_range_overlay = self.builder.get_object('enable_range_overlay')
         self.ffbmeter_overlay = self.builder.get_object('ffbmeter_overlay')

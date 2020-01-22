@@ -43,14 +43,11 @@ class Profile:
     def set_ffbmeter_overlay(self, state):
         self.set('ffbmeter_overlay', state)
 
-    def set_range_overlay(self, state):
-        self.set('range_overlay', state)
+    def set_range_overlay(self, id):
+        self.set('range_overlay', id)
 
     def set_range_buttons(self, state):
         self.set('range_buttons', state)
-
-    def set_overlay(self, state):
-        self.set('overlay', state)
 
     def get_mode(self):
         return self.get('mode')
@@ -91,13 +88,10 @@ class Profile:
         return self.get_int('ffbmeter_overlay')
 
     def get_range_overlay(self):
-        return self.get_int('range_overlay')
+        return self.get('range_overlay')
 
     def get_range_buttons(self):
         return self.get_int('range_buttons')
-
-    def get_overlay(self):
-        return self.get_int('overlay')
 
     def set(self, name, value):
         if value == None:

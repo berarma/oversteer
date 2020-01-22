@@ -26,7 +26,7 @@ class Application:
         parser.add_argument('--friction-level', type=int, help=_("set the friction level (0-100)"))
         parser.add_argument('--ffb-leds', action='store_true', help=_("enable/disable FFBmeter leds"))
         parser.add_argument('--ffb-overlay', action='store_true', help=_("enable/disable FFBmeter overlay"))
-        parser.add_argument('--range-overlay', action='store_true', help=_("enable/disable wheel range overlay"))
+        parser.add_argument('--range-overlay', help=_("enable range overlay (never, always or auto)"))
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
         parser.add_argument('-i', '--interactive', action='store_true', help=_("start the GUI"))
         parser.add_argument('--debug', action='store_true', help=_("enable debug output"))

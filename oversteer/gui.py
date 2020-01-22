@@ -69,9 +69,8 @@ class Gui:
             if self.app.args.ffb_overlay:
                 self.ui.set_ffbmeter_overlay(True)
             if self.app.args.range_overlay:
-                self.ui.set_range_overlay(True)
-            self.ui.set_overlay(True)
-            self.ui.window.iconify()
+                self.ui.set_range_overlay(self.app.args.range_overlay)
+            self.ui.iconify()
 
         threading.Thread(target=self.input_thread, daemon = True).start()
 
@@ -184,6 +183,8 @@ class Gui:
 
         self.read_settings(device_id)
 
+        self.ui.set_ffbmeter_overlay(False)
+        self.ui.set_range_overlay('never')
 
     def load_profile(self, profile_file):
         if profile_file == '':
@@ -215,8 +216,6 @@ class Gui:
             self.ui.set_range_overlay(profile.get_range_overlay())
         if profile.get_range_buttons() != None:
             self.ui.set_range_buttons(profile.get_range_buttons())
-        if profile.get_overlay() != None:
-            self.ui.set_overlay(profile.get_overlay())
         self.ui.set_new_profile_name('')
 
     def save_profile(self, profile_file):
@@ -236,7 +235,6 @@ class Gui:
         profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
         profile.set_range_overlay(self.ui.get_range_overlay())
         profile.set_range_buttons(self.ui.get_range_buttons())
-        profile.set_overlay(self.ui.get_overlay())
         profile.save(profile_file)
         self.populate_profiles()
         self.ui.set_profile(profile_file)
@@ -371,7 +369,9 @@ class Gui:
                     if event.value:
                         device.grab()
                         self.grab_input = True
+                        self.ui.update_overlay(True)
                     else:
+                        self.ui.update_overlay(False)
                         self.grab_input = False
                         device.ungrab()
                 if self.grab_input and event.value == 1:

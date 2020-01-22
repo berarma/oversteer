@@ -12,6 +12,28 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkListStore" id="enable_range_overlay_list">
+    <columns>
+      <!-- column-name id -->
+      <column type="gchararray"/>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0">never</col>
+        <col id="1" translatable="yes">Never</col>
+      </row>
+      <row>
+        <col id="0">always</col>
+        <col id="1" translatable="yes">Always</col>
+      </row>
+      <row>
+        <col id="0">auto</col>
+        <col id="1" translatable="yes">Auto</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkAdjustment" id="ff_gain_adjustment">
     <property name="upper">100</property>
     <property name="value">100</property>
@@ -22,24 +44,6 @@
     <property name="upper">100</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
-  </object>
-  <object class="GtkListStore" id="liststore1">
-    <columns>
-      <!-- column-name id -->
-      <column type="gchararray"/>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">1</col>
-        <col id="1" translatable="yes">Accelerator + Brake</col>
-      </row>
-      <row>
-        <col id="0" translatable="yes">2</col>
-        <col id="1" translatable="yes">Accelerator + Clutch</col>
-      </row>
-    </data>
   </object>
   <object class="GtkWindow" id="overlay_window">
     <property name="can_focus">False</property>
@@ -2229,50 +2233,6 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Enable game overlay.</property>
-                                <property name="spacing">64</property>
-                                <child>
-                                  <object class="GtkLabel">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="halign">start</property>
-                                    <property name="label" translatable="yes">Enable Overlay</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkSwitch" id="enable_overlay">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="halign">end</property>
-                                    <property name="valign">center</property>
-                                    <signal name="state-set" handler="on_enable_overlay_state_set" swapped="no"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkListBoxRow">
-                            <property name="height_request">70</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="activatable">False</property>
-                            <property name="selectable">False</property>
-                            <child>
-                              <object class="GtkBox">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
                                 <property name="tooltip_text" translatable="yes">Enable FFBmeter in overlay.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
@@ -2333,10 +2293,22 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkSwitch" id="enable_range_overlay">
+                                  <object class="GtkComboBox" id="enable_range_overlay">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <signal name="state-set" handler="on_enable_range_overlay_state_set" swapped="no"/>
+                                    <property name="can_focus">False</property>
+                                    <property name="tooltip_text" translatable="yes">When to show the wheel range overlay. When set to auto it will be shown only when changing it with the wheel buttons.</property>
+                                    <property name="valign">center</property>
+                                    <property name="model">enable_range_overlay_list</property>
+                                    <property name="active">0</property>
+                                    <property name="id_column">0</property>
+                                    <property name="active_id">0</property>
+                                    <signal name="changed" handler="on_enable_range_overlay_changed" swapped="no"/>
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">1</attribute>
+                                      </attributes>
+                                    </child>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
