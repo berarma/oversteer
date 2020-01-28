@@ -80,7 +80,9 @@ class Wheels:
                 self.add_udev_data(device)
 
     def first_device_id(self):
-        return next(iter(self.devices))
+        if self.devices:
+            return next(iter(self.devices))
+        return None
 
     def get_devices(self):
         device_list = []
