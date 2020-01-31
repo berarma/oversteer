@@ -41,6 +41,8 @@ class GtkUi:
         self.emulation_mode_combobox.add_attribute(cell_renderer, 'text', 1)
         self.emulation_mode_combobox.set_id_column(0)
 
+        self.set_wheel_range_overlay('never')
+
         self.builder.connect_signals(self)
 
         self.window.show_all()
@@ -131,12 +133,13 @@ class GtkUi:
     def set_profile(self, profile):
         self.profile_combobox.set_active_id(profile)
 
-    def set_emulation_modes(self, modes):
-        if modes == None:
-            self.emulation_mode_combobox.set_sensitive(False)
-            return
-
-        self.emulation_mode_combobox.set_sensitive(True)
+    def set_emulation_modes(self, modes, startup = False):
+        if startup:
+            if modes == None:
+                self.emulation_mode_combobox.set_sensitive(False)
+                return
+            else:
+                self.emulation_mode_combobox.set_sensitive(True)
         model = self.emulation_mode_combobox.get_model()
         if model == None:
             model = Gtk.ListStore(str, str)
@@ -160,28 +163,37 @@ class GtkUi:
         self.gui.set_emulation_mode(device_id, mode)
         self.change_emulation_mode_button.set_sensitive(False)
 
-    def set_range(self, range):
-        if range == None:
-            self.wheel_range.set_sensitive(False)
-            return
+    def set_range(self, range, startup = False):
+        GLib.idle_add(self._set_range, range, startup)
 
+    def _set_range(self, range, startup = False):
+        if startup:
+            if range == None:
+                self.wheel_range.set_sensitive(False)
+                self.wheel_range_overlay_always.set_sensitive(False)
+                self.wheel_range_overlay_auto.set_sensitive(False)
+                return
+            else:
+                self.wheel_range.set_sensitive(True)
+                self.wheel_range_overlay_always.set_sensitive(True)
+                self.wheel_range_overlay_auto.set_sensitive(True)
         range = int(range) / 10
-        self.wheel_range.set_sensitive(True)
         self.wheel_range.set_value(range)
         range = self.format_range(range)
-        self.overlay_range.set_label(range)
+        self.overlay_wheel_range.set_label(range)
 
     def get_range(self):
         return int(self.wheel_range.get_value() * 10)
 
-    def set_combine_pedals(self, combine_pedals):
-        if combine_pedals == None:
-            self.combine_brakes.set_sensitive(False)
-            self.combine_clutch.set_sensitive(False)
-            return
-
-        self.combine_brakes.set_sensitive(True)
-        self.combine_clutch.set_sensitive(True)
+    def set_combine_pedals(self, combine_pedals, startup = False):
+        if startup:
+            if combine_pedals == None:
+                self.combine_brakes.set_sensitive(False)
+                self.combine_clutch.set_sensitive(False)
+                return
+            else:
+                self.combine_brakes.set_sensitive(True)
+                self.combine_clutch.set_sensitive(True)
         if combine_pedals == 1:
             self.combine_brakes.set_active(True)
         elif combine_pedals == 2:
@@ -209,12 +221,13 @@ class GtkUi:
     def get_ff_gain(self):
         return int(self.ff_gain.get_value())
 
-    def set_spring_level(self, level):
-        if level == None:
-            self.ff_spring_level.set_sensitive(False)
-            return
-
-        self.ff_spring_level.set_sensitive(True)
+    def set_spring_level(self, level, startup = False):
+        if startup:
+            if level == None:
+                self.ff_spring_level.set_sensitive(False)
+                return
+            else:
+                self.ff_spring_level.set_sensitive(True)
         self.ff_spring_level.set_value(int(level))
 
     def get_spring_level(self):
@@ -222,12 +235,13 @@ class GtkUi:
             return None
         return int(self.ff_spring_level.get_value())
 
-    def set_damper_level(self, level):
-        if level == None:
-            self.ff_damper_level.set_sensitive(False)
-            return
-
-        self.ff_damper_level.set_sensitive(True)
+    def set_damper_level(self, level, startup = False):
+        if startup:
+            if level == None:
+                self.ff_damper_level.set_sensitive(False)
+                return
+            else:
+                self.ff_damper_level.set_sensitive(True)
         self.ff_damper_level.set_value(int(level))
 
     def get_damper_level(self):
@@ -235,12 +249,13 @@ class GtkUi:
             return None
         return int(self.ff_damper_level.get_value())
 
-    def set_friction_level(self, level):
-        if level == None:
-            self.ff_friction_level.set_sensitive(False)
-            return
-
-        self.ff_friction_level.set_sensitive(True)
+    def set_friction_level(self, level, startup = False):
+        if startup:
+            if level == None:
+                self.ff_friction_level.set_sensitive(False)
+                return
+            else:
+                self.ff_friction_level.set_sensitive(True)
         self.ff_friction_level.set_value(int(level))
 
     def get_friction_level(self):
@@ -248,39 +263,52 @@ class GtkUi:
             return None
         return int(self.ff_friction_level.get_value())
 
-    def set_ffbmeter_leds(self, value):
-        if value == None:
-            self.ffbmeter_leds.set_sensitive(False)
-            return
-
-        self.ffbmeter_leds.set_sensitive(True)
-        self.ffbmeter_leds.set_state(bool(value))
+    def set_ffbmeter_leds(self, value, startup = False):
+        if startup:
+            if value == None:
+                self.ffbmeter_leds.set_sensitive(False)
+                return
+            else:
+                self.ffbmeter_leds.set_sensitive(True)
+        self.ffbmeter_leds.set_active(bool(value))
 
     def get_ffbmeter_leds(self):
         if not self.ffbmeter_leds.get_sensitive():
             return None
-        return int(self.ffbmeter_leds.get_state())
+        return int(self.ffbmeter_leds.get_active())
 
     def set_ffbmeter_overlay(self, state):
-        self.enable_ffbmeter_overlay.set_state(state)
-        self.on_enable_ffbmeter_overlay_state_set(self.enable_ffbmeter_overlay, state)
+        self.ffbmeter_overlay.set_active(state)
 
     def get_ffbmeter_overlay(self):
-        if not self.enable_ffbmeter_overlay.get_sensitive():
+        if not self.ffbmeter_overlay.get_sensitive():
             return None
-        return int(self.enable_ffbmeter_overlay.get_state())
+        return int(self.ffbmeter_overlay.get_active())
 
-    def set_range_overlay(self, id):
-        return self.enable_range_overlay.set_active_id(id)
+    def set_wheel_range_overlay(self, id):
+        self.wheel_range_overlay_never.set_active(False)
+        self.wheel_range_overlay_always.set_active(False)
+        self.wheel_range_overlay_auto.set_active(False)
+        if id == 'always':
+            self.wheel_range_overlay_always.set_active(True)
+        elif id == 'auto':
+            self.wheel_range_overlay_auto.set_active(True)
+        else:
+            self.wheel_range_overlay_never.set_active(True)
 
-    def get_range_overlay(self):
-        return self.enable_range_overlay.get_active_id()
+    def get_wheel_range_overlay(self):
+        if self.wheel_range_overlay_never.get_active():
+            return 'never'
+        if self.wheel_range_overlay_always.get_active():
+            return 'always'
+        if self.wheel_range_overlay_auto.get_active():
+            return 'auto'
 
-    def set_range_buttons(self, state):
-        return self.enable_range_buttons.set_state(state)
+    def set_wheel_buttons(self, state):
+        return self.wheel_buttons.set_state(state)
 
-    def get_range_buttons(self):
-        return int(self.enable_range_buttons.get_state())
+    def get_wheel_buttons(self):
+        return int(self.wheel_buttons.get_state())
 
     def set_new_profile_name(self, name):
         self.new_profile_name.set_text(name)
@@ -324,14 +352,17 @@ class GtkUi:
         else:
             GLib.idle_add(self.btn_input[index].set_value, value)
 
-    def set_range_overlay_visibility(self, state):
-        self.enable_range_overlay.set_sensitive(state)
-
     def set_ffbmeter_overlay_visibility(self, state):
-        self.enable_ffbmeter_overlay.set_sensitive(state)
+        self.ffbmeter_overlay.set_sensitive(state)
 
-    def get_range_buttons_enabled(self):
-        return self.enable_range_buttons.get_state()
+    def get_wheel_buttons_enabled(self):
+        return self.wheel_buttons.get_state()
+
+    def set_define_buttons_text(self, text):
+        GLib.idle_add(self.start_define_buttons.set_label, text)
+
+    def reset_define_buttons_text(self):
+        GLib.idle_add(self.start_define_buttons.set_label, self.define_buttons_text)
 
     def round_input(self, value, decimals = 0):
         multiplier = 10 ** decimals
@@ -347,12 +378,12 @@ class GtkUi:
         GLib.idle_add(self._update_overlay, auto)
 
     def _update_overlay(self, auto = False):
-        enable_ffbmeter_overlay = self.enable_ffbmeter_overlay.get_state()
-        enable_range_overlay = self.enable_range_overlay.get_active_id()
-        if enable_ffbmeter_overlay or enable_range_overlay == 'always' or (enable_range_overlay == 'auto' and auto):
+        ffbmeter_overlay = self.ffbmeter_overlay.get_active()
+        wheel_range_overlay = self.get_wheel_range_overlay()
+        if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
-                if enable_ffbmeter_overlay:
+                if ffbmeter_overlay:
                     GLib.timeout_add(250, self.update_ffbmeter_overlay)
         else:
             self.overlay_window.hide()
@@ -440,7 +471,7 @@ class GtkUi:
         device_id = self.get_device_id()
         range = self.format_range(self.wheel_range.get_value())
         self.gui.change_range(device_id, int(range))
-        self.overlay_range.set_label(range)
+        self.overlay_wheel_range.set_label(range)
 
     def on_overlay_decrange_clicked(self, widget):
         device_id = self.get_device_id()
@@ -448,7 +479,7 @@ class GtkUi:
         step = adjustment.get_step_increment()
         self.wheel_range.set_value(self.wheel_range.get_value() - step);
         range = self.format_range(self.wheel_range.get_value())
-        self.overlay_range.set_label(range)
+        self.overlay_wheel_range.set_label(range)
 
     def on_overlay_incrange_clicked(self, widget):
         device_id = self.get_device_id()
@@ -456,7 +487,7 @@ class GtkUi:
         step = adjustment.get_step_increment()
         self.wheel_range.set_value(self.wheel_range.get_value() + step);
         range = self.format_range(self.wheel_range.get_value())
-        self.overlay_range.set_label(range)
+        self.overlay_wheel_range.set_label(range)
 
     def on_combine_none_clicked(self, widget):
         device_id = self.get_device_id()
@@ -484,9 +515,11 @@ class GtkUi:
         profile_file = self.profile_combobox.get_active_id()
         self.gui.delete_profile(profile_file)
 
-    def on_apply_preferences_clicked(self, widget):
-        self.preferences_window.hide()
-        self.gui.apply_preferences()
+    def on_check_permissions_state_set(self, widget, state):
+        GLib.idle_add(self.gui.save_preferences)
+
+    def on_languages_changed(self, widget):
+        GLib.idle_add(self.gui.save_preferences)
 
     def on_ff_spring_level_value_changed(self, widget):
         device_id = self.get_device_id()
@@ -500,26 +533,23 @@ class GtkUi:
         device_id = self.get_device_id()
         self.gui.set_friction_level(device_id, self.ff_friction_level.get_value())
 
-    def on_ffbmeter_leds_state_set(self, widget, state):
+    def on_ffbmeter_leds_clicked(self, widget):
         device_id = self.get_device_id()
-        self.gui.ffbmeter_leds(device_id, state)
+        self.gui.ffbmeter_leds(device_id, widget.get_active())
 
-    def on_enable_ffbmeter_overlay_state_set(self, widget, state):
+    def on_ffbmeter_overlay_clicked(self, widget):
         device_id = self.get_device_id()
-        if state:
-            self.ffbmeter_overlay.show()
+        if widget.get_active():
+            self._ffbmeter_overlay.show()
         else:
-            self.ffbmeter_overlay.hide()
+            self._ffbmeter_overlay.hide()
         GLib.idle_add(self._update_overlay)
 
-    def on_enable_range_overlay_changed(self, widget):
-        device_id = self.get_device_id()
-        id = widget.get_active_id()
-        if id == 'always' or id == 'auto':
-            self.range_overlay.show()
-        else:
-            self.range_overlay.hide()
-        GLib.idle_add(self._update_overlay)
+    def on_wheel_range_overlay_clicked(self, widget):
+        self.update_overlay()
+
+    def on_start_define_buttons_clicked(self, widget):
+        self.gui.start_stop_button_setup()
 
     def _set_builder_objects(self):
         self.builder = Gtk.Builder()
@@ -550,17 +580,21 @@ class GtkUi:
         self.ff_damper_level = self.builder.get_object('ff_damper_level')
         self.ff_friction_level = self.builder.get_object('ff_friction_level')
         self.ffbmeter_leds = self.builder.get_object('ffbmeter_leds')
-        self.enable_ffbmeter_overlay = self.builder.get_object('enable_ffbmeter_overlay')
-        self.enable_range_overlay = self.builder.get_object('enable_range_overlay')
         self.ffbmeter_overlay = self.builder.get_object('ffbmeter_overlay')
-        self.range_overlay = self.builder.get_object('range_overlay')
-        self.overlay_range = self.builder.get_object('overlay_range')
+        self.wheel_range_overlay_never = self.builder.get_object('wheel_range_overlay_never')
+        self.wheel_range_overlay_always = self.builder.get_object('wheel_range_overlay_always')
+        self.wheel_range_overlay_auto = self.builder.get_object('wheel_range_overlay_auto')
+        self._ffbmeter_overlay = self.builder.get_object('_ffbmeter_overlay')
+        self._wheel_range_overlay = self.builder.get_object('_wheel_range_overlay')
+        self.overlay_wheel_range = self.builder.get_object('overlay_wheel_range')
         self.overlay_led_0 = self.builder.get_object('overlay_led_0')
         self.overlay_led_1 = self.builder.get_object('overlay_led_1')
         self.overlay_led_2 = self.builder.get_object('overlay_led_2')
         self.overlay_led_3 = self.builder.get_object('overlay_led_3')
         self.overlay_led_4 = self.builder.get_object('overlay_led_4')
-        self.enable_range_buttons = self.builder.get_object('enable_range_buttons')
+        self.wheel_buttons = self.builder.get_object('wheel_buttons')
+        self.start_define_buttons = self.builder.get_object('start_define_buttons')
+        self.define_buttons_text = self.start_define_buttons.get_label()
 
         self.steering_left_input = self.builder.get_object('steering_left_input')
         self.steering_right_input = self.builder.get_object('steering_right_input')

@@ -16,9 +16,37 @@ from .profiles import Profile
 
 class Gui:
 
+    locale = ''
+
     device = None
 
     grab_input = False
+
+    button_config = [
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+        -1,
+    ]
+
+    button_labels = [
+        _("Activation Switch"),
+        _("Set 270º"),
+        _("Set 360º"),
+        _("Set 540º"),
+        _("Set 900º"),
+        _("+10º"),
+        _("-10º"),
+        _("+90º"),
+        _("-90º"),
+    ]
+
+    button_setup_step = False
 
     languages = [
         ('', _('System default')),
@@ -35,15 +63,7 @@ class Gui:
 
         self.config_path = save_config_path('oversteer')
 
-        config = configparser.ConfigParser()
-        config_file = os.path.join(self.config_path, 'config.ini')
-        config.read(config_file)
-        self.check_permissions_dialog = True
-        if 'base' in config:
-            if 'locale' in config['base'] and config['base']['locale'] != '':
-                locale.setlocale(locale.LC_ALL, (config['base']['locale'], 'UTF-8'))
-            if 'check_permissions_dialog' in config['base']:
-                self.check_permissions_dialog = config['base']['check_permissions_dialog']
+        self.load_preferences()
 
         self.profile_path = os.path.join(self.config_path, 'profiles')
         if not os.path.isdir(self.profile_path):
@@ -53,10 +73,8 @@ class Gui:
         self.ui.set_app_version(self.app.version)
         self.ui.set_app_icon(os.path.join(self.app.icondir, 'org.berarma.Oversteer.svg'))
         self.ui.set_languages(self.languages)
-        if 'base' in config and 'locale' in config['base']:
-            self.ui.set_language(config['base']['locale'])
-        else:
-            self.ui.set_language('')
+
+        self.ui.set_language(self.locale)
 
         self.ui.set_check_permissions(self.check_permissions_dialog)
 
@@ -69,7 +87,7 @@ class Gui:
             if self.app.args.ffb_overlay:
                 self.ui.set_ffbmeter_overlay(True)
             if self.app.args.range_overlay:
-                self.ui.set_range_overlay(self.app.args.range_overlay)
+                self.ui.set_wheel_range_overlay(self.app.args.range_overlay)
 
         threading.Thread(target=self.input_thread, daemon = True).start()
 
@@ -133,7 +151,7 @@ class Gui:
 
     def read_settings(self, device_id, ignore_emulation_mode = False):
         alternate_modes = self.wheels.get_alternate_modes(device_id);
-        self.ui.set_emulation_modes(alternate_modes)
+        self.ui.set_emulation_modes(alternate_modes, True)
 
         emulation_mode = self.wheels.get_current_mode(device_id)
         if not ignore_emulation_mode:
@@ -141,14 +159,13 @@ class Gui:
             self.ui.change_emulation_mode(emulation_mode)
 
         range = self.wheels.get_range(device_id)
-        self.ui.set_range(range)
-        self.ui.set_range_overlay_visibility(True if range != None else False)
+        self.ui.set_range(range, True)
         if range != None:
             # The range returned by the driver after an emulation mode change can be wrong
             self.wheels.set_range(device_id, range)
 
         combine_pedals = self.wheels.get_combine_pedals(device_id)
-        self.ui.set_combine_pedals(combine_pedals)
+        self.ui.set_combine_pedals(combine_pedals, True)
 
         autocenter = self.wheels.get_autocenter(device_id)
         self.ui.set_autocenter(autocenter)
@@ -157,16 +174,16 @@ class Gui:
         self.ui.set_ff_gain(ff_gain)
 
         spring_level = self.wheels.get_spring_level(device_id)
-        self.ui.set_spring_level(spring_level)
+        self.ui.set_spring_level(spring_level, True)
 
         damper_level = self.wheels.get_damper_level(device_id)
-        self.ui.set_damper_level(damper_level)
+        self.ui.set_damper_level(damper_level, True)
 
         friction_level = self.wheels.get_friction_level(device_id)
-        self.ui.set_friction_level(friction_level)
+        self.ui.set_friction_level(friction_level, True)
 
         ffb_leds = self.wheels.get_ffb_leds(device_id)
-        self.ui.set_ffbmeter_leds(ffb_leds)
+        self.ui.set_ffbmeter_leds(ffb_leds, True)
 
         self.ui.set_ffbmeter_overlay_visibility(True if self.wheels.get_peak_ffb_level(device_id) != None else False)
 
@@ -183,7 +200,7 @@ class Gui:
         self.read_settings(device_id)
 
         self.ui.set_ffbmeter_overlay(False)
-        self.ui.set_range_overlay('never')
+        self.ui.set_wheel_range_overlay('never')
 
     def load_profile(self, profile_file):
         if profile_file == '':
@@ -211,10 +228,10 @@ class Gui:
             self.ui.set_ffbmeter_leds(profile.get_ffbmeter_leds())
         if profile.get_ffbmeter_overlay() != None:
             self.ui.set_ffbmeter_overlay(profile.get_ffbmeter_overlay())
-        if profile.get_range_overlay() != None:
-            self.ui.set_range_overlay(profile.get_range_overlay())
-        if profile.get_range_buttons() != None:
-            self.ui.set_range_buttons(profile.get_range_buttons())
+        if profile.get_wheel_range_overlay() != None:
+            self.ui.set_wheel_range_overlay(profile.get_wheel_range_overlay())
+        if profile.get_wheel_buttons() != None:
+            self.ui.set_wheel_buttons(profile.get_wheel_buttons())
         self.ui.set_new_profile_name('')
 
     def save_profile(self, profile_file):
@@ -232,8 +249,8 @@ class Gui:
         profile.set_friction_level(self.ui.get_friction_level())
         profile.set_ffbmeter_leds(self.ui.get_ffbmeter_leds())
         profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
-        profile.set_range_overlay(self.ui.get_range_overlay())
-        profile.set_range_buttons(self.ui.get_range_buttons())
+        profile.set_wheel_range_overlay(self.ui.get_wheel_range_overlay())
+        profile.set_wheel_buttons(self.ui.get_wheel_buttons())
         profile.save(profile_file)
         self.populate_profiles()
         self.ui.set_profile(profile_file)
@@ -246,6 +263,7 @@ class Gui:
         self.save_profile(profile_file)
 
     def set_emulation_mode(self, device_id, mode):
+        self.device.close()
         self.device = None
         self.wheels.set_mode(device_id, mode)
         self.emulation_mode = mode
@@ -289,22 +307,85 @@ class Gui:
                 os.remove(profile_file)
                 self.populate_profiles()
 
-    def apply_preferences(self):
+    def load_preferences(self):
+        config = configparser.ConfigParser()
+        config_file = os.path.join(self.config_path, 'config.ini')
+        config.read(config_file)
+        self.check_permissions_dialog = True
+        if 'DEFAULT' in config:
+            if 'locale' in config['DEFAULT'] and config['DEFAULT']['locale'] != '':
+                self.locale = config['DEFAULT']['locale']
+                locale.setlocale(locale.LC_ALL, (self.locale, 'UTF-8'))
+            if 'check_permissions_dialog' in config['DEFAULT']:
+                self.check_permissions_dialog = config['DEFAULT']['check_permissions_dialog']
+            if 'button_config' in config['DEFAULT'] and config['DEFAULT']['button_config'] != '':
+                self.button_config = list(map(int, config['DEFAULT']['button_config'].split(',')))
+
+    def save_preferences(self):
         language = self.ui.get_language()
         if language == None:
             language = ''
         self.check_permissions_dialog = self.ui.get_check_permissions()
         check_permissions = '1' if self.check_permissions_dialog else '0'
         config = configparser.ConfigParser()
-        config['base'] = {
+        config['DEFAULT'] = {
             'locale': language,
             'check_permissions': check_permissions,
+            'button_config': ','.join(map(str, self.button_config)),
         }
         config_file = os.path.join(self.config_path, 'config.ini')
         with open(config_file, 'w') as file:
             config.write(file)
         if language != '':
             locale.setlocale(locale.LC_ALL, (language, 'UTF-8'))
+
+    def start_stop_button_setup(self):
+        if self.button_setup_step is not False:
+            self.button_setup_step = False
+        else:
+            self.button_setup_step = 0
+            self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
+
+    def on_button_press(self, button, value):
+        if self.button_setup_step is not False:
+            if value == 1 and (self.button_setup_step != 0 or button < 100):
+                self.button_config[self.button_setup_step] = button
+                self.button_setup_step = self.button_setup_step + 1
+                if self.button_setup_step >= len(self.button_config):
+                    self.button_setup_step = False
+                    self.ui.reset_define_buttons_text()
+                    self.save_preferences()
+                else:
+                    self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
+            return
+
+        if self.ui.get_wheel_buttons_enabled():
+            if button == self.button_config[0] and value == 0:
+                if self.grab_input:
+                    self.device.ungrab()
+                    self.grab_input = False
+                    self.ui.update_overlay(False)
+                else:
+                    self.device.grab()
+                    self.grab_input = True
+                    self.ui.update_overlay(True)
+            if self.grab_input and value == 1:
+                if button == self.button_config[1]:
+                    self.ui.set_range(270)
+                if button == self.button_config[2]:
+                    self.ui.set_range(360)
+                if button == self.button_config[3]:
+                    self.ui.set_range(540)
+                if button == self.button_config[4]:
+                    self.ui.set_range(900)
+                if button == self.button_config[5]:
+                    self.add_range(10)
+                if button == self.button_config[6]:
+                    self.add_range(-10)
+                if button == self.button_config[7]:
+                    self.add_range(90)
+                if button == self.button_config[8]:
+                    self.add_range(-90)
 
     def read_ffbmeter(self, device_id):
         level = self.wheels.get_peak_ffb_level(device_id)
@@ -345,47 +426,29 @@ class Gui:
                         self.ui.set_accelerator_input(event.value)
                 elif event.code == ecodes.ABS_RZ:
                     self.ui.set_brakes_input(event.value)
-                elif event.code == ecodes.ABS_HAT0X and event.value:
-                    if self.grab_input:
-                        if event.value == -1:
-                            self.add_range(-10)
-                        else:
-                            self.add_range(10)
+                elif event.code == ecodes.ABS_HAT0X:
                     self.ui.set_hatx_input(event.value)
+                    if event.value == -1:
+                        self.on_button_press(100, 1)
+                    elif event.value == 1:
+                        self.on_button_press(101, 1)
                 elif event.code == ecodes.ABS_HAT0Y:
-                    if self.grab_input and event.value:
-                        if event.value == -1:
-                            self.add_range(90)
-                        else:
-                            self.add_range(-90)
                     self.ui.set_haty_input(event.value)
+                    if event.value == -1:
+                        self.on_button_press(102, 1)
+                    elif event.value == 1:
+                        self.on_button_press(103, 1)
             if event.type == ecodes.EV_KEY:
-                if event.value == 0:
-                    delay = 100
-                else:
+                if event.value:
                     delay = 0
-                if event.code == 712 and self.ui.get_range_buttons_enabled():
-                    if event.value:
-                        device.grab()
-                        self.grab_input = True
-                        self.ui.update_overlay(True)
-                    else:
-                        self.ui.update_overlay(False)
-                        self.grab_input = False
-                        device.ungrab()
-                if self.grab_input and event.value == 1:
-                    if event.code == 288:
-                        self.ui.set_range(270)
-                    if event.code == 289:
-                        self.ui.set_range(360)
-                    if event.code == 290:
-                        self.ui.set_range(540)
-                    if event.code == 291:
-                        self.ui.set_range(900)
+                else:
+                    delay = 100
                 if event.code >= 288 and event.code <= 303:
-                    self.ui.set_btn_input(event.code - 288, event.value, delay)
+                    button = event.code - 288
                 if event.code >= 704 and event.code <= 712:
-                    self.ui.set_btn_input(event.code - 704 + 16, event.value, delay)
+                    button = event.code - 688
+                self.ui.set_btn_input(button, event.value, delay)
+                self.on_button_press(button, event.value)
 
     def input_thread(self):
         while 1:
