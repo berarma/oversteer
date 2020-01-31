@@ -190,9 +190,9 @@ class GtkUi:
             self.combine_none.set_active(True)
 
     def get_combine_pedals(self):
-        if self.combine_clutch.get_state():
+        if self.combine_clutch.get_active():
             return 2
-        elif self.combine_brakes.get_state():
+        elif self.combine_brakes.get_active():
             return 1
         else:
             return 0
