@@ -48,9 +48,6 @@ class GtkUi:
     def main(self):
         Gtk.main()
 
-    def iconify(self):
-        self.window.iconify()
-
     def update(self):
         self.window.queue_draw()
 

@@ -70,7 +70,6 @@ class Gui:
                 self.ui.set_ffbmeter_overlay(True)
             if self.app.args.range_overlay:
                 self.ui.set_range_overlay(self.app.args.range_overlay)
-            self.ui.iconify()
 
         threading.Thread(target=self.input_thread, daemon = True).start()
 
