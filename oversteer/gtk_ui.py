@@ -89,7 +89,7 @@ class GtkUi:
         self.languages_combobox.set_active_id(language)
 
     def get_language(self):
-        language = self.languages_combobox.get_active_id()
+        return self.languages_combobox.get_active_id()
 
     def set_check_permissions(self, state):
         self.check_permissions.set_state(state)
