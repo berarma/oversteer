@@ -97,6 +97,7 @@
       </object>
       <packing>
         <property name="submenu">main</property>
+        <property name="position">1</property>
       </packing>
     </child>
   </object>
@@ -194,7 +195,7 @@
             <property name="homogeneous">True</property>
             <child>
               <object class="GtkButton" id="overlay_decrange">
-                <property name="label" translatable="yes">&lt;&lt;</property>
+                <property name="label">&lt;&lt;</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -211,7 +212,7 @@
               <object class="GtkLabel" id="overlay_wheel_range">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">900</property>
+                <property name="label">900</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -221,7 +222,7 @@
             </child>
             <child>
               <object class="GtkButton" id="overlay_incrange">
-                <property name="label" translatable="yes">&gt;&gt;</property>
+                <property name="label">&gt;&gt;</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -291,7 +292,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="tooltip_text" translatable="yes">Check permissions to read/write device settings. It's recommended to accept the proposed changes to make the device settings available to normal users.</property>
+            <property name="tooltip_text" translatable="yes">Check permissions to read/write device settings and propose changes to make them available to normal users.</property>
             <property name="spacing">20</property>
             <property name="homogeneous">True</property>
             <child>
@@ -370,6 +371,7 @@
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Pressing start  will begin configuration of wheel buttons. Just press the button in the wheel that you want to use for every displayed action.</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
@@ -385,7 +387,7 @@
             </child>
             <child>
               <object class="GtkButton" id="start_define_buttons">
-                <property name="label" translatable="yes">Press to start </property>
+                <property name="label" translatable="yes">Start</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -1301,7 +1303,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B0</property>
+                                        <property name="label">B0</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1328,7 +1330,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B1</property>
+                                        <property name="label">B1</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1355,7 +1357,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B2</property>
+                                        <property name="label">B2</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1382,7 +1384,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B3</property>
+                                        <property name="label">B3</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1409,7 +1411,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B4</property>
+                                        <property name="label">B4</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1436,7 +1438,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B5</property>
+                                        <property name="label">B5</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1463,7 +1465,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B6</property>
+                                        <property name="label">B6</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1490,7 +1492,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B7</property>
+                                        <property name="label">B7</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1517,7 +1519,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B8</property>
+                                        <property name="label">B8</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1544,7 +1546,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B9</property>
+                                        <property name="label">B9</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1571,7 +1573,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B10</property>
+                                        <property name="label">B10</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1598,7 +1600,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B11</property>
+                                        <property name="label">B11</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1625,7 +1627,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B12</property>
+                                        <property name="label">B12</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1665,7 +1667,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B13</property>
+                                        <property name="label">B13</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1692,7 +1694,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B14</property>
+                                        <property name="label">B14</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1719,7 +1721,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B15</property>
+                                        <property name="label">B15</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1746,7 +1748,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B16</property>
+                                        <property name="label">B16</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1773,7 +1775,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B17</property>
+                                        <property name="label">B17</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1800,7 +1802,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B18</property>
+                                        <property name="label">B18</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1827,7 +1829,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B19</property>
+                                        <property name="label">B19</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1854,7 +1856,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B20</property>
+                                        <property name="label">B20</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1881,7 +1883,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B21</property>
+                                        <property name="label">B21</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1908,7 +1910,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B22</property>
+                                        <property name="label">B22</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1935,7 +1937,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B23</property>
+                                        <property name="label">B23</property>
                                       </object>
                                     </child>
                                   </object>
@@ -1962,7 +1964,7 @@
                                       <object class="GtkLabel">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">B24</property>
+                                        <property name="label">B24</property>
                                       </object>
                                     </child>
                                   </object>
@@ -2135,7 +2137,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Amount of spring force.</property>
+                                <property name="tooltip_text" translatable="yes">How strong will be the spring type effects.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2184,7 +2186,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Amount of damper force.</property>
+                                <property name="tooltip_text" translatable="yes">How strong will be the damper type effects.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2234,7 +2236,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Amount of friction force.</property>
+                                <property name="tooltip_text" translatable="yes">How strong will be the friction type effects.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2310,7 +2312,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Enable wheel range settings in overlay.</property>
+                                <property name="tooltip_text" translatable="yes">Enable wheel range settings in the window overlay. When set to auto, it will be displayed only when being set using the wheel buttons.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2402,7 +2404,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Enable FFBmeter in overlay.</property>
+                                <property name="tooltip_text" translatable="yes">Enable FFBmeter using the leds in the wheel or the window overlay.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
@@ -2476,7 +2478,7 @@
                               <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="tooltip_text" translatable="yes">Use wheel buttons to change the wheel range. Hold &lt;PS&gt; button and press X (180º), Square (360º), Circle (540º), Triangle (720º), D-Pad Left (-10º), D-Pad Right (+10º), D-Pad Down (-90º), D-Pad Up (+90º)</property>
+                                <property name="tooltip_text" translatable="yes">Use wheel buttons to control some wheel settings. The buttons must be defined in the preferences window.</property>
                                 <property name="valign">center</property>
                                 <property name="spacing">64</property>
                                 <child>
