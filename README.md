@@ -12,10 +12,17 @@ Features (when supported by the device):
  - Change force feedback gain.
  - Device configuration profiles.
  - Fix system permissions to access all device features.
+ - Overlay window to display/configure range.
+ - Use wheel buttons to configure range.
 
-This software uses the Linux driver for Logitech HID++ devices and thus it
-could work on any model supported by said driver:
+Additional features when using [new-lg4ff](https://github.com/berarma/new-lg4ff):
+ - Combine accelerator/clutch pedals (for flight simulators).
+ - Change global force feedback gain.
+ - Change each conditional force feedback effect type gain.
+ - FFBmeter to monitor FFB clipping using wheel leds or overlay window.
 
+This software supports the same wheel models supported by the Logitech Linux
+driver:
  - Driving Force / Formula EX
  - Driving Force Pro
  - Driving Force GT
@@ -46,19 +53,14 @@ There's an AUR package kindly created by DNModder.
 
 You can install all dependencies on Debian systems with the following command:
 
-```apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils jstest-gtk```
-
-Other distros may use slightly different names for the same packages.
-
-```jstest-gtk``` is launched when the test button is clicked.
+`apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils`
 
 #### Permissions
 
-The access to some device features might be restricted by permissions. The app
-will ask for an administrator password when needed.
-
-Device access can be permanently allowed to any user and application from the
-preferences window. It will install a udev rule file for the Logitech wheels.
+The access to some device features might be restricted by permissions. If
+that's the case, Oversteer will ask to install a udev rule file for the
+Logitech wheels that gives permissions to access the device settings to any
+user.
 
 #### Build and install
 
@@ -88,8 +90,21 @@ ninja -C build oversteer-pot
 ninja -C build oversteer-update-po
 ```
 
-## Collaboration
+## Contributing
 
-We could all benefit greatly benefit from your help as with any other free software project.
+We could all benefit greatly benefit from your help as with any other free
+software project.
 
-Reports about what works and what not on different devices and systems are very welcome. You can also help by contributing specific notes for your distro or doing the packaging work. Anything that you find useful might help others.
+Reports about what works and what not on different devices and systems are very
+welcome. You can also help by contributing specific notes for your distro, or
+doing the packaging work or anything else.
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
