@@ -423,6 +423,7 @@ class GtkUi:
         Gtk.main_quit()
 
     def on_preferences_window_delete_event(self, *args):
+        self.gui.on_close_preferences()
         self.preferences_window.hide()
         return True
 
@@ -430,6 +431,7 @@ class GtkUi:
         self.preferences_window.show()
 
     def on_cancel_preferences_clicked(self, *args):
+        self.gui.on_close_preferences()
         self.preferences_window.hide()
 
     def on_about_clicked(self, *args):

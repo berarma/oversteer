@@ -339,12 +339,19 @@ class Gui:
         if language != '':
             locale.setlocale(locale.LC_ALL, (language, 'UTF-8'))
 
+    def stop_button_setup(self):
+        self.button_setup_step = False
+        self.ui.reset_define_buttons_text()
+
     def start_stop_button_setup(self):
         if self.button_setup_step is not False:
-            self.button_setup_step = False
+            self.stop_button_setup()
         else:
             self.button_setup_step = 0
             self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
+
+    def on_close_preferences(self):
+        self.stop_button_setup()
 
     def on_button_press(self, button, value):
         if self.button_setup_step is not False:
@@ -352,8 +359,7 @@ class Gui:
                 self.button_config[self.button_setup_step] = button
                 self.button_setup_step = self.button_setup_step + 1
                 if self.button_setup_step >= len(self.button_config):
-                    self.button_setup_step = False
-                    self.ui.reset_define_buttons_text()
+                    self.stop_button_setup()
                     self.save_preferences()
                 else:
                     self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
