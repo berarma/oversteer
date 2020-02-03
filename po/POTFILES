@@ -1,4 +1,4 @@
 oversteer/application.py
-oversteer/gtk_ui.py
+oversteer/gui.py
 oversteer/main.ui
 data/org.berarma.Oversteer.desktop.in

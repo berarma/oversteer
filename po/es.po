@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-16 15:20+0200\n"
-"PO-Revision-Date: 2019-09-16 15:42+0200\n"
+"POT-Creation-Date: 2020-02-03 16:56+0100\n"
+"PO-Revision-Date: 2020-02-03 17:06+0100\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,137 +18,279 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: oversteer/application.py:15
+#: oversteer/application.py:16
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Configurador de volantes"
 
-#: oversteer/application.py:16
+#: oversteer/application.py:17
 msgid "Device id"
 msgstr "Id de dispositivo"
 
-#: oversteer/application.py:17
+#: oversteer/application.py:18
 msgid "list connected devices"
 msgstr "lista dispositivo conectados"
 
-#: oversteer/application.py:18
+#: oversteer/application.py:19
 msgid "set the compatibility mode"
 msgstr "establece el modo de compatibilidad"
 
-#: oversteer/application.py:19
-msgid "set the rotation range"
-msgstr "establece el rango de giro"
-
 #: oversteer/application.py:20
-msgid "combine pedals"
-msgstr "combina pedales"
+msgid "set the rotation range (40-900)"
+msgstr "establece el rango de giro (40-900)"
+
+#: oversteer/application.py:21
+msgid "combine pedals (0-2)"
+msgstr "combina pedales (0-2)"
 
 #: oversteer/application.py:22
-msgid "set the autocenter strength"
-msgstr "establece la fuerza de autocentrado"
+msgid "set the autocenter strength (0-100)"
+msgstr "establece la fuerza de autocentrado (0-100)"
 
 #: oversteer/application.py:23
-msgid "set the FF gain"
-msgstr "Establece la ganancia de FF"
+msgid "set the FF gain (0-100)"
+msgstr "establece la ganancia de FF (0-100)"
 
-#: oversteer/application.py:34
+#: oversteer/application.py:24
+msgid "set the spring level (0-100)"
+msgstr "establece el nivel de efecto muelle (0-100)"
+
+#: oversteer/application.py:25
+msgid "set the damper level (0-100)"
+msgstr "establece el nivel de efecto amortiguamiento (0-100)"
+
+#: oversteer/application.py:26
+msgid "set the friction level (0-100)"
+msgstr "establece el nivel del efecto fricción (0-100)"
+
+#: oversteer/application.py:27
+msgid "enable/disable FFBmeter leds"
+msgstr "activa/desactiva FFBmeter en los leds"
+
+#: oversteer/application.py:28
+msgid "enable/disable FFBmeter overlay"
+msgstr "activa/desactiva FFBmeter en la ventana superpuesta"
+
+#: oversteer/application.py:29
+msgid "enable range overlay (never, always or auto)"
+msgstr ""
+"activa rango de giro en la ventana superpuesta (usar never para nunca, "
+"always para siempre o auto para automático)"
+
+#: oversteer/application.py:30
+msgid "load settings from a profile"
+msgstr "carga los ajustes de un perfil"
+
+#: oversteer/application.py:31
+msgid "start the GUI"
+msgstr "inicia la interfaz gráfica"
+
+#: oversteer/application.py:32
+msgid "enable debug output"
+msgstr "activa la salida de depuración"
+
+#: oversteer/application.py:47 oversteer/gui.py:105
+msgid ""
+"You don't have the required permissions to change your wheel settings. You "
+"can fix it yourself by copying the {} file to the {} directory and rebooting."
+msgstr ""
+"No tienes los permisos necesarios para cambiar los ajustes del volante. "
+"Puedes arreglarlo tú mismo copiando el fichero {} al directorio {} y "
+"reiniciando."
+
+#: oversteer/application.py:58
 msgid "Devices found:"
 msgstr "Dispositivos encontrados:"
 
-#: oversteer/gtk_ui.py:20
+#: oversteer/gui.py:38
+msgid "Activation Switch"
+msgstr "Botón de activación"
+
+#: oversteer/gui.py:39
+msgid "Set 270º"
+msgstr "Establece 270º"
+
+#: oversteer/gui.py:40
+msgid "Set 360º"
+msgstr "Establece 360º"
+
+#: oversteer/gui.py:41
+msgid "Set 540º"
+msgstr "Establece 540º"
+
+#: oversteer/gui.py:42
+msgid "Set 900º"
+msgstr "Establece 900º"
+
+#: oversteer/gui.py:43
+msgid "+10º"
+msgstr "+10º"
+
+#: oversteer/gui.py:44
+msgid "-10º"
+msgstr "-10º"
+
+#: oversteer/gui.py:45
+msgid "+90º"
+msgstr "+90º"
+
+#: oversteer/gui.py:46
+msgid "-90º"
+msgstr "-90º"
+
+#: oversteer/gui.py:52
 msgid "System default"
 msgstr "Predeterminado del sistema"
 
-#: oversteer/gtk_ui.py:21
+#: oversteer/gui.py:53
 msgid "English"
 msgstr "Inglés"
 
-#: oversteer/gtk_ui.py:22
+#: oversteer/gui.py:54
 msgid "Spanish"
 msgstr "Español"
 
-#: oversteer/gtk_ui.py:23
+#: oversteer/gui.py:55
 msgid "Galician"
 msgstr "Gallego"
 
-#: oversteer/gtk_ui.py:272
-msgid "This profile will be deleted, are you sure?"
-msgstr "Se va a borrar este perfil, ¿estás seguro?"
+#: oversteer/gui.py:109
+msgid "Do you want us to make this change for you?"
+msgstr "¿Quieres que haga este cambio por ti?"
 
-#: oversteer/gtk_ui.py:302
-msgid "You've asked to remove the custom permissions rules."
-msgstr "Vas a eliminar las reglas de permisos personalizadas."
-
-#: oversteer/gtk_ui.py:315
-msgid "Permissions rules removed."
-msgstr "Reglas de permisos eliminadas."
-
-#: oversteer/gtk_ui.py:317 oversteer/gtk_ui.py:338
-msgid "Changes will take effect after reconnecting the device."
-msgstr "Los cambios tendrán efecto cuando reconectes el dispositivo."
-
-#: oversteer/gtk_ui.py:323
-msgid ""
-"You've asked to install our custom permissions rules that would allow any "
-"user and application to access the device."
-msgstr ""
-"Vas a instalar unas reglas de permisos personalizadas que permitirán el "
-"acceso al dispositivo a cualquier usuario y aplicación."
-
-#: oversteer/gtk_ui.py:336
+#: oversteer/gui.py:119
 msgid "Permissions rules installed."
 msgstr "Reglas de permisos instaladas."
 
-#: oversteer/main.ui:74
-msgid ""
-"Change the interface language. Applied after app restart. Only language "
-"locales supported by your system."
-msgstr ""
-"Cambia el idioma de la interfaz. Se aplicará al reiniciar la aplicación. "
-"Solo los idiomas admitidos por el sistema."
+#: oversteer/gui.py:120
+msgid "In some cases, a system restart might be needed."
+msgstr "En algunos casos puede ser necesario reiniciar el sistema."
 
-#: oversteer/main.ui:82
+#: oversteer/gui.py:123
+msgid ""
+"Error installing permissions rules. Please, try again and make sure you use "
+"the right password for the administrator user."
+msgstr ""
+"Error instalando las nuevas reglas de permisos. Por favor, inténtalo otra "
+"vez y asegúrate de usar la contraseña correcta para el usuario administrador."
+
+#: oversteer/gui.py:261
+msgid "This profile already exists. Are you sure?"
+msgstr "Este perfil ya existe, ¿estás seguro?"
+
+#: oversteer/gui.py:306
+msgid "This profile will be deleted, are you sure?"
+msgstr "Se va a borrar este perfil, ¿estás seguro?"
+
+#: oversteer/main.ui:25 oversteer/main.ui:2369
+msgid "Never"
+msgstr "Nunca"
+
+#: oversteer/main.ui:29 oversteer/main.ui:2353
+msgid "Always"
+msgstr "Siempre"
+
+#: oversteer/main.ui:33 oversteer/main.ui:2337
+msgid "Auto"
+msgstr "Auto"
+
+#: oversteer/main.ui:63
+msgid "Preferences"
+msgstr "Preferencias"
+
+#: oversteer/main.ui:88
+msgid "About Oversteer"
+msgstr "Acerca de Oversteer"
+
+#: oversteer/main.ui:295
+msgid ""
+"Check permissions to read/write device settings and propose changes to make "
+"them available to normal users."
+msgstr ""
+"Comprobar los permisos de lectura/escritura para los ajustes del dispositivo "
+"y proponer cambios para hacerlos accesibles a usuarios normales."
+
+#: oversteer/main.ui:303
+msgid "Check permissions"
+msgstr "Comprobar permisos"
+
+#: oversteer/main.ui:335
+msgid ""
+"Change the interface language. You'll need to restart the application to "
+"apply."
+msgstr ""
+"Cambia el idioma de la interfaz. Se aplicará al reiniciar la aplicación."
+
+#: oversteer/main.ui:343
 msgid "Language"
 msgstr "Idioma"
 
-#: oversteer/main.ui:112
+#: oversteer/main.ui:374
 msgid ""
-"Make the device accessible to any user. No more asking for administrator "
-"password to change settings. Some games need this to handle the leds in some "
-"wheels."
+"Pressing start  will begin configuration of wheel buttons. Just press the "
+"button in the wheel that you want to use for every displayed action."
 msgstr ""
-"Hace el dispositivo accesible a cualquier usuario. No se pedirá más la "
-"contraseña de administrador para cambiar los ajustes. Algunos juegos "
-"necesitan eso para poder controlar los leds de algunos volantes."
+"Pulsando Empezar se iniciará la configuración de botones del volante. Pulsa "
+"el botón del volante que quieras usar para cada acción que se muestre."
 
-#: oversteer/main.ui:120
-msgid "Allow access to the device"
-msgstr "Permitir el acceso al dispositivo"
+#: oversteer/main.ui:380
+msgid "Define buttons"
+msgstr "Definir botones"
 
-#: oversteer/main.ui:188
+#: oversteer/main.ui:390
+msgid "Start"
+msgstr "Empezar"
+
+#: oversteer/main.ui:462
+msgid "Re-scan wheel devices and update window."
+msgstr "Vuelve a buscar dispositivos que sean volantes y actualiza la ventana."
+
+#: oversteer/main.ui:506
 msgid "Select the wheel controller you want to configure."
 msgstr "Selecciona el volante que quieres configurar."
 
-#: oversteer/main.ui:195
+#: oversteer/main.ui:513
 msgid "Selected Device"
 msgstr "Dispositivo seleccionado"
 
-#: oversteer/main.ui:228
+#: oversteer/main.ui:546
 msgid "Select a profile to load the saved settings."
 msgstr "Selecciona un perfil para cargar los ajustes."
 
-#: oversteer/main.ui:235
+#: oversteer/main.ui:553
 msgid "Profile"
 msgstr "Perfil"
 
-#: oversteer/main.ui:280
+#: oversteer/main.ui:583
+msgid "Delete profile"
+msgstr "Borrar el perfil"
+
+#: oversteer/main.ui:599
+msgid "Save profile"
+msgstr "Guardar perfil"
+
+#: oversteer/main.ui:630
+msgid "Type the name of a profile if you want to save this settings."
+msgstr "Escribe el nombre de un perfil si quieres guardar los ajustes."
+
+#: oversteer/main.ui:637 oversteer/main.ui:666
+msgid "Save as new profile"
+msgstr "Guardar como perfil nuevo"
+
+#: oversteer/main.ui:734
 msgid "Select an emulation mode from the ones supported."
 msgstr "Selecciona un modo de emulación de entre los admitidos."
 
-#: oversteer/main.ui:290
+#: oversteer/main.ui:742
 msgid "Compatibility mode"
 msgstr "Modo de compatibilidad"
 
-#: oversteer/main.ui:324
+#: oversteer/main.ui:772
+msgid "Apply changes  (the wheel may move when changing the emulation mode)."
+msgstr ""
+"Aplica cambios (el volante puede moverse cuando se cambia el modo de "
+"emulación)"
+
+#: oversteer/main.ui:807
 msgid ""
 "Range in degrees that the wheel will be able to rotate both ways. It will "
 "affect the sensitivity."
@@ -156,70 +298,152 @@ msgstr ""
 "Rango de giro del volante en grados en ambos sentidos. Afectará a la "
 "sensibilidad."
 
-#: oversteer/main.ui:334
+#: oversteer/main.ui:815
 msgid "Rotation range"
 msgstr "Rango de giro"
 
-#: oversteer/main.ui:376
-msgid "Strength of autocenter force."
-msgstr "Fuerza del efecto de autocentrado."
-
-#: oversteer/main.ui:386
-msgid "Autocenter strength"
-msgstr "Fuerza de autocentrado"
-
-#: oversteer/main.ui:427
-msgid "Global strength of force feedback effects."
-msgstr "Fuerza global de los efectos de retroalimentación."
-
-#: oversteer/main.ui:437
-msgid "Force feedback gain"
-msgstr "Ganancia del feedback"
-
-#: oversteer/main.ui:478
+#: oversteer/main.ui:868
 msgid ""
-"Combine the gas and break pedals into one axe for games that use controller "
-"actions up/down."
+"Combine two pedals into one axe. Useful for old games and flight simulators."
 msgstr ""
-"Combina los pedales del acelerador y del freno en un solo eje para juegos "
-"que usan las acciones de arriba/abajo del controlador."
+"Combinar dos pedales en un eje. Útil para juegos antiguos y simuladores de "
+"vuelo."
 
-#: oversteer/main.ui:488
+#: oversteer/main.ui:876
 msgid "Combine pedals"
 msgstr "Combina pedales"
 
-#: oversteer/main.ui:523
-msgid "Note: games can override some or all of these settings."
+#: oversteer/main.ui:890
+msgid "Accelerator + Clutch"
+msgstr "Acelerador + Embrague"
+
+#: oversteer/main.ui:906
+msgid "Accelerator + Brakes"
+msgstr "Acelerador + Frenos"
+
+#: oversteer/main.ui:922
+msgid "None"
+msgstr "Ninguno"
+
+#: oversteer/main.ui:979
+msgid "Steering"
+msgstr "Giro"
+
+#: oversteer/main.ui:1060
+msgid "Clutch"
+msgstr "Embrague"
+
+#: oversteer/main.ui:1086
+msgid "Brakes"
+msgstr "Frenos"
+
+#: oversteer/main.ui:1112
+msgid "Accel."
+msgstr "Acel."
+
+#: oversteer/main.ui:1136
+msgid "Hat"
+msgstr "Cruceta"
+
+#: oversteer/main.ui:1275
+msgid "Buttons"
+msgstr "Botones"
+
+#: oversteer/main.ui:2015
+msgid "Controls"
+msgstr "Controles"
+
+#: oversteer/main.ui:2042
+msgid "Global strength of force feedback effects."
+msgstr "Fuerza global de los efectos de retroalimentación."
+
+#: oversteer/main.ui:2050
+msgid "Force feedback gain"
+msgstr "Ganancia del feedback"
+
+#: oversteer/main.ui:2091
+msgid "Strength of autocenter force."
+msgstr "Fuerza del efecto de autocentrado."
+
+#: oversteer/main.ui:2099
+msgid "Autocenter strength"
+msgstr "Fuerza de autocentrado"
+
+#: oversteer/main.ui:2140
+msgid "How strong will be the spring type effects."
+msgstr "Cómo de fuertes serán los efectos de tipo muelle."
+
+#: oversteer/main.ui:2148
+msgid "Spring force level"
+msgstr "Fuerza de muelle"
+
+#: oversteer/main.ui:2189
+msgid "How strong will be the damper type effects."
+msgstr "Cómo de fuertes serán los efectos de tipo amortiguamiento."
+
+#: oversteer/main.ui:2197
+msgid "Damper force level"
+msgstr "Fuerza de amortiguamiento"
+
+#: oversteer/main.ui:2239
+msgid "How strong will be the friction type effects."
+msgstr "Cómo de fuertes serán los efectos de tipo fricción."
+
+#: oversteer/main.ui:2247
+msgid "Friction force level"
+msgstr "Fuerza de fricción"
+
+#: oversteer/main.ui:2290
+msgid "Force Feedback"
+msgstr "Force Feedback"
+
+#: oversteer/main.ui:2315
+msgid ""
+"Enable wheel range settings in the window overlay. When set to auto, it will "
+"be displayed only when being set using the wheel buttons."
 msgstr ""
-"Nota: los juegos pueden sobreescribir total o parcialmente estos ajustes."
+"Activa los ajustes de rango de giro del volante en la venta de "
+"superposición. Cuando esté a auto se mostrará solo cuando esté modificándose "
+"usando los botones del volante."
 
-#: oversteer/main.ui:543
-msgid "Type the name of a profile if you want to save this settings."
-msgstr "Escribe el nombre de un perfil si quieres guardar los ajustes."
+#: oversteer/main.ui:2323
+msgid "Wheel range display"
+msgstr "Mostrar rango de giro"
 
-#: oversteer/main.ui:549
-msgid "Save as new profile"
-msgstr "Guardar como perfil nuevo"
-
-#: oversteer/main.ui:597
-msgid "Test"
-msgstr "Probar"
-
-#: oversteer/main.ui:601
-msgid "Test the wheel using an external application."
-msgstr "Prueba el volante usando una aplicación externa."
-
-#: oversteer/main.ui:616
-msgid "Search for wheel devices."
-msgstr "Busca dispositivos que sean volantes."
-
-#: oversteer/main.ui:649
-msgid "Apply changes  (the wheel may move when changing the emulation mode)."
+#: oversteer/main.ui:2407
+msgid "Enable FFBmeter using the leds in the wheel or the window overlay."
 msgstr ""
-"Aplica cambios (el volante puede moverse cuando se cambia el modo de "
-"emulación)"
+"Activa el FFBmeter usando los leds del volante o la ventana de superposición."
 
-#: oversteer/main.ui:714
+#: oversteer/main.ui:2415
+msgid "FFBmeter"
+msgstr "FFBmeter"
+
+#: oversteer/main.ui:2429
+msgid "Leds"
+msgstr "Leds"
+
+#: oversteer/main.ui:2443
+msgid "Overlay"
+msgstr "Superposición"
+
+#: oversteer/main.ui:2481
+msgid ""
+"Use wheel buttons to control some wheel settings. The buttons must be "
+"defined in the preferences window."
+msgstr ""
+"Usa los botones del volante para controlar algunos ajustes del volante. Los "
+"botones se deben definir en la ventana de preferencias."
+
+#: oversteer/main.ui:2489
+msgid "Enable wheel buttons"
+msgstr "Activar botones del volante"
+
+#: oversteer/main.ui:2525
+msgid "Tools"
+msgstr "Herramientas"
+
+#: oversteer/main.ui:2556
 msgid "(c) 2019 Bernat Arlandis"
 msgstr "(c) 2019 Bernat Arlandis"
 
@@ -238,6 +462,61 @@ msgstr ""
 #: data/org.berarma.Oversteer.desktop.in:11
 msgid "game;racing;cars;wheels"
 msgstr "juego;carreras;coches;volantes"
+
+#~ msgid "Amount of spring force."
+#~ msgstr "Nivel de fuerza de muelle."
+
+#, fuzzy
+#~ msgid "Amount of damper force."
+#~ msgstr "Fuerza del efecto de autocentrado."
+
+#~ msgid "You've asked to remove the custom permissions rules."
+#~ msgstr "Vas a eliminar las reglas de permisos personalizadas."
+
+#~ msgid "Permissions rules removed."
+#~ msgstr "Reglas de permisos eliminadas."
+
+#~ msgid "Changes will take effect after reconnecting the device."
+#~ msgstr "Los cambios tendrán efecto cuando reconectes el dispositivo."
+
+#~ msgid ""
+#~ "You've asked to install our custom permissions rules that would allow any "
+#~ "user and application to access the device."
+#~ msgstr ""
+#~ "Vas a instalar unas reglas de permisos personalizadas que permitirán el "
+#~ "acceso al dispositivo a cualquier usuario y aplicación."
+
+#~ msgid ""
+#~ "Make the device accessible to any user. No more asking for administrator "
+#~ "password to change settings. Some games need this to handle the leds in "
+#~ "some wheels."
+#~ msgstr ""
+#~ "Hace el dispositivo accesible a cualquier usuario. No se pedirá más la "
+#~ "contraseña de administrador para cambiar los ajustes. Algunos juegos "
+#~ "necesitan eso para poder controlar los leds de algunos volantes."
+
+#~ msgid "Allow access to the device"
+#~ msgstr "Permitir el acceso al dispositivo"
+
+#~ msgid ""
+#~ "Combine the gas and break pedals into one axe for games that use "
+#~ "controller actions up/down."
+#~ msgstr ""
+#~ "Combina los pedales del acelerador y del freno en un solo eje para juegos "
+#~ "que usan las acciones de arriba/abajo del controlador."
+
+#~ msgid "Note: games can override some or all of these settings."
+#~ msgstr ""
+#~ "Nota: los juegos pueden sobreescribir total o parcialmente estos ajustes."
+
+#~ msgid "Test"
+#~ msgstr "Probar"
+
+#~ msgid "Test the wheel using an external application."
+#~ msgstr "Prueba el volante usando una aplicación externa."
+
+#~ msgid "Search for wheel devices."
+#~ msgstr "Busca dispositivos que sean volantes."
 
 #~ msgid "Save as"
 #~ msgstr "Guardar cómo"
@@ -259,6 +538,3 @@ msgstr "juego;carreras;coches;volantes"
 
 #~ msgid "Wheel mode"
 #~ msgstr "Modo del volante"
-
-#~ msgid "Wheel range"
-#~ msgstr "Rango de giro"
