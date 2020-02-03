@@ -1,6 +1,5 @@
 from locale import gettext as _
 import gi
-import inspect
 import locale
 import logging
 import math
