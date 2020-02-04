@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-03 16:56+0100\n"
-"PO-Revision-Date: 2020-02-03 17:06+0100\n"
+"POT-Creation-Date: 2020-02-04 21:56+0100\n"
+"PO-Revision-Date: 2020-02-04 16:48+0100\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -35,31 +35,38 @@ msgid "set the compatibility mode"
 msgstr "establece el modo de compatibilidad"
 
 #: oversteer/application.py:20
-msgid "set the rotation range (40-900)"
+#, fuzzy
+msgid "set the rotation range [40-900]"
 msgstr "establece el rango de giro (40-900)"
 
 #: oversteer/application.py:21
-msgid "combine pedals (0-2)"
+#, fuzzy
+msgid "combine pedals [0-2]"
 msgstr "combina pedales (0-2)"
 
 #: oversteer/application.py:22
-msgid "set the autocenter strength (0-100)"
+#, fuzzy
+msgid "set the autocenter strength [0-100]"
 msgstr "establece la fuerza de autocentrado (0-100)"
 
 #: oversteer/application.py:23
-msgid "set the FF gain (0-100)"
+#, fuzzy
+msgid "set the FF gain [0-100]"
 msgstr "establece la ganancia de FF (0-100)"
 
 #: oversteer/application.py:24
-msgid "set the spring level (0-100)"
+#, fuzzy
+msgid "set the spring level [0-100]"
 msgstr "establece el nivel de efecto muelle (0-100)"
 
 #: oversteer/application.py:25
-msgid "set the damper level (0-100)"
+#, fuzzy
+msgid "set the damper level [0-100]"
 msgstr "establece el nivel de efecto amortiguamiento (0-100)"
 
 #: oversteer/application.py:26
-msgid "set the friction level (0-100)"
+#, fuzzy
+msgid "set the friction level [0-100]"
 msgstr "establece el nivel del efecto fricción (0-100)"
 
 #: oversteer/application.py:27
@@ -68,12 +75,12 @@ msgstr "activa/desactiva FFBmeter en los leds"
 
 #: oversteer/application.py:28
 msgid "enable/disable FFBmeter overlay"
-msgstr "activa/desactiva FFBmeter en la ventana superpuesta"
+msgstr "activa/desactiva FFBmeter en la ventana de superposición"
 
 #: oversteer/application.py:29
 msgid "enable range overlay (never, always or auto)"
 msgstr ""
-"activa rango de giro en la ventana superpuesta (usar never para nunca, "
+"activa rango de giro en la ventana de superposición (usar never para nunca, "
 "always para siempre o auto para automático)"
 
 #: oversteer/application.py:30
@@ -88,7 +95,7 @@ msgstr "inicia la interfaz gráfica"
 msgid "enable debug output"
 msgstr "activa la salida de depuración"
 
-#: oversteer/application.py:47 oversteer/gui.py:105
+#: oversteer/application.py:47 oversteer/gui.py:106
 msgid ""
 "You don't have the required permissions to change your wheel settings. You "
 "can fix it yourself by copying the {} file to the {} directory and rebooting."
@@ -107,19 +114,19 @@ msgstr "Botón de activación"
 
 #: oversteer/gui.py:39
 msgid "Set 270º"
-msgstr "Establece 270º"
+msgstr "Cambia a 270º"
 
 #: oversteer/gui.py:40
 msgid "Set 360º"
-msgstr "Establece 360º"
+msgstr "Cambia a 360º"
 
 #: oversteer/gui.py:41
 msgid "Set 540º"
-msgstr "Establece 540º"
+msgstr "Cambia a 540º"
 
 #: oversteer/gui.py:42
 msgid "Set 900º"
-msgstr "Establece 900º"
+msgstr "Cambia 900º"
 
 #: oversteer/gui.py:43
 msgid "+10º"
@@ -153,19 +160,24 @@ msgstr "Español"
 msgid "Galician"
 msgstr "Gallego"
 
-#: oversteer/gui.py:109
+#: oversteer/gui.py:56
+#, fuzzy
+msgid "Valencian"
+msgstr "Gallego"
+
+#: oversteer/gui.py:110
 msgid "Do you want us to make this change for you?"
 msgstr "¿Quieres que haga este cambio por ti?"
 
-#: oversteer/gui.py:119
+#: oversteer/gui.py:120
 msgid "Permissions rules installed."
 msgstr "Reglas de permisos instaladas."
 
-#: oversteer/gui.py:120
+#: oversteer/gui.py:121
 msgid "In some cases, a system restart might be needed."
 msgstr "En algunos casos puede ser necesario reiniciar el sistema."
 
-#: oversteer/gui.py:123
+#: oversteer/gui.py:124
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
@@ -173,11 +185,11 @@ msgstr ""
 "Error instalando las nuevas reglas de permisos. Por favor, inténtalo otra "
 "vez y asegúrate de usar la contraseña correcta para el usuario administrador."
 
-#: oversteer/gui.py:261
+#: oversteer/gui.py:262
 msgid "This profile already exists. Are you sure?"
 msgstr "Este perfil ya existe, ¿estás seguro?"
 
-#: oversteer/gui.py:306
+#: oversteer/gui.py:307
 msgid "This profile will be deleted, are you sure?"
 msgstr "Se va a borrar este perfil, ¿estás seguro?"
 
