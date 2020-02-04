@@ -1,3 +1,4 @@
 /build
 /po/oversteer.pot
+/po/*.mo
 __pycache__
