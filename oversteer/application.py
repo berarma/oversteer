@@ -30,8 +30,13 @@ class Application:
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
         parser.add_argument('-i', '--interactive', action='store_true', help=_("start the GUI"))
         parser.add_argument('--debug', action='store_true', help=_("enable debug output"))
+        parser.add_argument('--version', action='store_true', help=_("show version"))
 
         args = parser.parse_args(argv[1:])
+
+        if args.version:
+            print("Oversteer v" + self.version)
+            sys.exit(0)
 
         if not args.debug:
             logging.basicConfig(level=logging.WARNING)
