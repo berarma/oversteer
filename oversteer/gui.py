@@ -316,8 +316,8 @@ class Gui:
             if 'locale' in config['DEFAULT'] and config['DEFAULT']['locale'] != '':
                 self.locale = config['DEFAULT']['locale']
                 locale.setlocale(locale.LC_ALL, (self.locale, 'UTF-8'))
-            if 'check_permissions_dialog' in config['DEFAULT']:
-                self.check_permissions_dialog = config['DEFAULT']['check_permissions_dialog']
+            if 'check_permissions' in config['DEFAULT']:
+                self.check_permissions_dialog = config['DEFAULT']['check_permissions'] == '1'
             if 'button_config' in config['DEFAULT'] and config['DEFAULT']['button_config'] != '':
                 self.button_config = list(map(int, config['DEFAULT']['button_config'].split(',')))
 
