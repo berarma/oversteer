@@ -73,15 +73,26 @@ ninja -C build
 
 Trying it without installing:
 
-```ninja -C build run```
+`ninja -C build run`
 
 Installing (needs administration rights):
 
-```sudo ninja -C build install```
+`sudo ninja -C build install`
 
 Uninstalling (needs administration rights):
 
-```sudo ninja -C build uninstall```
+`sudo ninja -C build uninstall`
+
+## Using it
+
+Oversteer can be launched as any desktop application.
+
+It's also possible to use it from the console. Type `oversteer --help` to see
+the command line help.
+
+It's possible to configure game launchers to run oversteer to load a profile or
+change settings so that it automatically configures the wheel when the game
+runs.
 
 ## Updating translations (for translators)
 
