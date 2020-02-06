@@ -268,11 +268,10 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton">
-                <property name="label">gtk-close</property>
+                <property name="label" translatable="yes">Close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
                 <signal name="clicked" handler="on_cancel_preferences_clicked" swapped="no"/>
               </object>
               <packing>
@@ -576,12 +575,11 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="delete_profile">
-                        <property name="label">gtk-delete</property>
+                        <property name="label" translatable="yes">Delete</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="tooltip_text" translatable="yes">Delete profile</property>
-                        <property name="use_stock">True</property>
                         <signal name="clicked" handler="on_delete_profile_clicked" swapped="no"/>
                       </object>
                       <packing>
@@ -592,12 +590,11 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="save_profile">
-                        <property name="label">gtk-save</property>
+                        <property name="label" translatable="yes">Save</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="tooltip_text" translatable="yes">Save profile</property>
-                        <property name="use_stock">True</property>
                         <signal name="clicked" handler="on_save_profile_clicked" swapped="no"/>
                       </object>
                       <packing>
@@ -659,12 +656,11 @@
                     </child>
                     <child>
                       <object class="GtkButton" id="save_profile_as">
-                        <property name="label">gtk-save</property>
+                        <property name="label" translatable="yes">Save as</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="tooltip_text" translatable="yes">Save as new profile</property>
-                        <property name="use_stock">True</property>
                         <signal name="clicked" handler="on_save_profile_as_clicked" swapped="no"/>
                       </object>
                       <packing>
@@ -765,12 +761,11 @@
                                     </child>
                                     <child>
                                       <object class="GtkButton" id="change_emulation_mode">
-                                        <property name="label">gtk-apply</property>
+                                        <property name="label" translatable="yes">Apply</property>
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
-                                        <property name="tooltip_text" translatable="yes">Apply changes  (the wheel may move when changing the emulation mode).</property>
-                                        <property name="use_stock">True</property>
+                                        <property name="tooltip_text" translatable="yes">Apply changes (the wheel may move when changing the emulation mode).</property>
                                         <signal name="clicked" handler="on_change_emulation_mode_clicked" swapped="no"/>
                                       </object>
                                       <packing>
@@ -2554,8 +2549,8 @@
     <property name="program_name">Oversteer - Steering Wheel Manager</property>
     <property name="version">0.0.0</property>
     <property name="copyright" translatable="yes">(c) 2019 Bernat Arlandis</property>
-    <property name="authors">Bernat Arlandis
-Leandro Vergara</property>
+    <property name="authors">Bernat Arlandis</property>
+    <property name="translator_credits">Leandro Vergara</property>
     <property name="logo_icon_name"/>
     <property name="license_type">gpl-3-0</property>
     <signal name="delete-event" handler="on_about_window_delete_event" swapped="no"/>

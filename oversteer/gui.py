@@ -53,6 +53,7 @@ class Gui:
         ('en_US', _('English')),
         ('es_ES', _('Spanish')),
         ('gl_ES', _('Galician')),
+        ('ca_ES', _('Valencian')),
     ]
 
     def __init__(self, application):
