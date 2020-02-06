@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-02-06 17:25+0100\n"
-"PO-Revision-Date: 2020-02-05 19:35+0100\n"
+"PO-Revision-Date: 2020-02-06 18:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: oversteer/application.py:16
@@ -63,14 +63,12 @@ msgid "set the friction level [0-100]"
 msgstr "configura o nivel de fricción [0-100]"
 
 #: oversteer/application.py:27
-#, fuzzy
 msgid "enable FFBmeter leds"
-msgstr "acende/apaga os Leds con FFBmeter"
+msgstr "acende os Leds con FFBmeter"
 
 #: oversteer/application.py:28
-#, fuzzy
 msgid "disable FFBmeter leds"
-msgstr "acende/apaga os Leds con FFBmeter"
+msgstr "acende os Leds con FFBmeter"
 
 #: oversteer/application.py:29
 msgid "load settings from a profile"
@@ -86,7 +84,7 @@ msgstr "activa a saida de depuración"
 
 #: oversteer/application.py:32
 msgid "show version"
-msgstr ""
+msgstr "mostra versión"
 
 #: oversteer/application.py:51 oversteer/gui.py:100
 msgid ""
@@ -206,7 +204,7 @@ msgstr "Sobre Oversteer"
 
 #: oversteer/main.ui:271
 msgid "Close"
-msgstr ""
+msgstr "Pecha"
 
 #: oversteer/main.ui:294
 msgid ""
@@ -270,18 +268,16 @@ msgid "Profile"
 msgstr "Perfil"
 
 #: oversteer/main.ui:578
-#, fuzzy
 msgid "Delete"
-msgstr "Borra Perfil"
+msgstr "Borra"
 
 #: oversteer/main.ui:582
 msgid "Delete profile"
 msgstr "Borra Perfil"
 
 #: oversteer/main.ui:593
-#, fuzzy
 msgid "Save"
-msgstr "Garda como"
+msgstr "Garda"
 
 #: oversteer/main.ui:597
 msgid "Save profile"
@@ -296,7 +292,6 @@ msgid "Save as new profile"
 msgstr "Salva coma novo perfil"
 
 #: oversteer/main.ui:659
-#, fuzzy
 msgid "Save as"
 msgstr "Garda como"
 
@@ -310,10 +305,9 @@ msgstr "Modo de Compatibilidade"
 
 #: oversteer/main.ui:764
 msgid "Apply"
-msgstr ""
+msgstr "Aplica"
 
 #: oversteer/main.ui:768
-#, fuzzy
 msgid "Apply changes (the wheel may move when changing the emulation mode)."
 msgstr ""
 "Aplica os trocos (o volante pode moverse cando se cambia o modo de "
