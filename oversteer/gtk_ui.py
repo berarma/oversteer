@@ -10,6 +10,8 @@ from gi.repository import Gtk, Gdk, GLib
 
 class GtkUi:
 
+    ffbmeter_timer = False
+
     def __init__(self, gui):
         self.gui = gui
 
@@ -382,14 +384,25 @@ class GtkUi:
         if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
-                if ffbmeter_overlay:
-                    GLib.timeout_add(250, self.update_ffbmeter_overlay)
+            if not self.ffbmeter_timer and self.overlay_window.props.visible and ffbmeter_overlay:
+                GLib.timeout_add(250, self.update_ffbmeter_overlay)
+            if ffbmeter_overlay:
+                self._ffbmeter_overlay.show()
+            else:
+                self._ffbmeter_overlay.hide()
+            if wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
+                self._wheel_range_overlay.show()
+            else:
+                self._wheel_range_overlay.hide()
+
         else:
             self.overlay_window.hide()
 
     def update_ffbmeter_overlay(self):
         if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
+            self.ffbmeter_timer = False
             return False
+        self.ffbmeter_timer = True
         device_id = self.get_device_id()
         level = self.gui.read_ffbmeter(device_id)
         if level < 2458: # < 7.5%
@@ -544,7 +557,7 @@ class GtkUi:
             self._ffbmeter_overlay.show()
         else:
             self._ffbmeter_overlay.hide()
-        GLib.idle_add(self._update_overlay)
+        self.update_overlay()
 
     def on_wheel_range_overlay_clicked(self, widget):
         self.update_overlay()
