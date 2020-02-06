@@ -24,9 +24,8 @@ class Application:
         parser.add_argument('--spring-level', type=int, help=_("set the spring level [0-100]"))
         parser.add_argument('--damper-level', type=int, help=_("set the damper level [0-100]"))
         parser.add_argument('--friction-level', type=int, help=_("set the friction level [0-100]"))
-        parser.add_argument('--ffb-leds', action='store_true', help=_("enable/disable FFBmeter leds"))
-        parser.add_argument('--ffb-overlay', action='store_true', help=_("enable/disable FFBmeter overlay"))
-        parser.add_argument('--range-overlay', help=_("enable range overlay (never, always or auto)"))
+        parser.add_argument('--ffb-leds', action='store_true', default=None, help=_("enable FFBmeter leds"))
+        parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
         parser.add_argument('-i', '--interactive', action='store_true', help=_("start the GUI"))
         parser.add_argument('--debug', action='store_true', help=_("enable debug output"))
@@ -88,13 +87,9 @@ class Application:
         if args.friction_level != None:
             wheels.set_friction_level(device_id, args.friction_level)
             nothing_done = False
-        if args.ffb_leds != None and args.ffb_leds:
-            wheels.set_ffb_leds(device_id, 1)
+        if args.ffb_leds != None:
+            wheels.set_ffb_leds(device_id, 1 if args.ffb_leds else 0)
             nothing_done = False
-        if args.ffb_overlay != None and args.ffb_overlay:
-            args.interactive = True
-        if args.range_overlay != None and args.range_overlay:
-            args.interactive = True
         if args.profile != None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             profile = Profile()

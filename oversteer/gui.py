@@ -83,12 +83,6 @@ class Gui:
         if self.app.args.device_id:
             self.ui.set_device_id(self.app.args.device_id)
 
-        if self.app.args.ffb_overlay or self.app.args.range_overlay:
-            if self.app.args.ffb_overlay:
-                self.ui.set_ffbmeter_overlay(True)
-            if self.app.args.range_overlay:
-                self.ui.set_wheel_range_overlay(self.app.args.range_overlay)
-
         threading.Thread(target=self.input_thread, daemon = True).start()
 
         self.ui.main()
