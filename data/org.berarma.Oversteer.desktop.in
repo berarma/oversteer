@@ -6,5 +6,5 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Icon=org.berarma.Oversteer
-Categories=Games;Utility;
+Categories=Game;Utility;
 Keywords=game;racing;cars;wheels
