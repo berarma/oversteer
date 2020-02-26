@@ -94,6 +94,9 @@ It's possible to configure game launchers to run oversteer to load a profile or
 change settings so that it automatically configures the wheel when the game
 runs.
 
+@Leillo1975 has kindly created a [video explaining the basics of Oversteer
+(Spanish)](https://www.youtube.com/watch?v=WdIV1FOkFsw).
+
 ## Updating translations (for translators)
 
 ```
