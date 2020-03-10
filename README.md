@@ -2,7 +2,7 @@
 
 https://github.com/berarma/oversteer
 
-Oversteer is a desktop application to configure Logitech Wheels.
+Oversteer is an application to configure Logitech Wheels.
 
 Features (when supported by the device):
  - Change emulation mode.
@@ -35,7 +35,7 @@ driver:
  - G920 Driving Force Racing Wheel
 
 I can test only on a Logitech G29 Driving Force. Please, report your results
-with different devices.
+with other devices.
 
 Use at your own risk. Suggestions, bugs and pull requests welcome.
 
@@ -54,6 +54,9 @@ There's an AUR package kindly created by DNModder.
 You can install all dependencies on Debian systems with the following command:
 
 `apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils`
+
+In other distributions use the available tools to install the packages that
+will have similar names.
 
 #### Permissions
 
@@ -90,9 +93,8 @@ Oversteer can be launched as any desktop application.
 It's also possible to use it from the console. Type `oversteer --help` to see
 the command line help.
 
-It's possible to configure game launchers to run oversteer to load a profile or
-change settings so that it automatically configures the wheel when the game
-runs.
+You can configure game launchers to run oversteer to load a profile or change
+settings so that it automatically configures the wheel when the game runs.
 
 @Leillo1975 has kindly created a [video explaining the basics of Oversteer
 (Spanish)](https://www.youtube.com/watch?v=WdIV1FOkFsw).
@@ -106,12 +108,12 @@ ninja -C build oversteer-update-po
 
 ## Contributing
 
-We could all benefit greatly benefit from your help as with any other free
-software project.
+We could all greatly benefit from your help as with any other free software
+project.
 
 Reports about what works and what not on different devices and systems are very
 welcome. You can also help by contributing specific notes for your distro, or
-doing the packaging work or anything else.
+doing the packaging work and everything else.
 
 ## Disclaimer
 
