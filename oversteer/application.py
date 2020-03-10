@@ -3,6 +3,7 @@ import configparser
 from locale import gettext as _
 import logging
 import os
+from .profiles import Profile
 import sys
 from xdg.BaseDirectory import *
 
@@ -90,7 +91,7 @@ class Application:
         if args.ffb_leds != None:
             wheels.set_ffb_leds(device_id, 1 if args.ffb_leds else 0)
             nothing_done = False
-        if args.profile != None:
+        if not args.interactive and args.profile != None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             profile = Profile()
             profile.load(profile_file)

@@ -84,6 +84,11 @@ class Gui:
         if self.app.args.device_id:
             self.ui.set_device_id(self.app.args.device_id)
 
+        if self.app.args.profile != None:
+            profile_file = os.path.join(self.profile_path, self.app.args.profile + '.ini')
+            if os.path.exists(profile_file):
+                self.ui.set_profile(profile_file)
+
         threading.Thread(target=self.input_thread, daemon = True).start()
 
         self.ui.main()
