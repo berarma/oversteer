@@ -328,6 +328,14 @@ class Gui:
         self.check_permissions_dialog = self.ui.get_check_permissions()
         check_permissions = '1' if self.check_permissions_dialog else '0'
         config = configparser.ConfigParser()
+        if language != '':
+            try:
+                locale.setlocale(locale.LC_ALL, (language, 'UTF-8'))
+            except locale.Error:
+                self.ui.info_dialog(_("Failed to change language."),
+                _("Make sure locale '" + str(language) + ".UTF8' is generated on your system" ))
+                self.ui.set_language(self.locale)
+                language = self.ui.get_language()
         config['DEFAULT'] = {
             'locale': language,
             'check_permissions': check_permissions,
@@ -336,8 +344,6 @@ class Gui:
         config_file = os.path.join(self.config_path, 'config.ini')
         with open(config_file, 'w') as file:
             config.write(file)
-        if language != '':
-            locale.setlocale(locale.LC_ALL, (language, 'UTF-8'))
 
     def stop_button_setup(self):
         self.button_setup_step = False
