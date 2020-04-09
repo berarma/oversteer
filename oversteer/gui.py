@@ -344,7 +344,7 @@ class Gui:
         config_file = os.path.join(self.config_path, 'config.ini')
         with open(config_file, 'w') as file:
             config.write(file)
-                
+
     def stop_button_setup(self):
         self.button_setup_step = False
         self.ui.reset_define_buttons_text()
