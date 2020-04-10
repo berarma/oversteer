@@ -488,18 +488,16 @@ class GtkUi:
         self.overlay_wheel_range.set_label(range)
 
     def on_overlay_decrange_clicked(self, widget):
-        device_id = self.get_device_id()
         adjustment = self.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
-        self.wheel_range.set_value(self.wheel_range.get_value() - step);
+        self.wheel_range.set_value(self.wheel_range.get_value() - step)
         range = self.format_range(self.wheel_range.get_value())
         self.overlay_wheel_range.set_label(range)
 
     def on_overlay_incrange_clicked(self, widget):
-        device_id = self.get_device_id()
         adjustment = self.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
-        self.wheel_range.set_value(self.wheel_range.get_value() + step);
+        self.wheel_range.set_value(self.wheel_range.get_value() + step)
         range = self.format_range(self.wheel_range.get_value())
         self.overlay_wheel_range.set_label(range)
 
@@ -552,7 +550,6 @@ class GtkUi:
         self.gui.ffbmeter_leds(device_id, widget.get_active())
 
     def on_ffbmeter_overlay_clicked(self, widget):
-        device_id = self.get_device_id()
         if widget.get_active():
             self._ffbmeter_overlay.show()
         else:

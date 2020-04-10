@@ -150,7 +150,7 @@ class Gui:
         self.ui.update()
 
     def read_settings(self, device_id, ignore_emulation_mode = False):
-        alternate_modes = self.wheels.get_alternate_modes(device_id);
+        alternate_modes = self.wheels.get_alternate_modes(device_id)
         self.ui.set_emulation_modes(alternate_modes, True)
 
         emulation_mode = self.wheels.get_current_mode(device_id)
@@ -472,6 +472,6 @@ class Gui:
                         for fd in r:
                             self.read_events(devices[fd])
                     except OSError:
-                        break;
-            time.sleep(1);
+                        break
+            time.sleep(1)
 
