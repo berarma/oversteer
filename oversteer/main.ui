@@ -2548,7 +2548,7 @@
     <property name="transient_for">main_window</property>
     <property name="program_name">Oversteer - Steering Wheel Manager</property>
     <property name="version">0.0.0</property>
-    <property name="copyright" translatable="yes">(c) 2019 Bernat Arlandis</property>
+    <property name="copyright">Copyright © 2019-2020 Bernat Arlandis</property>
     <property name="authors">Bernat Arlandis</property>
     <property name="translator_credits">Leandro Vergara</property>
     <property name="logo_icon_name"/>
