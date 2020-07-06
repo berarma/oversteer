@@ -55,6 +55,10 @@ You can install all dependencies on Debian systems with the following command:
 
 `apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils`
 
+You can install all dependencies on Fedora systems with the following command:
+
+`dnf install python3 python3-gobject python3-pyudev python3-pyxdg python3-libevdev gettext meson appstream desktop-file-utils`
+
 In other distributions use the available tools to install the packages that
 will have similar names.
 
