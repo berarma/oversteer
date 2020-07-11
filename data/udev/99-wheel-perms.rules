@@ -42,3 +42,6 @@ SUBSYSTEMS=="hid", KERNELS=="0003:046D:C20E.????", DRIVERS=="logitech", RUN+="/b
 
 # Logitech WingMan Formula (Yellow) (USB)
 SUBSYSTEMS=="hid", KERNELS=="0003:046D:C202.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../range'"
+
+# Thrustmaster T300RS Racing Wheel (USB)
+SUBSYSTEMS=="hid", KERNELS=="0003:044F:B66E.????", DRIVERS=="t300rs", RUN+="/bin/sh -c 'chmod 666 %S%p/../../../range'"

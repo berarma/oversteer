@@ -30,6 +30,8 @@ class Wheels:
         'b66e', # T300RS
     ]
 
+    model_id = ''
+
     def __init__(self):
         self.reset()
 
@@ -40,8 +42,12 @@ class Wheels:
         for device in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
             if device.get('ID_VENDOR_ID') in self.supported_vendors and device.get('ID_MODEL_ID') in self.supported_models:
                 self.add_udev_data(device)
+                self.model_id = device.get('ID_MODEL_ID')
 
         logging.debug('Devices:' + str(self.devices))
+
+    def get_model_id(self):
+        return self.model_id
 
     def add_udev_data(self, device):
         device_id = device.get('ID_FOR_SEAT')
