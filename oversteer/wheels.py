@@ -11,6 +11,11 @@ logging.basicConfig(level=logging.DEBUG)
 
 class Wheels:
 
+    supported_vendors = [
+        '046d', # Logitech
+        '044f', # Thrustmaster
+    ]
+
     supported_models = [
         'c24f', # G29
         'c262', # G920
@@ -22,7 +27,10 @@ class Wheels:
         'c29b', # G27
         'c29c', # Speed Force Wireless
         'ca03', # MOMO2
+        'b66e', # T300RS
     ]
+
+    model_id = ''
 
     def __init__(self):
         self.reset()
@@ -32,10 +40,14 @@ class Wheels:
 
         context = pyudev.Context()
         for device in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
-            if device.get('ID_VENDOR_ID') == '046d' and device.get('ID_MODEL_ID') in self.supported_models:
+            if device.get('ID_VENDOR_ID') in self.supported_vendors and device.get('ID_MODEL_ID') in self.supported_models:
                 self.add_udev_data(device)
+                self.model_id = device.get('ID_MODEL_ID')
 
         logging.debug('Devices:' + str(self.devices))
+
+    def get_model_id(self):
+        return self.model_id
 
     def add_udev_data(self, device):
         device_id = device.get('ID_FOR_SEAT')

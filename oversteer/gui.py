@@ -18,6 +18,8 @@ class Gui:
 
     locale = ''
 
+    model_id = ''
+
     device = None
 
     grab_input = False
@@ -32,6 +34,10 @@ class Gui:
         -1,
         -1,
         -1,
+    ]
+
+    thrustmaster_ids = [
+        'b66e',
     ]
 
     button_labels = [
@@ -92,6 +98,9 @@ class Gui:
         threading.Thread(target=self.input_thread, daemon = True).start()
 
         self.ui.main()
+
+    def set_model_id(self, model_id):
+        self.model_id = model_id
 
     def sig_int_handler(self, signal, frame):
         sys.exit(0)
@@ -425,6 +434,10 @@ class Gui:
                         value = event.value * 4
                     else:
                         value = event.value
+
+                    if self.wheels.get_model_id() in self.thrustmaster_ids:
+                        value = event.value
+
                     self.ui.set_steering_input(value)
                 elif event.code == ecodes.ABS_Y:
                     if self.emulation_mode == 'DFGT' or self.emulation_mode == 'DFP':
