@@ -108,7 +108,7 @@ class Gui:
     def install_udev_file(self):
         if not self.check_permissions_dialog:
             return
-        udev_file = self.app.datadir + '/udev/99-wheel-perms.rules'
+        udev_file = self.app.datadir + '/udev/99-logitech-wheel-perms.rules'
         target_dir = '/etc/udev/rules.d/'
         while True:
             affirmative = self.ui.confirmation_dialog(_("You don't have the " +
