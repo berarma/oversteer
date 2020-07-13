@@ -6,6 +6,13 @@ list.list > row {
     padding-right: 16px;
 }
 levelbar block.filled {
+    /*
+     * Work around issue in some themes
+     * See: https://github.com/berarma/oversteer/issues/15
+     */
+    min-width: 0px;
+    min-height: 0px;
+    /* End of workaround */
     background-color: #3584e4;
 }
 stacksidebar list row {
