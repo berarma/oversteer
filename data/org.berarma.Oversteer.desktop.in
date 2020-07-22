@@ -5,6 +5,7 @@ Exec=@bindir@/oversteer
 Terminal=false
 Type=Application
 StartupNotify=true
+StartupWMClass=Oversteer
 Icon=org.berarma.Oversteer
 Categories=Game;Utility;
 Keywords=game;racing;cars;wheels
