@@ -55,7 +55,7 @@ class Wheels:
 
         context = pyudev.Context()
         for device in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
-            if device.get('ID_VENDOR_ID') + ':' + device.get('ID_MODEL_ID') in self.supported_wheels:
+            if str(device.get('ID_VENDOR_ID')) + ':' + str(device.get('ID_MODEL_ID')) in self.supported_wheels:
                 self.add_udev_data(device)
 
         logging.debug('Devices:' + str(self.devices))
