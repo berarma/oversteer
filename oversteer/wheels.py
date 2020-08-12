@@ -1,3 +1,4 @@
+from enum import Enum
 from evdev import ecodes, InputDevice
 import functools
 import glob
@@ -5,34 +6,48 @@ import logging
 import os
 import pyudev
 import re
+import select
 import time
 
 logging.basicConfig(level=logging.DEBUG)
 
 class Wheels:
 
-    supported_vendors = [
-        '046d', # Logitech
-        '044f', # Thrustmaster
-    ]
+    VENDOR_LOGITECH = '046d'
+    VENDOR_THRUSTMASTER = '044f'
 
-    supported_models = [
-        'c24f', # G29
-        'c262', # G920
-        'c294', # Driving Force / Formula EX
-        'c295', # MOMO
-        'c298', # Driving Force pro
-        'c299', # G25
-        'c29a', # Driving Force GT
-        'c29b', # G27
-        'c29c', # Speed Force Wireless
-        'ca03', # MOMO2
-        'b66e', # T300RS
-    ]
+    LG_G29 = '046d:c24f'
+    LG_G920 = '046d:c262'
+    LG_DF = '046d:c294'
+    LG_MOMO = '046d:c295'
+    LG_DFP = '046d:c298'
+    LG_G25 = '046d:c299'
+    LG_DFGT = '046d:c29a'
+    LG_G27 = '046d:c29b'
+    LG_SFW = '046d:c29c'
+    LG_MOMO2 = '046d:ca03'
+    TM_T300RS = '044f:b66e'
 
-    model_id = ''
+    supported_wheels = []
+
+    devices = {}
+
+    idevice = None
 
     def __init__(self):
+        self.supported_wheels = [
+            self.LG_G29,
+            self.LG_G920,
+            self.LG_DF,
+            self.LG_MOMO,
+            self.LG_DFP,
+            self.LG_G25,
+            self.LG_DFGT,
+            self.LG_G27,
+            self.LG_SFW,
+            self.LG_MOMO2,
+            self.TM_T300RS,
+        ]
         self.reset()
 
     def reset(self):
@@ -40,20 +55,22 @@ class Wheels:
 
         context = pyudev.Context()
         for device in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
-            if device.get('ID_VENDOR_ID') in self.supported_vendors and device.get('ID_MODEL_ID') in self.supported_models:
+            if device.get('ID_VENDOR_ID') + ':' + device.get('ID_MODEL_ID') in self.supported_wheels:
                 self.add_udev_data(device)
-                self.model_id = device.get('ID_MODEL_ID')
 
         logging.debug('Devices:' + str(self.devices))
-
-    def get_model_id(self):
-        return self.model_id
 
     def add_udev_data(self, device):
         device_id = device.get('ID_FOR_SEAT')
 
         if device_id not in self.devices:
-            data = {'id': device_id}
+            data = {
+                'id': device_id,
+                'vendor': device.get('ID_VENDOR_ID'),
+                'model': device.get('ID_MODEL_ID'),
+                'usbid': device.get('ID_VENDOR_ID') + ':' + device.get('ID_MODEL_ID'),
+                'input_device': None,
+            }
             self.devices[device_id] = data
         else:
             data = self.devices[device_id]
@@ -72,10 +89,19 @@ class Wheels:
         return None
 
     def id_to_dev(self, device_id):
+        print(self.devices)
+        print(self.devices[device_id])
         return self.devices[device_id]['dev']
 
     def device_file(self, device_id, filename):
         return os.path.join(self.devices[device_id]['path'], filename)
+
+    def get_input_device(self, device_id):
+        idevice = self.devices[device_id]['input_device']
+        if idevice == None:
+            idevice = InputDevice(self.devices[device_id]['dev'])
+            self.devices[device_id]['input_device'] = idevice
+        return idevice
 
     def checked_device_file(self, device_id, filename):
         path = self.device_file(device_id, filename)
@@ -231,6 +257,9 @@ class Wheels:
         old_mode = self.get_current_mode(device_id)
         if old_mode == emulation_mode:
             return True
+        idevice = self.get_input_device(device_id)
+        if idevice != None:
+            idevice.close()
         logging.debug("Setting mode: " + str(emulation_mode))
         with open(path, "w") as file:
             file.write(emulation_mode)
@@ -366,3 +395,28 @@ class Wheels:
             return True
         return False
 
+    def read_events(self, device_id, timeout):
+        idevice = self.get_input_device(device_id)
+        r, w, x = select.select({idevice.fd: idevice}, [], [], timeout)
+        if idevice.fd in r:
+            for event in idevice.read():
+                yield self.normalize_event(device_id, event)
+
+        return None
+
+    def normalize_event(self, device_id, event):
+        device = self.devices[device_id]
+        usbid = device['usbid']
+        if event.type == ecodes.EV_ABS:
+            if event.code == ecodes.ABS_X:
+                if usbid not in [self.LG_G29, self.TM_T300RS]:
+                    event.value = event.value * 4
+            elif usbid not in [self.LG_DFGT, self.LG_DFP, self.LG_G920]:
+                if event.code == ecodes.ABS_Y:
+                    event.code = ecodes.ABS_RZ
+                elif event.code == ecodes.ABS_Z:
+                    event.code = ecodes.ABS_Y
+                elif event.code == ecodes.ABS_RZ:
+                    event.code = ecodes.ABS_Z
+
+        return event

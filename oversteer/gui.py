@@ -3,7 +3,6 @@ from evdev import InputDevice, categorize, ecodes
 import glob
 import locale
 from locale import gettext as _
-import select
 import signal
 import subprocess
 import sys
@@ -18,9 +17,7 @@ class Gui:
 
     locale = ''
 
-    model_id = ''
-
-    device = None
+    device_id = None
 
     grab_input = False
 
@@ -89,6 +86,7 @@ class Gui:
 
         if self.app.args.device_id:
             self.ui.set_device_id(self.app.args.device_id)
+            self.device_id = self.app.args.device_id
 
         if self.app.args.profile != None:
             profile_file = os.path.join(self.profile_path, self.app.args.profile + '.ini')
@@ -98,9 +96,6 @@ class Gui:
         threading.Thread(target=self.input_thread, daemon = True).start()
 
         self.ui.main()
-
-    def set_model_id(self, model_id):
-        self.model_id = model_id
 
     def sig_int_handler(self, signal, frame):
         sys.exit(0)
@@ -197,11 +192,7 @@ class Gui:
         self.ui.set_ffbmeter_overlay_visibility(True if self.wheels.get_peak_ffb_level(device_id) != None else False)
 
     def change_device(self, device_id):
-        if device_id == None:
-            self.device = None
-            return
-
-        self.device = InputDevice(self.wheels.id_to_dev(device_id))
+        self.device_id = device_id
 
         if not self.wheels.check_permissions(device_id):
             self.install_udev_file()
@@ -272,12 +263,10 @@ class Gui:
         self.save_profile(profile_file)
 
     def set_emulation_mode(self, device_id, mode):
-        self.device.close()
-        self.device = None
         self.wheels.set_mode(device_id, mode)
         self.emulation_mode = mode
-        self.device = InputDevice(self.wheels.id_to_dev(device_id))
         self.ui.set_device_id(device_id)
+        self.device_id = device_id
         self.read_settings(device_id, True)
 
     def change_range(self, device_id, range):
@@ -382,12 +371,13 @@ class Gui:
 
         if self.ui.get_wheel_buttons_enabled():
             if button == self.button_config[0] and value == 0:
+                device = self.wheels.get_input_device(self.device_id)
                 if self.grab_input:
-                    self.device.ungrab()
+                    device.ungrab()
                     self.grab_input = False
                     self.ui.update_overlay(False)
                 else:
-                    self.device.grab()
+                    device.grab()
                     self.grab_input = True
                     self.ui.update_overlay(True)
             if self.grab_input and value == 1:
@@ -426,31 +416,17 @@ class Gui:
             range = 900
         self.ui.set_range(range)
 
-    def read_events(self, device):
-        for event in device.read():
+    def process_events(self, events):
+        for event in events:
             if event.type == ecodes.EV_ABS:
                 if event.code == ecodes.ABS_X:
-                    if self.emulation_mode != 'G29':
-                        value = event.value * 4
-                    else:
-                        value = event.value
-
-                    if self.wheels.get_model_id() in self.thrustmaster_ids:
-                        value = event.value
-
-                    self.ui.set_steering_input(value)
+                    self.ui.set_steering_input(event.value)
                 elif event.code == ecodes.ABS_Y:
-                    if self.emulation_mode == 'DFGT' or self.emulation_mode == 'DFP':
-                        self.ui.set_accelerator_input(event.value)
-                    else:
-                        self.ui.set_clutch_input(event.value)
+                    self.ui.set_accelerator_input(event.value)
                 elif event.code == ecodes.ABS_Z:
-                    if self.emulation_mode == 'DFGT' or self.emulation_mode == 'DFP':
-                        self.ui.set_brakes_input(event.value)
-                    else:
-                        self.ui.set_accelerator_input(event.value)
-                elif event.code == ecodes.ABS_RZ:
                     self.ui.set_brakes_input(event.value)
+                elif event.code == ecodes.ABS_RZ:
+                    self.ui.set_clutch_input(event.value)
                 elif event.code == ecodes.ABS_HAT0X:
                     self.ui.set_hatx_input(event.value)
                     if event.value == -1:
@@ -477,14 +453,10 @@ class Gui:
 
     def input_thread(self):
         while 1:
-            if self.device != None:
-                devices = {self.device.fd: self.device}
-                while 1:
-                    r, w, x = select.select(devices, [], [], 0.2)
-                    try:
-                        for fd in r:
-                            self.read_events(devices[fd])
-                    except OSError:
-                        break
-            time.sleep(1)
+            try:
+                events = self.wheels.read_events(self.device_id, 0.2);
+            except OSError:
+                time.sleep(1)
+            if events != None:
+                self.process_events(events)
 
