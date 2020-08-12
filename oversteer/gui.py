@@ -454,7 +454,7 @@ class Gui:
     def input_thread(self):
         while 1:
             try:
-                events = self.wheels.read_events(self.device_id, 0.2);
+                events = self.wheels.read_events(self.device_id, 0.2)
             except OSError:
                 time.sleep(1)
             if events != None:
