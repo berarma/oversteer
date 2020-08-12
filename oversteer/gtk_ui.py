@@ -12,6 +12,8 @@ class GtkUi:
 
     ffbmeter_timer = False
 
+    overlay_window_pos = (20, 20)
+
     def __init__(self, gui):
         self.gui = gui
 
@@ -384,6 +386,7 @@ class GtkUi:
         if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
+                self.overlay_window.move(self.overlay_window_pos[0], self.overlay_window_pos[1])
             if not self.ffbmeter_timer and self.overlay_window.props.visible and ffbmeter_overlay:
                 GLib.timeout_add(250, self.update_ffbmeter_overlay)
             if ffbmeter_overlay:
@@ -396,6 +399,7 @@ class GtkUi:
                 self._wheel_range_overlay.hide()
 
         else:
+            self.overlay_window_pos = self.overlay_window.get_position()
             self.overlay_window.hide()
 
     def update_ffbmeter_overlay(self):
