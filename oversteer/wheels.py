@@ -89,8 +89,6 @@ class Wheels:
         return None
 
     def id_to_dev(self, device_id):
-        print(self.devices)
-        print(self.devices[device_id])
         return self.devices[device_id]['dev']
 
     def device_file(self, device_id, filename):
