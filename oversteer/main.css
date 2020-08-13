@@ -1,3 +1,9 @@
+window#overlay-window {
+    background-color: rgba(50, 50, 50, 0.85);
+}
+window#overlay-window label {
+    color: white;
+}
 list.list {
     border: 1px solid #ccc;
 }

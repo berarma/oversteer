@@ -566,6 +566,11 @@ class GtkUi:
     def on_start_define_buttons_clicked(self, widget):
         self.gui.start_stop_button_setup()
 
+    def _screen_changed(self, widget, old_screen, userdata=None):
+        screen = self.overlay_window.get_screen()
+        visual = screen.get_rgba_visual()
+        self.overlay_window.set_visual(visual)
+
     def _set_builder_objects(self):
         self.builder = Gtk.Builder()
         self.builder.set_translation_domain('oversteer')
@@ -576,6 +581,8 @@ class GtkUi:
         self.preferences_window = self.builder.get_object('preferences_window')
         self.overlay_window = self.builder.get_object('overlay_window')
         self.overlay_window.set_keep_above(True)
+        self.overlay_window.connect("screen-changed", self._screen_changed)
+        self._screen_changed(self.overlay_window, None)
 
         self.languages_combobox = self.builder.get_object('languages')
         self.check_permissions = self.builder.get_object('check_permissions')
