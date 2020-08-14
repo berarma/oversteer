@@ -110,7 +110,6 @@
     <property name="skip_pager_hint">True</property>
     <property name="accept_focus">False</property>
     <property name="focus_on_map">False</property>
-    <property name="decorated">False</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -120,18 +119,6 @@
         <property name="margin_top">8</property>
         <property name="margin_bottom">4</property>
         <property name="orientation">vertical</property>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Oversteer</property>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
         <child>
           <object class="GtkBox" id="_wheel_range_overlay">
             <property name="visible">True</property>
@@ -145,6 +132,18 @@
                 <property name="receives_default">True</property>
                 <property name="relief">none</property>
                 <signal name="clicked" handler="on_overlay_decrange_clicked" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="overlay_wheel_range">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label">900</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -164,19 +163,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel" id="overlay_wheel_range">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label">900</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -263,7 +250,11 @@
       </object>
     </child>
     <child type="titlebar">
-      <placeholder/>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Oversteer</property>
+      </object>
     </child>
   </object>
   <object class="GtkDialog" id="preferences_window">

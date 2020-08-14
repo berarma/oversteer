@@ -1,8 +1,19 @@
 window#overlay-window {
     background-color: rgba(50, 50, 50, 0.85);
 }
-window#overlay-window label {
-    color: white;
+window#overlay-window * {
+    background-color: transparent;
+    color: #fcfcfc;
+}
+window#overlay-window decoration {
+    border-radius: 0;
+}
+window#overlay-window .titlebar {
+    border-radius: 0;
+    background-color: rgba(80, 80, 80, 0.85);
+}
+window#overlay-window levelbar trough {
+    background-color: #fcfcfc;
 }
 list.list {
     border: 1px solid #ccc;
