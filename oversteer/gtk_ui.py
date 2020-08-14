@@ -119,6 +119,7 @@ class GtkUi:
             model.append(pair)
         if devices:
             self.device_combobox.set_model(model)
+            self.device_combobox.set_active(0)
 
     def set_profiles(self, profiles):
         model = self.profile_combobox.get_model()

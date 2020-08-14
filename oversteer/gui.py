@@ -133,6 +133,7 @@ class Gui:
                 break
 
     def update(self):
+        self.device_id = None
         self.wheels.reset()
         self.populate_window()
 
@@ -456,10 +457,10 @@ class Gui:
             if self.device_id is not None:
                 try:
                     events = self.wheels.read_events(self.device_id, 0.2)
+                    if events != None:
+                        self.process_events(events)
                 except OSError:
                     time.sleep(1)
-                if events != None:
-                    self.process_events(events)
             else:
                 time.sleep(1)
 
