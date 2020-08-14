@@ -360,6 +360,8 @@ class Wheels:
         return True
 
     def check_permissions(self, device_id):
+        if device_id is None:
+            return True
         if not os.access(self.devices[device_id]['path'], os.F_OK | os.R_OK | os.X_OK):
             return False
         if not self.check_file_permissions(self.device_file(device_id, 'alternate_modes')):

@@ -453,10 +453,13 @@ class Gui:
 
     def input_thread(self):
         while 1:
-            try:
-                events = self.wheels.read_events(self.device_id, 0.2)
-            except OSError:
+            if self.device_id is not None:
+                try:
+                    events = self.wheels.read_events(self.device_id, 0.2)
+                except OSError:
+                    time.sleep(1)
+                if events != None:
+                    self.process_events(events)
+            else:
                 time.sleep(1)
-            if events != None:
-                self.process_events(events)
 
