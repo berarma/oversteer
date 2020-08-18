@@ -10,12 +10,10 @@ from gi.repository import Gtk, Gdk, GLib
 
 class GtkUi:
 
-    ffbmeter_timer = False
-
-    overlay_window_pos = (20, 20)
-
     def __init__(self, gui):
         self.gui = gui
+        self.ffbmeter_timer = False
+        self.overlay_window_pos = (20, 20)
 
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.css'))
@@ -163,8 +161,7 @@ class GtkUi:
         return self.emulation_mode_combobox.get_active_id()
 
     def change_emulation_mode(self, mode):
-        device_id = self.get_device_id()
-        self.gui.set_emulation_mode(device_id, mode)
+        self.gui.set_emulation_mode(mode)
         self.change_emulation_mode_button.set_sensitive(False)
 
     def set_range(self, range, startup = False):
@@ -408,8 +405,7 @@ class GtkUi:
             self.ffbmeter_timer = False
             return False
         self.ffbmeter_timer = True
-        device_id = self.get_device_id()
-        level = self.gui.read_ffbmeter(device_id)
+        level = self.gui.read_ffbmeter()
         if level < 2458: # < 7.5%
             led_states = 0
         elif level < 8192: # < 25%
@@ -487,9 +483,8 @@ class GtkUi:
         self.change_emulation_mode_button.set_sensitive(True)
 
     def on_wheel_range_value_changed(self, widget):
-        device_id = self.get_device_id()
         range = self.format_range(self.wheel_range.get_value())
-        self.gui.change_range(device_id, int(range))
+        self.gui.change_range(int(range))
         self.overlay_wheel_range.set_label(range)
 
     def on_overlay_decrange_clicked(self, widget):
@@ -507,26 +502,21 @@ class GtkUi:
         self.overlay_wheel_range.set_label(range)
 
     def on_combine_none_clicked(self, widget):
-        device_id = self.get_device_id()
-        self.gui.combine_none(device_id)
+        self.gui.combine_none()
 
     def on_combine_brakes_clicked(self, widget):
-        device_id = self.get_device_id()
-        self.gui.combine_brakes(device_id)
+        self.gui.combine_brakes()
 
     def on_combine_clutch_clicked(self, widget):
-        device_id = self.get_device_id()
-        self.gui.combine_clutch(device_id)
+        self.gui.combine_clutch()
 
     def on_ff_gain_value_changed(self, widget):
-        device_id = self.get_device_id()
         ff_gain = int(self.ff_gain.get_value())
-        self.gui.set_ff_gain(device_id, ff_gain)
+        self.gui.set_ff_gain(ff_gain)
 
     def on_autocenter_value_changed(self, widget):
-        device_id = self.get_device_id()
         autocenter = int(self.autocenter.get_value())
-        self.gui.change_autocenter(device_id, autocenter)
+        self.gui.change_autocenter(autocenter)
 
     def on_delete_profile_clicked(self, widget):
         profile_file = self.profile_combobox.get_active_id()
@@ -539,20 +529,16 @@ class GtkUi:
         GLib.idle_add(self.gui.save_preferences)
 
     def on_ff_spring_level_value_changed(self, widget):
-        device_id = self.get_device_id()
-        self.gui.set_spring_level(device_id, self.ff_spring_level.get_value())
+        self.gui.set_spring_level(self.ff_spring_level.get_value())
 
     def on_ff_damper_level_value_changed(self, widget):
-        device_id = self.get_device_id()
-        self.gui.set_damper_level(device_id, self.ff_damper_level.get_value())
+        self.gui.set_damper_level(self.ff_damper_level.get_value())
 
     def on_ff_friction_level_value_changed(self, widget):
-        device_id = self.get_device_id()
-        self.gui.set_friction_level(device_id, self.ff_friction_level.get_value())
+        self.gui.set_friction_level(self.ff_friction_level.get_value())
 
     def on_ffbmeter_leds_clicked(self, widget):
-        device_id = self.get_device_id()
-        self.gui.ffbmeter_leds(device_id, widget.get_active())
+        self.gui.ffbmeter_leds(widget.get_active())
 
     def on_ffbmeter_overlay_clicked(self, widget):
         if widget.get_active():

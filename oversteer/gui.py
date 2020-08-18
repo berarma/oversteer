@@ -9,59 +9,51 @@ import sys
 import threading
 import time
 from xdg.BaseDirectory import *
-from .wheels import Wheels
+from .device_manager import DeviceManager
 from .gtk_ui import GtkUi
 from .profiles import Profile
 
 class Gui:
 
-    locale = ''
-
-    device_id = None
-
-    grab_input = False
-
-    button_config = [
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-        -1,
-    ]
-
-    thrustmaster_ids = [
-        'b66e',
-    ]
-
-    button_labels = [
-        _("Activation Switch"),
-        _("Set 270º"),
-        _("Set 360º"),
-        _("Set 540º"),
-        _("Set 900º"),
-        _("+10º"),
-        _("-10º"),
-        _("+90º"),
-        _("-90º"),
-    ]
-
-    button_setup_step = False
-
-    languages = [
-        ('', _('System default')),
-        ('en_US', _('English')),
-        ('es_ES', _('Spanish')),
-        ('gl_ES', _('Galician')),
-        ('ca_ES', _('Valencian')),
-    ]
-
     def __init__(self, application):
         self.app = application
-        self.wheels = self.app.wheels
+        self.device_manager = self.app.device_manager
+        self.locale = ''
+        self.device = None
+        self.grab_input = False
+        self.button_config = [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+        ]
+        self.thrustmaster_ids = [
+            'b66e',
+        ]
+        self.button_labels = [
+            _("Activation Switch"),
+            _("Set 270º"),
+            _("Set 360º"),
+            _("Set 540º"),
+            _("Set 900º"),
+            _("+10º"),
+            _("-10º"),
+            _("+90º"),
+            _("-90º"),
+        ]
+        self.button_setup_step = False
+        self.languages = [
+            ('', _('System default')),
+            ('en_US', _('English')),
+            ('es_ES', _('Spanish')),
+            ('gl_ES', _('Galician')),
+            ('ca_ES', _('Valencian')),
+        ]
 
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
@@ -84,9 +76,9 @@ class Gui:
 
         self.populate_window()
 
-        if self.app.args.device_id:
-            self.ui.set_device_id(self.app.args.device_id)
-            self.device_id = self.app.args.device_id
+        if self.app.device:
+            self.device = self.app.device
+            self.ui.set_device_id(self.device.get_id())
 
         if self.app.args.profile != None:
             profile_file = os.path.join(self.profile_path, self.app.args.profile + '.ini')
@@ -133,13 +125,13 @@ class Gui:
                 break
 
     def update(self):
-        self.device_id = None
-        self.wheels.reset()
+        self.device = None
+        self.device_manager.reset()
         self.populate_window()
 
     def populate_devices(self):
         devices = []
-        for pair in self.wheels.get_devices():
+        for pair in self.device_manager.list_devices():
             devices.append(pair)
         self.ui.set_devices(devices)
 
@@ -154,51 +146,51 @@ class Gui:
         self.populate_profiles()
         self.ui.update()
 
-    def read_settings(self, device_id, ignore_emulation_mode = False):
-        alternate_modes = self.wheels.get_alternate_modes(device_id)
+    def read_settings(self, ignore_emulation_mode = False):
+        alternate_modes = self.device.list_modes()
         self.ui.set_emulation_modes(alternate_modes, True)
 
-        emulation_mode = self.wheels.get_current_mode(device_id)
+        emulation_mode = self.device.get_mode()
         if not ignore_emulation_mode:
             self.ui.set_emulation_mode(emulation_mode)
             self.ui.change_emulation_mode(emulation_mode)
 
-        range = self.wheels.get_range(device_id)
+        range = self.device.get_range()
         self.ui.set_range(range, True)
         if range != None:
             # The range returned by the driver after an emulation mode change can be wrong
-            self.wheels.set_range(device_id, range)
+            self.device.set_range(range)
 
-        combine_pedals = self.wheels.get_combine_pedals(device_id)
+        combine_pedals = self.device.get_combine_pedals()
         self.ui.set_combine_pedals(combine_pedals, True)
 
-        autocenter = self.wheels.get_autocenter(device_id)
+        autocenter = self.device.get_autocenter()
         self.ui.set_autocenter(autocenter)
 
-        ff_gain = self.wheels.get_ff_gain(device_id)
+        ff_gain = self.device.get_ff_gain()
         self.ui.set_ff_gain(ff_gain)
 
-        spring_level = self.wheels.get_spring_level(device_id)
+        spring_level = self.device.get_spring_level()
         self.ui.set_spring_level(spring_level, True)
 
-        damper_level = self.wheels.get_damper_level(device_id)
+        damper_level = self.device.get_damper_level()
         self.ui.set_damper_level(damper_level, True)
 
-        friction_level = self.wheels.get_friction_level(device_id)
+        friction_level = self.device.get_friction_level()
         self.ui.set_friction_level(friction_level, True)
 
-        ffb_leds = self.wheels.get_ffb_leds(device_id)
+        ffb_leds = self.device.get_ffb_leds()
         self.ui.set_ffbmeter_leds(ffb_leds, True)
 
-        self.ui.set_ffbmeter_overlay_visibility(True if self.wheels.get_peak_ffb_level(device_id) != None else False)
+        self.ui.set_ffbmeter_overlay_visibility(True if self.device.get_peak_ffb_level() != None else False)
 
     def change_device(self, device_id):
-        self.device_id = device_id
+        self.device = self.device_manager.get_device(device_id)
 
-        if not self.wheels.check_permissions(device_id):
+        if not self.device.check_permissions():
             self.install_udev_file()
 
-        self.read_settings(device_id)
+        self.read_settings()
 
         self.ui.set_ffbmeter_overlay(False)
         self.ui.set_wheel_range_overlay('never')
@@ -240,15 +232,6 @@ class Gui:
             return
 
         profile = Profile()
-        profile.set_mode(self.ui.get_emulation_mode())
-        profile.set_range(self.ui.get_range())
-        profile.set_combine_pedals(self.ui.get_combine_pedals())
-        profile.set_autocenter(self.ui.get_autocenter())
-        profile.set_ff_gain(self.ui.get_ff_gain())
-        profile.set_spring_level(self.ui.get_spring_level())
-        profile.set_damper_level(self.ui.get_damper_level())
-        profile.set_friction_level(self.ui.get_friction_level())
-        profile.set_ffbmeter_leds(self.ui.get_ffbmeter_leds())
         profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
         profile.set_wheel_range_overlay(self.ui.get_wheel_range_overlay())
         profile.set_wheel_buttons(self.ui.get_wheel_buttons())
@@ -263,42 +246,41 @@ class Gui:
                 return
         self.save_profile(profile_file)
 
-    def set_emulation_mode(self, device_id, mode):
-        self.wheels.set_mode(device_id, mode)
+    def set_emulation_mode(self, mode):
+        self.device.set_mode(mode)
         self.emulation_mode = mode
-        self.ui.set_device_id(device_id)
-        self.device_id = device_id
-        self.read_settings(device_id, True)
+        self.ui.set_device_id(self.device.get_id())
+        self.read_settings(True)
 
-    def change_range(self, device_id, range):
-        self.wheels.set_range(device_id, range)
+    def change_range(self, range):
+        self.device.set_range(range)
 
-    def combine_none(self, device_id):
-        self.wheels.set_combine_pedals(device_id, 0)
+    def combine_none(self):
+        self.device.set_combine_pedals(0)
 
-    def combine_brakes(self, device_id):
-        self.wheels.set_combine_pedals(device_id, 1)
+    def combine_brakes(self):
+        self.device.set_combine_pedals(1)
 
-    def combine_clutch(self, device_id):
-        self.wheels.set_combine_pedals(device_id, 2)
+    def combine_clutch(self):
+        self.device.set_combine_pedals(2)
 
-    def set_ff_gain(self, device_id, ff_gain):
-        self.wheels.set_ff_gain(device_id, ff_gain)
+    def set_ff_gain(self, ff_gain):
+        self.device.set_ff_gain(ff_gain)
 
-    def set_spring_level(self, device_id, level):
-        self.wheels.set_spring_level(device_id, level)
+    def set_spring_level(self, level):
+        self.device.set_spring_level(level)
 
-    def set_damper_level(self, device_id, level):
-        self.wheels.set_damper_level(device_id, level)
+    def set_damper_level(self, level):
+        self.device.set_damper_level(level)
 
-    def set_friction_level(self, device_id, level):
-        self.wheels.set_friction_level(device_id, level)
+    def set_friction_level(self, level):
+        self.device.set_friction_level(level)
 
-    def ffbmeter_leds(self, device_id, state):
-        self.wheels.set_ffb_leds(device_id, 1 if state else 0)
+    def ffbmeter_leds(self, state):
+        self.device.set_ffb_leds(1 if state else 0)
 
-    def change_autocenter(self, device_id, autocenter):
-        self.wheels.set_autocenter(device_id, autocenter)
+    def change_autocenter(self, autocenter):
+        self.device.set_autocenter(autocenter)
 
     def delete_profile(self, profile_file):
         if profile_file != '' and profile_file != None:
@@ -372,7 +354,7 @@ class Gui:
 
         if self.ui.get_wheel_buttons_enabled():
             if button == self.button_config[0] and value == 0:
-                device = self.wheels.get_input_device(self.device_id)
+                device = self.device.get_input_device()
                 if self.grab_input:
                     device.ungrab()
                     self.grab_input = False
@@ -399,13 +381,13 @@ class Gui:
                 if button == self.button_config[8]:
                     self.add_range(-90)
 
-    def read_ffbmeter(self, device_id):
-        level = self.wheels.get_peak_ffb_level(device_id)
+    def read_ffbmeter(self):
+        level = self.device.get_peak_ffb_level()
         if level == None:
             return level
         level = int(level)
         if level > 0:
-            self.wheels.set_peak_ffb_level(device_id, 0)
+            self.device.set_peak_ffb_level(0)
         return level
 
     def add_range(self, delta):
@@ -454,12 +436,13 @@ class Gui:
 
     def input_thread(self):
         while 1:
-            if self.device_id is not None:
+            if self.device is not None:
                 try:
-                    events = self.wheels.read_events(self.device_id, 0.2)
+                    events = self.device.read_events(0.2)
                     if events != None:
                         self.process_events(events)
-                except OSError:
+                except OSError as e:
+                    print(e)
                     time.sleep(1)
             else:
                 time.sleep(1)

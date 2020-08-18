@@ -15,7 +15,7 @@ class Application:
 
     def run(self, argv):
         parser = argparse.ArgumentParser(prog=argv[0], description=_("Oversteer - Steering Wheel Manager"))
-        parser.add_argument('device_id', nargs='?', help=_("Device id"))
+        parser.add_argument('device_path', nargs='?', help=_("Device path"))
         parser.add_argument('--list', action='store_true', help=_("list connected devices"))
         parser.add_argument('--mode', help=_("set the compatibility mode"))
         parser.add_argument('--range', type=int, help=_("set the rotation range [40-900]"))
@@ -41,73 +41,65 @@ class Application:
         if not args.debug:
             logging.basicConfig(level=logging.WARNING)
 
-        from .wheels import Wheels
-        wheels = Wheels()
+        from .device_manager import DeviceManager
+        device_manager = DeviceManager()
 
-        if args.device_id != None:
-            device_id = args.device_id
-            if os.path.exists(device_id):
-                device_id = wheels.dev_to_id(os.path.realpath(device_id))
-            if not wheels.check_permissions(device_id):
+        if args.device_path is not None:
+            if os.path.exists(args.device_path):
+                device = device_manager.get_device(os.path.realpath(args.device_path))
+            if not device.check_permissions():
                 print(_("You don't have the required permissions to change your " +
                     "wheel settings. You can fix it yourself by copying the {} " +
                     "file to the {} directory and rebooting.".format(udev_file,
                     target_dir)))
         else:
-            device_id = wheels.first_device_id()
-            args.device_id = device_id
+            device = device_manager.first_device()
 
         nothing_done = True
         if args.list == True:
-            devices = wheels.get_devices()
+            device_list = device_manager.list_devices()
             print(_("Devices found:"))
-            for key, name in devices:
-                print("  {}: {} ({})".format(wheels.id_to_dev(key), name, key))
+            for id, name in device_list:
+                device = device_manager.get_device(id)
+                print("  {}: {}".format(device.dev_name, name))
             nothing_done = False
         if args.mode != None:
-            wheels.set_mode(device_id, args.mode)
+            device.set_mode(args.mode)
             nothing_done = False
         if args.range != None:
-            wheels.set_range(device_id, args.range)
+            device.set_range(args.range)
             nothing_done = False
         if args.combine_pedals != None:
-            wheels.set_combine_pedals(device_id, args.combine_pedals)
+            device.set_combine_pedals(args.combine_pedals)
             nothing_done = False
         if args.autocenter != None:
-            wheels.set_autocenter(device_id, args.autocenter)
+            device.set_autocenter(args.autocenter)
             nothing_done = False
         if args.ff_gain != None:
-            wheels.set_ff_gain(device_id, args.ff_gain)
+            device.set_ff_gain(args.ff_gain)
             nothing_done = False
         if args.spring_level != None:
-            wheels.set_spring_level(device_id, args.spring_level)
+            device.set_spring_level(args.spring_level)
             nothing_done = False
         if args.damper_level != None:
-            wheels.set_damper_level(device_id, args.damper_level)
+            device.set_damper_level(args.damper_level)
             nothing_done = False
         if args.friction_level != None:
-            wheels.set_friction_level(device_id, args.friction_level)
+            device.set_friction_level(args.friction_level)
             nothing_done = False
         if args.ffb_leds != None:
-            wheels.set_ffb_leds(device_id, 1 if args.ffb_leds else 0)
+            device.set_ffb_leds(1 if args.ffb_leds else 0)
             nothing_done = False
         if not args.interactive and args.profile != None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             profile = Profile()
             profile.load(profile_file)
-            wheels.set_mode(device_id, profile.get_mode())
-            wheels.set_range(device_id, profile.get_range())
-            wheels.set_combine_pedals(device_id, profile.get_combine_pedals())
-            wheels.set_autocenter(device_id, profile.get_autocenter())
-            wheels.set_ff_gain(device_id, profile.get_ff_gain())
-            wheels.set_spring_level(device_id, profile.get_spring_level())
-            wheels.set_damper_level(device_id, profile.get_damper_level())
-            wheels.set_friction_level(device_id, profile.get_friction_level())
-            wheels.set_ffb_leds(device_id, profile.get_ffbmeter_leds())
+            device.load_settings(profile.export_settings())
             nothing_done = False
         if args.interactive or nothing_done:
             self.args = args
-            self.wheels = wheels
+            self.device_manager = device_manager
+            self.device = device
             from oversteer.gui import Gui
             Gui(self)
 

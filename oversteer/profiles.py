@@ -2,8 +2,10 @@ import configparser
 
 class Profile:
 
-    def __init__(self):
+    def __init__(self, data = None):
         self.config = configparser.ConfigParser()
+        if data is not None:
+            self.import_settings(data)
 
     def load(self, profile_file):
         self.config = configparser.ConfigParser()
@@ -13,47 +15,53 @@ class Profile:
         with open(profile_file, 'w') as configfile:
             self.config.write(configfile)
 
+    def export_settings(self):
+        return self.config['DEFAULT']
+
+    def import_settings(self, data):
+        self.config['DEFAULT'] = {**self.config['DEFAULT'], **data}
+
     def set_mode(self, mode):
         self.set('mode', mode)
 
     def set_range(self, range):
-        self.set('range', range)
+        self.set('range', int(range))
 
     def set_combine_pedals(self, combine_pedals):
-        self.set('combine_pedals', combine_pedals)
+        self.set('combine_pedals', int(combine_pedals))
 
     def set_autocenter(self, autocenter):
-        self.set('autocenter', autocenter)
+        self.set('autocenter', int(autocenter))
 
     def set_ff_gain(self, ff_gain):
-        self.set('ff_gain', ff_gain)
+        self.set('ff_gain', int(ff_gain))
 
     def set_spring_level(self, level):
-        self.set('spring_level', level)
+        self.set('spring_level', int(level))
 
     def set_damper_level(self, level):
-        self.set('damper_level', level)
+        self.set('damper_level', int(level))
 
     def set_friction_level(self, level):
-        self.set('friction_level', level)
+        self.set('friction_level', int(level))
 
     def set_ffbmeter_leds(self, state):
-        self.set('ffbmeter_leds', state)
+        self.set('ffbmeter_leds', int(state))
 
     def set_ffbmeter_overlay(self, state):
-        self.set('ffbmeter_overlay', state)
+        self.set('ffbmeter_overlay', int(state))
 
     def set_wheel_range_overlay(self, id):
         self.set('wheel_range_overlay', id)
 
     def set_wheel_buttons(self, state):
-        self.set('wheel_buttons', state)
+        self.set('wheel_buttons', int(state))
 
     def get_mode(self):
         return self.get('mode')
 
     def get_range(self):
-        return self.get('range')
+        return self.get_int('range')
 
     def get_combine_pedals(self):
         combine_pedals = self.get('combine_pedals')
@@ -102,6 +110,7 @@ class Profile:
         if not self.config.has_option('DEFAULT', name):
             return None
         return self.config.get('DEFAULT', name)
+
     def get_int(self, name):
         if not self.config.has_option('DEFAULT', name):
             return None
