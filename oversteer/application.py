@@ -12,6 +12,8 @@ class Application:
         self.version = version
         self.datadir = pkgdatadir
         self.icondir = icondir
+        self.udev_file = self.datadir + '/udev/99-logitech-wheel-perms.rules'
+        self.target_dir = '/etc/udev/rules.d/'
 
     def run(self, argv):
         parser = argparse.ArgumentParser(prog=argv[0], description=_("Oversteer - Steering Wheel Manager"))
@@ -50,8 +52,8 @@ class Application:
             if not device.check_permissions():
                 print(_("You don't have the required permissions to change your " +
                     "wheel settings. You can fix it yourself by copying the {} " +
-                    "file to the {} directory and rebooting.".format(udev_file,
-                    target_dir)))
+                    "file to the {} directory and rebooting.".format(self.udev_file,
+                    self.target_dir)))
         else:
             device = device_manager.first_device()
 

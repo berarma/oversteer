@@ -95,20 +95,18 @@ class Gui:
     def install_udev_file(self):
         if not self.check_permissions_dialog:
             return
-        udev_file = self.app.datadir + '/udev/99-logitech-wheel-perms.rules'
-        target_dir = '/etc/udev/rules.d/'
         while True:
             affirmative = self.ui.confirmation_dialog(_("You don't have the " +
                 "required permissions to change your wheel settings. You can " +
                 "fix it yourself by copying the {} file to the {} directory " +
-                "and rebooting.").format(udev_file, target_dir) + "\n\n" +
+                "and rebooting.").format(self.app.udev_file, self.app.target_dir) + "\n\n" +
                 _("Do you want us to make this change for you?"))
             if affirmative:
                 return_code = subprocess.call([
                     'pkexec',
                     '/bin/sh',
                     '-c',
-                    'cp -f ' + udev_file + ' ' + target_dir + ' && ' +
+                    'cp -f ' + self.app.udev_file + ' ' + self.app.target_dir + ' && ' +
                     'udevadm control --reload-rules && udevadm trigger',
                 ])
                 if return_code == 0:
