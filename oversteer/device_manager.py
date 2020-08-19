@@ -97,6 +97,8 @@ class DeviceManager:
         return device_list
 
     def get_device(self, id):
+        if id is None:
+            return None
         if id in self.devices:
             return Device(self, self.devices[id])
         else:

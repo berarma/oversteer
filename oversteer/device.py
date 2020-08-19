@@ -27,6 +27,10 @@ class Device:
         for key in data:
             setattr(self, key, data[key])
 
+    def close(self):
+        if self.input_device is not None:
+            self.input_device.close()
+
     def get_id(self):
         return self.seat_id
 

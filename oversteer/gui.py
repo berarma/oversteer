@@ -123,9 +123,14 @@ class Gui:
                 break
 
     def update(self):
+        current_device_id = None
+        if self.device is not None:
+            self.device.close()
+            current_device_id = self.device.get_id()
         self.device = None
         self.device_manager.reset()
         self.populate_window()
+        self.ui.set_device_id(current_device_id);
 
     def populate_devices(self):
         devices = []
@@ -183,7 +188,13 @@ class Gui:
         self.ui.set_ffbmeter_overlay_visibility(True if self.device.get_peak_ffb_level() != None else False)
 
     def change_device(self, device_id):
+        if self.device is not None:
+            self.device.close()
+
         self.device = self.device_manager.get_device(device_id)
+
+        if self.device is None:
+            return
 
         if not self.device.check_permissions():
             self.install_udev_file()

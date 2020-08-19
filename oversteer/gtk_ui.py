@@ -101,6 +101,7 @@ class GtkUi:
         return self.check_permissions.get_state()
 
     def set_device_id(self, device_id):
+        device_id = None
         self.device_combobox.set_active_id(device_id)
 
     def get_device_id(self):
