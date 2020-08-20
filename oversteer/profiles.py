@@ -65,7 +65,7 @@ class Profile:
 
     def get_combine_pedals(self):
         combine_pedals = self.get('combine_pedals')
-        if combine_pedals != None:
+        if combine_pedals is not None:
             if combine_pedals == 'True':
                 combine_pedals = 1
             elif combine_pedals == 'False':
@@ -102,7 +102,7 @@ class Profile:
         return self.get_int('wheel_buttons')
 
     def set(self, name, value):
-        if value == None:
+        if value is None:
             return
         self.config.set('DEFAULT', name, str(value))
 

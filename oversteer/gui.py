@@ -83,7 +83,7 @@ class Gui:
         if self.device is not None:
             self.ui.set_device_id(self.device.get_id())
 
-        if self.app.args.profile != None:
+        if self.app.args.profile is not None:
             profile_file = os.path.join(self.profile_path, self.app.args.profile + '.ini')
             if os.path.exists(profile_file):
                 self.ui.set_profile(profile_file)
@@ -155,7 +155,7 @@ class Gui:
 
         range = self.device.get_range()
         self.ui.set_range(range, True)
-        if range != None:
+        if range is not None:
             # The range returned by the driver after an emulation mode change can be wrong
             self.device.set_range(range)
 
@@ -180,7 +180,7 @@ class Gui:
         ffb_leds = self.device.get_ffb_leds()
         self.ui.set_ffbmeter_leds(ffb_leds, True)
 
-        self.ui.set_ffbmeter_overlay_visibility(True if self.device.get_peak_ffb_level() != None else False)
+        self.ui.set_ffbmeter_overlay_visibility(True if self.device.get_peak_ffb_level() is not None else False)
 
     def change_device(self, device_id):
         self.device = self.device_manager.get_device(device_id)
@@ -201,35 +201,35 @@ class Gui:
             return
         profile = Profile()
         profile.load(profile_file)
-        if profile.get_mode() != None:
+        if profile.get_mode() is not None:
             self.ui.set_emulation_mode(profile.get_mode())
             self.ui.change_emulation_mode(profile.get_mode())
-        if profile.get_range() != None:
+        if profile.get_range() is not None:
             self.ui.set_range(profile.get_range())
-        if profile.get_combine_pedals() != None:
+        if profile.get_combine_pedals() is not None:
             self.ui.set_combine_pedals(profile.get_combine_pedals())
-        if profile.get_autocenter() != None:
+        if profile.get_autocenter() is not None:
             self.ui.set_autocenter(profile.get_autocenter())
-        if profile.get_ff_gain() != None:
+        if profile.get_ff_gain() is not None:
             self.ui.set_ff_gain(profile.get_ff_gain())
-        if profile.get_spring_level() != None:
+        if profile.get_spring_level() is not None:
             self.ui.set_spring_level(profile.get_spring_level())
-        if profile.get_damper_level() != None:
+        if profile.get_damper_level() is not None:
             self.ui.set_damper_level(profile.get_damper_level())
-        if profile.get_friction_level() != None:
+        if profile.get_friction_level() is not None:
             self.ui.set_friction_level(profile.get_friction_level())
-        if profile.get_ffbmeter_leds() != None:
+        if profile.get_ffbmeter_leds() is not None:
             self.ui.set_ffbmeter_leds(profile.get_ffbmeter_leds())
-        if profile.get_ffbmeter_overlay() != None:
+        if profile.get_ffbmeter_overlay() is not None:
             self.ui.set_ffbmeter_overlay(profile.get_ffbmeter_overlay())
-        if profile.get_wheel_range_overlay() != None:
+        if profile.get_wheel_range_overlay() is not None:
             self.ui.set_wheel_range_overlay(profile.get_wheel_range_overlay())
-        if profile.get_wheel_buttons() != None:
+        if profile.get_wheel_buttons() is not None:
             self.ui.set_wheel_buttons(profile.get_wheel_buttons())
         self.ui.set_new_profile_name('')
 
     def save_profile(self, profile_file):
-        if profile_file == None or profile_file == '':
+        if profile_file is None or profile_file == '':
             return
 
         if self.device is None:
@@ -285,7 +285,7 @@ class Gui:
         self.device.set_autocenter(autocenter)
 
     def delete_profile(self, profile_file):
-        if profile_file != '' and profile_file != None:
+        if profile_file != '' and profile_file is not None:
             if self.ui.confirmation_dialog(_("This profile will be deleted, are you sure?")):
                 os.remove(profile_file)
                 self.populate_profiles()
@@ -306,7 +306,7 @@ class Gui:
 
     def save_preferences(self):
         language = self.ui.get_language()
-        if language == None:
+        if language is None:
             language = ''
         self.check_permissions_dialog = self.ui.get_check_permissions()
         check_permissions = '1' if self.check_permissions_dialog else '0'
@@ -385,7 +385,7 @@ class Gui:
 
     def read_ffbmeter(self):
         level = self.device.get_peak_ffb_level()
-        if level == None:
+        if level is None:
             return level
         level = int(level)
         if level > 0:
@@ -441,7 +441,7 @@ class Gui:
             if self.device is not None and self.device.is_ready():
                 try:
                     events = self.device.read_events(0.5)
-                    if events != None:
+                    if events is not None:
                         self.process_events(events)
                 except OSError as e:
                     logging.debug(e)

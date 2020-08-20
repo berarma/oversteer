@@ -108,7 +108,7 @@ class GtkUi:
 
     def set_devices(self, devices):
         model = self.device_combobox.get_model()
-        if model == None:
+        if model is None:
             model = Gtk.ListStore(str, str)
         else:
             self.device_combobox.set_model(None)
@@ -122,7 +122,7 @@ class GtkUi:
 
     def set_profiles(self, profiles):
         model = self.profile_combobox.get_model()
-        if model == None:
+        if model is None:
             model = Gtk.ListStore(str, str)
         else:
             self.profile_combobox.set_model(None)
@@ -138,13 +138,13 @@ class GtkUi:
 
     def set_emulation_modes(self, modes, startup = False):
         if startup:
-            if modes == None:
+            if modes is None:
                 self.emulation_mode_combobox.set_sensitive(False)
                 return
             else:
                 self.emulation_mode_combobox.set_sensitive(True)
         model = self.emulation_mode_combobox.get_model()
-        if model == None:
+        if model is None:
             model = Gtk.ListStore(str, str)
         else:
             self.emulation_mode_combobox.set_model(None)
@@ -170,7 +170,7 @@ class GtkUi:
 
     def _set_range(self, range, startup = False):
         if startup:
-            if range == None:
+            if range is None:
                 self.wheel_range.set_sensitive(False)
                 self.wheel_range_overlay_always.set_sensitive(False)
                 self.wheel_range_overlay_auto.set_sensitive(False)
@@ -189,7 +189,7 @@ class GtkUi:
 
     def set_combine_pedals(self, combine_pedals, startup = False):
         if startup:
-            if combine_pedals == None:
+            if combine_pedals is None:
                 self.combine_brakes.set_sensitive(False)
                 self.combine_clutch.set_sensitive(False)
                 return
@@ -225,7 +225,7 @@ class GtkUi:
 
     def set_spring_level(self, level, startup = False):
         if startup:
-            if level == None:
+            if level is None:
                 self.ff_spring_level.set_sensitive(False)
                 return
             else:
@@ -239,7 +239,7 @@ class GtkUi:
 
     def set_damper_level(self, level, startup = False):
         if startup:
-            if level == None:
+            if level is None:
                 self.ff_damper_level.set_sensitive(False)
                 return
             else:
@@ -253,7 +253,7 @@ class GtkUi:
 
     def set_friction_level(self, level, startup = False):
         if startup:
-            if level == None:
+            if level is None:
                 self.ff_friction_level.set_sensitive(False)
                 return
             else:
@@ -267,7 +267,7 @@ class GtkUi:
 
     def set_ffbmeter_leds(self, value, startup = False):
         if startup:
-            if value == None:
+            if value is None:
                 self.ffbmeter_leds.set_sensitive(False)
                 return
             else:
@@ -349,7 +349,7 @@ class GtkUi:
             GLib.idle_add(self.hat_down_input.set_value, value)
 
     def set_btn_input(self, index, value, wait = None):
-        if wait != None:
+        if wait is not None:
             GLib.timeout_add(wait, lambda index=index, value=value: GLib.idle_add(self.set_btn_input, index, value) & False)
         else:
             GLib.idle_add(self.btn_input[index].set_value, value)

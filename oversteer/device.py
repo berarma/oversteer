@@ -59,7 +59,7 @@ class Device:
         return path
 
     def check_file_permissions(self, filename):
-        if filename == None:
+        if filename is None:
             return True
         path = self.device_file(filename)
         if not os.access(path, os.F_OK):

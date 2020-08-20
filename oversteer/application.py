@@ -66,34 +66,34 @@ class Application:
                 device = device_manager.get_device(id)
                 print("  {}: {}".format(device.dev_name, name))
             nothing_done = False
-        if args.mode != None:
+        if args.mode is not None:
             device.set_mode(args.mode)
             nothing_done = False
-        if args.range != None:
+        if args.range is not None:
             device.set_range(args.range)
             nothing_done = False
-        if args.combine_pedals != None:
+        if args.combine_pedals is not None:
             device.set_combine_pedals(args.combine_pedals)
             nothing_done = False
-        if args.autocenter != None:
+        if args.autocenter is not None:
             device.set_autocenter(args.autocenter)
             nothing_done = False
-        if args.ff_gain != None:
+        if args.ff_gain is not None:
             device.set_ff_gain(args.ff_gain)
             nothing_done = False
-        if args.spring_level != None:
+        if args.spring_level is not None:
             device.set_spring_level(args.spring_level)
             nothing_done = False
-        if args.damper_level != None:
+        if args.damper_level is not None:
             device.set_damper_level(args.damper_level)
             nothing_done = False
-        if args.friction_level != None:
+        if args.friction_level is not None:
             device.set_friction_level(args.friction_level)
             nothing_done = False
-        if args.ffb_leds != None:
+        if args.ffb_leds is not None:
             device.set_ffb_leds(1 if args.ffb_leds else 0)
             nothing_done = False
-        if not args.interactive and args.profile != None:
+        if not args.interactive and args.profile is not None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             profile = Profile()
             profile.load(profile_file)
