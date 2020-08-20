@@ -57,6 +57,9 @@ class Profile:
     def set_wheel_buttons(self, state):
         self.set('wheel_buttons', int(state))
 
+    def set_overlay_window_pos(self, position):
+        self.set('overlay_window_pos', ','.join(map(str, position)))
+
     def get_mode(self):
         return self.get('mode')
 
@@ -100,6 +103,9 @@ class Profile:
 
     def get_wheel_buttons(self):
         return self.get_int('wheel_buttons')
+
+    def get_overlay_window_pos(self):
+        return tuple(map(int, self.get('overlay_window_pos').split(',')))
 
     def set(self, name, value):
         if value is None:

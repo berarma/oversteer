@@ -226,6 +226,8 @@ class Gui:
             self.ui.set_wheel_range_overlay(profile.get_wheel_range_overlay())
         if profile.get_wheel_buttons() is not None:
             self.ui.set_wheel_buttons(profile.get_wheel_buttons())
+        if profile.get_overlay_window_pos() is not None:
+            self.ui.set_overlay_window_pos(profile.get_overlay_window_pos())
         self.ui.set_new_profile_name('')
 
     def save_profile(self, profile_file):
@@ -239,6 +241,7 @@ class Gui:
         profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
         profile.set_wheel_range_overlay(self.ui.get_wheel_range_overlay())
         profile.set_wheel_buttons(self.ui.get_wheel_buttons())
+        profile.set_overlay_window_pos(self.ui.get_overlay_window_pos())
         profile.save(profile_file)
         self.populate_profiles()
         self.ui.set_profile(profile_file)

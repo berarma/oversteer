@@ -404,6 +404,13 @@ class GtkUi:
             self.overlay_window_pos = self.overlay_window.get_position()
             self.overlay_window.hide()
 
+    def get_overlay_window_pos(self):
+        return self.overlay_window.get_position()
+
+    def set_overlay_window_pos(self, position):
+        self.overlay_window.move(position[0], position[1])
+        self.overlay_window_pos = self.overlay_window.get_position()
+
     def update_ffbmeter_overlay(self):
         if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
             self.ffbmeter_timer = False
