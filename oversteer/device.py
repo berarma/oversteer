@@ -23,13 +23,28 @@ class Device:
         self.dev_path = None
         self.dev_name = None
         self.name = None
+        self.ready = True
 
-        for key in data:
-            setattr(self, key, data[key])
+        self.set(data)
+
+    def set(self, data):
+        for key, value in data.items():
+            setattr(self, key, value)
 
     def close(self):
         if self.input_device is not None:
             self.input_device.close()
+            self.input_device = None
+
+    def disconnect(self):
+        self.ready = False
+        self.close()
+
+    def reconnect(self):
+        self.ready = True
+
+    def is_ready(self):
+        return self.ready
 
     def get_id(self):
         return self.seat_id
@@ -101,15 +116,14 @@ class Device:
         old_mode = self.get_mode()
         if old_mode == emulation_mode:
             return True
-        idevice = self.get_input_device()
-        if idevice != None:
-            idevice.close()
+        self.disconnect()
         logging.debug("Setting mode: " + str(emulation_mode))
+        product_id = self.product_id
         with open(path, "w") as file:
             file.write(emulation_mode)
-        self.device_manager.wait_for_device(self.id)
-        # Wait for self-calibration to finish
-        time.sleep(3)
+        # Wait for device ready
+        while not self.is_ready():
+            time.sleep(1)
         return True
 
     def get_range(self):
@@ -345,17 +359,19 @@ class Device:
         return True
 
     def get_input_device(self):
-        if self.input_device is None:
-            self.input_device = InputDevice(self.dev_name)
+        if self.input_device is None or self.input_device.fd == -1:
+            if os.access(self.dev_name, os.R_OK):
+                self.input_device = InputDevice(self.dev_name)
         return self.input_device
 
     def read_events(self, timeout):
         input_device = self.get_input_device()
+        if input_device.fd == -1:
+            return None
         r, w, x = select.select({input_device.fd: input_device}, [], [], timeout)
         if input_device.fd in r:
             for event in input_device.read():
                 yield self.normalize_event(event)
-        return None
 
     def normalize_event(self, event):
         if event.type == ecodes.EV_ABS:

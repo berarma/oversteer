@@ -28,8 +28,6 @@ class DeviceManager:
     LG_MOMO2 = '046d:ca03'
     TM_T300RS = '044f:b66e'
 
-    supported_wheels = []
-
     def __init__(self):
         self.supported_wheels = [
             self.LG_G29,
@@ -44,65 +42,83 @@ class DeviceManager:
             self.LG_MOMO2,
             self.TM_T300RS,
         ]
-        self.reset()
-
-    def reset(self):
         self.devices = {}
+        self.changed = True
 
-        context = pyudev.Context()
-        for device in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
-            if str(device.get('ID_VENDOR_ID')) + ':' + str(device.get('ID_MODEL_ID')) in self.supported_wheels:
-                self.add_udev_data(device)
-
-        logging.debug('Devices:' + str(self.devices))
-
-    def add_udev_data(self, device):
-        seat_id = device.get('ID_FOR_SEAT')
-
-        if seat_id not in self.devices:
-            data = {
-                'seat_id': seat_id,
-                'vendor': device.get('ID_VENDOR_ID'),
-                'model': device.get('ID_MODEL_ID'),
-                'usb_id': device.get('ID_VENDOR_ID') + ':' + device.get('ID_MODEL_ID'),
-            }
-            self.devices[seat_id] = data
-        else:
-            data = self.devices[seat_id]
-
-        if device.get('DEVNAME'):
-            if 'event' in device.get('DEVNAME'):
-                data['dev_name'] = device.get('DEVNAME')
-        else:
-            data['dev_path'] = os.path.join(device.sys_path, 'device')
-            data['name'] = device.get('NAME').strip('"')
-
-    def wait_for_device(self, seat_id):
+    def start(self):
         context = pyudev.Context()
         monitor = pyudev.Monitor.from_netlink(context)
         monitor.filter_by('input')
-        for device in iter(functools.partial(monitor.poll, 2), None):
-            if device.action == 'add' and device.get('ID_FOR_SEAT') == seat_id:
-                self.add_udev_data(device)
+        self.observer = pyudev.MonitorObserver(monitor, self.register_event)
+        self.init_device_list()
+        self.observer.start()
+
+    def stop(self):
+        self.observer.stop()
+
+    def register_event(self, action, udevice):
+        usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
+        if usb_id not in self.supported_wheels:
+            return
+        seat_id = udevice.get('ID_FOR_SEAT')
+        logging.debug("{}: {}".format(action, seat_id))
+        if action == 'add':
+            self.update_device_list(udevice)
+            device = self.get_device(seat_id)
+            device.reconnect()
+            self.changed = True
+        if action == 'remove':
+            device = self.get_device(seat_id)
+            device.disconnect()
+            self.changed = True
+
+    def init_device_list(self):
+        context = pyudev.Context()
+        for udevice in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
+            self.update_device_list(udevice)
+
+        logging.debug('Devices:' + str(self.devices))
+
+    def update_device_list(self, udevice):
+        seat_id = udevice.get('ID_FOR_SEAT')
+
+        if seat_id not in self.devices:
+            self.devices[seat_id] = Device(self, {
+                'seat_id': seat_id,
+            })
+
+        device = self.devices[seat_id]
+
+        if 'DEVNAME' in udevice:
+            if 'event' in udevice.get('DEVNAME'):
+                device.set({
+                    'vendor': udevice.get('ID_VENDOR_ID'),
+                    'model': udevice.get('ID_MODEL_ID'),
+                    'usb_id': udevice.get('ID_VENDOR_ID') + ':' + udevice.get('ID_MODEL_ID'),
+                    'dev_name': udevice.get('DEVNAME'),
+                })
+        else:
+            device.set({
+                'dev_path': os.path.join(udevice.sys_path, 'device'),
+                'name': udevice.get('NAME').strip('"'),
+            })
 
     def first_device(self):
         if self.devices:
             return self.get_device(next(iter(self.devices)))
         return None
 
-    def list_devices(self):
-        device_list = []
-        for key, device in self.devices.items():
-            device_list.append([key, device['name']])
-        return device_list
+    def get_devices(self):
+        self.changed = False
+        return list(self.devices.values())
 
     def get_device(self, id):
         if id is None:
             return None
         if id in self.devices:
-            return Device(self, self.devices[id])
+            return self.devices[id]
         else:
-            for seat_id, device in self.devices:
-                if device['dev_name'] == id:
-                    return Device(self, device)
-        return None
+            return next((item for item in self.devices if item.dev_name == id), None)
+
+    def is_changed(self):
+        return self.changed

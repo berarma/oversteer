@@ -101,7 +101,6 @@ class GtkUi:
         return self.check_permissions.get_state()
 
     def set_device_id(self, device_id):
-        device_id = None
         self.device_combobox.set_active_id(device_id)
 
     def get_device_id(self):
@@ -114,11 +113,12 @@ class GtkUi:
         else:
             self.device_combobox.set_model(None)
             model.clear()
-        for pair in devices:
-            model.append(pair)
         if devices:
+            for pair in devices:
+                model.append(pair)
             self.device_combobox.set_model(model)
-            self.device_combobox.set_active(0)
+            if self.device_combobox.get_active() == -1:
+                self.device_combobox.set_active(0)
 
     def set_profiles(self, profiles):
         model = self.profile_combobox.get_model()
@@ -376,6 +376,9 @@ class GtkUi:
     def format_range(self, value):
         return str(round(value * 10))
 
+    def idle_call(self, callback):
+        GLib.idle_add(callback)
+
     def update_overlay(self, auto = False):
         GLib.idle_add(self._update_overlay, auto)
 
@@ -460,7 +463,9 @@ class GtkUi:
         return True
 
     def on_device_changed(self, combobox):
-        self.gui.change_device(combobox.get_active_id())
+        device_id = combobox.get_active_id()
+        if device_id is not None:
+            self.gui.change_device(device_id)
 
     def on_profile_changed(self, combobox):
         self.gui.load_profile(combobox.get_active_id())
@@ -474,7 +479,8 @@ class GtkUi:
         self.gui.save_profile(profile_file)
 
     def on_update_clicked(self, button):
-        self.gui.update()
+        self.gui.populate_window()
+        self.update()
 
     def on_change_emulation_mode_clicked(self, widget):
         mode = self.get_emulation_mode()

@@ -45,6 +45,7 @@ class Application:
 
         from .device_manager import DeviceManager
         device_manager = DeviceManager()
+        device_manager.start()
 
         if args.device_path is not None:
             if os.path.exists(args.device_path):
@@ -104,6 +105,8 @@ class Application:
             self.device = device
             from oversteer.gui import Gui
             Gui(self)
+
+        device_manager.stop()
 
         sys.exit(0)
 

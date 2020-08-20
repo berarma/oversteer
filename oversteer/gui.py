@@ -3,6 +3,7 @@ from evdev import InputDevice, categorize, ecodes
 import glob
 import locale
 from locale import gettext as _
+import logging
 import signal
 import subprocess
 import sys
@@ -74,16 +75,20 @@ class Gui:
 
         self.ui.set_check_permissions(self.check_permissions_dialog)
 
-        self.populate_window()
-
         if self.app.device:
             self.device = self.app.device
+
+        self.populate_window()
+
+        if self.device is not None:
             self.ui.set_device_id(self.device.get_id())
 
         if self.app.args.profile != None:
             profile_file = os.path.join(self.profile_path, self.app.args.profile + '.ini')
             if os.path.exists(profile_file):
                 self.ui.set_profile(profile_file)
+
+        self.ui.update()
 
         threading.Thread(target=self.input_thread, daemon = True).start()
 
@@ -122,21 +127,13 @@ class Gui:
             else:
                 break
 
-    def update(self):
-        current_device_id = None
-        if self.device is not None:
-            self.device.close()
-            current_device_id = self.device.get_id()
-        self.device = None
-        self.device_manager.reset()
-        self.populate_window()
-        self.ui.set_device_id(current_device_id);
-
     def populate_devices(self):
-        devices = []
-        for pair in self.device_manager.list_devices():
-            devices.append(pair)
-        self.ui.set_devices(devices)
+        if self.device_manager.is_changed():
+            device_list = []
+            for device in self.device_manager.get_devices():
+                if device.is_ready():
+                    device_list.append((device.get_id(), device.name))
+            self.ui.set_devices(device_list)
 
     def populate_profiles(self):
         profiles = []
@@ -147,7 +144,6 @@ class Gui:
     def populate_window(self):
         self.populate_devices()
         self.populate_profiles()
-        self.ui.update()
 
     def read_settings(self, ignore_emulation_mode = False):
         alternate_modes = self.device.list_modes()
@@ -156,7 +152,6 @@ class Gui:
         emulation_mode = self.device.get_mode()
         if not ignore_emulation_mode:
             self.ui.set_emulation_mode(emulation_mode)
-            self.ui.change_emulation_mode(emulation_mode)
 
         range = self.device.get_range()
         self.ui.set_range(range, True)
@@ -188,12 +183,9 @@ class Gui:
         self.ui.set_ffbmeter_overlay_visibility(True if self.device.get_peak_ffb_level() != None else False)
 
     def change_device(self, device_id):
-        if self.device is not None:
-            self.device.close()
-
         self.device = self.device_manager.get_device(device_id)
 
-        if self.device is None:
+        if self.device is None or not self.device.is_ready():
             return
 
         if not self.device.check_permissions():
@@ -257,8 +249,6 @@ class Gui:
 
     def set_emulation_mode(self, mode):
         self.device.set_mode(mode)
-        self.emulation_mode = mode
-        self.ui.set_device_id(self.device.get_id())
         self.read_settings(True)
 
     def change_range(self, range):
@@ -445,14 +435,15 @@ class Gui:
 
     def input_thread(self):
         while 1:
-            if self.device is not None:
+            if self.device is not None and self.device.is_ready():
                 try:
-                    events = self.device.read_events(0.2)
+                    events = self.device.read_events(0.5)
                     if events != None:
                         self.process_events(events)
                 except OSError as e:
-                    print(e)
+                    logging.debug(e)
                     time.sleep(1)
             else:
                 time.sleep(1)
-
+            if self.device_manager.is_changed():
+                self.ui.idle_call(self.populate_devices)
