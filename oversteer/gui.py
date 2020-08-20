@@ -232,7 +232,10 @@ class Gui:
         if profile_file == None or profile_file == '':
             return
 
-        profile = Profile()
+        if self.device is None:
+            return
+
+        profile = Profile(self.device.save_settings())
         profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
         profile.set_wheel_range_overlay(self.ui.get_wheel_range_overlay())
         profile.set_wheel_buttons(self.ui.get_wheel_buttons())

@@ -191,8 +191,8 @@ class Device:
             return 100
         with open(path, "r") as file:
             data = file.read()
-        gain = data.strip()
-        return int(gain)
+        gain = int(data.strip())
+        return int(gain/65530*100)
 
     def set_ff_gain(self, gain):
         gain = str(int(65535 * gain / 100))
