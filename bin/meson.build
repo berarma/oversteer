@@ -18,3 +18,6 @@ oversteer = join_paths(meson.build_root(), 'bin', 'oversteer')
 run_target('run',
   command: [oversteer],
 )
+run_target('run_debug',
+  command: [oversteer, '--debug'],
+)
