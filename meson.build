@@ -1,15 +1,16 @@
 project('oversteer',
   version: '0.4.1',
-  meson_version: '>= 0.40.0'
+  meson_version: '>= 0.50.0'
 )
 
 i18n = import('i18n')
-python3 = import('python3')
+pymod = import('python')
 prefix = get_option('prefix')
 pkgdatadir = join_paths(prefix, get_option('datadir'), meson.project_name())
-pythondir = python3.sysconfig_path('purelib')
+py_installation = pymod.find_installation('python3')
+py_path = py_installation.get_path('purelib')
 
-install_subdir('oversteer', install_dir: pythondir)
+install_subdir('oversteer', install_dir: py_path)
 subdir('data')
 subdir('bin')
 subdir('po')
