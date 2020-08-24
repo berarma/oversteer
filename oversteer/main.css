@@ -1,20 +1,3 @@
-window#overlay-window {
-    background-color: rgba(50, 50, 50, 0.85);
-}
-window#overlay-window * {
-    background-color: transparent;
-    color: #fcfcfc;
-}
-window#overlay-window decoration {
-    border-radius: 0;
-}
-window#overlay-window .titlebar {
-    border-radius: 0;
-    background-color: rgba(80, 80, 80, 0.85);
-}
-window#overlay-window levelbar trough {
-    background-color: #fcfcfc;
-}
 list.list {
     border: 1px solid #ccc;
 }
@@ -34,20 +17,6 @@ levelbar block.filled {
 }
 stacksidebar list row {
     padding-right: 40px;
-}
-.overlay-leds levelbar:nth-child(1) block.filled,
-.overlay-leds levelbar:nth-child(2) block.filled {
-    border-color: #00e000;
-    background-color: #00e000;
-}
-.overlay-leds levelbar:nth-child(3) block.filled,
-.overlay-leds levelbar:nth-child(4) block.filled {
-    border-color: #e0e000;
-    background-color: #e0e000;
-}
-.overlay-leds levelbar:nth-child(5) block.filled {
-    border-color: #e00000;
-    background-color: #e00000;
 }
 levelbar#steering-input-left trough {
     padding-right: 0;
@@ -70,4 +39,39 @@ levelbar#steering-input-right block.empty {
     border-top-left-radius:0;
     border-bottom-left-radius:0;
     border-left-width:0;
+}
+window#overlay-window {
+    background-color: rgba(50, 50, 50, 0.85);
+}
+window#overlay-window * {
+    background-color: transparent;
+    color: #fcfcfc;
+}
+window#overlay-window decoration {
+    border-radius: 0;
+}
+window#overlay-window .titlebar {
+    border-radius: 0;
+    background-color: rgba(80, 80, 80, 0.85);
+}
+window#overlay-window levelbar trough {
+    margin: 0 1px;
+}
+window#overlay-window levelbar trough {
+    padding: 0;
+    background-color: #fcfcfc;
+}
+window#overlay-window .overlay-leds levelbar:nth-child(1) block.filled,
+window#overlay-window .overlay-leds levelbar:nth-child(2) block.filled {
+    border-color: #00e000;
+    background-color: #00e000;
+}
+window#overlay-window .overlay-leds levelbar:nth-child(3) block.filled,
+window#overlay-window .overlay-leds levelbar:nth-child(4) block.filled {
+    border-color: #e0e000;
+    background-color: #e0e000;
+}
+window#overlay-window .overlay-leds levelbar:nth-child(5) block.filled {
+    border-color: #e00000;
+    background-color: #e00000;
 }

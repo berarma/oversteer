@@ -281,6 +281,7 @@ class GtkUi:
 
     def set_ffbmeter_overlay(self, state):
         self.ffbmeter_overlay.set_active(state)
+        self.update_overlay()
 
     def get_ffbmeter_overlay(self):
         if not self.ffbmeter_overlay.get_sensitive():
@@ -383,13 +384,14 @@ class GtkUi:
         GLib.idle_add(self._update_overlay, auto)
 
     def _update_overlay(self, auto = False):
-        ffbmeter_overlay = self.ffbmeter_overlay.get_active()
+        ffbmeter_overlay = self.get_ffbmeter_overlay()
         wheel_range_overlay = self.get_wheel_range_overlay()
         if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
                 self.overlay_window.move(self.overlay_window_pos[0], self.overlay_window_pos[1])
             if not self.ffbmeter_timer and self.overlay_window.props.visible and ffbmeter_overlay:
+                self.ffbmeter_timer = True
                 GLib.timeout_add(250, self.update_ffbmeter_overlay)
             if ffbmeter_overlay:
                 self._ffbmeter_overlay.show()
@@ -415,7 +417,6 @@ class GtkUi:
         if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
             self.ffbmeter_timer = False
             return False
-        self.ffbmeter_timer = True
         level = self.gui.read_ffbmeter()
         if level < 2458: # < 7.5%
             led_states = 0
