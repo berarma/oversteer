@@ -30,7 +30,7 @@ class Application:
         parser.add_argument('--ffb-leds', action='store_true', default=None, help=_("enable FFBmeter leds"))
         parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
-        parser.add_argument('-i', '--interactive', action='store_true', help=_("start the GUI"))
+        parser.add_argument('-g', '--gui', action='store_true', help=_("start the GUI"))
         parser.add_argument('--debug', action='store_true', help=_("enable debug output"))
         parser.add_argument('--version', action='store_true', help=_("show version"))
 
@@ -93,13 +93,13 @@ class Application:
         if args.ffb_leds is not None:
             device.set_ffb_leds(1 if args.ffb_leds else 0)
             nothing_done = False
-        if not args.interactive and args.profile is not None:
+        if not args.gui and args.profile is not None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             profile = Profile()
             profile.load(profile_file)
             device.load_settings(profile.export_settings())
             nothing_done = False
-        if args.interactive or nothing_done:
+        if args.gui or nothing_done:
             self.args = args
             self.device_manager = device_manager
             self.device = device

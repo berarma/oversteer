@@ -18,9 +18,9 @@ class Gui:
 
     def __init__(self, application):
         self.app = application
-        self.device_manager = self.app.device_manager
         self.locale = ''
-        self.device = None
+        self.device_manager = self.app.device_manager
+        self.device = self.app.device
         self.grab_input = False
         self.button_config = [
             -1,
@@ -74,9 +74,6 @@ class Gui:
         self.ui.set_language(self.locale)
 
         self.ui.set_check_permissions(self.check_permissions_dialog)
-
-        if self.app.device:
-            self.device = self.app.device
 
         self.populate_window()
 
