@@ -33,6 +33,7 @@ driver:
  - G27 Racing Wheel
  - G29 Driving Force Racing Wheel
  - G920 Driving Force Racing Wheel
+ - Experimental support for the Thrustmaster T300RS wheel when using https://github.com/Kimplul/hid-tmff2.
 
 I can test only on a Logitech G29 Driving Force. Please, report your results
 with other devices.
@@ -51,7 +52,8 @@ There's an AUR package kindly created by DNModder.
 
 #### Requirements
 
-You can install all dependencies on Debian systems with the following command:
+You can install all dependencies on Debian systems with the following command
+(I'm using the meson package in Buster backports):
 
 `apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils`
 
