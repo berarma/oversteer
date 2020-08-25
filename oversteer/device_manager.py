@@ -118,7 +118,7 @@ class DeviceManager:
         if id in self.devices:
             return self.devices[id]
         else:
-            return next((item for item in self.devices if item.dev_name == id), None)
+            return next((item for item in self.devices.values() if item.dev_name == id), None)
 
     def is_changed(self):
         return self.changed

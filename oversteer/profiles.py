@@ -16,7 +16,21 @@ class Profile:
             self.config.write(configfile)
 
     def export_settings(self):
-        return self.config['DEFAULT']
+        return {
+            'mode': self.get_mode(),
+            'range': self.get_range(),
+            'combine_pedals': self.get_combine_pedals(),
+            'autocenter': self.get_autocenter(),
+            'ff_gain': self.get_ff_gain(),
+            'spring_level': self.get_spring_level(),
+            'damper_level': self.get_damper_level(),
+            'friction_level': self.get_friction_level(),
+            'ffbmeter_leds': self.get_ffbmeter_leds(),
+            'ffbmeter_overlay': self.get_ffbmeter_overlay(),
+            'wheel_range_overlay': self.get_wheel_range_overlay(),
+            'wheel_buttons': self.get_wheel_buttons(),
+            'overlay_window_pos': self.get_overlay_window_pos(),
+        }
 
     def import_settings(self, data):
         self.config['DEFAULT'] = {**self.config['DEFAULT'], **data}
@@ -105,6 +119,8 @@ class Profile:
         return self.get_int('wheel_buttons')
 
     def get_overlay_window_pos(self):
+        if 'overlay_window_pos' not in self.config:
+            return None
         return tuple(map(int, self.get('overlay_window_pos').split(',')))
 
     def set(self, name, value):
