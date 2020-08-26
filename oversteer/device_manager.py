@@ -75,6 +75,9 @@ class DeviceManager:
     def init_device_list(self):
         context = pyudev.Context()
         for udevice in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
+            usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
+            if usb_id not in self.supported_wheels:
+                return
             self.update_device_list(udevice)
 
         logging.debug('Devices:' + str(self.devices))
