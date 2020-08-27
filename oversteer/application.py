@@ -60,11 +60,10 @@ class Application:
 
         nothing_done = True
         if args.list == True:
-            device_list = device_manager.list_devices()
+            devices = device_manager.get_devices()
             print(_("Devices found:"))
-            for id, name in device_list:
-                device = device_manager.get_device(id)
-                print("  {}: {}".format(device.dev_name, name))
+            for device in devices:
+                print("  {}: {}".format(device.dev_name, device.name))
             nothing_done = False
         if args.mode is not None:
             device.set_mode(args.mode)
