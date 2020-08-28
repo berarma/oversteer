@@ -48,6 +48,10 @@ There's an AUR package kindly created by DNModder.
 
 [Install](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages) the [Oversteer](https://aur.archlinux.org/packages/oversteer/) package.
 
+### Gentoo
+
+There's an ebuild created by gripped [here](https://github.com/gripped/Logitech-wheel-ebuilds)
+
 ### Other distributions
 
 #### Requirements
