@@ -50,10 +50,11 @@ class Gui:
         self.button_setup_step = False
         self.languages = [
             ('', _('System default')),
+            ('ca_ES', _('Valencian')),
             ('en_US', _('English')),
             ('es_ES', _('Spanish')),
             ('gl_ES', _('Galician')),
-            ('ca_ES', _('Valencian')),
+            ('ru_RU', _('Russian')),
         ]
 
         signal.signal(signal.SIGINT, self.sig_int_handler)

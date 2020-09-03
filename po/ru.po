@@ -1,0 +1,498 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-03 21:52+0300\n"
+"PO-Revision-Date: 2020-02-06 18:11+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: gl_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: oversteer/application.py:19
+msgid "Oversteer - Steering Wheel Manager"
+msgstr "Oversteer - Мастер настройки руля"
+
+#: oversteer/application.py:20
+#, fuzzy
+msgid "Device path"
+msgstr "ID устройства"
+
+#: oversteer/application.py:21
+msgid "list connected devices"
+msgstr "список подключенных устройств"
+
+#: oversteer/application.py:22
+msgid "set the compatibility mode"
+msgstr "задать режим совместимости"
+
+#: oversteer/application.py:23
+msgid "set the rotation range [40-900]"
+msgstr "задать угол поворота руля [40-900]"
+
+#: oversteer/application.py:24
+msgid "combine pedals [0-2]"
+msgstr "совместить педали [0-2]"
+
+#: oversteer/application.py:25
+msgid "set the autocenter strength [0-100]"
+msgstr "задать силу автоцентрирования [0-100]"
+
+#: oversteer/application.py:26
+msgid "set the FF gain [0-100]"
+msgstr "задать усиление FF [0-100]"
+
+#: oversteer/application.py:27
+msgid "set the spring level [0-100]"
+msgstr "задать уровень пружины [0-100]"
+
+#: oversteer/application.py:28
+msgid "set the damper level [0-100]"
+msgstr "задать уровень демпфирования [0-100]"
+
+#: oversteer/application.py:29
+msgid "set the friction level [0-100]"
+msgstr "задать уровень сцепления [0-100]"
+
+#: oversteer/application.py:30
+msgid "enable FFBmeter leds"
+msgstr "включить светодиоды FFBmeter"
+
+#: oversteer/application.py:31
+msgid "disable FFBmeter leds"
+msgstr "отключить светодиоды FFBmeter"
+
+#: oversteer/application.py:32
+msgid "load settings from a profile"
+msgstr "загрузить настройки из профиля"
+
+#: oversteer/application.py:33
+msgid "start the GUI"
+msgstr "запустить графический интерфейс"
+
+#: oversteer/application.py:34
+msgid "enable debug output"
+msgstr "включить вывод отладки"
+
+#: oversteer/application.py:35
+msgid "show version"
+msgstr "показать версию"
+
+#: oversteer/application.py:54 oversteer/gui.py:102
+msgid ""
+"You don't have the required permissions to change your wheel settings. You "
+"can fix it yourself by copying the {} file to the {} directory and rebooting."
+msgstr ""
+"Non tes os permisos necesarios para trocar os axustes da teu volante. Podes "
+"arranxalo ti mesmo copiando o arquivo  {} no directorio {} e reiniciando."
+
+#: oversteer/application.py:64
+msgid "Devices found:"
+msgstr "Найдены устройства:"
+
+#: oversteer/gui.py:40
+msgid "Activation Switch"
+msgstr "Переключатель активации"
+
+#: oversteer/gui.py:41
+msgid "Set 270º"
+msgstr "Задать 270º"
+
+#: oversteer/gui.py:42
+msgid "Set 360º"
+msgstr "Задать 360º"
+
+#: oversteer/gui.py:43
+msgid "Set 540º"
+msgstr "Задать 540º"
+
+#: oversteer/gui.py:44
+msgid "Set 900º"
+msgstr "Задать 900º"
+
+#: oversteer/gui.py:45
+msgid "+10º"
+msgstr "+10º"
+
+#: oversteer/gui.py:46
+msgid "-10º"
+msgstr "-10º"
+
+#: oversteer/gui.py:47
+msgid "+90º"
+msgstr "+90º"
+
+#: oversteer/gui.py:48
+msgid "-90º"
+msgstr "-90º"
+
+#: oversteer/gui.py:52
+msgid "System default"
+msgstr "Язык системы по умолчанию"
+
+#: oversteer/gui.py:53
+msgid "Valencian"
+msgstr "Валенсийский"
+
+#: oversteer/gui.py:54
+msgid "English"
+msgstr "Английский"
+
+#: oversteer/gui.py:55
+msgid "Spanish"
+msgstr "Испанский"
+
+#: oversteer/gui.py:56
+msgid "Galician"
+msgstr "Галисийский"
+
+#: oversteer/gui.py:57
+msgid "Russian"
+msgstr "Русский"
+
+#: oversteer/gui.py:106
+msgid "Do you want us to make this change for you?"
+msgstr "Вы хотите применить изменения?"
+
+#: oversteer/gui.py:116
+msgid "Permissions rules installed."
+msgstr "Правила разрешений установлены."
+
+#: oversteer/gui.py:117
+msgid "In some cases, a system restart might be needed."
+msgstr "В некоторых случаях может потребоваться перезагрузка."
+
+#: oversteer/gui.py:120
+msgid ""
+"Error installing permissions rules. Please, try again and make sure you use "
+"the right password for the administrator user."
+msgstr ""
+"Ошибка установки правил разрешений. Попробуйте еще раз и убедитесь, что вы "
+"вводите правильный пароль администратора."
+
+#: oversteer/gui.py:250
+msgid "This profile already exists. Are you sure?"
+msgstr "Данный профиль уже существует. Вы уверены?"
+
+#: oversteer/gui.py:290
+msgid "This profile will be deleted, are you sure?"
+msgstr "Данный профиль будет удален. Вы уверены?"
+
+#: oversteer/gui.py:319
+msgid "Failed to change language."
+msgstr ""
+
+#: oversteer/gui.py:320
+msgid "Make sure locale '"
+msgstr ""
+
+#: oversteer/main.ui:25 oversteer/main.ui:2165
+msgid "Never"
+msgstr "Никогда"
+
+#: oversteer/main.ui:29 oversteer/main.ui:2149
+msgid "Always"
+msgstr "Всегда"
+
+#: oversteer/main.ui:33 oversteer/main.ui:2133
+msgid "Auto"
+msgstr "Автоматически"
+
+#: oversteer/main.ui:63
+msgid "Preferences"
+msgstr "Настройки"
+
+#: oversteer/main.ui:88
+msgid "About Oversteer"
+msgstr "Об Oversteer"
+
+#: oversteer/main.ui:256 data/org.berarma.Oversteer.desktop.in:3
+msgid "Oversteer"
+msgstr "Oversteer"
+
+#: oversteer/main.ui:306
+msgid "Select the wheel controller you want to configure."
+msgstr "Выберите руль, который вы хотите настроить."
+
+#: oversteer/main.ui:313
+msgid "Selected Device"
+msgstr "Выбранное устройство"
+
+#: oversteer/main.ui:346
+msgid "Select a profile to load the saved settings."
+msgstr "Выберите профиль, чтобы загрузить сохраненные настройки."
+
+#: oversteer/main.ui:353
+msgid "Profile"
+msgstr "Профиль"
+
+#: oversteer/main.ui:379
+msgid "Delete"
+msgstr "Удалить"
+
+#: oversteer/main.ui:383
+msgid "Delete profile"
+msgstr "Удалить профиль"
+
+#: oversteer/main.ui:394
+msgid "Save"
+msgstr "Сохранить"
+
+#: oversteer/main.ui:398
+msgid "Save profile"
+msgstr "Сохранить профиль"
+
+#: oversteer/main.ui:428
+msgid "Type the name of a profile if you want to save this settings."
+msgstr "Введите имя профиля, чтобы сохранить эти настройки."
+
+#: oversteer/main.ui:435 oversteer/main.ui:464
+msgid "Save as new profile"
+msgstr "Сохранить в новый профиль"
+
+#: oversteer/main.ui:460
+msgid "Save as"
+msgstr "Сохранить как..."
+
+#: oversteer/main.ui:531
+msgid "Select an emulation mode from the ones supported."
+msgstr "Выберите режим эмуляции из списка поддерживаемых."
+
+#: oversteer/main.ui:539
+msgid "Compatibility mode"
+msgstr "Режим совместимости"
+
+#: oversteer/main.ui:565
+msgid "Apply"
+msgstr "Применить"
+
+#: oversteer/main.ui:569
+msgid "Apply changes (the wheel may move when changing the emulation mode)."
+msgstr ""
+"Применить изменения (руль может самопроизвольно двигаться при изменении "
+"режима эмуляции)."
+
+#: oversteer/main.ui:603
+msgid ""
+"Range in degrees that the wheel will be able to rotate both ways. It will "
+"affect the sensitivity."
+msgstr ""
+"Диапазон в градусах, на который руль может поворачиваться в обоих "
+"направлениях. Влияет на чувствительность."
+
+#: oversteer/main.ui:611
+msgid "Rotation range"
+msgstr "Диапазон поворота руля"
+
+#: oversteer/main.ui:664
+msgid ""
+"Combine two pedals into one axe. Useful for old games and flight simulators."
+msgstr ""
+"Совместить две педали по одной оси. Полезно для старых игр и симуляторов "
+"полета."
+
+#: oversteer/main.ui:672
+msgid "Combine pedals"
+msgstr "Совместить педали"
+
+#: oversteer/main.ui:686
+msgid "Accelerator + Clutch"
+msgstr "Акселератор + Сцепление"
+
+#: oversteer/main.ui:702
+msgid "Accelerator + Brakes"
+msgstr "Акселератор + Тормоза"
+
+#: oversteer/main.ui:718
+msgid "None"
+msgstr "Нет"
+
+#: oversteer/main.ui:775
+msgid "Steering"
+msgstr "Руление"
+
+#: oversteer/main.ui:856
+msgid "Clutch"
+msgstr "Сцепление"
+
+#: oversteer/main.ui:882
+msgid "Brakes"
+msgstr "Тормоза"
+
+#: oversteer/main.ui:908
+msgid "Accel."
+msgstr "Аксел."
+
+#: oversteer/main.ui:932
+msgid "Hat"
+msgstr "Крестовина"
+
+#: oversteer/main.ui:1071
+msgid "Buttons"
+msgstr "Кнопки"
+
+#: oversteer/main.ui:1811
+msgid "Controls"
+msgstr "Управление"
+
+#: oversteer/main.ui:1838
+msgid "Global strength of force feedback effects."
+msgstr "Общая сила эффектов Force Feedback."
+
+#: oversteer/main.ui:1846
+msgid "Force feedback gain"
+msgstr "Усиление Force Feedback"
+
+#: oversteer/main.ui:1887
+msgid "Strength of autocenter force."
+msgstr "Сила автоцентрирования."
+
+#: oversteer/main.ui:1895
+msgid "Autocenter strength"
+msgstr "Сила автоцентрирования"
+
+#: oversteer/main.ui:1936
+msgid "How strong will be the spring type effects."
+msgstr "Сила эффекта пружины."
+
+#: oversteer/main.ui:1944
+msgid "Spring force level"
+msgstr "Уровень силы эффекта пружины"
+
+#: oversteer/main.ui:1985
+msgid "How strong will be the damper type effects."
+msgstr "Сила эффекта демпфирования."
+
+#: oversteer/main.ui:1993
+msgid "Damper force level"
+msgstr "Уровень силы эффекта демпфирования"
+
+#: oversteer/main.ui:2035
+msgid "How strong will be the friction type effects."
+msgstr "Сила эффекта сцепления."
+
+#: oversteer/main.ui:2043
+msgid "Friction force level"
+msgstr "Уровень силы эффекта сцепления"
+
+#: oversteer/main.ui:2086
+msgid "Force Feedback"
+msgstr "Force Feedback"
+
+#: oversteer/main.ui:2111
+msgid ""
+"Enable wheel range settings in the window overlay. When set to auto, it will "
+"be displayed only when being set using the wheel buttons."
+msgstr ""
+"Включить настройки диапазона руля во всплывающем окне. В автоматическом "
+"режиме они будут отображаться только при использовании кнопок на руле."
+
+#: oversteer/main.ui:2119
+msgid "Wheel range display"
+msgstr "Отображать диапазон поворота руля"
+
+#: oversteer/main.ui:2203
+msgid "Enable FFBmeter using the leds in the wheel or the window overlay."
+msgstr "Включить FFBmeter с помощью светодиодов на руле или всплывающего окна."
+
+#: oversteer/main.ui:2211
+msgid "FFBmeter"
+msgstr "FFBmeter"
+
+#: oversteer/main.ui:2225
+msgid "Leds"
+msgstr "Светодиоды"
+
+#: oversteer/main.ui:2239
+msgid "Overlay"
+msgstr "Всплывающее окно"
+
+#: oversteer/main.ui:2277
+msgid ""
+"Use wheel buttons to control some wheel settings. The buttons must be "
+"defined in the preferences window."
+msgstr ""
+"Использовать кнопки на руле для управления некоторыми настройками. Кнопки "
+"должны быть заданы в настройках."
+
+#: oversteer/main.ui:2285
+msgid "Enable wheel buttons"
+msgstr "Включить кнопки на руле"
+
+#: oversteer/main.ui:2321
+msgid "Tools"
+msgstr "Инструменты"
+
+#: oversteer/main.ui:2372
+msgid "Re-scan wheel devices and update window."
+msgstr "Пересканировать список устройств и обновить окно."
+
+#: oversteer/main.ui:2435
+#, fuzzy
+msgid "Oversteer preferences"
+msgstr "Настройки"
+
+#: oversteer/main.ui:2453
+msgid "Close"
+msgstr "Закрыть"
+
+#: oversteer/main.ui:2476
+msgid ""
+"Check permissions to read/write device settings and propose changes to make "
+"them available to normal users."
+msgstr ""
+"Проверить разрешения на чтение/запись настроек устройства и предложить "
+"изменения, доступные для обычных пользователей."
+
+#: oversteer/main.ui:2484
+msgid "Check permissions"
+msgstr "Проверить разрешения"
+
+#: oversteer/main.ui:2516
+msgid ""
+"Change the interface language. You'll need to restart the application to "
+"apply."
+msgstr ""
+"Изменить язык интерфейса. Для применения настроек требуется перезапустить "
+"приложение."
+
+#: oversteer/main.ui:2524
+msgid "Language"
+msgstr "Язык"
+
+#: oversteer/main.ui:2555
+msgid ""
+"Pressing start  will begin configuration of wheel buttons. Just press the "
+"button in the wheel that you want to use for every displayed action."
+msgstr ""
+"При нажатии \"Запустить\" начнется настройка кнопок на руле. Просто нажмите "
+"кнопку на руле, чтобы назначить ее для каждого отображаемого действия."
+
+#: oversteer/main.ui:2561
+msgid "Define buttons"
+msgstr "Задать кнопки"
+
+#: oversteer/main.ui:2571
+msgid "Start"
+msgstr "Запустить"
+
+#: data/org.berarma.Oversteer.desktop.in:4
+msgid "Steering Wheel Manager"
+msgstr "Мастер настройки руля"
+
+#: data/org.berarma.Oversteer.desktop.in:10
+msgid "org.berarma.Oversteer"
+msgstr "org.berarma.Oversteer"
+
+#: data/org.berarma.Oversteer.desktop.in:12
+msgid "game;racing;cars;wheels"
+msgstr "игра;гонки;автомобили;рули"
