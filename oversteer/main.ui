@@ -110,6 +110,7 @@
     <property name="skip_pager_hint">True</property>
     <property name="accept_focus">False</property>
     <property name="focus_on_map">False</property>
+    <signal name="configure-event" handler="on_overlay_window_configure" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -2294,6 +2295,7 @@
                                   <object class="GtkSwitch" id="wheel_buttons">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <signal name="state-set" handler="on_wheel_buttons_state_set" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>

@@ -4,22 +4,24 @@ class Profile:
 
     def __init__(self, data = None):
         self.config = configparser.ConfigParser()
+
         if data is not None:
-            self.import_settings(dict(filter(
-                lambda item: item[1] is not None,
-                data.items()
-            )))
+            self.set_mode(data['mode'])
+            self.set_range(data['range'])
+            self.set_combine_pedals(data['combine_pedals'])
+            self.set_autocenter(data['autocenter'])
+            self.set_ff_gain(data['ff_gain'])
+            self.set_spring_level(data['spring_level'])
+            self.set_damper_level(data['damper_level'])
+            self.set_friction_level(data['friction_level'])
+            self.set_ffb_leds(data['ffb_leds'])
+            self.set_ffb_overlay(data['ffb_overlay'])
+            self.set_range_overlay(data['range_overlay'])
+            self.set_overlay_window_pos(data['overlay_window_pos'])
+            self.set_use_buttons(data['use_buttons'])
 
-    def load(self, profile_file):
-        self.config = configparser.ConfigParser()
-        self.config.read(profile_file)
-
-    def save(self, profile_file):
-        with open(profile_file, 'w') as configfile:
-            self.config.write(configfile)
-
-    def export_settings(self):
-        return {
+    def to_dict(self):
+        data = {
             'mode': self.get_mode(),
             'range': self.get_range(),
             'combine_pedals': self.get_combine_pedals(),
@@ -28,12 +30,21 @@ class Profile:
             'spring_level': self.get_spring_level(),
             'damper_level': self.get_damper_level(),
             'friction_level': self.get_friction_level(),
-            'ffbmeter_leds': self.get_ffbmeter_leds(),
-            'ffbmeter_overlay': self.get_ffbmeter_overlay(),
-            'wheel_range_overlay': self.get_wheel_range_overlay(),
-            'wheel_buttons': self.get_wheel_buttons(),
+            'ffb_leds': self.get_ffb_leds(),
+            'ffb_overlay': self.get_ffb_overlay(),
+            'range_overlay': self.get_range_overlay(),
             'overlay_window_pos': self.get_overlay_window_pos(),
+            'use_buttons': self.get_use_buttons(),
         }
+
+        return {k:v for (k, v) in data.items() if v is not None}
+
+    def load(self, profile_file):
+        self.config.read(profile_file)
+
+    def save(self, profile_file):
+        with open(profile_file, 'w') as configfile:
+            self.config.write(configfile)
 
     def import_settings(self, data):
         self.config['DEFAULT'] = {**self.config['DEFAULT'], **data}
@@ -62,16 +73,16 @@ class Profile:
     def set_friction_level(self, level):
         self.set('friction_level', int(level))
 
-    def set_ffbmeter_leds(self, state):
+    def set_ffb_leds(self, state):
         self.set('ffbmeter_leds', int(state))
 
-    def set_ffbmeter_overlay(self, state):
+    def set_ffb_overlay(self, state):
         self.set('ffbmeter_overlay', int(state))
 
-    def set_wheel_range_overlay(self, id):
+    def set_range_overlay(self, id):
         self.set('wheel_range_overlay', id)
 
-    def set_wheel_buttons(self, state):
+    def set_use_buttons(self, state):
         self.set('wheel_buttons', int(state))
 
     def set_overlay_window_pos(self, position):
@@ -109,20 +120,20 @@ class Profile:
     def get_friction_level(self):
         return self.get_int('friction_level')
 
-    def get_ffbmeter_leds(self):
+    def get_ffb_leds(self):
         return self.get_int('ffbmeter_leds')
 
-    def get_ffbmeter_overlay(self):
+    def get_ffb_overlay(self):
         return self.get_int('ffbmeter_overlay')
 
-    def get_wheel_range_overlay(self):
+    def get_range_overlay(self):
         return self.get('wheel_range_overlay')
 
-    def get_wheel_buttons(self):
+    def get_use_buttons(self):
         return self.get_int('wheel_buttons')
 
     def get_overlay_window_pos(self):
-        if 'overlay_window_pos' not in self.config:
+        if not self.config.has_option('DEFAULT', 'overlay_window_pos'):
             return None
         return tuple(map(int, self.get('overlay_window_pos').split(',')))
 

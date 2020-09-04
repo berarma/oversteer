@@ -3,11 +3,13 @@ import configparser
 from locale import gettext as _
 import logging
 import os
-from .profiles import Profile
+from .model import Model
+from .profile import Profile
 import sys
 from xdg.BaseDirectory import *
 
 class Application:
+
     def __init__(self, version, pkgdatadir, icondir):
         self.version = version
         self.datadir = pkgdatadir
@@ -59,6 +61,7 @@ class Application:
             device = device_manager.first_device()
 
         nothing_done = True
+        model = Model(device)
         if args.list == True:
             devices = device_manager.get_devices()
             print(_("Devices found:"))
@@ -66,37 +69,37 @@ class Application:
                 print("  {}: {}".format(device.dev_name, device.name))
             nothing_done = False
         if args.mode is not None:
-            device.set_mode(args.mode)
+            model.set_mode(args.mode)
             nothing_done = False
         if args.range is not None:
-            device.set_range(args.range)
+            model.set_range(args.range)
             nothing_done = False
         if args.combine_pedals is not None:
-            device.set_combine_pedals(args.combine_pedals)
+            model.set_combine_pedals(args.combine_pedals)
             nothing_done = False
         if args.autocenter is not None:
-            device.set_autocenter(args.autocenter)
+            model.set_autocenter(args.autocenter)
             nothing_done = False
         if args.ff_gain is not None:
-            device.set_ff_gain(args.ff_gain)
+            model.set_ff_gain(args.ff_gain)
             nothing_done = False
         if args.spring_level is not None:
-            device.set_spring_level(args.spring_level)
+            model.set_spring_level(args.spring_level)
             nothing_done = False
         if args.damper_level is not None:
-            device.set_damper_level(args.damper_level)
+            model.set_damper_level(args.damper_level)
             nothing_done = False
         if args.friction_level is not None:
-            device.set_friction_level(args.friction_level)
+            model.set_friction_level(args.friction_level)
             nothing_done = False
         if args.ffb_leds is not None:
-            device.set_ffb_leds(1 if args.ffb_leds else 0)
+            model.set_ffb_leds(1 if args.ffb_leds else 0)
             nothing_done = False
         if not args.gui and args.profile is not None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             profile = Profile()
             profile.load(profile_file)
-            device.load_settings(profile.export_settings())
+            model.load_settings(profile.to_dict())
             nothing_done = False
         if args.gui or nothing_done:
             self.args = args

@@ -118,7 +118,6 @@ class Device:
             return True
         self.disconnect()
         logging.debug("Setting mode: " + str(emulation_mode))
-        product_id = self.product_id
         with open(path, "w") as file:
             file.write(emulation_mode)
         # Wait for device ready
@@ -366,9 +365,9 @@ class Device:
 
     def read_events(self, timeout):
         input_device = self.get_input_device()
-        if input_device.fd == -1:
+        if input_device is None or input_device.fd == -1:
             return None
-        r, w, x = select.select({input_device.fd: input_device}, [], [], timeout)
+        r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
         if input_device.fd in r:
             for event in input_device.read():
                 yield self.normalize_event(event)
