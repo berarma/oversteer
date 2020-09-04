@@ -59,11 +59,11 @@ There's an ebuild created by gripped [here](https://github.com/gripped/Logitech-
 You can install all dependencies on Debian systems with the following command
 (I'm using the meson package in Buster backports):
 
-`apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils`
+`apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils python3-matplotlib python3-scipy`
 
 You can install all dependencies on Fedora systems with the following command:
 
-`dnf install python3 python3-gobject python3-pyudev python3-pyxdg python3-libevdev gettext meson appstream desktop-file-utils`
+`dnf install python3 python3-gobject python3-pyudev python3-pyxdg python3-libevdev gettext meson appstream desktop-file-utils python3-matplotlib python3-scipy`
 
 In other distributions use the available tools to install the packages that
 will have similar names.

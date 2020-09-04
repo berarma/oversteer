@@ -15,6 +15,8 @@ class GtkUi:
         handlers = GtkHandlers(self, controller)
 
         self.ffbmeter_timer = False
+        self.current_test_canvas = None
+        self.current_test_toolbar = None
 
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.css'))
@@ -413,6 +415,11 @@ class GtkUi:
     def disable_save_profile(self):
         self.save_profile_button.set_sensitive(False)
 
+    def on_test_ready(self):
+        self.test_start_button.set_sensitive(True)
+        self.test_open_chart_button.set_sensitive(True)
+        self.test_export_csv_button.set_sensitive(True)
+
     def _update_ffbmeter_overlay(self):
         if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
             self.ffbmeter_timer = False
@@ -448,6 +455,19 @@ class GtkUi:
     def _round_input(self, value, decimals = 0):
         multiplier = 10 ** decimals
         return math.floor(value * multiplier) / multiplier
+
+    def show_test_chart(self, canvas, toolbar):
+        if self.current_test_canvas is not None:
+            self.test_chart_frame.remove(self.current_test_canvas)
+        if self.current_test_toolbar is not None:
+            self.test_chart_container.remove(self.current_test_toolbar)
+        self.current_test_canvas = canvas
+        self.current_test_toolbar = toolbar
+        self.test_chart_container.pack_start(toolbar, False, False, 0)
+        self.test_chart_frame.add(canvas)
+        self.test_chart_window.show_all()
+        self.test_chart_window.show()
+        self.test_open_chart_button.set_sensitive(False)
 
     def _screen_changed(self, widget, old_screen, userdata=None):
         screen = self.overlay_window.get_screen()
@@ -523,6 +543,32 @@ class GtkUi:
             else:
                 return 0
         self.profile_listbox.set_sort_func(sort_profiles)
+
+        self.test_container = self.builder.get_object('test_container')
+        self.test_container_stack = self.builder.get_object('test_container_stack')
+        self.test_chart_window = self.builder.get_object('test_chart_window')
+        self.test_chart_container = self.builder.get_object('test_chart_container')
+        self.test_chart_frame = self.builder.get_object('test_chart_frame')
+        self.test_chart_running = self.builder.get_object('test_chart_running')
+        self.test_chart_results = self.builder.get_object('test_chart_results')
+        self.test_chart_message = self.builder.get_object('test_chart_message')
+        self.test_type_combobox = self.builder.get_object('test_type_combobox')
+        self.test_start_button = self.builder.get_object('test_start_button')
+        self.test_open_chart_button = self.builder.get_object('test_open_chart_button')
+        self.test_export_csv_button = self.builder.get_object('test_export_csv_button')
+        self.test_import_csv_button = self.builder.get_object('test_import_csv_button')
+        self.test_open_chart_button.set_sensitive(False)
+        self.test_export_csv_button.set_sensitive(False)
+        self.test_max_velocity = self.builder.get_object('test_max_velocity')
+        self.test_latency = self.builder.get_object('test_latency')
+        self.test_max_accel = self.builder.get_object('test_max_accel')
+        self.test_max_decel = self.builder.get_object('test_max_decel')
+        self.test_time_to_max_accel = self.builder.get_object('test_time_to_max_accel')
+        self.test_time_to_max_decel = self.builder.get_object('test_time_to_max_decel')
+        self.test_mean_accel = self.builder.get_object('test_mean_accel')
+        self.test_mean_decel = self.builder.get_object('test_mean_decel')
+        self.test_residual_decel = self.builder.get_object('test_residual_decel')
+        self.test_estimated_snr = self.builder.get_object('test_estimated_snr')
 
     def _set_markers(self):
         self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')

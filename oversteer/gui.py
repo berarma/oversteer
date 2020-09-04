@@ -1,5 +1,6 @@
 import configparser
-from evdev import InputDevice, categorize, ecodes
+import csv
+from evdev import InputDevice, categorize, ecodes, ff
 import glob
 import locale as Locale
 from locale import gettext as _
@@ -8,13 +9,14 @@ import shutil
 import signal
 import subprocess
 import sys
-import threading
+from threading import Thread, Event
 import time
 from xdg.BaseDirectory import *
 from .device_manager import DeviceManager
 from .gtk_ui import GtkUi
 from .model import Model
 from .profile import Profile
+from .test_chart import TestChart
 
 class Gui:
 
@@ -26,6 +28,9 @@ class Gui:
         self.grab_input = False
         self.model = None
         self.models = {}
+        self.test_running = False
+        self.test_chart = None
+        self.last_wheel_axis_value = 32768
         self.button_config = [
             -1,
             -1,
@@ -89,7 +94,7 @@ class Gui:
 
         self.ui.update()
 
-        threading.Thread(target=self.input_thread, daemon = True).start()
+        Thread(target=self.input_thread, daemon = True).start()
 
         self.ui.main()
 
@@ -342,7 +347,12 @@ class Gui:
         for event in events:
             if event.type == ecodes.EV_ABS:
                 if event.code == ecodes.ABS_X:
-                    self.ui.safe_call(self.ui.set_steering_input, event.value)
+                    self.last_wheel_axis_value = event.value
+                    if self.test_running:
+                        if not self.test_startup:
+                            self.test_values.append((event.timestamp() - self.test_starttime, (event.value - 32768) / 32768))
+                    else:
+                        self.ui.safe_call(self.ui.set_steering_input, event.value)
                 elif event.code == ecodes.ABS_Y:
                     self.ui.safe_call(self.ui.set_accelerator_input, event.value)
                 elif event.code == ecodes.ABS_Z:
@@ -387,3 +397,159 @@ class Gui:
                 time.sleep(1)
             if self.device_manager.is_changed():
                 self.ui.safe_call(self.populate_devices)
+
+    def start_test(self):
+        Thread(target=self.test_thread).start()
+
+    def test_thread(self):
+        self.test_startup = True
+        self.test_running = True
+        input_device = self.device.get_input_device()
+
+        self.ui.test_container_stack.set_visible_child(self.ui.test_chart_running)
+
+        # Save wheel settings
+        current_range = self.device.get_range()
+        current_ff_gain = self.device.get_ff_gain()
+        current_autocenter = self.device.get_autocenter()
+
+        # Prepare wheel
+        try:
+            for effect_id in range(input_device.ff_effects_count):
+                input_device.erase_effect(effect_id)
+        except OSError as e:
+            pass
+        self.device.set_range(900)
+        self.device.set_ff_gain(65535)
+        self.device.set_autocenter(0)
+
+        turn_right = ff.Effect(
+            ecodes.FF_CONSTANT, -1, 0x4000,
+            ff.Trigger(0, 0),
+            ff.Replay(0, 0),
+            ff.EffectType(ff_constant_effect=ff.Constant(level=0x7fff))
+        )
+        right_force_id = input_device.upload_effect(turn_right)
+
+        turn_left = ff.Effect(
+            ecodes.FF_CONSTANT, -1, 0xc000,
+            ff.Trigger(0, 0),
+            ff.Replay(0, 0),
+            ff.EffectType(ff_constant_effect=ff.Constant(level=0x7fff))
+        )
+        left_force_id = input_device.upload_effect(turn_left)
+
+        input_device.write(ecodes.EV_FF, left_force_id, 1)
+        time.sleep(0.1)
+        input_device.write(ecodes.EV_FF, left_force_id, 0)
+        self.device.set_autocenter(65535)
+        time.sleep(1)
+        self.device.set_autocenter(0)
+        time.sleep(0.1)
+
+        starting_wheel_pos = (self.last_wheel_axis_value - 32768) / 32768
+        test_inputs = [(0, 0)]
+        self.test_values = [(0, starting_wheel_pos)]
+        self.test_starttime = time.time()
+        time.sleep(0.1)
+        self.test_startup = False
+
+        test_inputs.append((time.time() - self.test_starttime, 1))
+        input_device.write(ecodes.EV_FF, left_force_id, 1)
+        time.sleep(0.3)
+        input_device.write(ecodes.EV_FF, left_force_id, 0)
+
+        test_inputs.append((time.time() - self.test_starttime, -1))
+        input_device.write(ecodes.EV_FF, right_force_id, 1)
+        time.sleep(0.3)
+        input_device.write(ecodes.EV_FF, right_force_id, 0)
+
+        test_inputs.append((time.time() - self.test_starttime, 1))
+        input_device.write(ecodes.EV_FF, left_force_id, 1)
+        time.sleep(0.3)
+        input_device.write(ecodes.EV_FF, left_force_id, 0)
+        test_inputs.append((time.time() - self.test_starttime, 0))
+
+        time.sleep(0.5)
+
+        test_inputs.append((time.time() - self.test_starttime, 0))
+
+        self.test_running = False
+
+        input_device.erase_effect(right_force_id)
+        input_device.erase_effect(left_force_id)
+
+        # Restore wheel settings
+        self.device.set_range(current_range)
+        self.device.set_ff_gain(current_ff_gain)
+        self.device.set_autocenter(current_autocenter)
+
+        self.test_chart = TestChart(test_inputs, self.test_values)
+
+        if self.test_chart.latency() is None:
+            self.ui.error_dialog(_('Steering wheel not responding.'), _('No wheel movement could be registered.'))
+            return
+
+        self.ui.safe_call(self.show_test_results)
+
+    def show_test_results(self):
+        self.ui.test_max_velocity.set_text(format(self.test_chart.max_velocity(), '.0f'))
+        self.ui.test_latency.set_text(format(1000 * self.test_chart.latency(), '.0f'))
+        self.ui.test_max_accel.set_text(format(self.test_chart.max_accel(), '.0f'))
+        self.ui.test_max_decel.set_text(format(self.test_chart.max_decel(), '.0f'))
+        self.ui.test_time_to_max_accel.set_text(format(1000 * self.test_chart.time_to_max_accel(), '.0f'))
+        self.ui.test_time_to_max_decel.set_text(format(1000 * self.test_chart.time_to_max_decel(), '.0f'))
+        self.ui.test_mean_accel.set_text(format(self.test_chart.mean_accel(), '.0f'))
+        self.ui.test_mean_decel.set_text(format(self.test_chart.mean_decel(), '.0f'))
+        self.ui.test_residual_decel.set_text(format(self.test_chart.residual_decel(), '.0f'))
+        self.ui.test_estimated_snr.set_text(format(self.test_chart.estimated_snr(), '.0f'))
+
+        self.ui.test_container_stack.set_visible_child(self.ui.test_chart_results)
+        self.ui.on_test_ready()
+
+    def import_test_values(self):
+        filename = self.ui.file_chooser(_('CSV file to import'), 'open')
+        if filename is None:
+            return
+
+        with open(filename) as csv_file:
+            test_inputs = []
+            test_values = []
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            for row in csv_reader:
+                if row[0].startswith('#'):
+                    continue
+                test_inputs.append((float(row[0]), float(row[1])))
+                test_values.append((float(row[2]), float(row[3])))
+
+        self.test_chart = TestChart(test_inputs, test_values)
+
+        self.show_test_results()
+
+        self.ui.info_dialog(_("Test data imported."),
+            _("New test data imported from CSV file."))
+
+    def export_test_values(self):
+        if self.test_chart is None:
+            return
+
+        filename = self.ui.file_chooser(_('CSV file to export'), 'save', 'report.csv')
+        if filename is None:
+            return
+
+        with open(filename, mode='w') as csv_file:
+            csv_writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            for v1, v2 in zip(self.test_chart.get_input_values(), self.test_chart.get_pos_values()):
+                csv_writer.writerow([format(v1[0], '.5f'), format(v1[1], '.5f'), format(v2[0], '.5f'), format(v2[1], '.5f')])
+
+        self.ui.info_dialog(_("Test data imported."),
+            _("Current test data has been exported to a CSV file."))
+
+    def open_test_chart(self):
+        if self.test_chart is None:
+            return
+
+        canvas = self.test_chart.get_canvas()
+        toolbar = self.test_chart.get_navigation_toolbar(canvas, self.ui.window)
+        self.ui.show_test_chart(canvas, toolbar)
+
