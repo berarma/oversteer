@@ -161,10 +161,10 @@ class Gui:
         self.ui.set_combine_pedals(combine_pedals, True)
 
         autocenter = self.device.get_autocenter()
-        self.ui.set_autocenter(autocenter)
+        self.ui.set_autocenter(autocenter * 100 / 65535)
 
         ff_gain = self.device.get_ff_gain()
-        self.ui.set_ff_gain(ff_gain)
+        self.ui.set_ff_gain(ff_gain * 100 / 65535)
 
         spring_level = self.device.get_spring_level()
         self.ui.set_spring_level(spring_level, True)
@@ -235,7 +235,15 @@ class Gui:
         if self.device is None:
             return
 
-        profile = Profile(self.device.save_settings())
+        profile = Profile()
+        profile.set_mode(self.ui.get_emulation_mode())
+        profile.set_range(self.ui.get_range())
+        profile.set_combine_pedals(self.ui.get_combine_pedals())
+        profile.set_autocenter(self.ui.get_autocenter())
+        profile.set_ff_gain(self.ui.get_ff_gain())
+        profile.set_spring_level(self.ui.get_spring_level())
+        profile.set_damper_level(self.ui.get_damper_level())
+        profile.set_friction_level(self.ui.get_friction_level())
         profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
         profile.set_wheel_range_overlay(self.ui.get_wheel_range_overlay())
         profile.set_wheel_buttons(self.ui.get_wheel_buttons())
@@ -268,7 +276,7 @@ class Gui:
         self.device.set_combine_pedals(2)
 
     def set_ff_gain(self, ff_gain):
-        self.device.set_ff_gain(ff_gain)
+        self.device.set_ff_gain(ff_gain * 65535 / 100)
 
     def set_spring_level(self, level):
         self.device.set_spring_level(level)
@@ -283,7 +291,7 @@ class Gui:
         self.device.set_ffb_leds(1 if state else 0)
 
     def change_autocenter(self, autocenter):
-        self.device.set_autocenter(autocenter)
+        self.device.set_autocenter(autocenter * 65535 / 100)
 
     def delete_profile(self, profile_file):
         if profile_file != '' and profile_file is not None:

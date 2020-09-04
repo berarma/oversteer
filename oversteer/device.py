@@ -174,7 +174,7 @@ class Device:
         return int(round((int(autocenter) * 100) / 65535))
 
     def set_autocenter(self, autocenter):
-        autocenter = str(int(65535 * autocenter / 100))
+        autocenter = str(autocenter)
         logging.debug("Setting autocenter strength: " + autocenter)
         path = self.checked_device_file("autocenter")
         if path:
@@ -188,14 +188,14 @@ class Device:
     def get_ff_gain(self):
         path = self.checked_device_file("gain")
         if not path:
-            return 100
+            return 65535
         with open(path, "r") as file:
             data = file.read()
         gain = int(data.strip())
-        return int(gain/65530*100)
+        return int(gain)
 
     def set_ff_gain(self, gain):
-        gain = str(int(65535 * gain / 100))
+        gain = str(gain)
         logging.debug("Setting FF gain: " + gain)
         path = self.checked_device_file("gain")
         if path:
