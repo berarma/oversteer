@@ -1,4 +1,5 @@
 import gi
+from locale import gettext as _
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
@@ -19,6 +20,7 @@ class GtkHandlers:
     def on_overlay_window_configure(self, window, event):
         if event.type == Gdk.EventType.CONFIGURE:
             self.ui.update_overlay_window_pos((event.x, event.y))
+            self.model.set_overlay_window_pos((event.x, event.y))
 
     def on_main_window_destroy(self, *args):
         Gtk.main_quit()
@@ -50,17 +52,6 @@ class GtkHandlers:
         if device_id is not None:
             self.controller.change_device(device_id)
 
-    def on_profile_changed(self, combobox):
-        self.controller.load_profile(combobox.get_active_id())
-
-    def on_save_profile_as_clicked(self, widget):
-        profile_name = self.ui.new_profile_name.get_text()
-        self.controller.save_profile_as(profile_name)
-
-    def on_save_profile_clicked(self, widget):
-        profile_file = self.ui.profile_combobox.get_active_id()
-        self.controller.save_profile(profile_file)
-
     def on_update_clicked(self, button):
         self.controller.populate_window()
         self.ui.update()
@@ -74,7 +65,7 @@ class GtkHandlers:
         self.ui.change_emulation_mode_button.set_sensitive(True)
 
     def on_wheel_range_value_changed(self, widget):
-        range = widget.get_value() * 10
+        range = int(widget.get_value() * 10)
         self.model.set_range(range)
         self.ui.overlay_wheel_range.set_label(str(range))
 
@@ -109,10 +100,6 @@ class GtkHandlers:
         autocenter = int(widget.get_value())
         self.model.set_autocenter(autocenter)
 
-    def on_delete_profile_clicked(self, widget):
-        profile_file = self.ui.profile_combobox.get_active_id()
-        self.controller.delete_profile(profile_file)
-
     def on_check_permissions_state_set(self, widget, state):
         self.controller.set_check_permissions(state)
 
@@ -141,7 +128,7 @@ class GtkHandlers:
         self.ui.update_overlay()
 
     def on_wheel_range_overlay_clicked(self, widget):
-        self.model.set_range_overlay(widget.get_active())
+        self.model.set_range_overlay(self.ui.get_wheel_range_overlay())
         self.ui.update_overlay()
 
     def on_start_define_buttons_clicked(self, widget):
@@ -150,3 +137,117 @@ class GtkHandlers:
     def on_wheel_buttons_state_set(self, widget, state):
         self.model.set_use_buttons(state)
 
+    def on_profile_changed(self, combobox):
+        self.controller.load_profile(combobox.get_active_id())
+
+    def on_save_profile_clicked(self, widget):
+        profile_name = self.ui.profile_combobox.get_active_id()
+        self.controller.save_profile(profile_name)
+
+    def on_new_profile_clicked(self, widget):
+        self.ui.new_profile_name_entry.set_text('')
+        self.ui.new_profile_name_entry.show()
+        self.ui.new_profile_name_entry.grab_focus()
+
+    def on_new_profile_focus_out(self, widget, event):
+        widget.hide()
+
+    def on_new_profile_key_release(self, widget, event):
+        if event.keyval == Gdk.KEY_Escape:
+            widget.hide()
+
+    def on_new_profile_activate(self, widget):
+        widget.hide()
+        profile_name = widget.get_text()
+        try:
+            self.controller.save_profile(profile_name, True)
+            self.ui.profile_listbox_add(profile_name)
+            self.ui.update_profiles_combobox()
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except Exception as e:
+            if str(e) != '':
+                self.ui.error_dialog(_('Error creating profile'), str(e))
+
+    def on_rename_profile_clicked(self, widget):
+        row = self.ui.profile_listbox.get_selected_row()
+        if row is None:
+            return
+        def on_rename_profile_focus_out(widget, event):
+            entry.disconnect_by_func(on_rename_profile_focus_out)
+            row.remove(widget)
+            row.add(label)
+        def on_rename_profile_key_release(widget, event):
+            if event.keyval == Gdk.KEY_Escape:
+                entry.disconnect_by_func(on_rename_profile_focus_out)
+                row.remove(widget)
+                row.add(label)
+        def on_rename_profile_activate(widget):
+            entry.disconnect_by_func(on_rename_profile_focus_out)
+            source_profile_name = label.get_text()
+            target_profile_name = widget.get_text()
+            row.remove(widget)
+            row.add(label)
+            try:
+                self.controller.rename_profile(source_profile_name, target_profile_name)
+                label.set_text(target_profile_name)
+                self.ui.profile_listbox.invalidate_sort()
+                self.ui.update_profiles_combobox()
+            except (KeyboardInterrupt, SystemExit):
+                raise
+            except Exception as e:
+                self.ui.error_dialog(_('Error renaming profile'), str(e))
+        entry = Gtk.Entry()
+        entry.connect('activate', on_rename_profile_activate)
+        entry.connect('focus-out-event', on_rename_profile_focus_out)
+        entry.connect('key-release-event', on_rename_profile_key_release)
+        label = row.get_children()[0]
+        row.remove(label)
+        text = label.get_text()
+        entry.set_text(text)
+        row.add(entry)
+        entry.show()
+        entry.grab_focus()
+
+    def on_delete_profile_clicked(self, widget):
+        row = self.ui.profile_listbox.get_selected_row()
+        if row is None:
+            return
+        profile_name = row.get_children()[0].get_text()
+        try:
+            self.controller.delete_profile(profile_name)
+            self.ui.profile_listbox.remove(row)
+            self.ui.update_profiles_combobox()
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except Exception as e:
+            if str(e) != '':
+                self.ui.error_dialog(_('Error deleting profile'), str(e))
+
+    def on_import_profile_clicked(self, widget):
+        profile_file = self.ui.file_chooser(_('Choose profile file to import'), 'open')
+        if profile_file is None:
+            return
+        try:
+            profile_name = self.controller.import_profile(profile_file)
+            self.ui.profile_listbox_add(profile_name)
+            self.ui.update_profiles_combobox()
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except Exception as e:
+            self.ui.error_dialog(_('Error importing profile'), str(e))
+
+    def on_export_profile_clicked(self, widget):
+        row = self.ui.profile_listbox.get_selected_row()
+        if row is None:
+            return
+        profile_name = row.get_children()[0].get_text()
+        export_file = self.ui.file_chooser(_('Export profile to'), 'save', profile_name + '.ini')
+        if export_file is None:
+            return
+        try:
+            self.controller.export_profile(profile_name, export_file)
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except Exception as e:
+            self.ui.error_dialog(_('Error exporting profile'), str(e))

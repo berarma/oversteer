@@ -95,11 +95,15 @@ class Application:
         if args.ffb_leds is not None:
             model.set_ffb_leds(1 if args.ffb_leds else 0)
             nothing_done = False
-        if not args.gui and args.profile is not None:
+        if args.profile is not None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
-            profile = Profile()
-            profile.load(profile_file)
-            model.load_settings(profile.to_dict())
+            if not os.path.exists(profile_file):
+                print(_("This profile doesn't exist."))
+                sys.exit(1)
+            if not args.gui:
+                profile = Profile()
+                profile.load(profile_file)
+                model.load_settings(profile.to_dict())
             nothing_done = False
         if args.gui or nothing_done:
             self.args = args

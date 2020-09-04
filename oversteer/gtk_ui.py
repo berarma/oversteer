@@ -39,7 +39,7 @@ class GtkUi:
 
         cell_renderer = Gtk.CellRendererText()
         self.profile_combobox.pack_start(cell_renderer, True)
-        self.profile_combobox.add_attribute(cell_renderer, 'text', 1)
+        self.profile_combobox.add_attribute(cell_renderer, 'text', 0)
         self.profile_combobox.set_id_column(0)
 
         cell_renderer = Gtk.CellRendererText()
@@ -53,6 +53,8 @@ class GtkUi:
 
     def main(self):
         self.window.show_all()
+        self.new_profile_name_entry.hide()
+
         Gtk.main()
 
     def safe_call(self, callback, *args):
@@ -71,6 +73,47 @@ class GtkUi:
         dialog.format_secondary_text(secondary_text)
         dialog.run()
         dialog.destroy()
+
+    def error_dialog(self, message, secondary_text = ''):
+        dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.ERROR,
+                Gtk.ButtonsType.OK, message)
+        dialog.format_secondary_text(secondary_text)
+        dialog.run()
+        dialog.destroy()
+
+    def file_chooser(self, title, action, default_name = None):
+        if action == 'open':
+            action = Gtk.FileChooserAction.OPEN
+            action_button = Gtk.STOCK_OPEN
+        elif action == 'save':
+            action = Gtk.FileChooserAction.SAVE
+            action_button = Gtk.STOCK_SAVE
+
+        dialog = Gtk.FileChooserDialog(
+            title=title, parent=self.window, action=action
+        )
+
+        if action == Gtk.FileChooserAction.SAVE:
+            if default_name is not None:
+                dialog.set_current_name(default_name)
+
+        dialog.add_buttons(
+            Gtk.STOCK_CANCEL,
+            Gtk.ResponseType.CANCEL,
+            action_button,
+            Gtk.ResponseType.OK,
+        )
+
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            filename = dialog.get_filename()
+        else:
+            filename = None
+
+        dialog.destroy()
+
+        return filename
 
     def update(self):
         self.window.queue_draw()
@@ -118,21 +161,54 @@ class GtkUi:
             if self.device_combobox.get_active() == -1:
                 self.device_combobox.set_active(0)
 
-    def set_profiles(self, profiles):
+    def update_profiles_combobox(self):
         model = self.profile_combobox.get_model()
         if model is None:
-            model = Gtk.ListStore(str, str)
+            active_id = ''
+            model = Gtk.ListStore(str)
         else:
-            self.profile_combobox.set_model(None)
+            active_id = self.profile_combobox.get_active_id()
             model.clear()
-        model.append(['', ''])
-        for profile_file in profiles:
-            profile_name = os.path.splitext(os.path.basename(profile_file))[0]
-            model.append([profile_file, profile_name])
+        model.append([''])
+
+        profiles = []
+        for row in self.profile_listbox.get_children():
+            profiles.append(row.get_children()[0].get_text())
+        profiles.sort()
+
+        for profile_name in profiles:
+            model.append([profile_name])
+
         self.profile_combobox.set_model(model)
+        self.profile_combobox.set_active_id(active_id)
+
+        if active_id == '':
+            self.disable_save_profile()
+        else:
+            self.enable_save_profile()
+
+    def profile_listbox_add(self, profile_name):
+        label = Gtk.Label(label=profile_name)
+        label.set_xalign(0)
+        self.profile_listbox.add(label)
+        label.show()
+        self.profile_listbox.select_row(label.get_parent())
+
+    def set_profiles(self, profiles):
+        for widget in self.profile_listbox.get_children():
+            widget.destroy()
+
+        for profile_name in profiles:
+            self.profile_listbox_add(profile_name)
+
+        self.update_profiles_combobox()
 
     def set_profile(self, profile):
         self.profile_combobox.set_active_id(profile)
+        if profile == '':
+            self.disable_save_profile()
+        else:
+            self.enable_save_profile()
 
     def set_modes(self, modes, startup = False):
         if startup:
@@ -293,14 +369,18 @@ class GtkUi:
     def reset_define_buttons_text(self):
         self.start_define_buttons.set_label(self.define_buttons_text)
 
-    def update_overlay(self, auto = False):
-        ffbmeter_overlay = self.ffbmeter_overlay.get_active()
+    def get_wheel_range_overlay(self):
         if self.wheel_range_overlay_never.get_active():
             wheel_range_overlay = 'never'
         elif self.wheel_range_overlay_always.get_active():
             wheel_range_overlay = 'always'
         elif self.wheel_range_overlay_auto.get_active():
             wheel_range_overlay = 'auto'
+        return wheel_range_overlay
+
+    def update_overlay(self, auto = False):
+        ffbmeter_overlay = self.ffbmeter_overlay.get_active()
+        wheel_range_overlay = self.get_wheel_range_overlay()
         if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
@@ -325,6 +405,13 @@ class GtkUi:
 
     def update_overlay_window_pos(self, position):
         self.overlay_window_pos = position
+
+    def enable_save_profile(self):
+        if self.profile_combobox.get_active_id() != '':
+            self.save_profile_button.set_sensitive(True)
+
+    def disable_save_profile(self):
+        self.save_profile_button.set_sensitive(False)
 
     def _update_ffbmeter_overlay(self):
         if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
@@ -381,6 +468,8 @@ class GtkUi:
 
         self.device_combobox = self.builder.get_object('device')
         self.profile_combobox = self.builder.get_object('profile')
+        self.new_profile_name_entry = self.builder.get_object('new_profile_name')
+        self.save_profile_button = self.builder.get_object('save_profile')
         self.new_profile_name = self.builder.get_object('new_profile_name')
         self.emulation_mode_combobox = self.builder.get_object('emulation_mode')
         self.change_emulation_mode_button = self.builder.get_object('change_emulation_mode')
@@ -422,6 +511,18 @@ class GtkUi:
         self.btn_input = [None] * 25
         for i in range(0, 25):
             self.btn_input[i] = self.builder.get_object('btn' + str(i) + '_input')
+
+        self.profile_listbox = self.builder.get_object('profile_listbox')
+        def sort_profiles(row1, row2):
+            text1 = row1.get_children()[0].get_text().lower()
+            text2 = row2.get_children()[0].get_text().lower()
+            if text1 < text2:
+                return -1
+            elif text1 > text2:
+                return 1
+            else:
+                return 0
+        self.profile_listbox.set_sort_func(sort_profiles)
 
     def _set_markers(self):
         self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')

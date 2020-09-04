@@ -20,6 +20,7 @@ class Model:
         self.device = device
         self.ui = ui
         self.data = self.defaults.copy()
+        self.reference_values = None
         self.read_device_settings()
 
     def read_device_settings(self):
@@ -82,12 +83,32 @@ class Model:
     def to_dict(self):
         return self.data.copy()
 
+    def save_reference_values(self):
+        self.reference_values = self.data.copy()
+        self.ui.disable_save_profile()
+
+    def clear_reference_values(self):
+        self.reference_values = None
+        self.ui.disable_save_profile()
+
     def get_mode_list(self):
         return self.device.list_modes()
 
+    def set_if_changed(self, key, value):
+        if self.data[key] != value:
+            self.data[key] = value
+            if self.ui is not None:
+                if self.reference_values is not None:
+                    self.ui.disable_save_profile()
+                    for k, v in self.data.items():
+                        if self.reference_values[k] != v:
+                            self.ui.enable_save_profile()
+                            break
+            return True
+        return False
+
     def set_mode(self, value):
-        if self.data['mode'] != value:
-            self.data['mode'] = value
+        if self.set_if_changed('mode', value):
             self.device.set_mode(value)
             self.read_device_settings()
             if self.ui is not None:
@@ -97,24 +118,24 @@ class Model:
         return self.data['mode']
 
     def set_range(self, value):
-        if self.data['range'] != value:
-            self.data['range'] = value
+        value = int(value)
+        if self.set_if_changed('range', value):
             self.device.set_range(value)
 
     def get_range(self):
         return self.data['range']
 
     def set_ff_gain(self, value):
-        if self.data['ff_gain'] != value:
-            self.data['ff_gain'] = value
+        value = int(value)
+        if self.set_if_changed('ff_gain', value):
             self.device.set_ff_gain(value * 65535 / 100)
 
     def get_ff_gain(self):
         return self.data['ff_gain']
 
     def set_autocenter(self, value):
-        if self.data['autocenter'] != value:
-            self.data['autocenter'] = value
+        value = int(value)
+        if self.set_if_changed('autocenter', value):
             self.device.set_autocenter(value * 65535 / 100)
 
     def get_autocenter(self):
@@ -122,8 +143,7 @@ class Model:
 
     def set_combine_pedals(self, value):
         value = int(value)
-        if self.data['combine_pedals'] != value:
-            self.data['combine_pedals'] = value
+        if self.set_if_changed('combine_pedals', value):
             self.device.set_combine_pedals(value)
 
     def get_combine_pedals(self):
@@ -131,8 +151,7 @@ class Model:
 
     def set_spring_level(self, value):
         value = int(value)
-        if self.data['spring_level'] != value:
-            self.data['spring_level'] = value
+        if self.set_if_changed('spring_level', value):
             self.device.set_spring_level(value)
 
     def get_spring_level(self):
@@ -140,8 +159,7 @@ class Model:
 
     def set_damper_level(self, value):
         value = int(value)
-        if self.data['damper_level'] != value:
-            self.data['damper_level'] = value
+        if self.set_if_changed('damper_level', value):
             self.device.set_damper_level(value)
 
     def get_damper_level(self):
@@ -149,8 +167,7 @@ class Model:
 
     def set_friction_level(self, value):
         value = int(value)
-        if self.data['friction_level'] != value:
-            self.data['friction_level'] = value
+        if self.set_if_changed('friction_level', value):
             self.device.set_friction_level(value)
 
     def get_friction_level(self):
@@ -158,33 +175,32 @@ class Model:
 
     def set_ffb_leds(self, value):
         value = bool(value)
-        if self.data['ffb_leds'] != value:
-            self.data['ffb_leds'] = value
+        if self.set_if_changed('ffb_leds', value):
             self.device.set_ffb_leds(1 if value else 0)
 
     def get_ffb_leds(self):
         return self.data['ffb_leds']
 
     def set_ffb_overlay(self, value):
-        self.data['ffb_overlay'] = bool(value)
+        self.set_if_changed('ffb_overlay', bool(value))
 
     def get_ffb_overlay(self):
         return self.data['ffb_overlay']
 
     def set_range_overlay(self, value):
-        self.data['range_overlay'] = value
+        self.set_if_changed('range_overlay', value)
 
     def get_range_overlay(self):
         return self.data['range_overlay']
 
     def set_overlay_window_pos(self, value):
-        self.data['overlay_window_pos'] = value
+        self.set_if_changed('overlay_window_pos', value)
 
     def get_overlay_window_pos(self):
         return self.data['overlay_window_pos']
 
     def set_use_buttons(self, value):
-        self.data['use_buttons'] = bool(value)
+        self.set_if_changed('use_buttons', bool(value))
 
     def get_use_buttons(self):
         return self.data['use_buttons']

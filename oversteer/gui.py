@@ -4,6 +4,7 @@ import glob
 import locale as Locale
 from locale import gettext as _
 import logging
+import shutil
 import signal
 import subprocess
 import sys
@@ -84,9 +85,7 @@ class Gui:
             self.ui.set_device_id(self.app.device.get_id())
 
         if self.app.args.profile is not None:
-            profile_file = os.path.join(self.profile_path, self.app.args.profile + '.ini')
-            if os.path.exists(profile_file):
-                self.ui.set_profile(profile_file)
+            self.ui.set_profile(self.app.args.profile)
 
         self.ui.update()
 
@@ -138,7 +137,8 @@ class Gui:
     def populate_profiles(self):
         profiles = []
         for profile_file in glob.iglob(os.path.join(self.profile_path, "*.ini")):
-            profiles.append(profile_file)
+            profile_name = os.path.splitext(os.path.basename(profile_file))[0]
+            profiles.append(profile_name)
         self.ui.set_profiles(profiles)
 
     def populate_window(self):
@@ -163,39 +163,65 @@ class Gui:
         self.ui.set_modes(self.model.get_mode_list())
         self.model.flush_ui()
 
-    def load_profile(self, profile_file):
-        if profile_file == '':
+    def load_profile(self, profile_name):
+        if profile_name is None or profile_name == '':
+            return
+
+        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        if not os.path.exists(profile_file):
+            self.ui.info_dialog(_("Error opening profile"), _("The selected profile can't be loaded."))
             return
 
         profile = Profile()
         profile.load(profile_file)
         self.model.load_settings(profile.to_dict())
-        self.ui.set_new_profile_name('')
+        self.ui.safe_call(self.model.save_reference_values)
 
-    def save_profile(self, profile_file):
-        if profile_file is None or profile_file == '':
-            return
-
+    def save_profile(self, profile_name, check_exists = False):
         if self.device is None:
             return
 
+        if profile_name is None or profile_name == '':
+            return
+
+        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        if check_exists:
+            if os.path.exists(profile_file):
+                if not self.ui.confirmation_dialog(_("This profile already exists. Are you sure?")):
+                    raise Exception()
         profile = Profile(self.model.to_dict())
         profile.save(profile_file)
+        self.model.save_reference_values()
 
-    def save_profile_as(self, profile_name):
-        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
-        if os.path.exists(profile_file):
-            if not self.ui.confirmation_dialog(_("This profile already exists. Are you sure?")):
-                return
-        self.save_profile(profile_file)
-        self.populate_profiles()
-        self.ui.set_profile(profile_file)
+    def rename_profile(self, current_name, new_name):
+        current_file = os.path.join(self.profile_path, current_name + '.ini')
+        new_file = os.path.join(self.profile_path, new_name + '.ini')
+        os.rename(current_file, new_file)
 
-    def delete_profile(self, profile_file):
-        if profile_file != '' and profile_file is not None:
+    def delete_profile(self, profile_name):
+        if profile_name != '' and profile_name is not None:
+            profile_file = os.path.join(self.profile_path, profile_name + '.ini')
             if self.ui.confirmation_dialog(_("This profile will be deleted, are you sure?")):
                 os.remove(profile_file)
-                self.populate_profiles()
+            else:
+                raise Exception()
+
+    def import_profile(self, path):
+        if not path.endswith('.ini'):
+            raise Exception(_('Invalid extension.'))
+        profile_name = os.path.splitext(os.path.basename(path))[0]
+        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        if os.path.exists(profile_file):
+            raise Exception(_('A profile with that name already exists.'))
+        shutil.copyfile(path, profile_file)
+        return profile_name
+
+    def export_profile(self, profile_name, path):
+        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        if os.path.exists(path):
+            if not self.ui.confirmation_dialog(_('File already exists, overwrite?')):
+                raise Exception()
+        shutil.copyfile(profile_file, path)
 
     def load_preferences(self):
         config = configparser.ConfigParser()
