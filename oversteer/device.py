@@ -171,7 +171,7 @@ class Device:
         with open(path, "r") as file:
             data = file.read()
         autocenter = data.strip()
-        return int(autocenter)
+        return int(round((int(autocenter) * 100) / 65535))
 
     def set_autocenter(self, autocenter):
         autocenter = str(int(65535 * autocenter / 100))
