@@ -5,7 +5,10 @@ class Profile:
     def __init__(self, data = None):
         self.config = configparser.ConfigParser()
         if data is not None:
-            self.import_settings(data)
+            self.import_settings(dict(filter(
+                lambda item: item[1] is not None,
+                data.items()
+            )))
 
     def load(self, profile_file):
         self.config = configparser.ConfigParser()
