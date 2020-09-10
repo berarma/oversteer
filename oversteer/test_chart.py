@@ -168,12 +168,10 @@ class TestChart:
 
     def latency(self):
         noiselev = self.noise_level()
-        print('noise level: {}'.format(noiselev))
         posdata = self.slice_range(self.posdata, 1, 2)
         v0 = posdata[0][1]
         for t, v in posdata:
             if v - v0 > noiselev:
-                print('{} {}'.format(t, self.periods[1]))
                 return t - self.periods[1]
 
     def max_velocity(self):
