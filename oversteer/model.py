@@ -9,11 +9,11 @@ class Model:
         'spring_level': None,
         'damper_level': None,
         'friction_level': None,
-        'ffb_leds': False,
-        'ffb_overlay': False,
-        'range_overlay': 'never',
+        'ffb_leds': None,
+        'ffb_overlay': None,
+        'range_overlay': None,
         'overlay_window_pos': (20, 20),
-        'use_buttons': False,
+        'use_buttons': None,
     }
 
     def __init__(self, device, ui = None):
@@ -21,7 +21,8 @@ class Model:
         self.ui = ui
         self.data = self.defaults.copy()
         self.reference_values = None
-        self.read_device_settings()
+        if device is not None:
+            self.read_device_settings()
 
     def read_device_settings(self):
         self.data.update({
@@ -35,6 +36,8 @@ class Model:
             'friction_level': self.device.get_friction_level(),
             'ffb_leds': self.device.get_ffb_leds(),
             'ffb_overlay': False if self.device.get_peak_ffb_level() is not None else None,
+            'range_overlay': False if self.device.get_peak_ffb_level() is not None else None,
+            'use_buttons': False if self.device.get_range() is not None else None,
         })
         # Some settings are read incorrectly sometimes
         self.flush_device()
@@ -67,6 +70,7 @@ class Model:
     def flush_ui(self, data = None):
         if data is None:
             data = self.data
+        self.ui.set_mode(data['mode'])
         self.ui_set_range(data['range'])
         self.ui_set_combine_pedals(data['combine_pedals'])
         self.ui_set_autocenter(data['autocenter'])

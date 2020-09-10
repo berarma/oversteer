@@ -86,6 +86,7 @@ class Gui:
 
         self.populate_window()
 
+        self.device = self.app.device
         if self.app.device is not None:
             self.ui.set_device_id(self.app.device.get_id())
 
@@ -138,6 +139,9 @@ class Gui:
                 if device.is_ready():
                     device_list.append((device.get_id(), device.name))
             self.ui.set_devices(device_list)
+            if not device_list:
+                self.model = Model(None, self.ui)
+                self.model.flush_ui()
 
     def populate_profiles(self):
         profiles = []

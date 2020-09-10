@@ -156,12 +156,27 @@ class GtkUi:
         else:
             self.device_combobox.set_model(None)
             model.clear()
+        self.device_combobox.set_model(model)
         if devices:
             for pair in devices:
                 model.append(pair)
-            self.device_combobox.set_model(model)
             if self.device_combobox.get_active() == -1:
                 self.device_combobox.set_active(0)
+            self.enable_controls()
+        else:
+            self.disable_controls()
+
+    def disable_controls(self):
+        self.profile_combobox.set_sensitive(False)
+        self.save_profile_button.set_sensitive(False)
+        self.test_start_button.set_sensitive(False)
+        self.test_start_button.set_sensitive(False)
+
+    def enable_controls(self):
+        self.profile_combobox.set_sensitive(True)
+        self.save_profile_button.set_sensitive(True)
+        self.test_start_button.set_sensitive(True)
+        self.test_start_button.set_sensitive(True)
 
     def update_profiles_combobox(self):
         model = self.profile_combobox.get_model()
@@ -232,7 +247,13 @@ class GtkUi:
         self.emulation_mode_combobox.set_model(model)
 
     def set_mode(self, mode):
-        self.emulation_mode_combobox.set_active_id(mode)
+        if mode is None:
+            self.emulation_mode_combobox.set_sensitive(False)
+            self.change_emulation_mode_button.set_sensitive(False)
+        else:
+            self.emulation_mode_combobox.set_sensitive(True)
+            self.change_emulation_mode_button.set_sensitive(True)
+            self.emulation_mode_combobox.set_active_id(mode)
 
     def set_range(self, range):
         if range is None:
@@ -264,10 +285,18 @@ class GtkUi:
             self.combine_none.set_active(True)
 
     def set_autocenter(self, autocenter):
-        self.autocenter.set_value(int(autocenter))
+        if autocenter is None:
+            self.autocenter.set_sensitive(False)
+        else:
+            self.autocenter.set_sensitive(True)
+            self.autocenter.set_value(int(autocenter))
 
     def set_ff_gain(self, ff_gain):
-        self.ff_gain.set_value(int(ff_gain))
+        if ff_gain is None:
+            self.ff_gain.set_sensitive(False)
+        else:
+            self.ff_gain.set_sensitive(True)
+            self.ff_gain.set_value(int(ff_gain))
 
     def set_spring_level(self, level):
         if level is None:
@@ -300,8 +329,10 @@ class GtkUi:
     def set_ffb_overlay(self, state):
         if state is None:
             self.set_ffbmeter_overlay_visibility(False)
+            self.ffbmeter_overlay.set_sensitive(False)
         else:
             self.set_ffbmeter_overlay_visibility(True)
+            self.ffbmeter_overlay.set_sensitive(True)
             self.ffbmeter_overlay.set_active(state)
             self.update_overlay()
 
@@ -317,7 +348,11 @@ class GtkUi:
             self.wheel_range_overlay_never.set_active(True)
 
     def set_use_buttons(self, state):
-        return self.wheel_buttons.set_state(state)
+        if  state is None:
+            self.wheel_buttons.set_sensitive(False)
+        else:
+            self.wheel_buttons.set_sensitive(True)
+            self.wheel_buttons.set_state(state)
 
     def set_new_profile_name(self, name):
         self.new_profile_name.set_text(name)
@@ -416,7 +451,8 @@ class GtkUi:
         self.save_profile_button.set_sensitive(False)
 
     def on_test_ready(self):
-        self.test_start_button.set_sensitive(True)
+        if self.device_combobox.get_active_id() is not None:
+            self.test_start_button.set_sensitive(True)
         self.test_open_chart_button.set_sensitive(True)
         self.test_export_csv_button.set_sensitive(True)
 

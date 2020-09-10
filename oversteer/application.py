@@ -60,8 +60,16 @@ class Application:
         else:
             device = device_manager.first_device()
 
-        nothing_done = True
+        if device is None:
+            for arg, value in vars(args).items():
+                if value is not None and value != False and arg not in ['list', 'debug', 'version', 'gui']:
+                    print(_('No compatible device found.'))
+                    exit(1)
+
+
         model = Model(device)
+
+        nothing_done = True
         if args.list == True:
             devices = device_manager.get_devices()
             print(_("Devices found:"))
