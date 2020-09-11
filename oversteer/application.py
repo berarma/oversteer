@@ -103,7 +103,7 @@ class Application:
             self.device_manager = device_manager
             self.device = device
             from oversteer.gui import Gui
-            Gui(self)
+            Gui(self, argv)
 
         device_manager.stop()
 

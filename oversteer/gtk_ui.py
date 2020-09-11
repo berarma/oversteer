@@ -10,11 +10,12 @@ from gi.repository import Gtk, Gdk, GLib
 
 class GtkUi:
 
-    def __init__(self, gui):
+    def __init__(self, gui, argv):
         self.gui = gui
         self.ffbmeter_timer = False
         self.overlay_window_pos = (20, 20)
 
+        Gdk.init(argv)
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.css'))
         Gtk.StyleContext.add_provider_for_screen(
