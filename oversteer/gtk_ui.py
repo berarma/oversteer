@@ -10,7 +10,7 @@ from gi.repository import Gtk, Gdk, GLib
 
 class GtkUi:
 
-    def __init__(self, controller):
+    def __init__(self, controller, argv):
         self.controller = controller
         handlers = GtkHandlers(self, controller)
 
@@ -18,6 +18,7 @@ class GtkUi:
         self.current_test_canvas = None
         self.current_test_toolbar = None
 
+        Gdk.init(argv)
         style_provider = Gtk.CssProvider()
         style_provider.load_from_path(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.css'))
         Gtk.StyleContext.add_provider_for_screen(

@@ -20,7 +20,7 @@ from .test_chart import TestChart
 
 class Gui:
 
-    def __init__(self, application):
+    def __init__(self, application, argv):
         self.app = application
         self.locale = ''
         self.check_permissions = True
@@ -76,7 +76,7 @@ class Gui:
         if not os.path.isdir(self.profile_path):
             os.makedirs(self.profile_path, 0o700)
 
-        self.ui = GtkUi(self)
+        self.ui = GtkUi(self, argv)
         self.ui.set_app_version(self.app.version)
         self.ui.set_app_icon(os.path.join(self.app.icondir, 'org.berarma.Oversteer.svg'))
         self.ui.set_languages(self.languages)
