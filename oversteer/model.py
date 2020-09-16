@@ -54,18 +54,29 @@ class Model:
     def flush_device(self, data = None):
         if data is None:
             data = self.data
-        self.set_range(data['range'])
-        self.set_combine_pedals(data['combine_pedals'])
-        self.set_autocenter(data['autocenter'])
-        self.set_ff_gain(data['ff_gain'])
-        self.set_spring_level(data['spring_level'])
-        self.set_damper_level(data['damper_level'])
-        self.set_friction_level(data['friction_level'])
-        self.set_ffb_leds(data['ffb_leds'])
-        self.set_ffb_overlay(data['ffb_overlay'])
-        self.set_range_overlay(data['range_overlay'])
+        if data['range'] is not None:
+            self.set_range(data['range'])
+        if data['combine_pedals'] is not None:
+            self.set_combine_pedals(data['combine_pedals'])
+        if data['autocenter'] is not None:
+            self.set_autocenter(data['autocenter'])
+        if data['ff_gain'] is not None:
+            self.set_ff_gain(data['ff_gain'])
+        if data['spring_level'] is not None:
+            self.set_spring_level(data['spring_level'])
+        if data['damper_level'] is not None:
+            self.set_damper_level(data['damper_level'])
+        if data['friction_level'] is not None:
+            self.set_friction_level(data['friction_level'])
+        if data['ffb_leds'] is not None:
+            self.set_ffb_leds(data['ffb_leds'])
+        if data['ffb_overlay'] is not None:
+            self.set_ffb_overlay(data['ffb_overlay'])
+        if data['range_overlay'] is not None:
+            self.set_range_overlay(data['range_overlay'])
         self.set_overlay_window_pos(data['overlay_window_pos'])
-        self.set_use_buttons(data['use_buttons'])
+        if data['use_buttons'] is not None:
+            self.set_use_buttons(data['use_buttons'])
 
     def flush_ui(self, data = None):
         if data is None:
