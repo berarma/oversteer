@@ -13,6 +13,13 @@ logging.basicConfig(level=logging.DEBUG)
 
 class Device:
 
+    last_axis_value = {
+        ecodes.ABS_X: 0,
+        ecodes.ABS_Y: 0,
+        ecodes.ABS_Z: 0,
+        ecodes.ABS_RZ: 0,
+    }
+
     def __init__(self, device_manager, data):
         self.device_manager = device_manager
         self.input_device = None
@@ -357,6 +364,9 @@ class Device:
             return False
         return True
 
+    def get_last_axis_value(self, axis):
+        return self.last_axis_value[axis]
+
     def get_input_device(self):
         if self.input_device is None or self.input_device.fd == -1:
             if os.access(self.dev_name, os.R_OK):
@@ -370,7 +380,10 @@ class Device:
         r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
         if input_device.fd in r:
             for event in input_device.read():
-                yield self.normalize_event(event)
+                event = self.normalize_event(event)
+                if event.type == ecodes.EV_ABS:
+                    self.last_axis_value[ecodes.ABS_X] = event.value
+                yield event
 
     def normalize_event(self, event):
         if event.type == ecodes.EV_ABS:

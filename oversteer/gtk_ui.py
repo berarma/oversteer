@@ -57,6 +57,7 @@ class GtkUi:
     def main(self):
         self.window.show_all()
         self.new_profile_name_entry.hide()
+        self.switch_test_panel(None)
 
         Gtk.main()
 
@@ -456,6 +457,37 @@ class GtkUi:
             self.test_start_button.set_sensitive(True)
         self.test_open_chart_button.set_sensitive(True)
         self.test_export_csv_button.set_sensitive(True)
+        self.test_container_stack.set_visible_child(self.test_panel_results)
+
+    def switch_test_panel(self, test_id):
+        self.test_panel_warning.set_visible(False)
+        self.test_panel_buttons.set_visible(False)
+        self.test_panel_back.set_sensitive(True)
+        if test_id is None:
+            self.test_container_stack.set_visible_child(self.test_panel_empty)
+        elif test_id == 0:
+            self.test_container_stack.set_visible_child(self.test_panel_start1)
+            self.test_panel_buttons.set_visible(True)
+            self.test_panel_back.set_sensitive(False)
+            self.test_panel_warning.set_visible(True)
+        elif test_id == 1:
+            self.test_container_stack.set_visible_child(self.test_panel_start2)
+            self.test_panel_buttons.set_visible(True)
+            self.test_panel_warning.set_visible(True)
+        elif test_id == 2:
+            self.test_container_stack.set_visible_child(self.test_panel_start3)
+            self.test_panel_buttons.set_visible(True)
+            self.test_panel_warning.set_visible(True)
+
+    def show_test_running(self, test_id):
+        self.test_panel_warning.set_visible(False)
+        self.test_panel_buttons.set_visible(False)
+        if test_id == 0:
+            self.test_container_stack.set_visible_child(self.test_panel_running1)
+        elif test_id == 1:
+            self.test_container_stack.set_visible_child(self.test_panel_running)
+        elif test_id == 2:
+            self.test_container_stack.set_visible_child(self.test_panel_running)
 
     def _update_ffbmeter_overlay(self):
         if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
@@ -586,10 +618,6 @@ class GtkUi:
         self.test_chart_window = self.builder.get_object('test_chart_window')
         self.test_chart_container = self.builder.get_object('test_chart_container')
         self.test_chart_frame = self.builder.get_object('test_chart_frame')
-        self.test_chart_running = self.builder.get_object('test_chart_running')
-        self.test_chart_results = self.builder.get_object('test_chart_results')
-        self.test_chart_message = self.builder.get_object('test_chart_message')
-        self.test_type_combobox = self.builder.get_object('test_type_combobox')
         self.test_start_button = self.builder.get_object('test_start_button')
         self.test_open_chart_button = self.builder.get_object('test_open_chart_button')
         self.test_export_csv_button = self.builder.get_object('test_export_csv_button')
@@ -606,6 +634,18 @@ class GtkUi:
         self.test_mean_decel = self.builder.get_object('test_mean_decel')
         self.test_residual_decel = self.builder.get_object('test_residual_decel')
         self.test_estimated_snr = self.builder.get_object('test_estimated_snr')
+        self.test_minimum_level = self.builder.get_object('test_minimum_level')
+        self.test_panel_empty = self.builder.get_object('test_panel_empty')
+        self.test_panel_start1 = self.builder.get_object('test_panel_start1')
+        self.test_panel_start2 = self.builder.get_object('test_panel_start2')
+        self.test_panel_start3 = self.builder.get_object('test_panel_start3')
+        self.test_panel_running = self.builder.get_object('test_panel_running')
+        self.test_panel_running1 = self.builder.get_object('test_panel_running1')
+        self.test_panel_results = self.builder.get_object('test_panel_results')
+        self.test_panel_warning = self.builder.get_object('test_panel_warning')
+        self.test_panel_buttons = self.builder.get_object('test_panel_buttons')
+        self.test_panel_back = self.builder.get_object('test_panel_back')
+        self.test_panel_run = self.builder.get_object('test_panel_run')
 
     def _set_markers(self):
         self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')

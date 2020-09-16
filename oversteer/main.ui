@@ -243,7 +243,7 @@
   </object>
   <object class="GtkWindow" id="test_chart_window">
     <property name="width_request">1000</property>
-    <property name="height_request">650</property>
+    <property name="height_request">900</property>
     <property name="can_focus">False</property>
     <signal name="delete-event" handler="on_test_chart_window_delete_event" swapped="no"/>
     <child>
@@ -2326,14 +2326,14 @@
                     <property name="layout_style">expand</property>
                     <child>
                       <object class="GtkButton" id="test_start_button">
-                        <property name="label" translatable="yes">Run test</property>
+                        <property name="label" translatable="yes">Start new</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <signal name="clicked" handler="on_test_start_clicked" swapped="no"/>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
+                        <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="position">0</property>
                       </packing>
@@ -2380,6 +2380,9 @@
                         <property name="position">3</property>
                       </packing>
                     </child>
+                    <style>
+                      <class name="linked"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -2392,7 +2395,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkBox" id="test_chart_message">
+                      <object class="GtkBox" id="test_panel_empty">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
@@ -2400,15 +2403,11 @@
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">No test has been run. Import test data or start a new test.
-WARNING: The wheel will move very fast during the test, leave a clear space around it to avoid accidents and unreliable results.</property>
+                            <property name="label" translatable="yes">No test data available. Please, import test data or start a new test.
+Be careful when running the tests and follow the instructions as closely as possible for safety and valid results.</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
-                            <property name="max_width_chars">30</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"/>
-                              <attribute name="size" value="14336"/>
-                            </attributes>
+                            <property name="max_width_chars">1</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
@@ -2423,7 +2422,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="test_chart_running">
+                      <object class="GtkBox" id="test_panel_start1">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
@@ -2431,17 +2430,15 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">The test is running, please wait and don't touch the wheel.</property>
+                            <property name="label" translatable="yes">The lowest torque test measures the minimum force level that the wheel can deliver. Your help is required for this test.</property>
+                            <property name="justify">center</property>
                             <property name="wrap">True</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"/>
-                              <attribute name="size" value="14336"/>
-                            </attributes>
+                            <property name="max_width_chars">1</property>
                           </object>
                           <packing>
                             <property name="expand">True</property>
                             <property name="fill">True</property>
-                            <property name="position">1</property>
+                            <property name="position">0</property>
                           </packing>
                         </child>
                       </object>
@@ -2452,7 +2449,86 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="test_chart_results">
+                      <object class="GtkBox" id="test_panel_start2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">The linearity test measures the linear force response.</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">1</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="name">page5</property>
+                        <property name="title" translatable="yes">page5</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="test_panel_start3">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">The step test measures several performance parameters at the highest force levels.</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">1</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="name">page3</property>
+                        <property name="title" translatable="yes">page3</property>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="test_panel_running">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">The test is running, please, don't touch the wheel and wait.</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">1</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="name">page4</property>
+                        <property name="title" translatable="yes">page4</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="test_panel_results">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
@@ -2474,7 +2550,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Max. angular acceleration (RPM/s):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2488,7 +2564,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Max. angular deceleration (RPM/s):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2502,7 +2578,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Time to max. angular acceleration (ms):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2516,7 +2592,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Time to max. angular deceleration (ms):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2621,7 +2697,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Mean angular acceleration (RPM/s):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2635,7 +2711,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Mean angular deceleration (RPM/s):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2649,7 +2725,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Residual angular deceleration (RPM/s):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2663,6 +2739,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Estimated SNR (dB):</property>
                                 <property name="wrap">True</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2689,7 +2766,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Max. angular velocity (RPM):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2703,7 +2780,7 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="can_focus">False</property>
                                 <property name="label" translatable="yes">Latency (ms):</property>
                                 <property name="wrap">True</property>
-                                <property name="max_width_chars">20</property>
+                                <property name="max_width_chars">1</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -2737,6 +2814,39 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                                 <property name="top_attach">0</property>
                               </packing>
                             </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Minimum force level (%)</property>
+                                <property name="wrap">True</property>
+                                <property name="max_width_chars">1</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_minimum_level">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -2744,21 +2854,110 @@ WARNING: The wheel will move very fast during the test, leave a clear space arou
                             <property name="position">0</property>
                           </packing>
                         </child>
-                        <child>
-                          <placeholder/>
-                        </child>
                       </object>
                       <packing>
                         <property name="name">page0</property>
                         <property name="title" translatable="yes">page0</property>
-                        <property name="position">2</property>
+                        <property name="position">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="test_panel_running1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Please, hold your wheel firmly and keep it moving slowly around the center. Press any button in the wheel when you notice a slightly notchy feeling. Press any button in the wheel when you're ready to start.</property>
+                            <property name="justify">center</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">1</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="name">page6</property>
+                        <property name="title" translatable="yes">page6</property>
+                        <property name="position">6</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="test_panel_warning">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">WARNING: Don't touch the wheel and leave a clear space around it to avoid accidents or unreliable results.</property>
+                    <property name="justify">center</property>
+                    <property name="wrap">True</property>
+                    <property name="max_width_chars">1</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
                     <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButtonBox" id="test_panel_buttons">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="homogeneous">True</property>
+                    <property name="layout_style">end</property>
+                    <child>
+                      <object class="GtkButton" id="test_panel_back">
+                        <property name="label" translatable="yes">Back</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_test_panel_back_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="test_panel_run">
+                        <property name="label" translatable="yes">Run</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_test_panel_run_clicked" swapped="no"/>
+                        <style>
+                          <class name="suggested-action"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <style>
+                      <class name="linked"/>
+                    </style>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
               </object>
