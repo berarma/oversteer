@@ -236,7 +236,8 @@ class Gui:
             return
 
         profile = Profile(self.device.save_settings())
-        profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
+        if self.ui.get_ffbmeter_overlay() is not None:
+            profile.set_ffbmeter_overlay(self.ui.get_ffbmeter_overlay())
         profile.set_wheel_range_overlay(self.ui.get_wheel_range_overlay())
         profile.set_wheel_buttons(self.ui.get_wheel_buttons())
         profile.set_overlay_window_pos(self.ui.get_overlay_window_pos())
