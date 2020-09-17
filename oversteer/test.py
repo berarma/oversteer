@@ -84,11 +84,11 @@ class Test:
 
     def run(self, test_id):
         if test_id == 0:
-            Thread(target=self.test1).start()
+            Thread(target=self.test1, daemon=True).start()
         elif test_id == 1:
-            Thread(target=self.test2).start()
+            Thread(target=self.test2, daemon=True).start()
         elif test_id == 2:
-            Thread(target=self.test3).start()
+            Thread(target=self.test3,).start()
 
     def append_data(self, timestamp, value):
         if self.collecting_data is False:
@@ -103,18 +103,11 @@ class Test:
         self.input_device.write(ecodes.EV_FF, effect.id, 0)
         self.erase_effect(effect)
 
-    def center_wheel(self, offset = 0):
-        if offset == 0:
-            # Center wheel
-            self.device.set_autocenter(65535)
-            time.sleep(1)
-            self.device.set_autocenter(0)
-        else:
-            left_effect = self.create_left_effect(0x6000)
-            self.input_device.write(ecodes.EV_FF, left_effect.id, 1)
-            time.sleep(1)
-            self.input_device.write(ecodes.EV_FF, left_effect.id, 0)
-            self.erase_effect(left_effect)
+    def center_wheel(self):
+        # Center wheel
+        self.device.set_autocenter(65535)
+        time.sleep(1)
+        self.device.set_autocenter(0)
 
         # Wait for wheel to stabilize and all events to arrive
         time.sleep(0.5)
@@ -127,11 +120,10 @@ class Test:
         # Start test
         self.action_triggered = False
         self.awaiting_action = True
-
         while not self.action_triggered:
             time.sleep(0.5)
-
         self.action_triggered = False
+        self.notify('running')
 
         left_effect = self.create_left_effect(0)
         right_effect = self.create_right_effect(0)
@@ -140,7 +132,6 @@ class Test:
 
         # Increasing force square effect
         for level in range(0, 0x7fff, 30):
-            print(level)
             left_effect.u.ff_constant_effect.level = level
             self.update_effect(left_effect)
             time.sleep(0.1)
@@ -168,7 +159,7 @@ class Test:
     def test2(self):
         self.start()
         self.seed_axis_position()
-        self.center_wheel(-1)
+        self.center_wheel()
 
         left_effect = self.create_left_effect(0)
         right_effect = self.create_right_effect(0)
@@ -183,22 +174,34 @@ class Test:
         # Start collecting data
         self.collecting_data = True
 
-        self.input_device.write(ecodes.EV_FF, right_effect.id, 1)
+        direction = 1
         for level in np.arange(0, 0x8000, 0x7fff / 50):
             level = int(round(level))
 
-            # Move wheel right
-            right_effect.u.ff_constant_effect.level = level
-            self.update_effect(right_effect)
-            self.input_values.append((time.time() - self.test_starttime, level / 0x7fff))
-            time.sleep(0.05)
+            if direction == 1:
+                # Move wheel right
+                right_effect.u.ff_constant_effect.level = level
+                self.update_effect(right_effect)
+                self.input_device.write(ecodes.EV_FF, right_effect.id, 1)
+                self.input_values.append((time.time() - self.test_starttime, level / 0x7fff))
+                time.sleep(0.3)
+                self.input_device.write(ecodes.EV_FF, right_effect.id, 0)
+            else:
+                # Move wheel left
+                left_effect.u.ff_constant_effect.level = level
+                self.update_effect(left_effect)
+                self.input_device.write(ecodes.EV_FF, left_effect.id, 1)
+                self.input_values.append((time.time() - self.test_starttime, -level / 0x7fff))
+                time.sleep(0.3)
+                self.input_device.write(ecodes.EV_FF, left_effect.id, 0)
+            direction = 3 - direction
 
-        self.input_device.write(ecodes.EV_FF, right_effect.id, 0)
         self.input_values.append((time.time() - self.test_starttime, 0))
 
         # Stop collecting data
         self.collecting_data = False
 
+        self.erase_effect(left_effect)
         self.erase_effect(right_effect)
 
         # Notify application the test is done

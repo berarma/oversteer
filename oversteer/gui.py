@@ -408,8 +408,11 @@ class Gui:
                 self.ui.safe_call(self.populate_devices)
 
     def start_test(self):
-        def test_callback():
-            self.ui.safe_call(self.end_test)
+        def test_callback(name = 'end'):
+            if name == 'end':
+                self.ui.safe_call(self.end_test)
+            elif name == 'running':
+                self.ui.safe_call(self.ui.show_test_running, self.test_run, 1)
         self.test = Test(self.device, test_callback)
         self.test_run = 0
         self.ui.switch_test_panel(self.test_run)
@@ -439,7 +442,11 @@ class Gui:
 
     def prev_test(self):
         self.test_run -= 1
+        if self.test_run == -1:
+            self.test_run = None
         self.ui.switch_test_panel(self.test_run)
+        if self.test_run is None and self.combined_chart is not None:
+            self.show_test_results()
 
     def next_test(self):
         self.test_run += 1

@@ -2870,7 +2870,7 @@ Be careful when running the tests and follow the instructions as closely as poss
                           <object class="GtkLabel">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Please, hold your wheel firmly and keep it moving slowly around the center. Press any button in the wheel when you notice a slightly notchy feeling. Press any button in the wheel when you're ready to start.</property>
+                            <property name="label" translatable="yes">For the duration of this test you have to hold your steering wheel firmly in your hands and move it slowly around its middle position. When you notice a slight resistance or pulsation press any button in the wheel.</property>
                             <property name="justify">center</property>
                             <property name="wrap">True</property>
                             <property name="max_width_chars">1</property>
@@ -2878,7 +2878,35 @@ Be careful when running the tests and follow the instructions as closely as poss
                           <packing>
                             <property name="expand">True</property>
                             <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="test_panel_running1_ready">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Press any wheel button when ready to start the test.</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">1</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
                             <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="test_panel_running1_go">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="label" translatable="yes">Now running the test.</property>
+                            <property name="wrap">True</property>
+                            <property name="max_width_chars">1</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                       </object>

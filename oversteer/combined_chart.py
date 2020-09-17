@@ -13,9 +13,8 @@ class CombinedChart:
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
 
         ax1.title.set_text(_('Linear response test'))
-        p11, = ax1.plot(*zip(*self.linear_chart.get_input_values()), label=_('Input force'), color='blue')
-        p12, = ax1.plot(*zip(*self.linear_chart.get_filtered_accel_values()), label=_('Output force'), color='purple')
-        p13, = ax1.plot(*zip(*self.linear_chart.get_filtered_velocity_values()), label=_('Output velocity'), color='teal')
+        p11, = ax1.plot(*zip(*self.linear_chart.get_fixed_input_values()), label=_('Input force'), color='blue')
+        p12, = ax1.plot(*zip(*self.linear_chart.get_linearity_values()), label=_('Angular velocity'), color='purple')
         ax1.set_ylabel(_('Input force'))
         ax1.set_ylabel(_('Output force'))
         ax1.grid(True)
@@ -36,14 +35,14 @@ class CombinedChart:
         ax3b.tick_params(axis='y', labelcolor='green')
         ax3.grid(True)
 
+        ax4b = ax4.twinx()
         ax4.title.set_text(_('Step test (angular acceleration)'))
-        p41, = ax4.plot(*zip(*self.performance_chart.get_accel_values()), label=_('Angular acceleration (raw)'), color='orange')
-        p42, = ax4.plot(*zip(*self.performance_chart.get_filtered_accel_values()), label=_('Angular acceleration (smoothed)'), color='red')
-        input_values = [(t, v * max(self.performance_chart.get_accel_values(), key=lambda x:x[1])[1]) for t, v in self.performance_chart.get_input_values()]
-        ax4.step(*zip(*input_values), label=_('Input Force'), color='blue')
+        p41, = ax4.step(*zip(*self.performance_chart.get_input_values()), label=_('Input Force'), color='blue')
+        p42, = ax4b.plot(*zip(*self.performance_chart.get_accel_values()), label=_('Angular acceleration (raw)'), color='orange')
+        p43, = ax4b.plot(*zip(*self.performance_chart.get_filtered_accel_values()), label=_('Angular acceleration (smoothed)'), color='red')
         ax4.set_xlabel(_('Time (s)'))
-        ax4.set_ylabel(_('RPM/s'))
-        ax4.tick_params(axis='y', labelcolor='red')
+        ax4b.set_ylabel(_('RPM/s'))
+        ax4b.tick_params(axis='y', labelcolor='red')
         ax4.grid(True)
 
         props = dict(boxstyle='square', pad=1.5, facecolor='wheat', alpha=0.5)
@@ -76,8 +75,11 @@ class CombinedChart:
         ax2.text(0, 0.9, '\n'.join(text).format(*values), transform=ax2.transAxes, fontsize=10, verticalalignment='top', bbox=props)
         fig.subplots_adjust(left=0.1, right=0.8)
 
-        subplots = [p11, p12, p13, p32, p33, p34, p35, p41, p42]
+        subplots = [p11, p12, p32, p33, p34, p35, p41, p42]
         plt.figlegend(subplots, [p.get_label() for p in subplots], loc='upper center', mode=None, ncol=3)
+
+        self.align_yaxis(ax3, 0, ax3b, 0)
+        self.align_yaxis(ax4, 0, ax4b, 0)
 
         canvas = FigureCanvas(fig)
 
@@ -85,3 +87,12 @@ class CombinedChart:
 
     def get_navigation_toolbar(self, canvas, window):
         return NavigationToolbar(canvas, window)
+
+    def align_yaxis(self, ax1, v1, ax2, v2):
+        """adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1"""
+        _, y1 = ax1.transData.transform((0, v1))
+        _, y2 = ax2.transData.transform((0, v2))
+        inv = ax2.transData.inverted()
+        _, dy = inv.transform((0, 0)) - inv.transform((0, y1-y2))
+        miny, maxy = ax2.get_ylim()
+        ax2.set_ylim(miny+dy, maxy+dy)

@@ -253,10 +253,6 @@ class GtkHandlers:
             self.ui.error_dialog(_('Error exporting profile'), str(e))
 
     def on_test_start_clicked(self, widget):
-        self.ui.test_start_button.set_sensitive(False)
-        self.ui.test_open_chart_button.set_sensitive(False)
-        self.ui.test_export_csv_button.set_sensitive(False)
-        self.ui.test_chart_window.hide()
         self.controller.start_test()
 
     def reset_test_start_button(self):

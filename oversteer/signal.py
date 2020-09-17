@@ -10,13 +10,15 @@ class Signal:
             self.values = values
 
         if periods:
-            self.periods = [self.values[0][0]]
-            v0 = self.values[0][1]
+            self.periods = [self.values[0]]
+            t0, v0 = self.values[0]
             for t, v in self.values:
                 if v - v0 != 0:
-                    self.periods.append(t)
+                    self.periods.append((t, v))
                     v0 = v
-            self.periods.append(t)
+                    t0 = t
+            if t != t0:
+                self.periods.append((t, v))
 
     def get_values(self):
         return self.values
@@ -39,13 +41,13 @@ class Signal:
 
         return newdata
 
-    def get_period(self, num):
-        return self.periods[num]
+    def get_period_start(self, num):
+        return self.periods[num][0]
 
     def get_range(self, p1, p2):
-        return (self.periods[p1], self.periods[p2])
+        return (self.get_period_start(p1), self.get_period_start(p2))
 
-    def get_all_periods(self):
+    def get_periods(self):
         return self.periods
 
     def derive(self, multiplier = 1):
@@ -108,4 +110,6 @@ class Signal:
             noise += math.pow(v - self.values[count][1], 2)
             signal += math.pow(v, 2)
             count += 1
+        if noise == 0:
+            return 30
         return 10 * math.log10(math.sqrt(signal / count) / math.sqrt(noise / count))

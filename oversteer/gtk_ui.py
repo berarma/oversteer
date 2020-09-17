@@ -462,14 +462,19 @@ class GtkUi:
     def switch_test_panel(self, test_id):
         self.test_panel_warning.set_visible(False)
         self.test_panel_buttons.set_visible(False)
-        self.test_panel_back.set_sensitive(True)
+        self.test_start_button.set_sensitive(False)
+        self.test_open_chart_button.set_sensitive(False)
+        self.test_export_csv_button.set_sensitive(False)
+        self.test_chart_window.hide()
         if test_id is None:
             self.test_container_stack.set_visible_child(self.test_panel_empty)
+            self.test_start_button.set_sensitive(True)
         elif test_id == 0:
             self.test_container_stack.set_visible_child(self.test_panel_start1)
             self.test_panel_buttons.set_visible(True)
-            self.test_panel_back.set_sensitive(False)
             self.test_panel_warning.set_visible(True)
+            self.test_panel_running1_ready.set_visible(True)
+            self.test_panel_running1_go.set_visible(False)
         elif test_id == 1:
             self.test_container_stack.set_visible_child(self.test_panel_start2)
             self.test_panel_buttons.set_visible(True)
@@ -479,10 +484,16 @@ class GtkUi:
             self.test_panel_buttons.set_visible(True)
             self.test_panel_warning.set_visible(True)
 
-    def show_test_running(self, test_id):
+    def show_test_running(self, test_id, data = None):
         self.test_panel_warning.set_visible(False)
         self.test_panel_buttons.set_visible(False)
         if test_id == 0:
+            self.test_panel_running1_ready.set_visible(True)
+            self.test_panel_running1_go.set_visible(False)
+            if data is not None:
+                if data == 1:
+                    self.test_panel_running1_ready.set_visible(False)
+                    self.test_panel_running1_go.set_visible(True)
             self.test_container_stack.set_visible_child(self.test_panel_running1)
         elif test_id == 1:
             self.test_container_stack.set_visible_child(self.test_panel_running)
@@ -641,6 +652,8 @@ class GtkUi:
         self.test_panel_start3 = self.builder.get_object('test_panel_start3')
         self.test_panel_running = self.builder.get_object('test_panel_running')
         self.test_panel_running1 = self.builder.get_object('test_panel_running1')
+        self.test_panel_running1_ready = self.builder.get_object('test_panel_running1_ready')
+        self.test_panel_running1_go = self.builder.get_object('test_panel_running1_go')
         self.test_panel_results = self.builder.get_object('test_panel_results')
         self.test_panel_warning = self.builder.get_object('test_panel_warning')
         self.test_panel_buttons = self.builder.get_object('test_panel_buttons')
