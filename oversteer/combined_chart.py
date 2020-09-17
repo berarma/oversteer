@@ -13,9 +13,9 @@ class CombinedChart:
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
 
         ax1.title.set_text(_('Linear response test'))
-        p11, = ax1.plot(*zip(*self.linear_chart.get_final_input_values()), label=_('Input force'), color='blue')
-        p12, = ax1.plot(*zip(*self.linear_chart.get_final_accel_values()), label=_('Output force'), color='purple')
-        p13, = ax1.plot(*zip(*self.linear_chart.get_final_velocity_values()), label=_('Output velocity'), color='teal')
+        p11, = ax1.plot(*zip(*self.linear_chart.get_input_values()), label=_('Input force'), color='blue')
+        p12, = ax1.plot(*zip(*self.linear_chart.get_filtered_accel_values()), label=_('Output force'), color='purple')
+        p13, = ax1.plot(*zip(*self.linear_chart.get_filtered_velocity_values()), label=_('Output velocity'), color='teal')
         ax1.set_ylabel(_('Input force'))
         ax1.set_ylabel(_('Output force'))
         ax1.grid(True)

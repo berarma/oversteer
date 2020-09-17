@@ -419,7 +419,7 @@ class Gui:
             self.minimum_level = self.test.get_minimum_level()
         elif self.test_run == 1:
             self.linear_chart = LinearChart(self.test.get_input_values(), self.test.get_output_values(), 900)
-            self.linear_chart.set_minimum_level = self.minimum_level
+            self.linear_chart.set_minimum_level(self.minimum_level)
         elif self.test_run == 2:
             self.performance_chart = PerformanceChart(self.test.get_input_values(), self.test.get_output_values(), 900)
             if self.performance_chart.get_latency() is None:
