@@ -1,5 +1,6 @@
 import gi
 from locale import gettext as _
+import traceback
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
@@ -167,7 +168,7 @@ class GtkHandlers:
             raise
         except Exception as e:
             if str(e) != '':
-                self.ui.error_dialog(_('Error creating profile'), str(e))
+                self.ui.error_dialog(_('Error creating profile'), traceback.format_exc())
 
     def on_rename_profile_clicked(self, widget):
         row = self.ui.profile_listbox.get_selected_row()
