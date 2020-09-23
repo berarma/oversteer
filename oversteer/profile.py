@@ -6,19 +6,35 @@ class Profile:
         self.config = configparser.ConfigParser()
 
         if data is not None:
-            self.set_mode(data['mode'])
-            self.set_range(data['range'])
-            self.set_combine_pedals(data['combine_pedals'])
-            self.set_autocenter(data['autocenter'])
-            self.set_ff_gain(data['ff_gain'])
-            self.set_spring_level(data['spring_level'])
-            self.set_damper_level(data['damper_level'])
-            self.set_friction_level(data['friction_level'])
-            self.set_ffb_leds(data['ffb_leds'])
-            self.set_ffb_overlay(data['ffb_overlay'])
-            self.set_range_overlay(data['range_overlay'])
+            data = dict(filter(
+                lambda item: item[1] is not None,
+                data.items()
+            ))
+            if 'mode' in data:
+                self.set_mode(data['mode'])
+            if 'range' in data:
+                self.set_range(data['range'])
+            if 'combine_pedals' in data:
+                self.set_combine_pedals(data['combine_pedals'])
+            if 'autocenter' in data:
+                self.set_autocenter(data['autocenter'])
+            if 'ff_gain' in data:
+                self.set_ff_gain(data['ff_gain'])
+            if 'spring_level' in data:
+                self.set_spring_level(data['spring_level'])
+            if 'damper_level' in data:
+                self.set_damper_level(data['damper_level'])
+            if 'friction_level' in data:
+                self.set_friction_level(data['friction_level'])
+            if 'ffb_leds' in data:
+                self.set_ffb_leds(data['ffb_leds'])
+            if 'ffb_overlay' in data:
+                self.set_ffb_overlay(data['ffb_overlay'])
+            if 'range_overlay' in data:
+                self.set_range_overlay(data['range_overlay'])
             self.set_overlay_window_pos(data['overlay_window_pos'])
-            self.set_use_buttons(data['use_buttons'])
+            if 'use_buttons' in data:
+                self.set_use_buttons(data['use_buttons'])
 
     def to_dict(self):
         data = {

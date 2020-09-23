@@ -43,7 +43,11 @@ class Model:
         self.flush_device()
 
     def load_settings(self, data):
-        data = dict(self.defaults, **data)
+        data = dict(filter(
+            lambda item: item[1] is not None and self.data[item[0]] is not None,
+            data.items()
+        ))
+        data = dict(self.data, **data)
         if data['mode'] is not None:
             self.set_mode(data['mode'])
         if self.ui is not None:
@@ -110,6 +114,8 @@ class Model:
         return self.device.list_modes()
 
     def set_if_changed(self, key, value):
+        if self.data[key] is None:
+            return False
         if self.data[key] != value:
             self.data[key] = value
             if self.ui is not None:
