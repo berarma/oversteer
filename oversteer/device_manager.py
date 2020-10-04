@@ -18,6 +18,7 @@ class DeviceManager:
 
     LG_G29 = '046d:c24f'
     LG_G920 = '046d:c262'
+    LG_G923 = '046d:c267'
     LG_DF = '046d:c294'
     LG_MOMO = '046d:c295'
     LG_DFP = '046d:c298'
@@ -32,6 +33,7 @@ class DeviceManager:
         self.supported_wheels = [
             self.LG_G29,
             self.LG_G920,
+            self.LG_G923,
             self.LG_DF,
             self.LG_MOMO,
             self.LG_DFP,
