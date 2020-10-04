@@ -385,12 +385,18 @@ class Gui:
                         self.test.trigger_action()
                 else:
                     delay = 100
+
+                button = None
+
                 if event.code >= 288 and event.code <= 303:
                     button = event.code - 288
                 if event.code >= 704 and event.code <= 712:
                     button = event.code - 688
-                self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
-                self.on_button_press(button, event.value)
+                if event.code >= 304 and event.code <= 316:
+                    button = event.code - 304
+                if button != None:
+                    self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
+                    self.on_button_press(button, event.value)
 
     def input_thread(self):
         while 1:
