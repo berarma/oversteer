@@ -173,6 +173,8 @@ class Gui:
             self.model = Model(self.device, self.ui)
             self.models[self.device.get_id()] = self.model
 
+        self.ui.set_max_range(self.device.get_max_range())
+
         self.ui.set_modes(self.model.get_mode_list())
         self.model.flush_ui()
 

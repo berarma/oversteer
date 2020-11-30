@@ -75,6 +75,9 @@ class Device:
             return True
         return False
 
+    def get_max_range(self):
+        return self.max_range
+
     def list_modes(self):
         path = self.checked_device_file("alternate_modes")
         if not path:

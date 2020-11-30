@@ -29,19 +29,19 @@ class DeviceManager:
     TM_T300RS = '044f:b66e'
 
     def __init__(self):
-        self.supported_wheels = [
-            self.LG_G29,
-            self.LG_G920,
-            self.LG_DF,
-            self.LG_MOMO,
-            self.LG_DFP,
-            self.LG_G25,
-            self.LG_DFGT,
-            self.LG_G27,
-            self.LG_SFW,
-            self.LG_MOMO2,
-            self.TM_T300RS,
-        ]
+        self.supported_wheels = {
+            self.LG_G29: 900,
+            self.LG_G920: 900,
+            self.LG_DF: 270,
+            self.LG_MOMO: 270,
+            self.LG_DFP: 900,
+            self.LG_G25: 900,
+            self.LG_DFGT: 900,
+            self.LG_G27: 900,
+            self.LG_SFW: 270,
+            self.LG_MOMO2: 270,
+            self.TM_T300RS: 1080,
+        }
         self.devices = {}
         self.changed = True
 
@@ -93,11 +93,13 @@ class DeviceManager:
 
         if 'DEVNAME' in udevice:
             if 'event' in udevice.get('DEVNAME'):
+                usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
                 device.set({
                     'vendor': udevice.get('ID_VENDOR_ID'),
                     'model': udevice.get('ID_MODEL_ID'),
-                    'usb_id': udevice.get('ID_VENDOR_ID') + ':' + udevice.get('ID_MODEL_ID'),
+                    'usb_id': usb_id,
                     'dev_name': udevice.get('DEVNAME'),
+                    'max_range': self.supported_wheels[usb_id],
                 })
         else:
             device.set({

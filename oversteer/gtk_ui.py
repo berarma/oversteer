@@ -229,6 +229,10 @@ class GtkUi:
         else:
             self.enable_save_profile()
 
+    def set_max_range(self, max_range):
+        self.wheel_range_setup.set_upper(max_range / 10)
+        self._set_range_markers(max_range)
+
     def set_modes(self, modes, startup = False):
         if startup:
             if modes is None:
@@ -574,6 +578,7 @@ class GtkUi:
         self.emulation_mode_combobox = self.builder.get_object('emulation_mode')
         self.change_emulation_mode_button = self.builder.get_object('change_emulation_mode')
         self.wheel_range = self.builder.get_object('wheel_range')
+        self.wheel_range_setup = self.builder.get_object('wheel_range_setup')
         self.combine_none = self.builder.get_object('combine_none')
         self.combine_brakes = self.builder.get_object('combine_brakes')
         self.combine_clutch = self.builder.get_object('combine_clutch')
@@ -661,13 +666,6 @@ class GtkUi:
         self.test_panel_run = self.builder.get_object('test_panel_run')
 
     def _set_markers(self):
-        self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')
-        self.wheel_range.add_mark(27, Gtk.PositionType.BOTTOM, '270')
-        self.wheel_range.add_mark(36, Gtk.PositionType.BOTTOM, '360')
-        self.wheel_range.add_mark(45, Gtk.PositionType.BOTTOM, '450')
-        self.wheel_range.add_mark(54, Gtk.PositionType.BOTTOM, '540')
-        self.wheel_range.add_mark(72, Gtk.PositionType.BOTTOM, '720')
-        self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
         self.autocenter.add_mark(20, Gtk.PositionType.BOTTOM, '20')
         self.autocenter.add_mark(40, Gtk.PositionType.BOTTOM, '40')
         self.autocenter.add_mark(60, Gtk.PositionType.BOTTOM, '60')
@@ -693,4 +691,23 @@ class GtkUi:
         self.ff_friction_level.add_mark(60, Gtk.PositionType.BOTTOM, '60')
         self.ff_friction_level.add_mark(80, Gtk.PositionType.BOTTOM, '80')
         self.ff_friction_level.add_mark(100, Gtk.PositionType.BOTTOM, '100')
+
+    def _set_range_markers(self, max_range):
+        self.wheel_range.clear_marks()
+        if max_range >= 180:
+            self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')
+        if max_range >= 270:
+            self.wheel_range.add_mark(27, Gtk.PositionType.BOTTOM, '270')
+        if max_range >= 360:
+            self.wheel_range.add_mark(36, Gtk.PositionType.BOTTOM, '360')
+        if max_range >= 450:
+            self.wheel_range.add_mark(45, Gtk.PositionType.BOTTOM, '450')
+        if max_range >= 540:
+            self.wheel_range.add_mark(54, Gtk.PositionType.BOTTOM, '540')
+        if max_range >= 720:
+            self.wheel_range.add_mark(72, Gtk.PositionType.BOTTOM, '720')
+        if max_range >= 900:
+            self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
+        if max_range >= 1080:
+            self.wheel_range.add_mark(108, Gtk.PositionType.BOTTOM, '1080')
 
