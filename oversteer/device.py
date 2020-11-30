@@ -393,7 +393,7 @@ class Device:
             if event.code == ecodes.ABS_X:
                 if self.usb_id not in [self.device_manager.LG_G29, self.device_manager.TM_T300RS]:
                     event.value = event.value * 4
-            elif self.usb_id not in [self.device_manager.LG_DFGT, self.device_manager.LG_DFP, self.device_manager.LG_G920]:
+            elif self.usb_id in [self.device_manager.LG_G25, self.device_manager.LG_G27, self.device_manager.LG_G29, self.device_manager.TM_T300RS]:
                 if event.code == ecodes.ABS_Y:
                     event.code = ecodes.ABS_RZ
                 elif event.code == ecodes.ABS_Z:
