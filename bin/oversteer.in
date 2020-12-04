@@ -43,6 +43,8 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 locale.bindtextdomain('oversteer', localedir)
 locale.textdomain('oversteer')
+if 'LC_ALL' in os.environ and os.environ['LC_ALL'] == 'C' and 'LANG' in os.environ and os.environ['LANG']:
+    os.environ['LC_ALL'] = os.environ['LANG']
 locale.setlocale(locale.LC_ALL, '')
 
 if __name__ == '__main__':
