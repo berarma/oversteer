@@ -24,7 +24,7 @@ class GtkHandlers:
             self.model.set_overlay_window_pos((event.x, event.y))
 
     def on_main_window_destroy(self, *args):
-        Gtk.main_quit()
+        self.ui.quit()
 
     def on_preferences_window_delete_event(self, *args):
         self.controller.on_close_preferences()

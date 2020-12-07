@@ -101,6 +101,9 @@ class Gui:
 
         Thread(target=self.input_thread, daemon = True).start()
 
+        if 'command' in self.app.args:
+            Thread(target=self.run_command).start() 
+
         self.ui.main()
 
     def sig_int_handler(self, signal, frame):
@@ -408,6 +411,11 @@ class Gui:
                 time.sleep(1)
             if self.device_manager.is_changed():
                 self.ui.safe_call(self.populate_devices)
+
+    def run_command(self):
+        proc = subprocess.Popen(self.app.args.command, shell=True)
+        proc.wait()
+        self.ui.quit()
 
     def start_test(self):
         def test_callback(name = 'end'):

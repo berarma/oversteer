@@ -61,6 +61,9 @@ class GtkUi:
 
         Gtk.main()
 
+    def quit(self):
+        Gtk.main_quit()
+
     def safe_call(self, callback, *args):
         GLib.idle_add(callback, *args)
 

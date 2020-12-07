@@ -19,7 +19,8 @@ class Application:
 
     def run(self, argv):
         parser = argparse.ArgumentParser(prog=argv[0], description=_("Oversteer - Steering Wheel Manager"))
-        parser.add_argument('device_path', nargs='?', help=_("Device path"))
+        parser.add_argument('command', nargs='*', help=_("Run as companion of command"))
+        parser.add_argument('--device', help=_("Device path"))
         parser.add_argument('--list', action='store_true', help=_("list connected devices"))
         parser.add_argument('--mode', help=_("set the compatibility mode"))
         parser.add_argument('--range', type=int, help=_("set the rotation range [40-900]"))
@@ -49,23 +50,16 @@ class Application:
         device_manager = DeviceManager()
         device_manager.start()
 
-        if args.device_path is not None:
-            if os.path.exists(args.device_path):
-                device = device_manager.get_device(os.path.realpath(args.device_path))
-            if not device.check_permissions():
-                print(_("You don't have the required permissions to change your " +
-                    "wheel settings. You can fix it yourself by copying the {} " +
-                    "file to the {} directory and rebooting.".format(self.udev_file,
-                    self.target_dir)))
+        if args.device is not None:
+            if os.path.exists(args.device):
+                device = device_manager.get_device(os.path.realpath(args.device))
+                if not device.check_permissions():
+                    print(_("You don't have the required permissions to change your " +
+                        "wheel settings. You can fix it yourself by copying the {} " +
+                        "file to the {} directory and rebooting.".format(self.udev_file,
+                        self.target_dir)))
         else:
             device = device_manager.first_device()
-
-        if device is None:
-            for arg, value in vars(args).items():
-                if value is not None and value != False and arg not in ['list', 'debug', 'version', 'gui']:
-                    print(_('No compatible device found.'))
-                    exit(1)
-
 
         model = Model(device)
 

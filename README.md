@@ -104,7 +104,10 @@ It's also possible to use it from the console. Type `oversteer --help` to see
 the command line help.
 
 You can configure game launchers to run oversteer to load a profile or change
-settings so that it automatically configures the wheel when the game runs.
+settings so that it automatically configures the wheel when the game runs. It
+will close when the you exit the game. An example for a Steam game:
+
+`oversteer -p rFactor2 -g "%command%"`
 
 @Leillo1975 has kindly created a [video explaining the basics of Oversteer
 (Spanish)](https://www.youtube.com/watch?v=WdIV1FOkFsw).
