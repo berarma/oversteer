@@ -102,7 +102,7 @@ class Gui:
 
         Thread(target=self.input_thread, daemon = True).start()
 
-        if 'command' in self.app.args:
+        if self.app.args.command:
             Thread(target=self.run_command).start() 
 
         self.ui.main()
