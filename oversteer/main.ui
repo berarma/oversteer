@@ -797,6 +797,7 @@
                               <packing>
                                 <property name="left-attach">0</property>
                                 <property name="top-attach">1</property>
+                                <property name="height">2</property>
                               </packing>
                             </child>
                             <child>
@@ -823,6 +824,7 @@
                               <packing>
                                 <property name="left-attach">1</property>
                                 <property name="top-attach">1</property>
+                                <property name="height">2</property>
                               </packing>
                             </child>
                             <child>
@@ -849,6 +851,7 @@
                               <packing>
                                 <property name="left-attach">2</property>
                                 <property name="top-attach">1</property>
+                                <property name="height">2</property>
                               </packing>
                             </child>
                             <child>
@@ -861,15 +864,6 @@
                                 <property name="left-attach">2</property>
                                 <property name="top-attach">0</property>
                               </packing>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <placeholder/>
                             </child>
                           </object>
                           <packing>
@@ -1854,7 +1848,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Gain applied to spring effects.</property>
+                            <property name="tooltip-text" translatable="yes">Gain applied to spring effects. Higher values may produce more clipping.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -1903,7 +1897,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Gain applied to damper effects.</property>
+                            <property name="tooltip-text" translatable="yes">Gain applied to damper effects. Higher values may produce more clipping.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -1953,7 +1947,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Gain applied to friction effects.</property>
+                            <property name="tooltip-text" translatable="yes">Gain applied to friction effects. Higher values may produce more clipping.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -3305,18 +3299,7 @@ Be careful when running the tests and follow the instructions as closely as poss
             <property name="can-focus">False</property>
             <property name="layout-style">end</property>
             <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">Close</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <signal name="clicked" handler="on_cancel_preferences_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
+              <placeholder/>
             </child>
           </object>
           <packing>
@@ -3401,7 +3384,7 @@ Be careful when running the tests and follow the instructions as closely as poss
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
