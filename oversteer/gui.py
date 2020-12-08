@@ -1,19 +1,19 @@
 import configparser
 import csv
 from datetime import datetime
-from evdev import InputDevice, categorize, ecodes, ff
+from evdev import categorize, ecodes, ff
 import glob
 import locale as Locale
 from locale import gettext as _
 import logging
+import os
 import shutil
 import signal
 import subprocess
 import sys
-from threading import Thread, Event
+from threading import Thread
 import time
-from xdg.BaseDirectory import *
-from .device_manager import DeviceManager
+from xdg.BaseDirectory import save_config_path
 from .gtk_ui import GtkUi
 from .model import Model
 from .profile import Profile
@@ -131,12 +131,11 @@ class Gui:
                     self.ui.info_dialog(_("Permissions rules installed."),
                             _("In some cases, a system restart might be needed."))
                     break
-                else:
-                    answer = self.ui.confirmation_dialog(_("Error installing " +
-                        "permissions rules. Please, try again and make sure you " +
-                        "use the right password for the administrator user."))
-                    if not answer:
-                        break
+                answer = self.ui.confirmation_dialog(_("Error installing " +
+                    "permissions rules. Please, try again and make sure you " +
+                    "use the right password for the administrator user."))
+                if not answer:
+                    break
             else:
                 break
 
@@ -340,13 +339,13 @@ class Gui:
                     self.ui.safe_call(self.add_range, -90)
 
     def add_range(self, delta):
-        range = self.model.get_range()
-        range = range + delta
-        if range < 40:
-            range = 40
-        if range > 900:
-            range = 900
-        self.model.ui_set_range(range)
+        wrange = self.model.get_range()
+        wrange = wrange + delta
+        if wrange < 40:
+            wrange = 40
+        if wrange > 900:
+            wrange = 900
+        self.model.ui_set_range(wrange)
 
     def read_ffbmeter(self):
         level = self.device.get_peak_ffb_level()
@@ -546,4 +545,3 @@ class Gui:
         canvas = self.combined_chart.get_canvas()
         toolbar = self.combined_chart.get_navigation_toolbar(canvas, self.ui.window)
         self.ui.show_test_chart(canvas, toolbar)
-

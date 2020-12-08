@@ -1,10 +1,8 @@
-from locale import gettext as _
 import gi
 import logging
 import math
 import os
 from .gtk_handlers import GtkHandlers
-
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
 
@@ -130,7 +128,7 @@ class GtkUi:
 
     def set_app_icon(self, icon):
         if not os.access(icon, os.R_OK):
-            logging.debug("Icon not found: " + icon)
+            logging.debug("Icon not found: %s", icon)
             return
         self.window.set_icon_from_file(icon)
 
@@ -241,8 +239,7 @@ class GtkUi:
             if modes is None:
                 self.emulation_mode_combobox.set_sensitive(False)
                 return
-            else:
-                self.emulation_mode_combobox.set_sensitive(True)
+            self.emulation_mode_combobox.set_sensitive(True)
         model = self.emulation_mode_combobox.get_model()
         if model is None:
             model = Gtk.ListStore(str, str)
@@ -264,20 +261,19 @@ class GtkUi:
             self.change_emulation_mode_button.set_sensitive(True)
             self.emulation_mode_combobox.set_active_id(mode)
 
-    def set_range(self, range):
-        if range is None:
+    def set_range(self, wrange):
+        if wrange is None:
             self.wheel_range.set_sensitive(False)
             self.wheel_range_overlay_always.set_sensitive(False)
             self.wheel_range_overlay_auto.set_sensitive(False)
             return
-        else:
-            self.wheel_range.set_sensitive(True)
-            self.wheel_range_overlay_always.set_sensitive(True)
-            self.wheel_range_overlay_auto.set_sensitive(True)
-            range = int(range) / 10
-            self.wheel_range.set_value(range)
-            range = str(round(range * 10))
-            self.overlay_wheel_range.set_label(range)
+        self.wheel_range.set_sensitive(True)
+        self.wheel_range_overlay_always.set_sensitive(True)
+        self.wheel_range_overlay_auto.set_sensitive(True)
+        wrange = int(wrange) / 10
+        self.wheel_range.set_value(wrange)
+        wrange = str(round(wrange * 10))
+        self.overlay_wheel_range.set_label(wrange)
 
     def set_combine_pedals(self, combine_pedals):
         if combine_pedals is None:
@@ -345,13 +341,13 @@ class GtkUi:
             self.ffbmeter_overlay.set_active(state)
             self.update_overlay()
 
-    def set_range_overlay(self, id):
+    def set_range_overlay(self, sid):
         self.wheel_range_overlay_never.set_active(False)
         self.wheel_range_overlay_always.set_active(False)
         self.wheel_range_overlay_auto.set_active(False)
-        if id == 'always':
+        if sid == 'always':
             self.wheel_range_overlay_always.set_active(True)
-        elif id == 'auto':
+        elif sid == 'auto':
             self.wheel_range_overlay_auto.set_active(True)
         else:
             self.wheel_range_overlay_never.set_active(True)
@@ -621,15 +617,16 @@ class GtkUi:
             self.btn_input[i] = self.builder.get_object('btn' + str(i) + '_input')
 
         self.profile_listbox = self.builder.get_object('profile_listbox')
+
         def sort_profiles(row1, row2):
             text1 = row1.get_children()[0].get_text().lower()
             text2 = row2.get_children()[0].get_text().lower()
             if text1 < text2:
                 return -1
-            elif text1 > text2:
+            if text1 > text2:
                 return 1
-            else:
-                return 0
+            return 0
+
         self.profile_listbox.set_sort_func(sort_profiles)
 
         self.test_container = self.builder.get_object('test_container')
@@ -713,4 +710,3 @@ class GtkUi:
             self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
         if max_range >= 1080:
             self.wheel_range.add_mark(108, Gtk.PositionType.BOTTOM, '1080')
-

@@ -1,9 +1,8 @@
 import gi
 from locale import gettext as _
 import traceback
-
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GLib
+from gi.repository import Gtk, Gdk
 
 class GtkHandlers:
 
@@ -66,23 +65,23 @@ class GtkHandlers:
         self.ui.change_emulation_mode_button.set_sensitive(True)
 
     def on_wheel_range_value_changed(self, widget):
-        range = int(widget.get_value() * 10)
-        self.model.set_range(range)
-        self.ui.overlay_wheel_range.set_label(str(range))
+        wrange = int(widget.get_value() * 10)
+        self.model.set_range(wrange)
+        self.ui.overlay_wheel_range.set_label(str(wrange))
 
     def on_overlay_decrange_clicked(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() - step)
-        range = self.ui.wheel_range.get_value() * 10
-        self.ui.overlay_wheel_range.set_label(range)
+        wrange = self.ui.wheel_range.get_value() * 10
+        self.ui.overlay_wheel_range.set_label(wrange)
 
     def on_overlay_incrange_clicked(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() + step)
-        range = self.ui.wheel_range.get_value() * 10
-        self.ui.overlay_wheel_range.set_label(range)
+        wrange = self.ui.wheel_range.get_value() * 10
+        self.ui.overlay_wheel_range.set_label(wrange)
 
     def on_combine_none_clicked(self, widget):
         self.model.set_combine_pedals(0)
@@ -174,15 +173,18 @@ class GtkHandlers:
         row = self.ui.profile_listbox.get_selected_row()
         if row is None:
             return
+
         def on_rename_profile_focus_out(widget, event):
             entry.disconnect_by_func(on_rename_profile_focus_out)
             row.remove(widget)
             row.add(label)
+
         def on_rename_profile_key_release(widget, event):
             if event.keyval == Gdk.KEY_Escape:
                 entry.disconnect_by_func(on_rename_profile_focus_out)
                 row.remove(widget)
                 row.add(label)
+
         def on_rename_profile_activate(widget):
             entry.disconnect_by_func(on_rename_profile_focus_out)
             source_profile_name = label.get_text()

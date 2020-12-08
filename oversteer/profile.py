@@ -68,8 +68,8 @@ class Profile:
     def set_mode(self, mode):
         self.set('mode', mode)
 
-    def set_range(self, range):
-        self.set('range', int(range))
+    def set_range(self, wrange):
+        self.set('range', int(wrange))
 
     def set_combine_pedals(self, combine_pedals):
         self.set('combine_pedals', int(combine_pedals))
@@ -95,8 +95,8 @@ class Profile:
     def set_ffb_overlay(self, state):
         self.set('ffbmeter_overlay', int(state))
 
-    def set_range_overlay(self, id):
-        self.set('wheel_range_overlay', id)
+    def set_range_overlay(self, sid):
+        self.set('wheel_range_overlay', sid)
 
     def set_use_buttons(self, state):
         self.set('wheel_buttons', int(state))

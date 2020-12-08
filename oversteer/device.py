@@ -1,10 +1,6 @@
-from enum import Enum
 from evdev import ecodes, InputDevice
-import functools
-import glob
 import logging
 import os
-import pyudev
 import re
 import select
 import time
@@ -127,7 +123,7 @@ class Device:
         if old_mode == emulation_mode:
             return True
         self.disconnect()
-        logging.debug("Setting mode: " + str(emulation_mode))
+        logging.debug("Setting mode: %s", str(emulation_mode))
         with open(path, "w") as file:
             file.write(emulation_mode)
         # Wait for device ready
@@ -141,17 +137,17 @@ class Device:
             return None
         with open(path, "r") as file:
             data = file.read()
-        range = data.strip()
-        return int(range)
+        wrange = data.strip()
+        return int(wrange)
 
-    def set_range(self, range):
+    def set_range(self, wrange):
         path = self.checked_device_file("range")
         if not path:
             return False
-        range = str(range)
-        logging.debug("Setting range: " + range)
+        wrange = str(wrange)
+        logging.debug("Setting range: %s", wrange)
         with open(path, "w") as file:
-            file.write(range)
+            file.write(wrange)
         return True
 
     def get_combine_pedals(self):
@@ -168,7 +164,7 @@ class Device:
         if not path:
             return False
         combine_pedals = str(combine_pedals)
-        logging.debug("Setting combined pedals: " + combine_pedals)
+        logging.debug("Setting combined pedals: %s", combine_pedals)
         with open(path, "w") as file:
             file.write(combine_pedals)
         return True
@@ -184,7 +180,7 @@ class Device:
 
     def set_autocenter(self, autocenter):
         autocenter = str(int(autocenter))
-        logging.debug("Setting autocenter strength: " + autocenter)
+        logging.debug("Setting autocenter strength: %s", autocenter)
         path = self.checked_device_file("autocenter")
         if path:
             with open(path, "w") as file:
@@ -205,7 +201,7 @@ class Device:
 
     def set_ff_gain(self, gain):
         gain = str(int(gain))
-        logging.debug("Setting FF gain: " + gain)
+        logging.debug("Setting FF gain: %s", gain)
         path = self.checked_device_file("gain")
         if path:
             with open(path, "w") as file:
@@ -228,7 +224,7 @@ class Device:
         if not path:
             return False
         level = str(level)
-        logging.debug("Setting spring level: " + level)
+        logging.debug("Setting spring level: %s", level)
         with open(path, "w") as file:
             file.write(level)
         return True
@@ -247,7 +243,7 @@ class Device:
         if not path:
             return False
         level = str(level)
-        logging.debug("Setting damper level: " + level)
+        logging.debug("Setting damper level: %s", level)
         with open(path, "w") as file:
             file.write(level)
         return True
@@ -266,7 +262,7 @@ class Device:
         if not path:
             return False
         level = str(level)
-        logging.debug("Setting friction level: " + level)
+        logging.debug("Setting friction level: %s", level)
         with open(path, "w") as file:
             file.write(level)
         return True
@@ -285,7 +281,7 @@ class Device:
         if not path:
             return False
         ffb_leds = str(ffb_leds)
-        logging.debug("Setting FF leds: " + ffb_leds)
+        logging.debug("Setting FF leds: %s", ffb_leds)
         with open(path, "w") as file:
             file.write(ffb_leds)
         return True
@@ -304,7 +300,7 @@ class Device:
         if not path:
             return False
         peak_ffb_level = str(peak_ffb_level)
-        logging.debug("Setting peak FF level: " + peak_ffb_level)
+        logging.debug("Setting peak FF level: %s", peak_ffb_level)
         with open(path, "w") as file:
             file.write(peak_ffb_level)
         return True
@@ -378,15 +374,14 @@ class Device:
 
     def read_events(self, timeout):
         input_device = self.get_input_device()
-        if input_device is None or input_device.fd == -1:
-            return None
-        r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
-        if input_device.fd in r:
-            for event in input_device.read():
-                event = self.normalize_event(event)
-                if event.type == ecodes.EV_ABS:
-                    self.last_axis_value[ecodes.ABS_X] = event.value
-                yield event
+        if input_device is not None and input_device.fd != -1:
+            r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
+            if input_device.fd in r:
+                for event in input_device.read():
+                    event = self.normalize_event(event)
+                    if event.type == ecodes.EV_ABS:
+                        self.last_axis_value[ecodes.ABS_X] = event.value
+                    yield event
 
     def normalize_event(self, event):
         if event.type == ecodes.EV_ABS:

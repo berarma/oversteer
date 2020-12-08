@@ -1,12 +1,13 @@
 import argparse
-import configparser
 from locale import gettext as _
 import logging
 import os
+from oversteer.gui import Gui
+from .device_manager import DeviceManager
 from .model import Model
 from .profile import Profile
 import sys
-from xdg.BaseDirectory import *
+from xdg.BaseDirectory import save_config_path
 
 class Application:
 
@@ -46,7 +47,6 @@ class Application:
         if not args.debug:
             logging.disable(level=logging.INFO)
 
-        from .device_manager import DeviceManager
         device_manager = DeviceManager()
         device_manager.start()
 
@@ -54,9 +54,9 @@ class Application:
             if os.path.exists(args.device):
                 device = device_manager.get_device(os.path.realpath(args.device))
                 if not device.check_permissions():
-                    print(_("You don't have the required permissions to change your " +
+                    print(_(("You don't have the required permissions to change your " +
                         "wheel settings. You can fix it yourself by copying the {} " +
-                        "file to the {} directory and rebooting.".format(self.udev_file,
+                        "file to the {} directory and rebooting.").format(self.udev_file,
                         self.target_dir)))
         else:
             device = device_manager.first_device()
@@ -64,7 +64,7 @@ class Application:
         model = Model(device)
 
         nothing_done = True
-        if args.list == True:
+        if args.list:
             devices = device_manager.get_devices()
             print(_("Devices found:"))
             for device in devices:
@@ -111,10 +111,8 @@ class Application:
             self.args = args
             self.device_manager = device_manager
             self.device = device
-            from oversteer.gui import Gui
             Gui(self, argv)
 
         device_manager.stop()
 
         sys.exit(0)
-

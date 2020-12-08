@@ -1,12 +1,6 @@
-from enum import Enum
-import functools
-import glob
 import logging
 import os
 import pyudev
-import re
-import select
-import time
 from .device import Device
 
 logging.basicConfig(level=logging.DEBUG)
@@ -61,7 +55,7 @@ class DeviceManager:
         if usb_id not in self.supported_wheels:
             return
         seat_id = udevice.get('ID_FOR_SEAT')
-        logging.debug("{}: {}".format(action, seat_id))
+        logging.debug("%s: %s", action, seat_id)
         if action == 'add':
             self.update_device_list(udevice)
             device = self.get_device(seat_id)
@@ -79,7 +73,7 @@ class DeviceManager:
             if usb_id in self.supported_wheels:
                 self.update_device_list(udevice)
 
-        logging.debug('Devices:' + str(self.devices))
+        logging.debug('Devices: %s', self.devices)
 
     def update_device_list(self, udevice):
         seat_id = udevice.get('ID_FOR_SEAT')
@@ -116,13 +110,12 @@ class DeviceManager:
         self.changed = False
         return list(self.devices.values())
 
-    def get_device(self, id):
-        if id is None:
+    def get_device(self, did):
+        if did is None:
             return None
-        if id in self.devices:
-            return self.devices[id]
-        else:
-            return next((item for item in self.devices.values() if item.dev_name == id), None)
+        if did in self.devices:
+            return self.devices[did]
+        return next((item for item in self.devices.values() if item.dev_name == did), None)
 
     def is_changed(self):
         return self.changed
