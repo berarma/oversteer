@@ -1,39 +1,43 @@
 # Oversteer - Steering Wheel Manager for Linux
 
-https://github.com/berarma/oversteer
+[https://github.com/berarma/oversteer]
 
 Oversteer is an application to configure Logitech Wheels.
 
 Features (when supported by the device):
- - Change emulation mode.
- - Change rotation range.
- - Combine accelerator/brakes pedals for games that use just one axis.
- - Change autocentering force strength.
- - Change force feedback gain.
- - Device configuration profiles.
- - Fix system permissions to access all device features.
- - Overlay window to display/configure range.
- - Use wheel buttons to configure range.
+
+- Change emulation mode.
+- Change rotation range.
+- Combine accelerator/brakes pedals for games that use just one axis.
+- Change autocentering force strength.
+- Change force feedback gain.
+- Device configuration profiles.
+- Fix system permissions to access all device features.
+- Overlay window to display/configure range.
+- Use wheel buttons to configure range.
+- Hardware performance testing.
 
 Additional features when using [new-lg4ff](https://github.com/berarma/new-lg4ff):
- - Combine accelerator/clutch pedals (for flight simulators).
- - Change global force feedback gain.
- - Change each conditional force feedback effect type gain.
- - FFBmeter to monitor FFB clipping using wheel leds or overlay window.
+
+- Combine accelerator/clutch pedals (for flight simulators).
+- Change global force feedback gain.
+- Change each conditional force feedback effect type gain.
+- FFBmeter to monitor FFB clipping using wheel leds or overlay window.
 
 This software supports the same wheel models supported by the Logitech Linux
 driver:
- - Driving Force / Formula EX
- - Driving Force Pro
- - Driving Force GT
- - Momo Force
- - Momo Racing Force
- - Speed Force Wireless
- - G25 Racing Wheel
- - G27 Racing Wheel
- - G29 Driving Force Racing Wheel
- - G920 Driving Force Racing Wheel
- - Experimental support for the Thrustmaster T300RS wheel when using https://github.com/Kimplul/hid-tmff2.
+
+- Driving Force / Formula EX
+- Driving Force Pro
+- Driving Force GT
+- Momo Force
+- Momo Racing Force
+- Speed Force Wireless
+- G25 Racing Wheel
+- G27 Racing Wheel
+- G29 Driving Force Racing Wheel
+- G920 Driving Force Racing Wheel
+- Experimental support for the Thrustmaster T300RS wheel when using [https://github.com/Kimplul/hid-tmff2].
 
 I can test only on a Logitech G29 Driving Force. Please, report your results
 with other devices.
@@ -46,7 +50,8 @@ Use at your own risk. Suggestions, bugs and pull requests welcome.
 
 There's an AUR package kindly created by DNModder.
 
-[Install](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages) the [Oversteer](https://aur.archlinux.org/packages/oversteer/) package.
+[Install](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages)
+the [Oversteer](https://aur.archlinux.org/packages/oversteer/) package.
 
 ### Gentoo
 
@@ -59,11 +64,15 @@ There's an ebuild created by gripped [here](https://github.com/gripped/Logitech-
 You can install all dependencies on Debian systems with the following command
 (I'm using the meson package in Buster backports):
 
-`apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev gettext meson appstream-util desktop-file-utils python3-matplotlib python3-scipy`
+`apt install python3 python3-gi python3-pyudev python3-xdg python3-evdev
+gettext meson appstream-util desktop-file-utils python3-matplotlib
+python3-scipy`
 
 You can install all dependencies on Fedora systems with the following command:
 
-`dnf install python3 python3-gobject python3-pyudev python3-pyxdg python3-libevdev gettext meson appstream desktop-file-utils python3-matplotlib python3-scipy`
+`dnf install python3 python3-gobject python3-pyudev python3-pyxdg
+python3-libevdev gettext meson appstream desktop-file-utils python3-matplotlib
+python3-scipy`
 
 In other distributions use the available tools to install the packages that
 will have similar names.
@@ -79,7 +88,7 @@ user.
 
 Build:
 
-```
+```shell
 meson build
 ninja -C build
 ```
@@ -114,7 +123,7 @@ will close when the you exit the game. An example for a Steam game:
 
 ## Updating translations (for translators)
 
-```
+```shell
 ninja -C build oversteer-pot
 ninja -C build oversteer-update-po
 ```
