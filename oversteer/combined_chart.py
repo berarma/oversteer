@@ -55,7 +55,7 @@ class CombinedChart:
             _('Time max. accel. = {:.0f} ms'),
             _('Max. decel. = {:.0f} RPM/s'),
             _('Time max. decel. = {:.0f} ms'),
-            _('Residual decel. = {:.0f} ms'),
+            _('Residual decel. = {:.0f} RPM/s'),
             _('Estimated SNR = {:.0f} dB'),
             _('Minimum force level = {:.1f} %'),
         ]
