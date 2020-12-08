@@ -44,7 +44,7 @@ class Application:
             sys.exit(0)
 
         if not args.debug:
-            logging.basicConfig(level=logging.WARNING)
+            logging.disable(level=logging.INFO)
 
         from .device_manager import DeviceManager
         device_manager = DeviceManager()
