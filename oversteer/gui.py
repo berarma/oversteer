@@ -1,5 +1,6 @@
 import configparser
 import csv
+from datetime import datetime
 from evdev import InputDevice, categorize, ecodes, ff
 import glob
 import locale as Locale
@@ -520,7 +521,8 @@ class Gui:
         if self.combined_chart is None:
             return
 
-        filename = self.ui.file_chooser(_('CSV file to export'), 'save', 'report.csv')
+        default_filename = 'report-' + datetime.now().strftime('%Y%m%d%H%M%S') + '.csv'
+        filename = self.ui.file_chooser(_('CSV file to export'), 'save', default_filename)
         if filename is None:
             return
 
