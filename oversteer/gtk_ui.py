@@ -234,29 +234,26 @@ class GtkUi:
         self.wheel_range_setup.set_upper(max_range / 10)
         self._set_range_markers(max_range)
 
-    def set_modes(self, modes, startup = False):
-        if startup:
-            if modes is None:
-                self.emulation_mode_combobox.set_sensitive(False)
-                return
-            self.emulation_mode_combobox.set_sensitive(True)
+    def set_modes(self, modes):
+        self.change_emulation_mode_button.set_sensitive(False)
         model = self.emulation_mode_combobox.get_model()
         if model is None:
             model = Gtk.ListStore(str, str)
         else:
             self.emulation_mode_combobox.set_model(None)
             model.clear()
-        for key, values in enumerate(modes):
-            model.append(values[:2])
-            if values[2]:
-                self.emulation_mode_combobox.set_active(key)
+        if not modes:
+            self.emulation_mode_combobox.set_sensitive(False)
+        else:
+            for key, values in enumerate(modes):
+                model.append(values[:2])
+                if values[2]:
+                    self.emulation_mode_combobox.set_active(key)
+            self.emulation_mode_combobox.set_sensitive(True)
         self.emulation_mode_combobox.set_model(model)
 
     def set_mode(self, mode):
-        if mode is None:
-            self.emulation_mode_combobox.set_sensitive(False)
-            self.change_emulation_mode_button.set_sensitive(False)
-        else:
+        if len(self.emulation_mode_combobox.get_model()) != 0:
             self.emulation_mode_combobox.set_sensitive(True)
             self.change_emulation_mode_button.set_sensitive(True)
             self.emulation_mode_combobox.set_active_id(mode)
