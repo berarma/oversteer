@@ -253,7 +253,8 @@ class GtkUi:
         self.emulation_mode_combobox.set_model(model)
 
     def set_mode(self, mode):
-        if len(self.emulation_mode_combobox.get_model()) != 0:
+        model = self.emulation_mode_combobox.get_model()
+        if model and len(model) != 0:
             self.emulation_mode_combobox.set_sensitive(True)
             self.change_emulation_mode_button.set_sensitive(True)
             self.emulation_mode_combobox.set_active_id(mode)
