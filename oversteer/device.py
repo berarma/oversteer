@@ -305,39 +305,6 @@ class Device:
             file.write(peak_ffb_level)
         return True
 
-    def load_settings(self, settings):
-        if 'mode' in settings:
-            self.set_mode(settings['mode'])
-        if 'range' in settings:
-            self.set_range(settings['range'])
-        if 'combine_pedals' in settings:
-            self.set_combine_pedals(settings['combine_pedals'])
-        if 'ff_gain' in settings:
-            self.set_ff_gain(settings['ff_gain'])
-        if 'autocenter' in settings:
-            self.set_autocenter(settings['autocenter'])
-        if 'spring_level' in settings:
-            self.set_spring_level(settings['spring_level'])
-        if 'damper_level' in settings:
-            self.set_damper_level(settings['damper_level'])
-        if 'friction_level' in settings:
-            self.set_friction_level(settings['friction_level'])
-        if 'ffb_leds' in settings:
-            self.set_ffb_leds(settings['ffb_leds'])
-
-    def save_settings(self):
-        return {
-            'mode': self.get_mode(),
-            'range': self.get_range(),
-            'combine_pedals': self.get_combine_pedals(),
-            'ff_gain': self.get_ff_gain(),
-            'autocenter': self.get_autocenter(),
-            'spring_level': self.get_spring_level(),
-            'damper_level': self.get_damper_level(),
-            'friction_level': self.get_friction_level(),
-            'ffb_leds': self.get_ffb_leds(),
-        }
-
     def check_permissions(self):
         if not os.access(self.dev_path, os.F_OK | os.R_OK | os.X_OK):
             return False
