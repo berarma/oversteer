@@ -351,7 +351,7 @@ class GtkUi:
             self.wheel_range_overlay_never.set_active(True)
 
     def set_use_buttons(self, state):
-        if  state is None:
+        if state is None:
             self.wheel_buttons.set_sensitive(False)
         else:
             self.wheel_buttons.set_sensitive(True)
