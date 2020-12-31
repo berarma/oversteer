@@ -41,6 +41,7 @@ class Application:
         parser.add_argument('--version', action='store_true', help=_("show version"))
 
         args = parser.parse_args(argv[1:])
+        argc = len(sys.argv[1:])
 
         if args.version:
             print("Oversteer v" + self.version)
@@ -53,6 +54,7 @@ class Application:
         device_manager.start()
 
         if args.device is not None:
+            argc -= 1
             if os.path.exists(args.device):
                 device = device_manager.get_device(os.path.realpath(args.device))
                 if not device.check_permissions():
@@ -65,46 +67,33 @@ class Application:
 
         model = Model(device)
 
-        nothing_done = True
         if args.list:
             devices = device_manager.get_devices()
             print(_("Devices found:"))
             for device in devices:
                 print("  {}: {}".format(device.dev_name, device.name))
-            nothing_done = False
         if args.mode is not None:
             model.set_mode(args.mode)
-            nothing_done = False
         if args.range is not None:
             model.set_range(args.range)
-            nothing_done = False
         if args.combine_pedals is not None:
             model.set_combine_pedals(args.combine_pedals)
-            nothing_done = False
         if args.autocenter is not None:
             model.set_autocenter(args.autocenter)
-            nothing_done = False
         if args.ff_gain is not None:
             model.set_ff_gain(args.ff_gain)
-            nothing_done = False
         if args.spring_level is not None:
             model.set_spring_level(args.spring_level)
-            nothing_done = False
         if args.damper_level is not None:
             model.set_damper_level(args.damper_level)
-            nothing_done = False
         if args.friction_level is not None:
             model.set_friction_level(args.friction_level)
-            nothing_done = False
         if args.ffb_leds is not None:
             model.set_ffb_leds(1 if args.ffb_leds else 0)
-            nothing_done = False
         if args.center_wheel is not None:
             model.set_center_wheel(True)
-            nothing_done = False
         if args.remove_deadzones is not None:
             model.set_remove_deadzones(True)
-            nothing_done = False
         if args.profile is not None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             if not os.path.exists(profile_file):
@@ -114,8 +103,7 @@ class Application:
                 profile = Profile()
                 profile.load(profile_file)
                 model.load_settings(profile.to_dict())
-            nothing_done = False
-        if args.gui or nothing_done:
+        if args.gui or argc == 0:
             self.args = args
             self.device_manager = device_manager
             self.device = device
