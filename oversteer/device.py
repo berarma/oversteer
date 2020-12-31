@@ -1,4 +1,6 @@
 from evdev import ecodes, InputDevice
+import fcntl
+import libevdev
 import logging
 import os
 import re
@@ -304,6 +306,30 @@ class Device:
         with open(path, "w") as file:
             file.write(peak_ffb_level)
         return True
+
+    def remove_deadzones(self):
+        fd = open(self.dev_name, "rb")
+        fcntl.fcntl(fd, fcntl.F_SETFL, os.O_NONBLOCK)
+        device = libevdev.Device(fd)
+        absinfo = libevdev.InputAbsInfo(flat=0)
+        if device.has(libevdev.EV_ABS.ABS_X):
+            device.absinfo[libevdev.EV_ABS.ABS_X] = absinfo
+            device.sync_absinfo_to_kernel(libevdev.EV_ABS.ABS_X)
+        if device.has(libevdev.EV_ABS.ABS_Y):
+            device.absinfo[libevdev.EV_ABS.ABS_Y] = absinfo
+            device.sync_absinfo_to_kernel(libevdev.EV_ABS.ABS_Y)
+        if device.has(libevdev.EV_ABS.ABS_Z):
+            device.absinfo[libevdev.EV_ABS.ABS_Z] = absinfo
+            device.sync_absinfo_to_kernel(libevdev.EV_ABS.ABS_Z)
+        if device.has(libevdev.EV_ABS.ABS_RZ):
+            device.absinfo[libevdev.EV_ABS.ABS_RZ] = absinfo
+            device.sync_absinfo_to_kernel(libevdev.EV_ABS.ABS_RZ)
+        if device.has(libevdev.EV_ABS.ABS_HAT0X):
+            device.absinfo[libevdev.EV_ABS.ABS_HAT0X] = absinfo
+            device.sync_absinfo_to_kernel(libevdev.EV_ABS.ABS_HAT0X)
+        if device.has(libevdev.EV_ABS.ABS_HAT0Y):
+            device.absinfo[libevdev.EV_ABS.ABS_HAT0Y] = absinfo
+            device.sync_absinfo_to_kernel(libevdev.EV_ABS.ABS_HAT0Y)
 
     def check_permissions(self):
         if not os.access(self.dev_path, os.F_OK | os.R_OK | os.X_OK):

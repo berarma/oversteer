@@ -357,6 +357,12 @@ class GtkUi:
             self.wheel_buttons.set_sensitive(True)
             self.wheel_buttons.set_state(state)
 
+    def set_center_wheel(self, state):
+        self.center_wheel.set_state(state)
+
+    def set_remove_deadzones(self, state):
+        self.remove_deadzones.set_state(state)
+
     def set_new_profile_name(self, name):
         self.new_profile_name.set_text(name)
 
@@ -598,6 +604,8 @@ class GtkUi:
         self.overlay_led_3 = self.builder.get_object('overlay_led_3')
         self.overlay_led_4 = self.builder.get_object('overlay_led_4')
         self.wheel_buttons = self.builder.get_object('wheel_buttons')
+        self.center_wheel = self.builder.get_object('center_wheel')
+        self.remove_deadzones = self.builder.get_object('remove_deadzones')
         self.start_define_buttons = self.builder.get_object('start_define_buttons')
         self.define_buttons_text = self.start_define_buttons.get_label()
 

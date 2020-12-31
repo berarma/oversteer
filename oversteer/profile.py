@@ -35,6 +35,10 @@ class Profile:
             self.set_overlay_window_pos(data['overlay_window_pos'])
             if 'use_buttons' in data:
                 self.set_use_buttons(data['use_buttons'])
+            if 'center_wheel' in data:
+                self.set_center_wheel(data['center_wheel'])
+            if 'remove_deadzones' in data:
+                self.set_remove_deadzones(data['remove_deadzones'])
 
     def to_dict(self):
         data = {
@@ -51,6 +55,8 @@ class Profile:
             'range_overlay': self.get_range_overlay(),
             'overlay_window_pos': self.get_overlay_window_pos(),
             'use_buttons': self.get_use_buttons(),
+            'center_wheel': self.get_center_wheel(),
+            'remove_deadzones': self.get_remove_deadzones(),
         }
 
         return {k:v for (k, v) in data.items() if v is not None}
@@ -104,6 +110,12 @@ class Profile:
     def set_overlay_window_pos(self, position):
         self.set('overlay_window_pos', ','.join(map(str, position)))
 
+    def set_center_wheel(self, state):
+        self.set('center_wheel', int(state))
+
+    def set_remove_deadzones(self, state):
+        self.set('remove_deadzones', int(state))
+
     def get_mode(self):
         return self.get('mode')
 
@@ -152,6 +164,12 @@ class Profile:
         if not self.config.has_option('DEFAULT', 'overlay_window_pos'):
             return None
         return tuple(map(int, self.get('overlay_window_pos').split(',')))
+
+    def get_center_wheel(self):
+        return self.get_int('center_wheel')
+
+    def get_remove_deadzones(self):
+        return self.get_int('remove_deadzones')
 
     def set(self, name, value):
         if value is None:

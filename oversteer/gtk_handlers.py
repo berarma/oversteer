@@ -1,5 +1,6 @@
 import gi
 from locale import gettext as _
+import threading
 import traceback
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
@@ -136,6 +137,12 @@ class GtkHandlers:
 
     def on_wheel_buttons_state_set(self, widget, state):
         self.model.set_use_buttons(state)
+
+    def on_center_wheel_state_set(self, widget, state):
+        threading.Thread(target = self.model.set_center_wheel, args = [state], daemon = True).start()
+
+    def on_remove_deadzones_state_set(self, widget, state):
+        self.model.set_remove_deadzones(state)
 
     def on_profile_changed(self, combobox):
         self.controller.load_profile(combobox.get_active_id())

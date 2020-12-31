@@ -1,3 +1,5 @@
+import time
+
 class Model:
 
     defaults = {
@@ -14,14 +16,16 @@ class Model:
         'range_overlay': None,
         'overlay_window_pos': (20, 20),
         'use_buttons': None,
+        'center_wheel': None,
+        'remove_deadzones': None,
     }
 
     def __init__(self, device, ui = None):
         self.device = device
         self.ui = ui
-        self.data = self.defaults.copy()
         self.reference_values = None
-        if device is not None:
+        self.data = self.defaults.copy()
+        if self.device is not None:
             self.read_device_settings()
 
     def read_device_settings(self):
@@ -38,11 +42,16 @@ class Model:
             'ffb_overlay': False if self.device.get_peak_ffb_level() is not None else None,
             'range_overlay': False if self.device.get_peak_ffb_level() is not None else None,
             'use_buttons': False if self.device.get_range() is not None else None,
+            'center_wheel': False,
+            'remove_deadzones': False,
         })
         # Some settings are read incorrectly sometimes
         self.flush_device()
 
     def load_settings(self, data):
+        self.data = self.defaults.copy()
+        if self.device is not None:
+            self.read_device_settings()
         data = dict(filter(
             lambda item: item[1] is not None and self.data[item[0]] is not None,
             data.items()
@@ -62,6 +71,10 @@ class Model:
             self.set_range(data['range'])
         if data['combine_pedals'] is not None:
             self.set_combine_pedals(data['combine_pedals'])
+        if data['center_wheel'] is not None:
+            self.set_center_wheel(data['center_wheel'])
+        if data['remove_deadzones'] is not None:
+            self.set_remove_deadzones(data['remove_deadzones'])
         if data['autocenter'] is not None:
             self.set_autocenter(data['autocenter'])
         if data['ff_gain'] is not None:
@@ -88,6 +101,8 @@ class Model:
         self.ui.set_mode(data['mode'])
         self.ui_set_range(data['range'])
         self.ui_set_combine_pedals(data['combine_pedals'])
+        self.ui_set_center_wheel(data['center_wheel'])
+        self.ui_set_remove_deadzones(data['remove_deadzones'])
         self.ui_set_autocenter(data['autocenter'])
         self.ui_set_ff_gain(data['ff_gain'])
         self.ui_set_spring_level(data['spring_level'])
@@ -226,6 +241,18 @@ class Model:
     def get_use_buttons(self):
         return self.data['use_buttons']
 
+    def set_center_wheel(self, value):
+        value = bool(value)
+        if self.set_if_changed('center_wheel', value) and value:
+            self.device.set_autocenter(65535)
+            time.sleep(1)
+            self.device.set_autocenter(0)
+
+    def set_remove_deadzones(self, value):
+        value = bool(value)
+        if self.set_if_changed('remove_deadzones', value) and value:
+            self.device.remove_deadzones()
+
     def ui_set_mode(self, value):
         self.ui.set_mode(value)
 
@@ -264,3 +291,9 @@ class Model:
 
     def ui_set_use_buttons(self, value):
         self.ui.set_use_buttons(value)
+
+    def ui_set_center_wheel(self, value):
+        self.ui.set_center_wheel(value)
+
+    def ui_set_remove_deadzones(self, value):
+        self.ui.set_remove_deadzones(value)
