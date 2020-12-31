@@ -99,20 +99,20 @@ class Model:
         if data is None:
             data = self.data
         self.ui.set_mode(data['mode'])
-        self.ui_set_range(data['range'])
-        self.ui_set_combine_pedals(data['combine_pedals'])
-        self.ui_set_center_wheel(data['center_wheel'])
-        self.ui_set_remove_deadzones(data['remove_deadzones'])
-        self.ui_set_autocenter(data['autocenter'])
-        self.ui_set_ff_gain(data['ff_gain'])
-        self.ui_set_spring_level(data['spring_level'])
-        self.ui_set_damper_level(data['damper_level'])
-        self.ui_set_friction_level(data['friction_level'])
-        self.ui_set_ffb_leds(data['ffb_leds'])
-        self.ui_set_ffb_overlay(data['ffb_overlay'])
-        self.ui_set_range_overlay(data['range_overlay'])
-        self.ui_set_overlay_window_pos(data['overlay_window_pos'])
-        self.ui_set_use_buttons(data['use_buttons'])
+        self.ui.set_range(data['range'])
+        self.ui.set_ff_gain(data['ff_gain'])
+        self.ui.set_autocenter(data['autocenter'])
+        self.ui.set_combine_pedals(data['combine_pedals'])
+        self.ui.set_spring_level(data['spring_level'])
+        self.ui.set_damper_level(data['damper_level'])
+        self.ui.set_friction_level(data['friction_level'])
+        self.ui.set_ffb_leds(data['ffb_leds'])
+        self.ui.set_ffb_overlay(data['ffb_overlay'])
+        self.ui.set_range_overlay(data['range_overlay'])
+        self.ui.set_overlay_window_pos(data['overlay_window_pos'])
+        self.ui.set_use_buttons(data['use_buttons'])
+        self.ui.set_center_wheel(data['center_wheel'])
+        self.ui.set_remove_deadzones(data['remove_deadzones'])
 
     def to_dict(self):
         return self.data.copy()
@@ -121,10 +121,6 @@ class Model:
         self.reference_values = self.data.copy()
         if self.ui is not None:
             self.ui.disable_save_profile()
-
-    def clear_reference_values(self):
-        self.reference_values = None
-        self.ui.disable_save_profile()
 
     def get_mode_list(self):
         return self.device.list_modes()
@@ -253,48 +249,3 @@ class Model:
         value = bool(value)
         if self.set_if_changed('remove_deadzones', value) and value:
             self.device.remove_deadzones()
-
-    def ui_set_mode(self, value):
-        self.ui.set_mode(value)
-
-    def ui_set_range(self, value):
-        self.ui.set_range(value)
-
-    def ui_set_ff_gain(self, value):
-        self.ui.set_ff_gain(value)
-
-    def ui_set_autocenter(self, value):
-        self.ui.set_autocenter(value)
-
-    def ui_set_combine_pedals(self, value):
-        self.ui.set_combine_pedals(value)
-
-    def ui_set_spring_level(self, value):
-        self.ui.set_spring_level(value)
-
-    def ui_set_damper_level(self, value):
-        self.ui.set_damper_level(value)
-
-    def ui_set_friction_level(self, value):
-        self.ui.set_friction_level(value)
-
-    def ui_set_ffb_leds(self, value):
-        self.ui.set_ffb_leds(value)
-
-    def ui_set_ffb_overlay(self, value):
-        self.ui.set_ffb_overlay(value)
-
-    def ui_set_range_overlay(self, value):
-        self.ui.set_range_overlay(value)
-
-    def ui_set_overlay_window_pos(self, value):
-        self.ui.set_overlay_window_pos(value)
-
-    def ui_set_use_buttons(self, value):
-        self.ui.set_use_buttons(value)
-
-    def ui_set_center_wheel(self, value):
-        self.ui.set_center_wheel(value)
-
-    def ui_set_remove_deadzones(self, value):
-        self.ui.set_remove_deadzones(value)
