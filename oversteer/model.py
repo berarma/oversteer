@@ -119,7 +119,8 @@ class Model:
 
     def save_reference_values(self):
         self.reference_values = self.data.copy()
-        self.ui.disable_save_profile()
+        if self.ui is not None:
+            self.ui.disable_save_profile()
 
     def clear_reference_values(self):
         self.reference_values = None
