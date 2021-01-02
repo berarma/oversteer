@@ -46,7 +46,9 @@ class Application:
             print("Oversteer v" + self.version)
             sys.exit(0)
 
-        if not args.debug:
+        if args.debug:
+            argc -= 1
+        else:
             logging.disable(level=logging.INFO)
 
         device_manager = DeviceManager()
