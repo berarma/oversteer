@@ -46,9 +46,6 @@ class Gui:
             -1,
             -1,
         ]
-        self.thrustmaster_ids = [
-            'b66e',
-        ]
         self.button_labels = [
             _("Activation Switch"),
             _("Set 270º"),
