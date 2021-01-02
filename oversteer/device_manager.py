@@ -20,6 +20,8 @@ class DeviceManager:
     LG_G27 = '046d:c29b'
     LG_SFW = '046d:c29c'
     LG_MOMO2 = '046d:ca03'
+    LG_WFG = '046d:c20e',
+    LG_WFFG = '046d:c293',
     TM_T300RS = '044f:b66e'
 
     def __init__(self):
@@ -34,6 +36,8 @@ class DeviceManager:
             self.LG_G27: 900,
             self.LG_SFW: 270,
             self.LG_MOMO2: 270,
+            self.LG_WFG: 180,
+            self.LG_WFFG: 180,
             self.TM_T300RS: 1080,
         }
         self.devices = {}

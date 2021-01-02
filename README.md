@@ -27,6 +27,8 @@ Additional features when using [new-lg4ff](https://github.com/berarma/new-lg4ff)
 This software supports the same wheel models supported by the Logitech Linux
 driver:
 
+- Wingman Formula GP
+- Wingman Formula Force GP
 - Driving Force / Formula EX
 - Driving Force Pro
 - Driving Force GT
