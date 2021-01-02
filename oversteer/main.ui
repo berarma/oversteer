@@ -88,7 +88,6 @@
     <property name="skip-pager-hint">True</property>
     <property name="accept-focus">False</property>
     <property name="focus-on-map">False</property>
-    <signal name="configure-event" handler="on_overlay_window_configure" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>

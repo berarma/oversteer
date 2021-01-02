@@ -18,11 +18,6 @@ class GtkHandlers:
     def format_wheel_range_value(self, scale, value):
         return str(round(value * 10))
 
-    def on_overlay_window_configure(self, window, event):
-        if event.type == Gdk.EventType.CONFIGURE:
-            self.ui.update_overlay_window_pos((event.x, event.y))
-            self.model.set_overlay_window_pos((event.x, event.y))
-
     def on_main_window_destroy(self, *args):
         self.ui.quit()
 

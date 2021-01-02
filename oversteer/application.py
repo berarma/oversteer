@@ -5,7 +5,6 @@ import os
 from oversteer.gui import Gui
 from .device_manager import DeviceManager
 from .model import Model
-from .profile import Profile
 import sys
 from xdg.BaseDirectory import save_config_path
 
@@ -100,9 +99,7 @@ class Application:
                 print(_("This profile doesn't exist."))
                 sys.exit(1)
             if not args.gui:
-                profile = Profile()
-                profile.load(profile_file)
-                model.load_settings(profile.to_dict())
+                model.load(profile_file)
         if args.gui or argc == 0:
             self.args = args
             self.device_manager = device_manager

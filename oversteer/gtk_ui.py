@@ -430,7 +430,6 @@ class GtkUi:
         if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
-                self.overlay_window.move(self.overlay_window_pos[0], self.overlay_window_pos[1])
             if not self.ffbmeter_timer and self.overlay_window.props.visible and ffbmeter_overlay:
                 self.ffbmeter_timer = True
                 GLib.timeout_add(250, self._update_ffbmeter_overlay)
@@ -444,13 +443,6 @@ class GtkUi:
                 self._wheel_range_overlay.hide()
         else:
             self.overlay_window.hide()
-
-    def set_overlay_window_pos(self, position):
-        self.overlay_window_pos = position
-        self.overlay_window.move(position[0], position[1])
-
-    def update_overlay_window_pos(self, position):
-        self.overlay_window_pos = position
 
     def enable_save_profile(self):
         if self.profile_combobox.get_active_id() != '':

@@ -16,7 +16,6 @@ import time
 from xdg.BaseDirectory import save_config_path
 from .gtk_ui import GtkUi
 from .model import Model
-from .profile import Profile
 from .test import Test
 from .combined_chart import CombinedChart
 from .linear_chart import LinearChart
@@ -190,10 +189,7 @@ class Gui:
             self.ui.info_dialog(_("Error opening profile"), _("The selected profile can't be loaded."))
             return
 
-        profile = Profile()
-        profile.load(profile_file)
-        self.model.load_settings(profile.to_dict())
-        self.ui.safe_call(self.model.save_reference_values)
+        self.model.load(profile_file)
 
     def save_profile(self, profile_name, check_exists = False):
         if self.device is None:
@@ -207,9 +203,7 @@ class Gui:
             if os.path.exists(profile_file):
                 if not self.ui.confirmation_dialog(_("This profile already exists. Are you sure?")):
                     raise Exception()
-        profile = Profile(self.model.to_dict())
-        profile.save(profile_file)
-        self.model.save_reference_values()
+        self.model.save(profile_file)
 
     def rename_profile(self, current_name, new_name):
         current_file = os.path.join(self.profile_path, current_name + '.ini')
