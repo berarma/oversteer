@@ -52,6 +52,14 @@ class Application:
         device_manager = DeviceManager()
         device_manager.start()
 
+        if args.list:
+            argc -= 1
+            devices = device_manager.get_devices()
+            print(_("Devices found:"))
+            for device in devices:
+                print("  {}: {}".format(device.dev_name, device.name))
+            sys,exit(0)
+
         if args.device is not None:
             argc -= 1
             if os.path.exists(args.device):
@@ -64,13 +72,20 @@ class Application:
         else:
             device = device_manager.first_device()
 
+        start_gui = args.gui or argc == 0
+
+        if device is None and not start_gui:
+            print(_("No device available."))
+            sys.exit(1)
+
         model = Model(device)
 
-        if args.list:
-            devices = device_manager.get_devices()
-            print(_("Devices found:"))
-            for device in devices:
-                print("  {}: {}".format(device.dev_name, device.name))
+        if args.profile is not None:
+            profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
+            if not os.path.exists(profile_file):
+                print(_("This profile doesn't exist."))
+                sys.exit(2)
+            model.load(profile_file)
         if args.mode is not None:
             model.set_mode(args.mode)
         if args.range is not None:
@@ -93,19 +108,7 @@ class Application:
             model.set_center_wheel(True)
         if args.remove_deadzones is not None:
             model.set_remove_deadzones(True)
-        if args.profile is not None:
-            profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
-            if not os.path.exists(profile_file):
-                print(_("This profile doesn't exist."))
-                sys.exit(1)
-            if not args.gui:
-                model.load(profile_file)
-        if args.gui or argc == 0:
+        if start_gui:
             self.args = args
             self.device_manager = device_manager
-            self.device = device
-            Gui(self, argv)
-
-        device_manager.stop()
-
-        sys.exit(0)
+            Gui(self, model, argv)

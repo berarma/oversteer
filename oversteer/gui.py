@@ -23,49 +23,40 @@ from .performance_chart import PerformanceChart
 
 class Gui:
 
-    def __init__(self, application, argv):
+    button_labels = [
+        _("Activation Switch"),
+        _("Set 270º"),
+        _("Set 360º"),
+        _("Set 540º"),
+        _("Set 900º"),
+        _("+10º"),
+        _("-10º"),
+        _("+90º"),
+        _("-90º"),
+    ]
+
+    languages = [
+        ('', _('System default')),
+        ('ca_ES', _('Valencian')),
+        ('en_US', _('English')),
+        ('es_ES', _('Spanish')),
+        ('gl_ES', _('Galician')),
+        ('ru_RU', _('Russian')),
+    ]
+
+    def __init__(self, application, model, argv):
         self.app = application
         self.locale = ''
         self.check_permissions = True
         self.device_manager = self.app.device_manager
+        self.device = None
         self.grab_input = False
-        self.model = None
-        self.models = {}
         self.test = None
         self.linear_chart = None
         self.performance_chart = None
         self.combined_chart = None
-        self.button_config = [
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-        ]
-        self.button_labels = [
-            _("Activation Switch"),
-            _("Set 270º"),
-            _("Set 360º"),
-            _("Set 540º"),
-            _("Set 900º"),
-            _("+10º"),
-            _("-10º"),
-            _("+90º"),
-            _("-90º"),
-        ]
         self.button_setup_step = False
-        self.languages = [
-            ('', _('System default')),
-            ('ca_ES', _('Valencian')),
-            ('en_US', _('English')),
-            ('es_ES', _('Spanish')),
-            ('gl_ES', _('Galician')),
-            ('ru_RU', _('Russian')),
-        ]
+        self.button_config = [-1] * 9
 
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
@@ -87,12 +78,21 @@ class Gui:
 
         self.populate_window()
 
-        self.device = self.app.device
-        if self.app.device is not None:
-            self.ui.set_device_id(self.app.device.get_id())
-
         if self.app.args.profile is not None:
             self.ui.set_profile(self.app.args.profile)
+
+        self.model = None
+        if model.device is not None:
+            model.set_ui(self.ui)
+            self.models = {
+                model.device.get_id(): model,
+            }
+        else:
+            self.models = {}
+
+        if model.device is not None:
+            self.ui.set_device_id(model.device.get_id())
+            self.change_device(model.device.get_id())
 
         self.ui.update()
 
@@ -142,9 +142,6 @@ class Gui:
                 if device.is_ready():
                     device_list.append((device.get_id(), device.name))
             self.ui.set_devices(device_list)
-            if not device_list:
-                self.model = Model(None, self.ui)
-                self.model.flush_ui()
 
     def populate_profiles(self):
         profiles = []

@@ -45,8 +45,20 @@ class Model:
         self.data = self.defaults.copy()
         if self.device is not None:
             self.data.update(self.read_device_settings())
-            # Some settings are read incorrectly sometimes
-            self.flush_device()
+            self.flush_device() # Some settings are read incorrectly sometimes
+
+    def set_ui(self, ui):
+        self.ui = ui
+        self.update_save_profile_button()
+        self.flush_ui()
+
+    def update_save_profile_button(self):
+        self.ui.disable_save_profile()
+        if self.ui is None or self.reference_values is None:
+            return
+        for (key, value) in self.reference_values.items():
+            if self.data[key] != value:
+                self.ui.enable_save_profile()
 
     def read_device_settings(self):
         return {
@@ -89,16 +101,17 @@ class Model:
         self.save_reference_values()
 
         if self.device is not None:
-            new_settings = self.read_device_settings()
-            for (key, value) in new_settings.items():
+            base_settings = self.read_device_settings()
+            for (key, value) in base_settings.items():
                 if self.data[key] is None:
-                    self.set_if_changed(key, value)
+                    self.data[key] = value
 
         if self.data['mode'] is not None:
             self.set_mode(self.data['mode'])
         self.flush_device()
         if self.ui is not None:
             self.flush_ui()
+            self.update_save_profile_button()
 
     def save(self, profile_file):
         data = {}
@@ -131,10 +144,7 @@ class Model:
         if self.data[key] != value:
             self.data[key] = value
             if self.ui is not None:
-                if self.reference_values is not None:
-                    if self.reference_values[key] != value:
-                        print("{}: {}, {}".format(key, value, self.reference_values[key]))
-                        self.ui.enable_save_profile()
+                self.update_save_profile_button()
             return True
         return False
 

@@ -10,7 +10,6 @@ class GtkUi:
 
     def __init__(self, controller, argv):
         self.controller = controller
-        handlers = GtkHandlers(self, controller)
 
         self.ffbmeter_timer = False
         self.current_test_canvas = None
@@ -49,14 +48,17 @@ class GtkUi:
         self.emulation_mode_combobox.set_id_column(0)
 
         self.set_range_overlay('never')
+        self.disable_save_profile()
 
-        self.builder.connect_signals(handlers)
-
-    def main(self):
-        self.window.show_all()
+    def reset_view(self):
         self.new_profile_name_entry.hide()
         self.switch_test_panel(None)
 
+    def main(self):
+        handlers = GtkHandlers(self, self.controller)
+        self.builder.connect_signals(handlers)
+        self.window.show_all()
+        self.reset_view()
         Gtk.main()
 
     def quit(self):
@@ -171,13 +173,11 @@ class GtkUi:
 
     def disable_controls(self):
         self.profile_combobox.set_sensitive(False)
-        self.save_profile_button.set_sensitive(False)
         self.test_start_button.set_sensitive(False)
         self.test_start_button.set_sensitive(False)
 
     def enable_controls(self):
         self.profile_combobox.set_sensitive(True)
-        self.save_profile_button.set_sensitive(True)
         self.test_start_button.set_sensitive(True)
         self.test_start_button.set_sensitive(True)
 
@@ -202,11 +202,6 @@ class GtkUi:
         self.profile_combobox.set_model(model)
         self.profile_combobox.set_active_id(active_id)
 
-        if active_id == '':
-            self.disable_save_profile()
-        else:
-            self.enable_save_profile()
-
     def profile_listbox_add(self, profile_name):
         label = Gtk.Label(label=profile_name)
         label.set_xalign(0)
@@ -225,10 +220,6 @@ class GtkUi:
 
     def set_profile(self, profile):
         self.profile_combobox.set_active_id(profile)
-        if profile == '':
-            self.disable_save_profile()
-        else:
-            self.enable_save_profile()
 
     def set_max_range(self, max_range):
         self.wheel_range_setup.set_upper(max_range / 10)
