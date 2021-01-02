@@ -98,10 +98,19 @@ class Gui:
 
         Thread(target=self.input_thread, daemon = True).start()
 
+        self.ui.start()
+
         if self.app.args.command:
-            Thread(target=self.run_command).start() 
+            if not model.get_start_app_manually():
+                self.start_app()
+            else:
+                self.ui.enable_start_app()
 
         self.ui.main()
+
+    def start_app(self):
+        self.ui.disable_start_app()
+        Thread(target=self.run_command).start() 
 
     def sig_int_handler(self, signal, frame):
         sys.exit(0)

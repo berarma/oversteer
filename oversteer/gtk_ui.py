@@ -52,13 +52,16 @@ class GtkUi:
 
     def reset_view(self):
         self.new_profile_name_entry.hide()
+        self.start_app.hide()
         self.switch_test_panel(None)
 
-    def main(self):
+    def start(self):
         handlers = GtkHandlers(self, self.controller)
         self.builder.connect_signals(handlers)
         self.window.show_all()
         self.reset_view()
+
+    def main(self):
         Gtk.main()
 
     def quit(self):
@@ -442,6 +445,15 @@ class GtkUi:
     def disable_save_profile(self):
         self.save_profile_button.set_sensitive(False)
 
+    def enable_start_app(self):
+        self.start_app.show()
+
+    def disable_start_app(self):
+        self.start_app.hide()
+
+    def set_start_app_manually(self, state):
+        self.start_app_manually.set_state(state)
+
     def on_test_ready(self):
         if self.device_combobox.get_active_id() is not None:
             self.test_start_button.set_sensitive(True)
@@ -591,6 +603,8 @@ class GtkUi:
         self.remove_deadzones = self.builder.get_object('remove_deadzones')
         self.start_define_buttons = self.builder.get_object('start_define_buttons')
         self.define_buttons_text = self.start_define_buttons.get_label()
+        self.start_app = self.builder.get_object('start_app')
+        self.start_app_manually = self.builder.get_object('start_app_manually')
 
         self.steering_left_input = self.builder.get_object('steering_left_input')
         self.steering_right_input = self.builder.get_object('steering_right_input')

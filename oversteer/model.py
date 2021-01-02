@@ -19,6 +19,7 @@ class Model:
         'use_buttons': None,
         'center_wheel': None,
         'remove_deadzones': None,
+        'start_app_manually': None,
     }
 
     types = {
@@ -36,6 +37,7 @@ class Model:
         'use_buttons': 'boolean',
         'center_wheel': 'boolean',
         'remove_deadzones': 'boolean',
+        'start_app_manually': 'boolean',
     }
 
     def __init__(self, device, ui = None):
@@ -76,6 +78,7 @@ class Model:
             'use_buttons': False if self.device.get_range() is not None else None,
             'center_wheel': False,
             'remove_deadzones': False,
+            'start_app_manually': False,
         }
 
     def update_from_device_settings(self):
@@ -257,6 +260,13 @@ class Model:
         if self.set_if_changed('remove_deadzones', value) and value:
             self.device.remove_deadzones()
 
+    def set_start_app_manually(self, value):
+        value = bool(value)
+        self.set_if_changed('start_app_manually', value)
+
+    def get_start_app_manually(self):
+        return self.data['start_app_manually']
+
     def flush_device(self):
         if self.data['range'] is not None:
             self.device.set_range(self.data['range'])
@@ -296,4 +306,5 @@ class Model:
         self.ui.set_use_buttons(data['use_buttons'])
         self.ui.set_center_wheel(data['center_wheel'])
         self.ui.set_remove_deadzones(data['remove_deadzones'])
+        self.ui.set_start_app_manually(data['start_app_manually'])
 

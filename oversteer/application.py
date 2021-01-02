@@ -36,6 +36,8 @@ class Application:
         parser.add_argument('--no-center-wheel', dest='center_wheel', action='store_false', default=None, help=_("don't center wheel"))
         parser.add_argument('--remove-deadzones', action='store_true', default=None, help=_("remove dead zones"))
         parser.add_argument('--no-remove-deadzones', dest='remove_deadzones', action='store_false', default=None, help=_("don't remove dead zones"))
+        parser.add_argument('--start-manually', action='store_true', default=None, help=_("start app manually"))
+        parser.add_argument('--no-start-manually', dest='start_manually', action='store_false', default=None, help=_("don't start app manually"))
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
         parser.add_argument('-g', '--gui', action='store_true', help=_("start the GUI"))
         parser.add_argument('--debug', action='store_true', help=_("enable debug output"))
@@ -76,12 +78,6 @@ class Application:
         else:
             device = device_manager.first_device()
 
-        start_gui = args.gui or argc == 0
-
-        if device is None and not start_gui:
-            print(_("No device available."))
-            sys.exit(1)
-
         model = Model(device)
 
         if args.profile is not None:
@@ -90,6 +86,16 @@ class Application:
                 print(_("This profile doesn't exist."))
                 sys.exit(2)
             model.load(profile_file)
+
+        if args.start_manually is not None:
+            model.set_start_app_manually(args.start_manually)
+
+        start_gui = args.gui or argc == 0 or (model.get_start_app_manually() and args.command)
+
+        if device is None and not start_gui:
+            print(_("No device available."))
+            sys.exit(1)
+
         if args.mode is not None:
             model.set_mode(args.mode)
         if args.range is not None:
@@ -112,6 +118,8 @@ class Application:
             model.set_center_wheel(1 if args.center_wheel else 0)
         if args.remove_deadzones is not None:
             model.set_remove_deadzones(1 if args.remove_deadzones else 0)
+        if args.start_manually is not None:
+            model.set_start_app_manually(1 if args.start_manually else 0)
         if start_gui:
             self.args = args
             self.device_manager = device_manager

@@ -283,3 +283,9 @@ class GtkHandlers:
 
     def on_test_panel_run_clicked(self, widget):
         self.controller.run_test()
+
+    def on_start_app_manually_state_set(self, widget, state):
+        self.model.set_start_app_manually(state)
+
+    def on_start_app_clicked(self, widget):
+        self.controller.start_app()
