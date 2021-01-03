@@ -55,6 +55,7 @@ class GtkHandlers:
     def on_change_emulation_mode_clicked(self, widget):
         mode = self.ui.emulation_mode_combobox.get_active_id()
         self.model.set_mode(mode)
+        self.model.flush_ui()
         self.ui.change_emulation_mode_button.set_sensitive(False)
 
     def on_emulation_mode_changed(self, widget):

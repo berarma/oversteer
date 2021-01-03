@@ -44,7 +44,7 @@ class Model:
         self.reference_values = None
         self.data = self.defaults.copy()
         if self.device is not None:
-            self.data.update(self.read_device_settings())
+            self.update_from_device_settings()
             self.flush_device() # Some settings are read incorrectly sometimes
 
     def set_ui(self, ui):
@@ -78,6 +78,9 @@ class Model:
             'remove_deadzones': False,
         }
 
+    def update_from_device_settings(self):
+        self.data.update(self.read_device_settings())
+
     def load(self, profile_file):
         config = configparser.ConfigParser()
         config.read(profile_file)
@@ -97,6 +100,9 @@ class Model:
             elif self.types[key] == 'tuple':
                 data[key] = tuple(map(int, value.split(',')))
 
+        if data['mode'] is not None:
+            self.set_mode(data['mode'])
+
         self.data = data
         self.save_reference_values()
 
@@ -105,10 +111,8 @@ class Model:
             for (key, value) in base_settings.items():
                 if self.data[key] is None:
                     self.data[key] = value
+            self.flush_device()
 
-        if self.data['mode'] is not None:
-            self.set_mode(self.data['mode'])
-        self.flush_device()
         if self.ui is not None:
             self.flush_ui()
             self.update_save_profile_button()
@@ -154,9 +158,7 @@ class Model:
     def set_mode(self, value):
         if self.set_if_changed('mode', value):
             self.device.set_mode(value)
-            self.read_device_settings()
-            if self.ui is not None:
-                self.flush_ui()
+            self.update_from_device_settings()
 
     def get_mode(self):
         return self.data['mode']
@@ -255,35 +257,27 @@ class Model:
         if self.set_if_changed('remove_deadzones', value) and value:
             self.device.remove_deadzones()
 
-    def flush_device(self, data = None):
-        if data is None:
-            data = self.data
-        if data['range'] is not None:
-            self.set_range(data['range'])
-        if data['combine_pedals'] is not None:
-            self.set_combine_pedals(data['combine_pedals'])
-        if data['center_wheel'] is not None:
-            self.set_center_wheel(data['center_wheel'])
-        if data['remove_deadzones'] is not None:
-            self.set_remove_deadzones(data['remove_deadzones'])
-        if data['autocenter'] is not None:
-            self.set_autocenter(data['autocenter'])
-        if data['ff_gain'] is not None:
-            self.set_ff_gain(data['ff_gain'])
-        if data['spring_level'] is not None:
-            self.set_spring_level(data['spring_level'])
-        if data['damper_level'] is not None:
-            self.set_damper_level(data['damper_level'])
-        if data['friction_level'] is not None:
-            self.set_friction_level(data['friction_level'])
-        if data['ffb_leds'] is not None:
-            self.set_ffb_leds(data['ffb_leds'])
-        if data['ffb_overlay'] is not None:
-            self.set_ffb_overlay(data['ffb_overlay'])
-        if data['range_overlay'] is not None:
-            self.set_range_overlay(data['range_overlay'])
-        if data['use_buttons'] is not None:
-            self.set_use_buttons(data['use_buttons'])
+    def flush_device(self):
+        if self.data['range'] is not None:
+            self.device.set_range(self.data['range'])
+        if self.data['combine_pedals'] is not None:
+            self.device.set_combine_pedals(self.data['combine_pedals'])
+        if self.data['center_wheel']:
+            self.device.center_wheel()
+        if self.data['remove_deadzones']:
+            self.device.remove_deadzones()
+        if self.data['autocenter'] is not None:
+            self.device.set_autocenter(self.data['autocenter'])
+        if self.data['ff_gain'] is not None:
+            self.device.set_ff_gain(self.data['ff_gain'])
+        if self.data['spring_level'] is not None:
+            self.device.set_spring_level(self.data['spring_level'])
+        if self.data['damper_level'] is not None:
+            self.device.set_damper_level(self.data['damper_level'])
+        if self.data['friction_level'] is not None:
+            self.device.set_friction_level(self.data['friction_level'])
+        if self.data['ffb_leds'] is not None:
+            self.device.set_ffb_leds(self.data['ffb_leds'])
 
     def flush_ui(self, data = None):
         if data is None:
