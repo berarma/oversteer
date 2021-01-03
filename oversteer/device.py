@@ -131,6 +131,8 @@ class Device:
         # Wait for device ready
         while not self.is_ready():
             time.sleep(1)
+        # Wait a bit more
+        time.sleep(5)
         return True
 
     def get_range(self):
