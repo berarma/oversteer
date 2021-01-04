@@ -2181,7 +2181,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Remove any pre-configured dead zones set in your system.</property>
+                            <property name="tooltip-text" translatable="yes">Start the companion app manually from the GUI.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
