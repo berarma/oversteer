@@ -276,7 +276,7 @@ class Model:
         if self.data['autocenter'] is not None:
             self.device.set_autocenter(self.data['autocenter'])
         if self.data['ff_gain'] is not None:
-            self.device.set_ff_gain(self.data['ff_gain'])
+            self.device.set_ff_gain(self.data['ff_gain'] * 65535 / 100)
         if self.data['spring_level'] is not None:
             self.device.set_spring_level(self.data['spring_level'])
         if self.data['damper_level'] is not None:
