@@ -1,6 +1,5 @@
 import configparser
 import logging
-import time
 
 class Model:
 
@@ -251,9 +250,7 @@ class Model:
     def set_center_wheel(self, value):
         value = bool(value)
         if self.set_if_changed('center_wheel', value) and value:
-            self.device.set_autocenter(65535)
-            time.sleep(1)
-            self.device.set_autocenter(0)
+            self.device.center_wheel()
 
     def set_remove_deadzones(self, value):
         value = bool(value)

@@ -309,6 +309,11 @@ class Device:
             file.write(peak_ffb_level)
         return True
 
+    def center_wheel(self):
+        self.set_autocenter(65535)
+        time.sleep(1)
+        self.set_autocenter(0)
+
     def remove_deadzones(self):
         fd = open(self.dev_name, "rb")
         fcntl.fcntl(fd, fcntl.F_SETFL, os.O_NONBLOCK)
