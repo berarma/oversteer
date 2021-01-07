@@ -319,13 +319,13 @@ class Gui:
                     self.ui.safe_call(self.ui.update_overlay, True)
             if self.grab_input and value == 1:
                 if button == self.button_config[1]:
-                    self.ui.safe_call(self.model.ui_set_range, 270)
+                    self.ui.safe_call(self.ui.set_range, 270)
                 if button == self.button_config[2]:
-                    self.ui.safe_call(self.model.ui_set_range, 360)
+                    self.ui.safe_call(self.ui.set_range, 360)
                 if button == self.button_config[3]:
-                    self.ui.safe_call(self.model.ui_set_range, 540)
+                    self.ui.safe_call(self.ui.set_range, 540)
                 if button == self.button_config[4]:
-                    self.ui.safe_call(self.model.ui_set_range, 900)
+                    self.ui.safe_call(self.ui.set_range, 900)
                 if button == self.button_config[5]:
                     self.ui.safe_call(self.add_range, 10)
                 if button == self.button_config[6]:
@@ -342,7 +342,7 @@ class Gui:
             wrange = 40
         if wrange > 900:
             wrange = 900
-        self.model.ui_set_range(wrange)
+        self.ui.set_range(wrange)
 
     def read_ffbmeter(self):
         level = self.device.get_peak_ffb_level()
