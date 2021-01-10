@@ -1,7 +1,7 @@
 import configparser
 import csv
 from datetime import datetime
-from evdev import categorize, ecodes, ff
+from evdev import ecodes
 import glob
 import locale as Locale
 from locale import gettext as _
