@@ -17,7 +17,6 @@ class Model:
         'range_overlay': None,
         'use_buttons': None,
         'center_wheel': None,
-        'remove_deadzones': None,
         'start_app_manually': None,
     }
 
@@ -35,7 +34,6 @@ class Model:
         'range_overlay': 'string',
         'use_buttons': 'boolean',
         'center_wheel': 'boolean',
-        'remove_deadzones': 'boolean',
         'start_app_manually': 'boolean',
     }
 
@@ -76,7 +74,6 @@ class Model:
             'range_overlay': 'never' if self.device.get_peak_ffb_level() is not None else None,
             'use_buttons': False if self.device.get_range() is not None else None,
             'center_wheel': False,
-            'remove_deadzones': False,
             'start_app_manually': False,
         }
 
@@ -252,11 +249,6 @@ class Model:
         if self.set_if_changed('center_wheel', value) and value:
             self.device.center_wheel()
 
-    def set_remove_deadzones(self, value):
-        value = bool(value)
-        if self.set_if_changed('remove_deadzones', value) and value:
-            self.device.remove_deadzones()
-
     def set_start_app_manually(self, value):
         value = bool(value)
         self.set_if_changed('start_app_manually', value)
@@ -271,8 +263,6 @@ class Model:
             self.device.set_combine_pedals(self.data['combine_pedals'])
         if self.data['center_wheel']:
             self.device.center_wheel()
-        if self.data['remove_deadzones']:
-            self.device.remove_deadzones()
         if self.data['autocenter'] is not None:
             self.device.set_autocenter(self.data['autocenter'])
         if self.data['ff_gain'] is not None:
@@ -302,6 +292,5 @@ class Model:
         self.ui.set_range_overlay(data['range_overlay'])
         self.ui.set_use_buttons(data['use_buttons'])
         self.ui.set_center_wheel(data['center_wheel'])
-        self.ui.set_remove_deadzones(data['remove_deadzones'])
         self.ui.set_start_app_manually(data['start_app_manually'])
 

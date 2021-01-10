@@ -34,8 +34,6 @@ class Application:
         parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
         parser.add_argument('--center-wheel', action='store_true', default=None, help=_("center wheel"))
         parser.add_argument('--no-center-wheel', dest='center_wheel', action='store_false', default=None, help=_("don't center wheel"))
-        parser.add_argument('--remove-deadzones', action='store_true', default=None, help=_("remove dead zones"))
-        parser.add_argument('--no-remove-deadzones', dest='remove_deadzones', action='store_false', default=None, help=_("don't remove dead zones"))
         parser.add_argument('--start-manually', action='store_true', default=None, help=_("start app manually"))
         parser.add_argument('--no-start-manually', dest='start_manually', action='store_false', default=None, help=_("don't start app manually"))
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
@@ -116,8 +114,6 @@ class Application:
             model.set_ffb_leds(1 if args.ffb_leds else 0)
         if args.center_wheel is not None:
             model.set_center_wheel(1 if args.center_wheel else 0)
-        if args.remove_deadzones is not None:
-            model.set_remove_deadzones(1 if args.remove_deadzones else 0)
         if args.start_manually is not None:
             model.set_start_app_manually(1 if args.start_manually else 0)
         if start_gui:
