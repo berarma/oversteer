@@ -1798,7 +1798,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Global strength of all force feedback effects.</property>
+                            <property name="tooltip-text" translatable="yes">Global strength for all force feedback effects.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -1806,7 +1806,7 @@
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="halign">start</property>
-                                <property name="label" translatable="yes">Force feedback gain</property>
+                                <property name="label" translatable="yes">Global feedback gain</property>
                               </object>
                               <packing>
                                 <property name="expand">True</property>
@@ -2181,7 +2181,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Start the companion app manually from the GUI.</property>
+                            <property name="tooltip-text" translatable="yes">Start the companion application manually from the GUI.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
