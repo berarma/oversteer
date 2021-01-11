@@ -73,7 +73,7 @@ python3-scipy`
 You can install all dependencies on Fedora systems with the following command:
 
 `dnf install python3 python3-gobject python3-pyudev python3-pyxdg
-python3-libevdev gettext meson appstream desktop-file-utils python3-matplotlib
+python3-evdev gettext meson appstream desktop-file-utils python3-matplotlib
 python3-scipy`
 
 In other distributions use the available tools to install the packages that
