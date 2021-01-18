@@ -336,12 +336,13 @@ class Gui:
                     self.ui.safe_call(self.add_range, -90)
 
     def add_range(self, delta):
+        max_range = self.device.get_max_range()
         wrange = self.model.get_range()
         wrange = wrange + delta
         if wrange < 40:
             wrange = 40
-        if wrange > 900:
-            wrange = 900
+        if wrange > max_range:
+            wrange = max_range
         self.ui.set_range(wrange)
 
     def read_ffbmeter(self):
