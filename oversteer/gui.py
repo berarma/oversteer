@@ -24,15 +24,15 @@ from .performance_chart import PerformanceChart
 class Gui:
 
     button_labels = [
-        _("Activation Switch"),
-        _("Set 270º"),
-        _("Set 360º"),
-        _("Set 540º"),
-        _("Set 900º"),
-        _("+10º"),
-        _("-10º"),
-        _("+90º"),
-        _("-90º"),
+        _("Press toggle button/s"),
+        _("Press button to set 270°"),
+        _("Press button to set 360°"),
+        _("Press button to set 540°"),
+        _("Press button to set 900°"),
+        _("Press button for +10°"),
+        _("Press button for -10°"),
+        _("Press button for +90°"),
+        _("Press button for -90°"),
     ]
 
     languages = [
@@ -57,6 +57,7 @@ class Gui:
         self.combined_chart = None
         self.button_setup_step = False
         self.button_config = [-1] * 9
+        self.pressed_button_count = 0
 
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
@@ -250,7 +251,8 @@ class Gui:
             if 'check_permissions' in config['DEFAULT']:
                 self.check_permissions = config['DEFAULT']['check_permissions'] == '1'
             if 'button_config' in config['DEFAULT'] and config['DEFAULT']['button_config'] != '':
-                self.button_config = list(map(int, config['DEFAULT']['button_config'].split(',')))
+                self.button_config[0] = list(map(int, config['DEFAULT']['button_toggle'].split(',')))
+                self.button_config[1:] = list(map(int, config['DEFAULT']['button_config'].split(',')))
 
     def set_locale(self, locale):
         if locale is None:
@@ -274,7 +276,8 @@ class Gui:
         config['DEFAULT'] = {
             'locale': self.locale,
             'check_permissions': '1' if self.check_permissions else '0',
-            'button_config': ','.join(map(str, self.button_config)),
+            'button_toggle': ','.join(map(str, self.button_config[0])),
+            'button_config': ','.join(map(str, self.button_config[1:])),
         }
         config_file = os.path.join(self.config_path, 'config.ini')
         with open(config_file, 'w') as file:
@@ -282,13 +285,16 @@ class Gui:
 
     def stop_button_setup(self):
         self.button_setup_step = False
-        self.ui.reset_define_buttons_text()
+        self.pressed_button_count = 0
+        self.ui.safe_call(self.ui.reset_define_buttons_text)
 
     def start_stop_button_setup(self):
         if self.button_setup_step is not False:
             self.stop_button_setup()
         else:
             self.button_setup_step = 0
+            self.button_config = [-1] * 9
+            self.pressed_button_count = 0
             self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
 
     def on_close_preferences(self):
@@ -296,28 +302,31 @@ class Gui:
 
     def on_button_press(self, button, value):
         if self.button_setup_step is not False:
-            if value == 1 and (self.button_setup_step != 0 or button < 100):
+            if self.button_setup_step == 0:
+                if button < 100:
+                    if value == 1:
+                        self.pressed_button_count += 1
+                        if self.button_config[0] == -1:
+                            self.button_config[0] = []
+                        self.button_config[0].append(button)
+                    else:
+                        self.pressed_button_count -= 1
+                        if self.pressed_button_count == 0:
+                            self.button_setup_step += 1
+                            self.ui.safe_call(self.ui.set_define_buttons_text, self.button_labels[self.button_setup_step])
+                return
+            if value == 1:
                 self.button_config[self.button_setup_step] = button
-                self.button_setup_step = self.button_setup_step + 1
+                self.button_setup_step += 1
                 if self.button_setup_step >= len(self.button_config):
                     self.stop_button_setup()
                     self.save_preferences()
                 else:
-                    self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
+                    self.ui.safe_call(self.ui.set_define_buttons_text, self.button_labels[self.button_setup_step])
             return
 
         if self.model.get_use_buttons():
-            if button == self.button_config[0] and value == 0:
-                device = self.device.get_input_device()
-                if self.grab_input:
-                    device.ungrab()
-                    self.grab_input = False
-                    self.ui.safe_call(self.ui.update_overlay, False)
-                else:
-                    device.grab()
-                    self.grab_input = True
-                    self.ui.safe_call(self.ui.update_overlay, True)
-            if self.grab_input and value == 1:
+            if self.grab_input and self.pressed_button_count == 0 and value == 1:
                 if button == self.button_config[1]:
                     self.ui.safe_call(self.ui.set_range, 270)
                 if button == self.button_config[2]:
@@ -334,6 +343,21 @@ class Gui:
                     self.ui.safe_call(self.add_range, 90)
                 if button == self.button_config[8]:
                     self.ui.safe_call(self.add_range, -90)
+            if button in self.button_config[0]:
+                if value == 1:
+                    self.pressed_button_count += 1
+                    if self.pressed_button_count == len(self.button_config[0]):
+                        device = self.device.get_input_device()
+                        if self.grab_input:
+                            device.ungrab()
+                            self.grab_input = False
+                            self.ui.safe_call(self.ui.update_overlay, False)
+                        else:
+                            device.grab()
+                            self.grab_input = True
+                            self.ui.safe_call(self.ui.update_overlay, True)
+                else:
+                    self.pressed_button_count -= 1
 
     def add_range(self, delta):
         max_range = self.device.get_max_range()
