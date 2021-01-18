@@ -429,10 +429,12 @@ class Gui:
         if self.test_run == 0:
             self.minimum_level = self.test.get_minimum_level()
         elif self.test_run == 1:
-            self.linear_chart = LinearChart(self.test.get_input_values(), self.test.get_output_values(), 900)
+            self.linear_chart = LinearChart(self.test.get_input_values(), self.test.get_output_values(),
+                    self.device.get_max_range())
             self.linear_chart.set_minimum_level(self.minimum_level)
         elif self.test_run == 2:
-            self.performance_chart = PerformanceChart(self.test.get_input_values(), self.test.get_output_values(), 900)
+            self.performance_chart = PerformanceChart(self.test.get_input_values(), self.test.get_output_values(),
+                    self.device.get_max_range())
             if self.performance_chart.get_latency() is None:
                 self.ui.error_dialog(_('Steering wheel not responding.'), _('No wheel movement could be registered.'))
                 self.ui.switch_test_panel(None)
@@ -504,9 +506,9 @@ class Gui:
                     perf_input_values.append((float(row[0]), float(row[1])))
                     perf_output_values.append((float(row[2]), float(row[3])))
 
-        self.linear_chart = LinearChart(lin_input_values, lin_output_values, 900)
+        self.linear_chart = LinearChart(lin_input_values, lin_output_values, self.device.get_max_range())
         self.linear_chart.set_minimum_level(self.minimum_level)
-        self.performance_chart = PerformanceChart(perf_input_values, perf_output_values, 900)
+        self.performance_chart = PerformanceChart(perf_input_values, perf_output_values, self.device.get_max_range())
         self.combined_chart = CombinedChart(self.linear_chart, self.performance_chart)
 
         self.show_test_results()
