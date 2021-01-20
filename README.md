@@ -39,7 +39,15 @@ driver:
 - G27 Racing Wheel
 - G29 Driving Force Racing Wheel
 - G920 Driving Force Racing Wheel
-- Experimental support for the Thrustmaster T300RS wheel when using [https://github.com/Kimplul/hid-tmff2].
+
+The following wheels have experimental support:
+
+- Thrustmaster T300RS wheel when using [https://github.com/Kimplul/hid-tmff2].
+- FANATEC CSL Elite Wheel Base
+- FANATEC CSL Elite Wheel Base PS4
+- FANATEC ClubSport Wheel Base V2
+- FANATEC ClubSport Wheel Base V2.5
+- FANATEC Podium Wheel Base DD1
 
 I can test only on a Logitech G29 Driving Force. Please, report your results
 with other devices.

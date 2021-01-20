@@ -9,6 +9,7 @@ class DeviceManager:
 
     VENDOR_LOGITECH = '046d'
     VENDOR_THRUSTMASTER = '044f'
+    VENDOR_FANATEC = '0eb7'
 
     LG_G29 = '046d:c24f'
     LG_G920 = '046d:c262'
@@ -23,6 +24,11 @@ class DeviceManager:
     LG_WFG = '046d:c20e'
     LG_WFFG = '046d:c293'
     TM_T300RS = '044f:b66e'
+    FT_CSL_ELITE = '0eb7:0e03'
+    FT_CSL_ELITE_PS4 = '0eb7:0005'
+    FT_CSV2 = '0eb7:0001'
+    FT_CSV25 = '0eb7:0004'
+    FT_PDD1 = '0eb7:0006'
 
     def __init__(self):
         self.supported_wheels = {
@@ -39,6 +45,11 @@ class DeviceManager:
             self.LG_WFG: 180,
             self.LG_WFFG: 180,
             self.TM_T300RS: 1080,
+            self.FT_CSL_ELITE: 1080,
+            self.FT_CSL_ELITE_PS4: 1080,
+            self.FT_CSV2: 900,
+            self.FT_CSV25: 900,
+            self.FT_PDD1: 1080,
         }
         self.devices = {}
         self.changed = True
