@@ -104,8 +104,8 @@ class DeviceManager:
             if 'event' in udevice.get('DEVNAME'):
                 usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
                 device.set({
-                    'vendor': udevice.get('ID_VENDOR_ID'),
-                    'model': udevice.get('ID_MODEL_ID'),
+                    'vendor_id': udevice.get('ID_VENDOR_ID'),
+                    'product_id': udevice.get('ID_MODEL_ID'),
                     'usb_id': usb_id,
                     'dev_name': udevice.get('DEVNAME'),
                     'max_range': self.supported_wheels[usb_id],
