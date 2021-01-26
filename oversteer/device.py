@@ -374,7 +374,7 @@ class Device:
                     event.code = ecodes.ABS_Z
             elif self.vendor_id == self.device_manager.VENDOR_FANATEC:
                 if event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
-                    event.value = int(event.value / 258 + 127)
+                    event.value = int(event.value / 257)
                 if event.code == ecodes.ABS_RZ:
                     event.code = ecodes.ABS_Z
                 elif event.code == ecodes.ABS_Y:
