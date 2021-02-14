@@ -18,5 +18,5 @@ if not destdir:
     subprocess.call(['update-desktop-database', '-q', str(datadir / 'applications')])
 
 print('Compiling python bytecode...')
-moduledir = sysconfig.get_path('purelib', vars={'base': str(prefix)})
+moduledir = sysconfig.get_path('purelib')
 compileall.compile_dir(destdir + os.path.join(moduledir, 'oversteer'), optimize=2)
