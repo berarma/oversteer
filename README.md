@@ -2,9 +2,9 @@
 
 [https://github.com/berarma/oversteer]
 
-Oversteer is an application to configure Logitech Wheels.
+Oversteer is an application to configure steering wheels on Linux.
 
-Features (when supported by the device):
+Features (when supported by the device and the driver):
 
 - Change emulation mode.
 - Change rotation range.
@@ -24,8 +24,7 @@ Additional features when using [new-lg4ff](https://github.com/berarma/new-lg4ff)
 - Change each conditional force feedback effect type gain.
 - FFBmeter to monitor FFB clipping using wheel leds or overlay window.
 
-This software supports the same wheel models supported by the Logitech Linux
-driver:
+This software supports the following Logitech wheels:
 
 - Wingman Formula GP
 - Wingman Formula Force GP
@@ -40,17 +39,17 @@ driver:
 - G29 Driving Force Racing Wheel
 - G920 Driving Force Racing Wheel
 
-The following wheels have experimental support:
+These other wheels are getting suppport as their drivers mature:
 
-- Thrustmaster T300RS wheel when using [https://github.com/Kimplul/hid-tmff2].
-- FANATEC CSL Elite Wheel Base
-- FANATEC CSL Elite Wheel Base PS4
-- FANATEC ClubSport Wheel Base V2
-- FANATEC ClubSport Wheel Base V2.5
-- FANATEC Podium Wheel Base DD1
+- Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
+- FANATEC CSL Elite Wheel Base with [https://github.com/gotzl/hid-fanatecff].
+- FANATEC CSL Elite Wheel Base PS4 with [https://github.com/gotzl/hid-fanatecff].
+- FANATEC ClubSport Wheel Base V2 with [https://github.com/gotzl/hid-fanatecff].
+- FANATEC ClubSport Wheel Base V2.5 with [https://github.com/gotzl/hid-fanatecff].
+- FANATEC Podium Wheel Base DD1 with [https://github.com/gotzl/hid-fanatecff].
 
 I can test only on a Logitech G29 Driving Force. Please, report your results
-with other devices.
+with other devices. The Logitech G923 wheel is currently unsupported.
 
 Use at your own risk. Suggestions, bugs and pull requests welcome.
 
@@ -58,14 +57,13 @@ Use at your own risk. Suggestions, bugs and pull requests welcome.
 
 ### Arch
 
-There's an AUR package kindly created by DNModder.
-
-[Install](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages)
-the [Oversteer](https://aur.archlinux.org/packages/oversteer/) package.
+DNModder has created an [AUR
+package](https://aur.archlinux.org/packages/oversteer/). Follow [install
+instructions](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages).
 
 ### Gentoo
 
-There's an ebuild created by gripped [here](https://github.com/gripped/Logitech-wheel-ebuilds)
+gripped has created a [Gentoo ebuild](https://github.com/gripped/Logitech-wheel-ebuilds).
 
 ### Other distributions
 
@@ -84,15 +82,14 @@ You can install all dependencies on Fedora systems with the following command:
 python3-pyxdg python3-evdev gettext meson appstream desktop-file-utils
 python3-matplotlib-gtk3 python3-scipy`
 
-In other distributions use the available tools to install the packages that
+In other distributions, use the available tools to install the packages that
 will have similar names.
 
 #### Permissions
 
 The access to some device features might be restricted by permissions. If
-that's the case, Oversteer will ask to install a udev rule file for the
-Logitech wheels that gives permissions to access the device settings to any
-user.
+that's the case, Oversteer will ask to install a udev rule file that gives
+permissions to access the device settings to any user.
 
 #### Build and install
 
@@ -122,14 +119,22 @@ Oversteer can be launched as any desktop application.
 It's also possible to use it from the console. Type `oversteer --help` to see
 the command line help.
 
-You can configure game launchers to run oversteer to load a profile or change
-settings so that it automatically configures the wheel when the game runs. It
-will close when the you exit the game. An example for a Steam game:
-
-`oversteer -p rFactor2 -g "%command%"`
-
-@Leillo1975 has kindly created a [video explaining the basics of Oversteer
+Leillo1975 has kindly created a [video explaining the basics of Oversteer
 (Spanish)](https://www.youtube.com/watch?v=WdIV1FOkFsw).
+
+### Using it as a companion app to your games
+
+You can configure game launchers to run oversteer and load a profile or change
+settings so that it automatically configures the wheel when the game runs. When
+the game exits the app will close too. Please, refer to the command line help
+for more info.
+
+It can also stop before the game runs so you can change some settings manually
+each time. This can be done from the command line or from a setting in the UI.
+
+An example that would work for any Steam game would be:
+
+`oversteer -p myprofile -g "%command%"`
 
 ## Updating translations (for translators)
 
