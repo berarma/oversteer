@@ -116,21 +116,24 @@ class Gui:
     def sig_int_handler(self, signal, frame):
         sys.exit(0)
 
-    def install_udev_file(self):
+    def install_udev_files(self):
         if not self.check_permissions:
             return
         while True:
             affirmative = self.ui.confirmation_dialog(_("You don't have the " +
                 "required permissions to change your wheel settings. You can " +
-                "fix it yourself by copying the {} file to the {} directory " +
-                "and rebooting.").format(self.app.udev_file, self.app.target_dir) + "\n\n" +
+                "fix it yourself by copying the files in {} to the {} directory " +
+                "and rebooting.").format(self.app.udev_path, self.app.target_dir) + "\n\n" +
                 _("Do you want us to make this change for you?"))
             if affirmative:
+                copy_cmd = ''
+                for udev_file in self.app.udev_files:
+                    copy_cmd += 'cp -f ' + udev_file + ' ' + self.app.target_dir + ' && '
                 return_code = subprocess.call([
                     'pkexec',
                     '/bin/sh',
                     '-c',
-                    'cp -f ' + self.app.udev_file + ' ' + self.app.target_dir + ' && ' +
+                    copy_cmd +
                     'udevadm control --reload-rules && udevadm trigger',
                 ])
                 if return_code == 0:
@@ -171,7 +174,7 @@ class Gui:
             return
 
         if not self.device.check_permissions():
-            self.install_udev_file()
+            self.install_udev_files()
 
         if self.device.get_id() in self.models:
             self.model = self.models[self.device.get_id()]

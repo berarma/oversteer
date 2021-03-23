@@ -42,21 +42,3 @@ SUBSYSTEMS=="hid", KERNELS=="0003:046D:C20E.????", DRIVERS=="logitech", RUN+="/b
 
 # Logitech WingMan Formula (Yellow) (USB)
 SUBSYSTEMS=="hid", KERNELS=="0003:046D:C202.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
-# Thrustmaster T300RS Racing Wheel (USB)
-SUBSYSTEMS=="hid", KERNELS=="0003:044F:B66E.????", DRIVERS=="t300rs", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range spring_level damper_level friction_level'"
-
-# FANATEC CSL Elite Wheel Base
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0E03.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
-# FANATEC CSL Elite Wheel Base PS44
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0005.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
-# FANATEC ClubSport Wheel Base V2
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0001.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
-# FANATEC ClubSport Wheel Base V2.5
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0004.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
-# FANATEC Podium Wheel Base DD1
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0006.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
