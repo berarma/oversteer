@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oversteer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 12:38+0100\n"
-"PO-Revision-Date: 2021-03-25 13:22+0100\n"
+"POT-Creation-Date: 2021-03-25 19:00+0100\n"
+"PO-Revision-Date: 2021-03-25 19:01+0100\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -158,26 +158,26 @@ msgid "System default"
 msgstr "Predeterminat del sistema"
 
 #: oversteer/gui.py:40
-msgid "Valencian"
-msgstr "Valencià"
-
-#: oversteer/gui.py:41
 msgid "English"
 msgstr "Anglés"
 
-#: oversteer/gui.py:42
-msgid "Spanish"
-msgstr "Castellà"
-
-#: oversteer/gui.py:43
+#: oversteer/gui.py:41
 msgid "Galician"
 msgstr "Gallec"
 
-#: oversteer/gui.py:44
+#: oversteer/gui.py:42
 msgid "Russian"
 msgstr "Rus"
 
-#: oversteer/gui.py:123
+#: oversteer/gui.py:43
+msgid "Spanish"
+msgstr "Castellà"
+
+#: oversteer/gui.py:44
+msgid "Valencian"
+msgstr "Valencià"
+
+#: oversteer/gui.py:124
 msgid ""
 "You don't have the required permissions to change your wheel settings. You "
 "can fix it yourself by copying the files in {} to the {} directory and "
@@ -187,19 +187,19 @@ msgstr ""
 "arreglar-ho tu mateixa copiant els fichers de {} al directori {} i "
 "reiniciant."
 
-#: oversteer/gui.py:127
+#: oversteer/gui.py:128
 msgid "Do you want us to make this change for you?"
 msgstr "¿Vols que faça el canvi per tu?"
 
-#: oversteer/gui.py:140
+#: oversteer/gui.py:141
 msgid "Permissions rules installed."
 msgstr "Regles de permissos instalades."
 
-#: oversteer/gui.py:141
+#: oversteer/gui.py:142
 msgid "In some cases, a system restart might be needed."
 msgstr "En alguns casos pot ser necessari reiniciar."
 
-#: oversteer/gui.py:143
+#: oversteer/gui.py:144
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
@@ -207,83 +207,83 @@ msgstr ""
 "Erro instalant les regles de permissos. Per favor, torna-ho a intentar i "
 "assegura't d'utilisar la contrasenya correcta per a l'usuari administrador."
 
-#: oversteer/gui.py:196
+#: oversteer/gui.py:197
 msgid "Error opening profile"
 msgstr "Erro obrint perfil"
 
-#: oversteer/gui.py:196
+#: oversteer/gui.py:197
 msgid "The selected profile can't be loaded."
 msgstr "No s'ha pogut carregar el perfil seleccionat."
 
-#: oversteer/gui.py:211
+#: oversteer/gui.py:212
 msgid "This profile already exists. Are you sure?"
 msgstr "Este perfil ya existix. ¿Segur que vols sobreescriure'l?"
 
-#: oversteer/gui.py:223
+#: oversteer/gui.py:224
 msgid "This profile will be deleted, are you sure?"
 msgstr "Este perfil es borrarà, ¿Segur que vols borrar-lo?"
 
-#: oversteer/gui.py:230
+#: oversteer/gui.py:231
 msgid "Invalid extension."
 msgstr "Extensió invàlida."
 
-#: oversteer/gui.py:234
+#: oversteer/gui.py:235
 msgid "A profile with that name already exists."
 msgstr "Ya existix un perfil en eixe nom."
 
-#: oversteer/gui.py:241
+#: oversteer/gui.py:242
 msgid "File already exists, overwrite?"
 msgstr "Este perfil ya existix. ¿vols sobreescriure'l?"
 
-#: oversteer/gui.py:268
+#: oversteer/gui.py:274
 msgid "Failed to change language"
 msgstr "Erro en el canvi d'idioma"
 
-#: oversteer/gui.py:269
+#: oversteer/gui.py:275
 msgid "Make sure locale '{}.UTF8' is generated on your system."
 msgstr "Assegura't de que la localisació '{}.UTF8' existix en el teu sistema."
 
-#: oversteer/gui.py:444
+#: oversteer/gui.py:450
 msgid "Command error"
 msgstr "Erro del comandament"
 
-#: oversteer/gui.py:445
+#: oversteer/gui.py:451
 msgid ""
-"The supplied commmand failed:\n"
+"The supplied command failed:\n"
 "{}"
 msgstr ""
 "El comandament proporcionat ha fallat:\n"
 "{}"
 
-#: oversteer/gui.py:470
+#: oversteer/gui.py:476
 msgid "Steering wheel not responding."
 msgstr "El volant no respon."
 
-#: oversteer/gui.py:470
+#: oversteer/gui.py:476
 msgid "No wheel movement could be registered."
 msgstr "No s'ha registrat cap moviment del volant."
 
-#: oversteer/gui.py:513
+#: oversteer/gui.py:519
 msgid "CSV file to import"
 msgstr "Ficher CSV a importar"
 
-#: oversteer/gui.py:547
+#: oversteer/gui.py:553
 msgid "Test data imported."
 msgstr "Senyes de les proves importades."
 
-#: oversteer/gui.py:548
+#: oversteer/gui.py:554
 msgid "New test data imported from CSV file."
 msgstr "Noves senyes de les proves importades del ficher CSV."
 
-#: oversteer/gui.py:555
+#: oversteer/gui.py:561
 msgid "CSV file to export"
 msgstr "Ficher CSV al que exportar"
 
-#: oversteer/gui.py:569
+#: oversteer/gui.py:575
 msgid "Test data exported."
 msgstr "Senyes de les proves exportades."
 
-#: oversteer/gui.py:570
+#: oversteer/gui.py:576
 msgid "Current test data has been exported to a CSV file."
 msgstr "Les senyes actuals de les proves s'han exportat a un ficher CSV."
 
@@ -763,7 +763,7 @@ msgstr "Idioma"
 
 #: oversteer/main.ui:3512
 msgid ""
-"Pressing start  will begin configuration of wheel buttons. Just press the "
+"Pressing start will begin configuration of wheel buttons. Just press the "
 "button in the wheel that you want to use for every displayed action."
 msgstr ""
 "Pulsant Escomençar escomençarà el procés de configuració dels botons del "
