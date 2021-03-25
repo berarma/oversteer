@@ -439,8 +439,12 @@ class Gui:
 
     def run_command(self):
         proc = subprocess.Popen(self.app.args.command, shell=True)
-        proc.wait()
-        self.ui.quit()
+        returncode = proc.wait()
+        if returncode != 0:
+            self.ui.safe_call(self.ui.error_dialog, _('Command error'),
+                _("The supplied commmand failed: \n{}").format(self.app.args.command[0]))
+        else:
+            self.ui.safe_call(self.ui.quit)
 
     def start_test(self):
         def test_callback(name = 'end'):
