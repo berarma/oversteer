@@ -254,8 +254,13 @@ class Gui:
             if 'check_permissions' in config['DEFAULT']:
                 self.check_permissions = config['DEFAULT']['check_permissions'] == '1'
             if 'button_config' in config['DEFAULT'] and config['DEFAULT']['button_config'] != '':
-                self.button_config[0] = list(map(int, config['DEFAULT']['button_toggle'].split(',')))
-                self.button_config[1:] = list(map(int, config['DEFAULT']['button_config'].split(',')))
+                if 'button_toggle' not in config['DEFAULT']:
+                    self.button_config = list(map(int, config['DEFAULT']['button_config'].split(',')))
+                    self.button_config[0] = [self.button_config[0]]
+                    self.save_preferences()
+                else:
+                    self.button_config[0] = list(map(int, config['DEFAULT']['button_toggle'].split(',')))
+                    self.button_config[1:] = list(map(int, config['DEFAULT']['button_config'].split(',')))
 
     def set_locale(self, locale):
         if locale is None:
