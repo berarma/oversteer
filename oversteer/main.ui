@@ -3509,7 +3509,7 @@ Be careful when running the tests and follow the instructions as closely as poss
           <object class="GtkBox">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="tooltip-text" translatable="yes">Pressing start  will begin configuration of wheel buttons. Just press the button in the wheel that you want to use for every displayed action.</property>
+            <property name="tooltip-text" translatable="yes">Pressing start will begin configuration of wheel buttons. Just press the button in the wheel that you want to use for every displayed action.</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
