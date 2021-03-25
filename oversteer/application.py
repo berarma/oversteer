@@ -24,7 +24,7 @@ class Application:
 
     def run(self, argv):
         parser = argparse.ArgumentParser(prog=argv[0], description=_("Oversteer - Steering Wheel Manager"))
-        parser.add_argument('command', nargs='*', help=_("Run as companion of command"))
+        parser.add_argument('command', nargs='*', help=_("Run as command's companion"))
         parser.add_argument('--device', help=_("Device path"))
         parser.add_argument('--list', action='store_true', help=_("list connected devices"))
         parser.add_argument('--mode', help=_("set the compatibility mode"))
@@ -39,8 +39,9 @@ class Application:
         parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
         parser.add_argument('--center-wheel', action='store_true', default=None, help=_("center wheel"))
         parser.add_argument('--no-center-wheel', dest='center_wheel', action='store_false', default=None, help=_("don't center wheel"))
-        parser.add_argument('--start-manually', action='store_true', default=None, help=_("start app manually"))
-        parser.add_argument('--no-start-manually', dest='start_manually', action='store_false', default=None, help=_("don't start app manually"))
+        parser.add_argument('--start-manually', action='store_true', default=None, help=_("run command manually"))
+        parser.add_argument('--no-start-manually', dest='start_manually', action='store_false', default=None,
+                help=_("don't run command manually"))
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
         parser.add_argument('-g', '--gui', action='store_true', help=_("start the GUI"))
         parser.add_argument('--debug', action='store_true', help=_("enable debug output"))

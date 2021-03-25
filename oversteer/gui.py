@@ -37,11 +37,11 @@ class Gui:
 
     languages = [
         ('', _('System default')),
-        ('ca_ES', _('Valencian')),
         ('en_US', _('English')),
-        ('es_ES', _('Spanish')),
         ('gl_ES', _('Galician')),
         ('ru_RU', _('Russian')),
+        ('es_ES', _('Spanish')),
+        ('ca_ES', _('Valencian')),
     ]
 
     def __init__(self, application, model, argv):
@@ -270,8 +270,8 @@ class Gui:
                 Locale.setlocale(Locale.LC_ALL, (locale, 'UTF-8'))
                 self.locale = locale
             except Locale.Error:
-                self.ui.info_dialog(_("Failed to change language."),
-                _("Make sure locale '" + str(locale) + ".UTF8' is generated on your system" ))
+                self.ui.info_dialog(_("Failed to change language"),
+                _("Make sure locale '{}.UTF8' is generated on your system.").format(str(locale)))
                 self.ui.set_language(self.locale)
         self.save_preferences()
 
@@ -447,7 +447,7 @@ class Gui:
         returncode = proc.wait()
         if returncode != 0:
             self.ui.safe_call(self.ui.error_dialog, _('Command error'),
-                _("The supplied commmand failed: \n{}").format(self.app.args.command[0]))
+                _("The supplied commmand failed:\n{}").format(self.app.args.command[0]))
         else:
             self.ui.safe_call(self.ui.quit)
 

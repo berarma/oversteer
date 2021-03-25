@@ -2095,7 +2095,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Center the wheel immediately after this option is enabled or when the profile is loaded.</property>
+                            <property name="tooltip-text" translatable="yes">Center the wheel immediately after this option is enabled. Works also when setting it from a profile.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -2631,7 +2631,7 @@ Be careful when running the tests and follow the instructions as closely as poss
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <!-- n-columns=4 n-rows=6 -->
+                          <!-- n-columns=6 n-rows=6 -->
                           <object class="GtkGrid">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
@@ -2639,7 +2639,7 @@ Be careful when running the tests and follow the instructions as closely as poss
                             <property name="margin-end">8</property>
                             <property name="margin-top">8</property>
                             <property name="margin-bottom">8</property>
-                            <property name="row-spacing">8</property>
+                            <property name="row-spacing">24</property>
                             <property name="column-spacing">8</property>
                             <property name="row-homogeneous">True</property>
                             <property name="column-homogeneous">True</property>
@@ -2655,6 +2655,7 @@ Be careful when running the tests and follow the instructions as closely as poss
                               <packing>
                                 <property name="left-attach">0</property>
                                 <property name="top-attach">2</property>
+                                <property name="width">2</property>
                               </packing>
                             </child>
                             <child>
@@ -2669,125 +2670,7 @@ Be careful when running the tests and follow the instructions as closely as poss
                               <packing>
                                 <property name="left-attach">0</property>
                                 <property name="top-attach">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">Time to max. angular acceleration (ms):</property>
-                                <property name="wrap">True</property>
-                                <property name="max-width-chars">1</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">2</property>
-                                <property name="top-attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">Time to max. angular deceleration (ms):</property>
-                                <property name="wrap">True</property>
-                                <property name="max-width-chars">1</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">2</property>
-                                <property name="top-attach">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_mean_accel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">1</property>
-                                <property name="top-attach">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_mean_decel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">3</property>
-                                <property name="top-attach">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_max_accel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">1</property>
-                                <property name="top-attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_time_to_max_accel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">3</property>
-                                <property name="top-attach">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_max_decel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">1</property>
-                                <property name="top-attach">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_time_to_max_decel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">3</property>
-                                <property name="top-attach">3</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_residual_decel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">1</property>
-                                <property name="top-attach">4</property>
+                                <property name="width">2</property>
                               </packing>
                             </child>
                             <child>
@@ -2802,20 +2685,7 @@ Be careful when running the tests and follow the instructions as closely as poss
                               <packing>
                                 <property name="left-attach">0</property>
                                 <property name="top-attach">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">Mean angular deceleration (RPM/s):</property>
-                                <property name="wrap">True</property>
-                                <property name="max-width-chars">1</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">2</property>
-                                <property name="top-attach">1</property>
+                                <property name="width">2</property>
                               </packing>
                             </child>
                             <child>
@@ -2830,47 +2700,7 @@ Be careful when running the tests and follow the instructions as closely as poss
                               <packing>
                                 <property name="left-attach">0</property>
                                 <property name="top-attach">4</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">Estimated SNR (dB):</property>
-                                <property name="wrap">True</property>
-                                <property name="max-width-chars">1</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">2</property>
-                                <property name="top-attach">4</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_estimated_snr">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">3</property>
-                                <property name="top-attach">4</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">Max. angular velocity (RPM):</property>
-                                <property name="wrap">True</property>
-                                <property name="max-width-chars">1</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">2</property>
-                                <property name="top-attach">0</property>
+                                <property name="width">2</property>
                               </packing>
                             </child>
                             <child>
@@ -2885,39 +2715,14 @@ Be careful when running the tests and follow the instructions as closely as poss
                               <packing>
                                 <property name="left-attach">0</property>
                                 <property name="top-attach">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_latency">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">1</property>
-                                <property name="top-attach">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="test_max_velocity">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
-                                <property name="selectable">True</property>
-                                <property name="xalign">0</property>
-                              </object>
-                              <packing>
-                                <property name="left-attach">3</property>
-                                <property name="top-attach">0</property>
+                                <property name="width">2</property>
                               </packing>
                             </child>
                             <child>
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">Minimum force level (%)</property>
+                                <property name="label" translatable="yes">Min. force level (%):</property>
                                 <property name="wrap">True</property>
                                 <property name="max-width-chars">1</property>
                                 <property name="xalign">0</property>
@@ -2925,20 +2730,229 @@ Be careful when running the tests and follow the instructions as closely as poss
                               <packing>
                                 <property name="left-attach">0</property>
                                 <property name="top-attach">5</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_max_velocity">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">5</property>
+                                <property name="top-attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_mean_decel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">5</property>
+                                <property name="top-attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_time_to_max_accel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">5</property>
+                                <property name="top-attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_time_to_max_decel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">5</property>
+                                <property name="top-attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_estimated_snr">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">5</property>
+                                <property name="top-attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Max. angular velocity (RPM):</property>
+                                <property name="wrap">True</property>
+                                <property name="max-width-chars">1</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">3</property>
+                                <property name="top-attach">0</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Mean angular deceleration (RPM/s):</property>
+                                <property name="wrap">True</property>
+                                <property name="max-width-chars">1</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">3</property>
+                                <property name="top-attach">1</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Time to max. angular acceleration (ms):</property>
+                                <property name="wrap">True</property>
+                                <property name="max-width-chars">1</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">3</property>
+                                <property name="top-attach">2</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Time to max. angular deceleration (ms):</property>
+                                <property name="wrap">True</property>
+                                <property name="max-width-chars">1</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">3</property>
+                                <property name="top-attach">3</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Estimated SNR (dB):</property>
+                                <property name="wrap">True</property>
+                                <property name="max-width-chars">1</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">3</property>
+                                <property name="top-attach">4</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_latency">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">2</property>
+                                <property name="top-attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_mean_accel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">2</property>
+                                <property name="top-attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_max_accel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">2</property>
+                                <property name="top-attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_max_decel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">2</property>
+                                <property name="top-attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="test_residual_decel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label">-</property>
+                                <property name="selectable">True</property>
+                                <property name="xalign">0</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">2</property>
+                                <property name="top-attach">4</property>
                               </packing>
                             </child>
                             <child>
                               <object class="GtkLabel" id="test_minimum_level">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="label" translatable="yes">-</property>
+                                <property name="label">-</property>
                                 <property name="selectable">True</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
-                                <property name="left-attach">1</property>
+                                <property name="left-attach">2</property>
                                 <property name="top-attach">5</property>
                               </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
                             </child>
                             <child>
                               <placeholder/>

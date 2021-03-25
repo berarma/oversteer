@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 21:52+0300\n"
+"POT-Creation-Date: 2021-03-25 12:38+0100\n"
 "PO-Revision-Date: 2020-02-06 18:11+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,160 +18,191 @@ msgstr ""
 "X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: oversteer/application.py:19
+#: oversteer/application.py:26
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Мастер настройки руля"
 
-#: oversteer/application.py:20
+#: oversteer/application.py:27
+msgid "Run as command's companion"
+msgstr ""
+
+#: oversteer/application.py:28
 #, fuzzy
 msgid "Device path"
 msgstr "ID устройства"
 
-#: oversteer/application.py:21
+#: oversteer/application.py:29
 msgid "list connected devices"
 msgstr "список подключенных устройств"
 
-#: oversteer/application.py:22
+#: oversteer/application.py:30
 msgid "set the compatibility mode"
 msgstr "задать режим совместимости"
 
-#: oversteer/application.py:23
+#: oversteer/application.py:31
 msgid "set the rotation range [40-900]"
 msgstr "задать угол поворота руля [40-900]"
 
-#: oversteer/application.py:24
+#: oversteer/application.py:32
 msgid "combine pedals [0-2]"
 msgstr "совместить педали [0-2]"
 
-#: oversteer/application.py:25
+#: oversteer/application.py:33
 msgid "set the autocenter strength [0-100]"
 msgstr "задать силу автоцентрирования [0-100]"
 
-#: oversteer/application.py:26
+#: oversteer/application.py:34
 msgid "set the FF gain [0-100]"
 msgstr "задать усиление FF [0-100]"
 
-#: oversteer/application.py:27
+#: oversteer/application.py:35
 msgid "set the spring level [0-100]"
 msgstr "задать уровень пружины [0-100]"
 
-#: oversteer/application.py:28
+#: oversteer/application.py:36
 msgid "set the damper level [0-100]"
 msgstr "задать уровень демпфирования [0-100]"
 
-#: oversteer/application.py:29
+#: oversteer/application.py:37
 msgid "set the friction level [0-100]"
 msgstr "задать уровень сцепления [0-100]"
 
-#: oversteer/application.py:30
+#: oversteer/application.py:38
 msgid "enable FFBmeter leds"
 msgstr "включить светодиоды FFBmeter"
 
-#: oversteer/application.py:31
+#: oversteer/application.py:39
 msgid "disable FFBmeter leds"
 msgstr "отключить светодиоды FFBmeter"
 
-#: oversteer/application.py:32
+#: oversteer/application.py:40
+msgid "center wheel"
+msgstr ""
+
+#: oversteer/application.py:41
+msgid "don't center wheel"
+msgstr ""
+
+#: oversteer/application.py:42
+msgid "run command manually"
+msgstr ""
+
+#: oversteer/application.py:44
+msgid "don't run command manually"
+msgstr ""
+
+#: oversteer/application.py:45
 msgid "load settings from a profile"
 msgstr "загрузить настройки из профиля"
 
-#: oversteer/application.py:33
+#: oversteer/application.py:46
 msgid "start the GUI"
 msgstr "запустить графический интерфейс"
 
-#: oversteer/application.py:34
+#: oversteer/application.py:47
 msgid "enable debug output"
 msgstr "включить вывод отладки"
 
-#: oversteer/application.py:35
+#: oversteer/application.py:48
 msgid "show version"
 msgstr "показать версию"
 
-#: oversteer/application.py:54 oversteer/gui.py:102
+#: oversteer/application.py:68
+msgid "Devices found:"
+msgstr "Найдены устройства:"
+
+#: oversteer/application.py:90
+#, fuzzy
+msgid "This profile doesn't exist."
+msgstr "Данный профиль уже существует. Вы уверены?"
+
+#: oversteer/application.py:100
+msgid "No device available."
+msgstr ""
+
+#: oversteer/gui.py:27
+msgid "Press toggle button/s"
+msgstr ""
+
+#: oversteer/gui.py:28
+msgid "Press button to set 270°"
+msgstr ""
+
+#: oversteer/gui.py:29
+msgid "Press button to set 360°"
+msgstr ""
+
+#: oversteer/gui.py:30
+msgid "Press button to set 540°"
+msgstr ""
+
+#: oversteer/gui.py:31
+msgid "Press button to set 900°"
+msgstr ""
+
+#: oversteer/gui.py:32
+msgid "Press button for +10°"
+msgstr ""
+
+#: oversteer/gui.py:33
+msgid "Press button for -10°"
+msgstr ""
+
+#: oversteer/gui.py:34
+msgid "Press button for +90°"
+msgstr ""
+
+#: oversteer/gui.py:35
+msgid "Press button for -90°"
+msgstr ""
+
+#: oversteer/gui.py:39
+msgid "System default"
+msgstr "Язык системы по умолчанию"
+
+#: oversteer/gui.py:40
+msgid "Valencian"
+msgstr "Валенсийский"
+
+#: oversteer/gui.py:41
+msgid "English"
+msgstr "Английский"
+
+#: oversteer/gui.py:42
+msgid "Spanish"
+msgstr "Испанский"
+
+#: oversteer/gui.py:43
+msgid "Galician"
+msgstr "Галисийский"
+
+#: oversteer/gui.py:44
+msgid "Russian"
+msgstr "Русский"
+
+#: oversteer/gui.py:123
+#, fuzzy
 msgid ""
 "You don't have the required permissions to change your wheel settings. You "
-"can fix it yourself by copying the {} file to the {} directory and rebooting."
+"can fix it yourself by copying the files in {} to the {} directory and "
+"rebooting."
 msgstr ""
 "Non tes os permisos necesarios para trocar os axustes da teu volante. Podes "
 "arranxalo ti mesmo copiando o arquivo  {} no directorio {} e reiniciando."
 
-#: oversteer/application.py:64
-msgid "Devices found:"
-msgstr "Найдены устройства:"
-
-#: oversteer/gui.py:40
-msgid "Activation Switch"
-msgstr "Переключатель активации"
-
-#: oversteer/gui.py:41
-msgid "Set 270º"
-msgstr "Задать 270º"
-
-#: oversteer/gui.py:42
-msgid "Set 360º"
-msgstr "Задать 360º"
-
-#: oversteer/gui.py:43
-msgid "Set 540º"
-msgstr "Задать 540º"
-
-#: oversteer/gui.py:44
-msgid "Set 900º"
-msgstr "Задать 900º"
-
-#: oversteer/gui.py:45
-msgid "+10º"
-msgstr "+10º"
-
-#: oversteer/gui.py:46
-msgid "-10º"
-msgstr "-10º"
-
-#: oversteer/gui.py:47
-msgid "+90º"
-msgstr "+90º"
-
-#: oversteer/gui.py:48
-msgid "-90º"
-msgstr "-90º"
-
-#: oversteer/gui.py:52
-msgid "System default"
-msgstr "Язык системы по умолчанию"
-
-#: oversteer/gui.py:53
-msgid "Valencian"
-msgstr "Валенсийский"
-
-#: oversteer/gui.py:54
-msgid "English"
-msgstr "Английский"
-
-#: oversteer/gui.py:55
-msgid "Spanish"
-msgstr "Испанский"
-
-#: oversteer/gui.py:56
-msgid "Galician"
-msgstr "Галисийский"
-
-#: oversteer/gui.py:57
-msgid "Russian"
-msgstr "Русский"
-
-#: oversteer/gui.py:106
+#: oversteer/gui.py:127
 msgid "Do you want us to make this change for you?"
 msgstr "Вы хотите применить изменения?"
 
-#: oversteer/gui.py:116
+#: oversteer/gui.py:140
 msgid "Permissions rules installed."
 msgstr "Правила разрешений установлены."
 
-#: oversteer/gui.py:117
+#: oversteer/gui.py:141
 msgid "In some cases, a system restart might be needed."
 msgstr "В некоторых случаях может потребоваться перезагрузка."
 
-#: oversteer/gui.py:120
+#: oversteer/gui.py:143
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
@@ -179,109 +210,150 @@ msgstr ""
 "Ошибка установки правил разрешений. Попробуйте еще раз и убедитесь, что вы "
 "вводите правильный пароль администратора."
 
-#: oversteer/gui.py:250
+#: oversteer/gui.py:196
+msgid "Error opening profile"
+msgstr ""
+
+#: oversteer/gui.py:196
+msgid "The selected profile can't be loaded."
+msgstr ""
+
+#: oversteer/gui.py:211
 msgid "This profile already exists. Are you sure?"
 msgstr "Данный профиль уже существует. Вы уверены?"
 
-#: oversteer/gui.py:290
+#: oversteer/gui.py:223
 msgid "This profile will be deleted, are you sure?"
 msgstr "Данный профиль будет удален. Вы уверены?"
 
-#: oversteer/gui.py:319
-msgid "Failed to change language."
+#: oversteer/gui.py:230
+msgid "Invalid extension."
 msgstr ""
 
-#: oversteer/gui.py:320
-msgid "Make sure locale '"
+#: oversteer/gui.py:234
+msgid "A profile with that name already exists."
 msgstr ""
 
-#: oversteer/main.ui:25 oversteer/main.ui:2165
-msgid "Never"
-msgstr "Никогда"
+#: oversteer/gui.py:241
+#, fuzzy
+msgid "File already exists, overwrite?"
+msgstr "Данный профиль уже существует. Вы уверены?"
 
-#: oversteer/main.ui:29 oversteer/main.ui:2149
-msgid "Always"
-msgstr "Всегда"
+#: oversteer/gui.py:268
+msgid "Failed to change language"
+msgstr ""
 
-#: oversteer/main.ui:33 oversteer/main.ui:2133
-msgid "Auto"
-msgstr "Автоматически"
+#: oversteer/gui.py:269
+msgid "Make sure locale '{}.UTF8' is generated on your system."
+msgstr ""
 
-#: oversteer/main.ui:63
+#: oversteer/gui.py:444
+msgid "Command error"
+msgstr ""
+
+#: oversteer/gui.py:445
+msgid ""
+"The supplied commmand failed:\n"
+"{}"
+msgstr ""
+
+#: oversteer/gui.py:470
+#, fuzzy
+msgid "Steering wheel not responding."
+msgstr "Мастер настройки руля"
+
+#: oversteer/gui.py:470
+msgid "No wheel movement could be registered."
+msgstr ""
+
+#: oversteer/gui.py:513
+msgid "CSV file to import"
+msgstr ""
+
+#: oversteer/gui.py:547
+msgid "Test data imported."
+msgstr ""
+
+#: oversteer/gui.py:548
+msgid "New test data imported from CSV file."
+msgstr ""
+
+#: oversteer/gui.py:555
+msgid "CSV file to export"
+msgstr ""
+
+#: oversteer/gui.py:569
+msgid "Test data exported."
+msgstr ""
+
+#: oversteer/gui.py:570
+msgid "Current test data has been exported to a CSV file."
+msgstr ""
+
+#: oversteer/main.ui:41
 msgid "Preferences"
 msgstr "Настройки"
 
-#: oversteer/main.ui:88
+#: oversteer/main.ui:66
 msgid "About Oversteer"
 msgstr "Об Oversteer"
 
-#: oversteer/main.ui:256 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
-#: oversteer/main.ui:306
+#: oversteer/main.ui:291
+msgid "Speed test"
+msgstr ""
+
+#: oversteer/main.ui:295
+msgid "Curve test"
+msgstr ""
+
+#: oversteer/main.ui:329
 msgid "Select the wheel controller you want to configure."
 msgstr "Выберите руль, который вы хотите настроить."
 
-#: oversteer/main.ui:313
-msgid "Selected Device"
-msgstr "Выбранное устройство"
+#: oversteer/main.ui:336
+#, fuzzy
+msgid "Device"
+msgstr "ID устройства"
 
-#: oversteer/main.ui:346
+#: oversteer/main.ui:370
 msgid "Select a profile to load the saved settings."
 msgstr "Выберите профиль, чтобы загрузить сохраненные настройки."
 
-#: oversteer/main.ui:353
-msgid "Profile"
-msgstr "Профиль"
-
-#: oversteer/main.ui:379
-msgid "Delete"
-msgstr "Удалить"
-
-#: oversteer/main.ui:383
-msgid "Delete profile"
-msgstr "Удалить профиль"
-
-#: oversteer/main.ui:394
+#: oversteer/main.ui:390
 msgid "Save"
 msgstr "Сохранить"
 
-#: oversteer/main.ui:398
+#: oversteer/main.ui:394
 msgid "Save profile"
 msgstr "Сохранить профиль"
 
-#: oversteer/main.ui:428
-msgid "Type the name of a profile if you want to save this settings."
-msgstr "Введите имя профиля, чтобы сохранить эти настройки."
+#: oversteer/main.ui:422
+msgid "Profile"
+msgstr "Профиль"
 
-#: oversteer/main.ui:435 oversteer/main.ui:464
-msgid "Save as new profile"
-msgstr "Сохранить в новый профиль"
-
-#: oversteer/main.ui:460
-msgid "Save as"
-msgstr "Сохранить как..."
-
-#: oversteer/main.ui:531
+#: oversteer/main.ui:478
 msgid "Select an emulation mode from the ones supported."
 msgstr "Выберите режим эмуляции из списка поддерживаемых."
 
-#: oversteer/main.ui:539
+#: oversteer/main.ui:486
 msgid "Compatibility mode"
 msgstr "Режим совместимости"
 
-#: oversteer/main.ui:565
+#: oversteer/main.ui:512
 msgid "Apply"
 msgstr "Применить"
 
-#: oversteer/main.ui:569
+#: oversteer/main.ui:516
 msgid "Apply changes (the wheel may move when changing the emulation mode)."
 msgstr ""
 "Применить изменения (руль может самопроизвольно двигаться при изменении "
 "режима эмуляции)."
 
-#: oversteer/main.ui:603
+#: oversteer/main.ui:550
 msgid ""
 "Range in degrees that the wheel will be able to rotate both ways. It will "
 "affect the sensitivity."
@@ -289,106 +361,131 @@ msgstr ""
 "Диапазон в градусах, на который руль может поворачиваться в обоих "
 "направлениях. Влияет на чувствительность."
 
-#: oversteer/main.ui:611
+#: oversteer/main.ui:558
 msgid "Rotation range"
 msgstr "Диапазон поворота руля"
 
-#: oversteer/main.ui:664
+#: oversteer/main.ui:611
 msgid ""
 "Combine two pedals into one axe. Useful for old games and flight simulators."
 msgstr ""
 "Совместить две педали по одной оси. Полезно для старых игр и симуляторов "
 "полета."
 
-#: oversteer/main.ui:672
+#: oversteer/main.ui:619
 msgid "Combine pedals"
 msgstr "Совместить педали"
 
-#: oversteer/main.ui:686
+#: oversteer/main.ui:633
 msgid "Accelerator + Clutch"
 msgstr "Акселератор + Сцепление"
 
-#: oversteer/main.ui:702
+#: oversteer/main.ui:649
 msgid "Accelerator + Brakes"
 msgstr "Акселератор + Тормоза"
 
-#: oversteer/main.ui:718
+#: oversteer/main.ui:665
 msgid "None"
 msgstr "Нет"
 
-#: oversteer/main.ui:775
+#: oversteer/main.ui:723
 msgid "Steering"
 msgstr "Руление"
 
-#: oversteer/main.ui:856
+#: oversteer/main.ui:806
 msgid "Clutch"
 msgstr "Сцепление"
 
-#: oversteer/main.ui:882
+#: oversteer/main.ui:833
 msgid "Brakes"
 msgstr "Тормоза"
 
-#: oversteer/main.ui:908
+#: oversteer/main.ui:860
 msgid "Accel."
 msgstr "Аксел."
 
-#: oversteer/main.ui:932
+#: oversteer/main.ui:884
 msgid "Hat"
 msgstr "Крестовина"
 
-#: oversteer/main.ui:1071
+#: oversteer/main.ui:1024
 msgid "Buttons"
 msgstr "Кнопки"
 
-#: oversteer/main.ui:1811
+#: oversteer/main.ui:1767
 msgid "Controls"
 msgstr "Управление"
 
-#: oversteer/main.ui:1838
-msgid "Global strength of force feedback effects."
+#: oversteer/main.ui:1801
+#, fuzzy
+msgid "Global strength for all force feedback effects."
 msgstr "Общая сила эффектов Force Feedback."
 
-#: oversteer/main.ui:1846
-msgid "Force feedback gain"
+#: oversteer/main.ui:1809
+#, fuzzy
+msgid "Global feedback gain"
 msgstr "Усиление Force Feedback"
 
-#: oversteer/main.ui:1887
-msgid "Strength of autocenter force."
-msgstr "Сила автоцентрирования."
+#: oversteer/main.ui:1850
+msgid ""
+"Gain applied to spring effects. Higher values may produce more clipping."
+msgstr ""
 
-#: oversteer/main.ui:1895
+#: oversteer/main.ui:1858
+msgid "Spring effect gain"
+msgstr ""
+
+#: oversteer/main.ui:1899
+msgid ""
+"Gain applied to damper effects. Higher values may produce more clipping."
+msgstr ""
+
+#: oversteer/main.ui:1907
+msgid "Damper effect gain"
+msgstr ""
+
+#: oversteer/main.ui:1949
+msgid ""
+"Gain applied to friction effects. Higher values may produce more clipping."
+msgstr ""
+
+#: oversteer/main.ui:1957
+#, fuzzy
+msgid "Friction effect gain"
+msgstr "Усиление Force Feedback"
+
+#: oversteer/main.ui:2010
+#, fuzzy
+msgid "Continuous autocenter force strength."
+msgstr "Сила автоцентрирования"
+
+#: oversteer/main.ui:2018
 msgid "Autocenter strength"
 msgstr "Сила автоцентрирования"
 
-#: oversteer/main.ui:1936
-msgid "How strong will be the spring type effects."
-msgstr "Сила эффекта пружины."
-
-#: oversteer/main.ui:1944
-msgid "Spring force level"
-msgstr "Уровень силы эффекта пружины"
-
-#: oversteer/main.ui:1985
-msgid "How strong will be the damper type effects."
-msgstr "Сила эффекта демпфирования."
-
-#: oversteer/main.ui:1993
-msgid "Damper force level"
-msgstr "Уровень силы эффекта демпфирования"
-
-#: oversteer/main.ui:2035
-msgid "How strong will be the friction type effects."
-msgstr "Сила эффекта сцепления."
-
-#: oversteer/main.ui:2043
-msgid "Friction force level"
-msgstr "Уровень силы эффекта сцепления"
-
-#: oversteer/main.ui:2086
+#: oversteer/main.ui:2067
 msgid "Force Feedback"
 msgstr "Force Feedback"
 
-#: oversteer/main.ui:2111
+#: oversteer/main.ui:2098
+msgid ""
+"Center the wheel immediately after this option is enabled. Works also when "
+"setting it from a profile."
+msgstr ""
+
+#: oversteer/main.ui:2106
+msgid "Center wheel"
+msgstr ""
+
+#: oversteer/main.ui:2141
+msgid "Start the companion application manually from the GUI."
+msgstr ""
+
+#: oversteer/main.ui:2149
+msgid "Start application manually"
+msgstr ""
+
+#: oversteer/main.ui:2185
 msgid ""
 "Enable wheel range settings in the window overlay. When set to auto, it will "
 "be displayed only when being set using the wheel buttons."
@@ -396,27 +493,39 @@ msgstr ""
 "Включить настройки диапазона руля во всплывающем окне. В автоматическом "
 "режиме они будут отображаться только при использовании кнопок на руле."
 
-#: oversteer/main.ui:2119
+#: oversteer/main.ui:2193
 msgid "Wheel range display"
 msgstr "Отображать диапазон поворота руля"
 
-#: oversteer/main.ui:2203
+#: oversteer/main.ui:2207
+msgid "Auto"
+msgstr "Автоматически"
+
+#: oversteer/main.ui:2223
+msgid "Always"
+msgstr "Всегда"
+
+#: oversteer/main.ui:2239
+msgid "Never"
+msgstr "Никогда"
+
+#: oversteer/main.ui:2278
 msgid "Enable FFBmeter using the leds in the wheel or the window overlay."
 msgstr "Включить FFBmeter с помощью светодиодов на руле или всплывающего окна."
 
-#: oversteer/main.ui:2211
+#: oversteer/main.ui:2286
 msgid "FFBmeter"
 msgstr "FFBmeter"
 
-#: oversteer/main.ui:2225
+#: oversteer/main.ui:2300
 msgid "Leds"
 msgstr "Светодиоды"
 
-#: oversteer/main.ui:2239
+#: oversteer/main.ui:2314
 msgid "Overlay"
 msgstr "Всплывающее окно"
 
-#: oversteer/main.ui:2277
+#: oversteer/main.ui:2351
 msgid ""
 "Use wheel buttons to control some wheel settings. The buttons must be "
 "defined in the preferences window."
@@ -424,28 +533,204 @@ msgstr ""
 "Использовать кнопки на руле для управления некоторыми настройками. Кнопки "
 "должны быть заданы в настройках."
 
-#: oversteer/main.ui:2285
+#: oversteer/main.ui:2359
 msgid "Enable wheel buttons"
 msgstr "Включить кнопки на руле"
 
-#: oversteer/main.ui:2321
+#: oversteer/main.ui:2402
 msgid "Tools"
 msgstr "Инструменты"
 
-#: oversteer/main.ui:2372
+#: oversteer/main.ui:2427
+#, fuzzy
+msgid "Start new"
+msgstr "Запустить"
+
+#: oversteer/main.ui:2441
+msgid "Import CSV"
+msgstr ""
+
+#: oversteer/main.ui:2455
+msgid "Export CSV"
+msgstr ""
+
+#: oversteer/main.ui:2469
+msgid "Open chart"
+msgstr ""
+
+#: oversteer/main.ui:2504
+msgid ""
+"No test data available. Please, import test data or start a new test.\n"
+"Be careful when running the tests and follow the instructions as closely as "
+"possible for safety and valid results."
+msgstr ""
+
+#: oversteer/main.ui:2519
+msgid "page1"
+msgstr ""
+
+#: oversteer/main.ui:2531
+msgid ""
+"The lowest torque test measures the minimum force level that the wheel can "
+"deliver. Your help is required for this test."
+msgstr ""
+
+#: oversteer/main.ui:2545
+msgid "page2"
+msgstr ""
+
+#: oversteer/main.ui:2558
+msgid "The linearity test measures the linear force response."
+msgstr ""
+
+#: oversteer/main.ui:2571
+msgid "page5"
+msgstr ""
+
+#: oversteer/main.ui:2584
+msgid ""
+"The step test measures several performance parameters at the highest force "
+"levels."
+msgstr ""
+
+#: oversteer/main.ui:2597
+msgid "page3"
+msgstr ""
+
+#: oversteer/main.ui:2610
+msgid "The test is running, please, don't touch the wheel and wait."
+msgstr ""
+
+#: oversteer/main.ui:2624
+msgid "page4"
+msgstr ""
+
+#: oversteer/main.ui:2650
+msgid "Max. angular acceleration (RPM/s):"
+msgstr ""
+
+#: oversteer/main.ui:2665
+msgid "Max. angular deceleration (RPM/s):"
+msgstr ""
+
+#: oversteer/main.ui:2680
+msgid "Mean angular acceleration (RPM/s):"
+msgstr ""
+
+#: oversteer/main.ui:2695
+msgid "Residual angular deceleration (RPM/s):"
+msgstr ""
+
+#: oversteer/main.ui:2710
+msgid "Latency (ms):"
+msgstr ""
+
+#: oversteer/main.ui:2725
+#, fuzzy
+msgid "Min. force level (%):"
+msgstr "Уровень силы эффекта пружины"
+
+#: oversteer/main.ui:2805
+msgid "Max. angular velocity (RPM):"
+msgstr ""
+
+#: oversteer/main.ui:2820
+msgid "Mean angular deceleration (RPM/s):"
+msgstr ""
+
+#: oversteer/main.ui:2835
+msgid "Time to max. angular acceleration (ms):"
+msgstr ""
+
+#: oversteer/main.ui:2850
+msgid "Time to max. angular deceleration (ms):"
+msgstr ""
+
+#: oversteer/main.ui:2865
+msgid "Estimated SNR (dB):"
+msgstr ""
+
+#: oversteer/main.ui:2973
+msgid "page0"
+msgstr ""
+
+#: oversteer/main.ui:2986
+msgid ""
+"For the duration of this test you have to hold your steering wheel firmly in "
+"your hands and move it slowly around its middle position. When you notice a "
+"slight resistance or pulsation press any button in the wheel."
+msgstr ""
+
+#: oversteer/main.ui:3001
+msgid "Press any wheel button when ready to start the test."
+msgstr ""
+
+#: oversteer/main.ui:3015
+msgid "Now running the test."
+msgstr ""
+
+#: oversteer/main.ui:3028
+msgid "page6"
+msgstr ""
+
+#: oversteer/main.ui:3043
+msgid ""
+"WARNING: Don't touch the wheel and leave a clear space around it to avoid "
+"accidents or unreliable results."
+msgstr ""
+
+#: oversteer/main.ui:3065
+msgid "Back"
+msgstr ""
+
+#: oversteer/main.ui:3079
+#, fuzzy
+msgid "Run"
+msgstr "Русский"
+
+#: oversteer/main.ui:3113
+msgid "Tests"
+msgstr ""
+
+#: oversteer/main.ui:3192
+msgid "New"
+msgstr ""
+
+#: oversteer/main.ui:3206
+msgid "Rename"
+msgstr ""
+
+#: oversteer/main.ui:3220
+msgid "Delete"
+msgstr "Удалить"
+
+#: oversteer/main.ui:3234
+msgid "Import"
+msgstr ""
+
+#: oversteer/main.ui:3248
+msgid "Export"
+msgstr ""
+
+#: oversteer/main.ui:3276
+#, fuzzy
+msgid "Profiles"
+msgstr "Профиль"
+
+#: oversteer/main.ui:3292
+msgid "Start Application"
+msgstr ""
+
+#: oversteer/main.ui:3343
 msgid "Re-scan wheel devices and update window."
 msgstr "Пересканировать список устройств и обновить окно."
 
-#: oversteer/main.ui:2435
+#: oversteer/main.ui:3403
 #, fuzzy
 msgid "Oversteer preferences"
 msgstr "Настройки"
 
-#: oversteer/main.ui:2453
-msgid "Close"
-msgstr "Закрыть"
-
-#: oversteer/main.ui:2476
+#: oversteer/main.ui:3433
 msgid ""
 "Check permissions to read/write device settings and propose changes to make "
 "them available to normal users."
@@ -453,11 +738,11 @@ msgstr ""
 "Проверить разрешения на чтение/запись настроек устройства и предложить "
 "изменения, доступные для обычных пользователей."
 
-#: oversteer/main.ui:2484
+#: oversteer/main.ui:3441
 msgid "Check permissions"
 msgstr "Проверить разрешения"
 
-#: oversteer/main.ui:2516
+#: oversteer/main.ui:3473
 msgid ""
 "Change the interface language. You'll need to restart the application to "
 "apply."
@@ -465,11 +750,11 @@ msgstr ""
 "Изменить язык интерфейса. Для применения настроек требуется перезапустить "
 "приложение."
 
-#: oversteer/main.ui:2524
+#: oversteer/main.ui:3481
 msgid "Language"
 msgstr "Язык"
 
-#: oversteer/main.ui:2555
+#: oversteer/main.ui:3512
 msgid ""
 "Pressing start  will begin configuration of wheel buttons. Just press the "
 "button in the wheel that you want to use for every displayed action."
@@ -477,13 +762,127 @@ msgstr ""
 "При нажатии \"Запустить\" начнется настройка кнопок на руле. Просто нажмите "
 "кнопку на руле, чтобы назначить ее для каждого отображаемого действия."
 
-#: oversteer/main.ui:2561
+#: oversteer/main.ui:3518
 msgid "Define buttons"
 msgstr "Задать кнопки"
 
-#: oversteer/main.ui:2571
+#: oversteer/main.ui:3528
 msgid "Start"
 msgstr "Запустить"
+
+#: oversteer/combined_chart.py:15
+msgid "Linear response test"
+msgstr ""
+
+#: oversteer/combined_chart.py:16 oversteer/combined_chart.py:25
+msgid "Input force"
+msgstr ""
+
+#: oversteer/combined_chart.py:17
+msgid "Output force"
+msgstr ""
+
+#: oversteer/combined_chart.py:18
+#, fuzzy
+msgid "Force level"
+msgstr "Уровень силы эффекта сцепления"
+
+#: oversteer/combined_chart.py:24
+msgid "Step test (angular velocity + position)"
+msgstr ""
+
+#: oversteer/combined_chart.py:26
+msgid "Angular displacement (raw)"
+msgstr ""
+
+#: oversteer/combined_chart.py:27
+msgid "Angular displacement (smoothed)"
+msgstr ""
+
+#: oversteer/combined_chart.py:28
+msgid "Angular velocity (raw)"
+msgstr ""
+
+#: oversteer/combined_chart.py:29
+msgid "Angular velocity (smoothed)"
+msgstr ""
+
+#: oversteer/combined_chart.py:30 oversteer/combined_chart.py:42
+msgid "Time (s)"
+msgstr ""
+
+#: oversteer/combined_chart.py:31
+msgid "Position"
+msgstr ""
+
+#: oversteer/combined_chart.py:32
+msgid "RPM"
+msgstr ""
+
+#: oversteer/combined_chart.py:38
+msgid "Step test (angular acceleration)"
+msgstr ""
+
+#: oversteer/combined_chart.py:39
+msgid "Input Force"
+msgstr ""
+
+#: oversteer/combined_chart.py:40
+msgid "Angular acceleration (raw)"
+msgstr ""
+
+#: oversteer/combined_chart.py:41
+msgid "Angular acceleration (smoothed)"
+msgstr ""
+
+#: oversteer/combined_chart.py:43
+msgid "RPM/s"
+msgstr ""
+
+#: oversteer/combined_chart.py:49
+msgid "Latency = {:.0f} ms"
+msgstr ""
+
+#: oversteer/combined_chart.py:50
+msgid "Max. velocity = {:.0f} RPM"
+msgstr ""
+
+#: oversteer/combined_chart.py:51
+msgid "Mean accel. = {:.0f} RPM/s"
+msgstr ""
+
+#: oversteer/combined_chart.py:52
+msgid "Mean decel. = {:.0f} RPM/s"
+msgstr ""
+
+#: oversteer/combined_chart.py:53
+msgid "Max. accel. = {:.0f} RPM/s"
+msgstr ""
+
+#: oversteer/combined_chart.py:54
+msgid "Time max. accel. = {:.0f} ms"
+msgstr ""
+
+#: oversteer/combined_chart.py:55
+msgid "Max. decel. = {:.0f} RPM/s"
+msgstr ""
+
+#: oversteer/combined_chart.py:56
+msgid "Time max. decel. = {:.0f} ms"
+msgstr ""
+
+#: oversteer/combined_chart.py:57
+msgid "Residual decel. = {:.0f} RPM/s"
+msgstr ""
+
+#: oversteer/combined_chart.py:58
+msgid "Estimated SNR = {:.0f} dB"
+msgstr ""
+
+#: oversteer/combined_chart.py:59
+#, fuzzy
+msgid "Min. force level = {:.1f} %"
+msgstr "Уровень силы эффекта пружины"
 
 #: data/org.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
@@ -496,3 +895,63 @@ msgstr "org.berarma.Oversteer"
 #: data/org.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "игра;гонки;автомобили;рули"
+
+#~ msgid "Activation Switch"
+#~ msgstr "Переключатель активации"
+
+#~ msgid "Set 270º"
+#~ msgstr "Задать 270º"
+
+#~ msgid "Set 360º"
+#~ msgstr "Задать 360º"
+
+#~ msgid "Set 540º"
+#~ msgstr "Задать 540º"
+
+#~ msgid "Set 900º"
+#~ msgstr "Задать 900º"
+
+#~ msgid "+10º"
+#~ msgstr "+10º"
+
+#~ msgid "-10º"
+#~ msgstr "-10º"
+
+#~ msgid "+90º"
+#~ msgstr "+90º"
+
+#~ msgid "-90º"
+#~ msgstr "-90º"
+
+#~ msgid "Selected Device"
+#~ msgstr "Выбранное устройство"
+
+#~ msgid "Delete profile"
+#~ msgstr "Удалить профиль"
+
+#~ msgid "Type the name of a profile if you want to save this settings."
+#~ msgstr "Введите имя профиля, чтобы сохранить эти настройки."
+
+#~ msgid "Save as new profile"
+#~ msgstr "Сохранить в новый профиль"
+
+#~ msgid "Save as"
+#~ msgstr "Сохранить как..."
+
+#~ msgid "Strength of autocenter force."
+#~ msgstr "Сила автоцентрирования."
+
+#~ msgid "How strong will be the spring type effects."
+#~ msgstr "Сила эффекта пружины."
+
+#~ msgid "How strong will be the damper type effects."
+#~ msgstr "Сила эффекта демпфирования."
+
+#~ msgid "Damper force level"
+#~ msgstr "Уровень силы эффекта демпфирования"
+
+#~ msgid "How strong will be the friction type effects."
+#~ msgstr "Сила эффекта сцепления."
+
+#~ msgid "Close"
+#~ msgstr "Закрыть"
