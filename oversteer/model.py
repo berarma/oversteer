@@ -99,7 +99,7 @@ class Model:
             elif self.types[key] == 'tuple':
                 data[key] = tuple(map(int, value.split(',')))
 
-        if data['mode'] is not None:
+        if data['mode'] is not None and self.device is not None:
             self.set_mode(data['mode'])
 
         self.data = data
