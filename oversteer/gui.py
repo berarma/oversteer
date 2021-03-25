@@ -57,6 +57,7 @@ class Gui:
         self.combined_chart = None
         self.button_setup_step = False
         self.button_config = [-1] * 9
+        self.button_config[0] = [-1]
         self.pressed_button_count = 0
 
         signal.signal(signal.SIGINT, self.sig_int_handler)
