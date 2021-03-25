@@ -78,14 +78,14 @@ class GtkUi:
         return response == Gtk.ResponseType.OK
 
     def info_dialog(self, message, secondary_text = ''):
-        dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.INFO,
+        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO,
                 Gtk.ButtonsType.OK, message)
         dialog.format_secondary_text(secondary_text)
         dialog.run()
         dialog.destroy()
 
     def error_dialog(self, message, secondary_text = ''):
-        dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.ERROR,
+        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.ERROR,
                 Gtk.ButtonsType.OK, message)
         dialog.format_secondary_text(secondary_text)
         dialog.run()
