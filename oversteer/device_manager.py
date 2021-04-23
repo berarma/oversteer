@@ -73,6 +73,8 @@ class DeviceManager:
             return
         seat_id = udevice.get('ID_FOR_SEAT')
         logging.debug("%s: %s", action, seat_id)
+        if seat_id is None:
+            return
         if action == 'add':
             self.update_device_list(udevice)
             device = self.get_device(seat_id)
@@ -94,6 +96,9 @@ class DeviceManager:
 
     def update_device_list(self, udevice):
         seat_id = udevice.get('ID_FOR_SEAT')
+        logging.debug("update_device_list: %s", seat_id)
+        if seat_id is None:
+            return
 
         if seat_id not in self.devices:
             self.devices[seat_id] = Device(self, {
