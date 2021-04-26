@@ -415,6 +415,7 @@ class Gui:
                     elif event.value == 1:
                         self.on_button_press(103, 1)
             if event.type == ecodes.EV_KEY:
+                button = None
                 if event.value:
                     delay = 0
                     if self.test and self.test.is_awaiting_action():
@@ -425,8 +426,9 @@ class Gui:
                     button = event.code - 288
                 if event.code >= 704 and event.code <= 712:
                     button = event.code - 688
-                self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
-                self.on_button_press(button, event.value)
+                if button is not None:
+                    self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
+                    self.on_button_press(button, event.value)
 
     def input_thread(self):
         while 1:
