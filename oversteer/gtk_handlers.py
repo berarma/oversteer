@@ -70,15 +70,15 @@ class GtkHandlers:
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() - step)
-        wrange = self.ui.wheel_range.get_value() * 10
-        self.ui.overlay_wheel_range.set_label(wrange)
+        wrange = int(self.ui.wheel_range.get_value() * 10)
+        self.ui.overlay_wheel_range.set_label(str(wrange))
 
     def on_overlay_incrange_clicked(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() + step)
-        wrange = self.ui.wheel_range.get_value() * 10
-        self.ui.overlay_wheel_range.set_label(wrange)
+        wrange = int(self.ui.wheel_range.get_value() * 10)
+        self.ui.overlay_wheel_range.set_label(str(wrange))
 
     def on_combine_none_clicked(self, widget):
         self.model.set_combine_pedals(0)
