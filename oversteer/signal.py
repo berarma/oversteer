@@ -12,12 +12,14 @@ class Signal:
         if periods:
             self.periods = [self.values[0]]
             t0, v0 = self.values[0]
+            t = None
+            v = None
             for t, v in self.values:
                 if v - v0 != 0:
                     self.periods.append((t, v))
                     v0 = v
                     t0 = t
-            if t != t0:
+            if t is not None and t != t0:
                 self.periods.append((t, v))
 
     def get_values(self):
@@ -29,6 +31,8 @@ class Signal:
     def resample(self, data):
         newdata = []
         new_t = 0
+        t0 = 0
+        v0 = 0
         for t, v in data:
             if t > 0:
                 new_t = math.ceil(t * 1000)

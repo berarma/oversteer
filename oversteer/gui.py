@@ -1,21 +1,21 @@
 import configparser
 import csv
-from evdev import InputDevice, categorize, ecodes, ff
+from datetime import datetime
+from evdev import ecodes
 import glob
 import locale as Locale
 from locale import gettext as _
 import logging
+import os
 import shutil
 import signal
 import subprocess
 import sys
-from threading import Thread, Event
+from threading import Thread
 import time
-from xdg.BaseDirectory import *
-from .device_manager import DeviceManager
+from xdg.BaseDirectory import save_config_path
 from .gtk_ui import GtkUi
 from .model import Model
-from .profile import Profile
 from .test import Test
 from .combined_chart import CombinedChart
 from .linear_chart import LinearChart
@@ -23,52 +23,42 @@ from .performance_chart import PerformanceChart
 
 class Gui:
 
-    def __init__(self, application, argv):
+    button_labels = [
+        _("Press toggle button/s"),
+        _("Press button to set 270°"),
+        _("Press button to set 360°"),
+        _("Press button to set 540°"),
+        _("Press button to set 900°"),
+        _("Press button for +10°"),
+        _("Press button for -10°"),
+        _("Press button for +90°"),
+        _("Press button for -90°"),
+    ]
+
+    languages = [
+        ('', _('System default')),
+        ('en_US', _('English')),
+        ('gl_ES', _('Galician')),
+        ('ru_RU', _('Russian')),
+        ('es_ES', _('Spanish')),
+        ('ca_ES', _('Valencian')),
+    ]
+
+    def __init__(self, application, model, argv):
         self.app = application
         self.locale = ''
         self.check_permissions = True
         self.device_manager = self.app.device_manager
+        self.device = None
         self.grab_input = False
-        self.model = None
-        self.models = {}
         self.test = None
         self.linear_chart = None
         self.performance_chart = None
         self.combined_chart = None
-        self.button_config = [
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-            -1,
-        ]
-        self.thrustmaster_ids = [
-            'b66e',
-        ]
-        self.button_labels = [
-            _("Activation Switch"),
-            _("Set 270º"),
-            _("Set 360º"),
-            _("Set 540º"),
-            _("Set 900º"),
-            _("+10º"),
-            _("-10º"),
-            _("+90º"),
-            _("-90º"),
-        ]
         self.button_setup_step = False
-        self.languages = [
-            ('', _('System default')),
-            ('ca_ES', _('Valencian')),
-            ('en_US', _('English')),
-            ('es_ES', _('Spanish')),
-            ('gl_ES', _('Galician')),
-            ('ru_RU', _('Russian')),
-        ]
+        self.button_config = [-1] * 9
+        self.button_config[0] = [-1]
+        self.pressed_button_count = 0
 
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
@@ -90,49 +80,72 @@ class Gui:
 
         self.populate_window()
 
-        self.device = self.app.device
-        if self.app.device is not None:
-            self.ui.set_device_id(self.app.device.get_id())
-
         if self.app.args.profile is not None:
             self.ui.set_profile(self.app.args.profile)
+
+        self.model = None
+        if model.device is not None:
+            model.set_ui(self.ui)
+            self.models = {
+                model.device.get_id(): model,
+            }
+        else:
+            self.models = {}
+
+        if model.device is not None:
+            self.ui.set_device_id(model.device.get_id())
+            self.change_device(model.device.get_id())
 
         self.ui.update()
 
         Thread(target=self.input_thread, daemon = True).start()
 
+        self.ui.start()
+
+        if self.app.args.command:
+            if not model.get_start_app_manually():
+                self.start_app()
+            else:
+                self.ui.enable_start_app()
+
         self.ui.main()
+
+    def start_app(self):
+        self.ui.disable_start_app()
+        Thread(target=self.run_command).start() 
 
     def sig_int_handler(self, signal, frame):
         sys.exit(0)
 
-    def install_udev_file(self):
+    def install_udev_files(self):
         if not self.check_permissions:
             return
         while True:
             affirmative = self.ui.confirmation_dialog(_("You don't have the " +
                 "required permissions to change your wheel settings. You can " +
-                "fix it yourself by copying the {} file to the {} directory " +
-                "and rebooting.").format(self.app.udev_file, self.app.target_dir) + "\n\n" +
+                "fix it yourself by copying the files in {} to the {} directory " +
+                "and rebooting.").format(self.app.udev_path, self.app.target_dir) + "\n\n" +
                 _("Do you want us to make this change for you?"))
             if affirmative:
+                copy_cmd = ''
+                for udev_file in self.app.udev_files:
+                    copy_cmd += 'cp -f ' + udev_file + ' ' + self.app.target_dir + ' && '
                 return_code = subprocess.call([
                     'pkexec',
                     '/bin/sh',
                     '-c',
-                    'cp -f ' + self.app.udev_file + ' ' + self.app.target_dir + ' && ' +
+                    copy_cmd +
                     'udevadm control --reload-rules && udevadm trigger',
                 ])
                 if return_code == 0:
                     self.ui.info_dialog(_("Permissions rules installed."),
                             _("In some cases, a system restart might be needed."))
                     break
-                else:
-                    answer = self.ui.confirmation_dialog(_("Error installing " +
-                        "permissions rules. Please, try again and make sure you " +
-                        "use the right password for the administrator user."))
-                    if not answer:
-                        break
+                answer = self.ui.confirmation_dialog(_("Error installing " +
+                    "permissions rules. Please, try again and make sure you " +
+                    "use the right password for the administrator user."))
+                if not answer:
+                    break
             else:
                 break
 
@@ -143,9 +156,6 @@ class Gui:
                 if device.is_ready():
                     device_list.append((device.get_id(), device.name))
             self.ui.set_devices(device_list)
-            if not device_list:
-                self.model = Model(None, self.ui)
-                self.model.flush_ui()
 
     def populate_profiles(self):
         profiles = []
@@ -165,13 +175,15 @@ class Gui:
             return
 
         if not self.device.check_permissions():
-            self.install_udev_file()
+            self.install_udev_files()
 
         if self.device.get_id() in self.models:
             self.model = self.models[self.device.get_id()]
         else:
             self.model = Model(self.device, self.ui)
             self.models[self.device.get_id()] = self.model
+
+        self.ui.set_max_range(self.device.get_max_range())
 
         self.ui.set_modes(self.model.get_mode_list())
         self.model.flush_ui()
@@ -185,10 +197,7 @@ class Gui:
             self.ui.info_dialog(_("Error opening profile"), _("The selected profile can't be loaded."))
             return
 
-        profile = Profile()
-        profile.load(profile_file)
-        self.model.load_settings(profile.to_dict())
-        self.ui.safe_call(self.model.save_reference_values)
+        self.model.load(profile_file)
 
     def save_profile(self, profile_name, check_exists = False):
         if self.device is None:
@@ -202,9 +211,7 @@ class Gui:
             if os.path.exists(profile_file):
                 if not self.ui.confirmation_dialog(_("This profile already exists. Are you sure?")):
                     raise Exception()
-        profile = Profile(self.model.to_dict())
-        profile.save(profile_file)
-        self.model.save_reference_values()
+        self.model.save(profile_file)
 
     def rename_profile(self, current_name, new_name):
         current_file = os.path.join(self.profile_path, current_name + '.ini')
@@ -248,7 +255,13 @@ class Gui:
             if 'check_permissions' in config['DEFAULT']:
                 self.check_permissions = config['DEFAULT']['check_permissions'] == '1'
             if 'button_config' in config['DEFAULT'] and config['DEFAULT']['button_config'] != '':
-                self.button_config = list(map(int, config['DEFAULT']['button_config'].split(',')))
+                if 'button_toggle' not in config['DEFAULT']:
+                    self.button_config = list(map(int, config['DEFAULT']['button_config'].split(',')))
+                    self.button_config[0] = [self.button_config[0]]
+                    self.save_preferences()
+                else:
+                    self.button_config[0] = list(map(int, config['DEFAULT']['button_toggle'].split(',')))
+                    self.button_config[1:] = list(map(int, config['DEFAULT']['button_config'].split(',')))
 
     def set_locale(self, locale):
         if locale is None:
@@ -258,8 +271,8 @@ class Gui:
                 Locale.setlocale(Locale.LC_ALL, (locale, 'UTF-8'))
                 self.locale = locale
             except Locale.Error:
-                self.ui.info_dialog(_("Failed to change language."),
-                _("Make sure locale '" + str(locale) + ".UTF8' is generated on your system" ))
+                self.ui.info_dialog(_("Failed to change language"),
+                _("Make sure locale '{}.UTF8' is generated on your system.").format(str(locale)))
                 self.ui.set_language(self.locale)
         self.save_preferences()
 
@@ -272,7 +285,8 @@ class Gui:
         config['DEFAULT'] = {
             'locale': self.locale,
             'check_permissions': '1' if self.check_permissions else '0',
-            'button_config': ','.join(map(str, self.button_config)),
+            'button_toggle': ','.join(map(str, self.button_config[0])),
+            'button_config': ','.join(map(str, self.button_config[1:])),
         }
         config_file = os.path.join(self.config_path, 'config.ini')
         with open(config_file, 'w') as file:
@@ -280,13 +294,16 @@ class Gui:
 
     def stop_button_setup(self):
         self.button_setup_step = False
-        self.ui.reset_define_buttons_text()
+        self.pressed_button_count = 0
+        self.ui.safe_call(self.ui.reset_define_buttons_text)
 
     def start_stop_button_setup(self):
         if self.button_setup_step is not False:
             self.stop_button_setup()
         else:
             self.button_setup_step = 0
+            self.button_config = [-1] * 9
+            self.pressed_button_count = 0
             self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
 
     def on_close_preferences(self):
@@ -294,36 +311,39 @@ class Gui:
 
     def on_button_press(self, button, value):
         if self.button_setup_step is not False:
-            if value == 1 and (self.button_setup_step != 0 or button < 100):
+            if self.button_setup_step == 0:
+                if button < 100:
+                    if value == 1:
+                        self.pressed_button_count += 1
+                        if self.button_config[0] == -1:
+                            self.button_config[0] = []
+                        self.button_config[0].append(button)
+                    else:
+                        self.pressed_button_count -= 1
+                        if self.pressed_button_count == 0:
+                            self.button_setup_step += 1
+                            self.ui.safe_call(self.ui.set_define_buttons_text, self.button_labels[self.button_setup_step])
+                return
+            if value == 1:
                 self.button_config[self.button_setup_step] = button
-                self.button_setup_step = self.button_setup_step + 1
+                self.button_setup_step += 1
                 if self.button_setup_step >= len(self.button_config):
                     self.stop_button_setup()
                     self.save_preferences()
                 else:
-                    self.ui.set_define_buttons_text(self.button_labels[self.button_setup_step])
+                    self.ui.safe_call(self.ui.set_define_buttons_text, self.button_labels[self.button_setup_step])
             return
 
         if self.model.get_use_buttons():
-            if button == self.button_config[0] and value == 0:
-                device = self.device.get_input_device()
-                if self.grab_input:
-                    device.ungrab()
-                    self.grab_input = False
-                    self.ui.safe_call(self.ui.update_overlay, False)
-                else:
-                    device.grab()
-                    self.grab_input = True
-                    self.ui.safe_call(self.ui.update_overlay, True)
-            if self.grab_input and value == 1:
+            if self.grab_input and self.pressed_button_count == 0 and value == 1:
                 if button == self.button_config[1]:
-                    self.ui.safe_call(self.model.ui_set_range, 270)
+                    self.ui.safe_call(self.ui.set_range, 270)
                 if button == self.button_config[2]:
-                    self.ui.safe_call(self.model.ui_set_range, 360)
+                    self.ui.safe_call(self.ui.set_range, 360)
                 if button == self.button_config[3]:
-                    self.ui.safe_call(self.model.ui_set_range, 540)
+                    self.ui.safe_call(self.ui.set_range, 540)
                 if button == self.button_config[4]:
-                    self.ui.safe_call(self.model.ui_set_range, 900)
+                    self.ui.safe_call(self.ui.set_range, 900)
                 if button == self.button_config[5]:
                     self.ui.safe_call(self.add_range, 10)
                 if button == self.button_config[6]:
@@ -332,15 +352,31 @@ class Gui:
                     self.ui.safe_call(self.add_range, 90)
                 if button == self.button_config[8]:
                     self.ui.safe_call(self.add_range, -90)
+            if button in self.button_config[0]:
+                if value == 1:
+                    self.pressed_button_count += 1
+                    if self.pressed_button_count == len(self.button_config[0]):
+                        device = self.device.get_input_device()
+                        if self.grab_input:
+                            device.ungrab()
+                            self.grab_input = False
+                            self.ui.safe_call(self.ui.update_overlay, False)
+                        else:
+                            device.grab()
+                            self.grab_input = True
+                            self.ui.safe_call(self.ui.update_overlay, True)
+                else:
+                    self.pressed_button_count -= 1
 
     def add_range(self, delta):
-        range = self.model.get_range()
-        range = range + delta
-        if range < 40:
-            range = 40
-        if range > 900:
-            range = 900
-        self.model.ui_set_range(range)
+        max_range = self.device.get_max_range()
+        wrange = self.model.get_range()
+        wrange = wrange + delta
+        if wrange < 40:
+            wrange = 40
+        if wrange > max_range:
+            wrange = max_range
+        self.ui.set_range(wrange)
 
     def read_ffbmeter(self):
         level = self.device.get_peak_ffb_level()
@@ -379,6 +415,7 @@ class Gui:
                     elif event.value == 1:
                         self.on_button_press(103, 1)
             if event.type == ecodes.EV_KEY:
+                button = None
                 if event.value:
                     delay = 0
                     if self.test and self.test.is_awaiting_action():
@@ -394,7 +431,7 @@ class Gui:
                     button = event.code - 688
                 if event.code >= 304 and event.code <= 316:
                     button = event.code - 304
-                if button != None:
+                if button is not None:
                     self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
                     self.on_button_press(button, event.value)
 
@@ -413,6 +450,15 @@ class Gui:
             if self.device_manager.is_changed():
                 self.ui.safe_call(self.populate_devices)
 
+    def run_command(self):
+        proc = subprocess.Popen(self.app.args.command, shell=True)
+        returncode = proc.wait()
+        if returncode != 0:
+            self.ui.safe_call(self.ui.error_dialog, _('Command error'),
+                _("The supplied command failed:\n{}").format(self.app.args.command[0]))
+        else:
+            self.ui.safe_call(self.ui.quit)
+
     def start_test(self):
         def test_callback(name = 'end'):
             if name == 'end':
@@ -427,10 +473,12 @@ class Gui:
         if self.test_run == 0:
             self.minimum_level = self.test.get_minimum_level()
         elif self.test_run == 1:
-            self.linear_chart = LinearChart(self.test.get_input_values(), self.test.get_output_values(), 900)
+            self.linear_chart = LinearChart(self.test.get_input_values(), self.test.get_output_values(),
+                    self.device.get_max_range())
             self.linear_chart.set_minimum_level(self.minimum_level)
         elif self.test_run == 2:
-            self.performance_chart = PerformanceChart(self.test.get_input_values(), self.test.get_output_values(), 900)
+            self.performance_chart = PerformanceChart(self.test.get_input_values(), self.test.get_output_values(),
+                    self.device.get_max_range())
             if self.performance_chart.get_latency() is None:
                 self.ui.error_dialog(_('Steering wheel not responding.'), _('No wheel movement could be registered.'))
                 self.ui.switch_test_panel(None)
@@ -502,9 +550,9 @@ class Gui:
                     perf_input_values.append((float(row[0]), float(row[1])))
                     perf_output_values.append((float(row[2]), float(row[3])))
 
-        self.linear_chart = LinearChart(lin_input_values, lin_output_values, 900)
+        self.linear_chart = LinearChart(lin_input_values, lin_output_values, self.device.get_max_range())
         self.linear_chart.set_minimum_level(self.minimum_level)
-        self.performance_chart = PerformanceChart(perf_input_values, perf_output_values, 900)
+        self.performance_chart = PerformanceChart(perf_input_values, perf_output_values, self.device.get_max_range())
         self.combined_chart = CombinedChart(self.linear_chart, self.performance_chart)
 
         self.show_test_results()
@@ -516,7 +564,8 @@ class Gui:
         if self.combined_chart is None:
             return
 
-        filename = self.ui.file_chooser(_('CSV file to export'), 'save', 'report.csv')
+        default_filename = 'report-' + datetime.now().strftime('%Y%m%d%H%M%S') + '.csv'
+        filename = self.ui.file_chooser(_('CSV file to export'), 'save', default_filename)
         if filename is None:
             return
 
@@ -540,4 +589,3 @@ class Gui:
         canvas = self.combined_chart.get_canvas()
         toolbar = self.combined_chart.get_navigation_toolbar(canvas, self.ui.window)
         self.ui.show_test_chart(canvas, toolbar)
-

@@ -11,6 +11,7 @@ class Test:
         self.notify = callback
         self.collecting_data = False
         self.awaiting_action = False
+        self.minimum_level = 0
 
     def get_input_values(self):
         return self.input_values

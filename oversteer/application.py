@@ -1,12 +1,12 @@
 import argparse
-import configparser
 from locale import gettext as _
 import logging
 import os
+from oversteer.gui import Gui
+from .device_manager import DeviceManager
 from .model import Model
-from .profile import Profile
 import sys
-from xdg.BaseDirectory import *
+from xdg.BaseDirectory import save_config_path
 
 class Application:
 
@@ -14,12 +14,18 @@ class Application:
         self.version = version
         self.datadir = pkgdatadir
         self.icondir = icondir
-        self.udev_file = self.datadir + '/udev/99-logitech-wheel-perms.rules'
+        self.udev_path = self.datadir + '/udev/'
+        self.udev_files = [
+            self.udev_path + '99-logitech-wheel-perms.rules',
+            self.udev_path + '99-thrustmaster-wheel-perms.rules',
+            self.udev_path + '99-fanatec-wheel-perms.rules',
+        ]
         self.target_dir = '/etc/udev/rules.d/'
 
     def run(self, argv):
         parser = argparse.ArgumentParser(prog=argv[0], description=_("Oversteer - Steering Wheel Manager"))
-        parser.add_argument('device_path', nargs='?', help=_("Device path"))
+        parser.add_argument('command', nargs='*', help=_("Run as command's companion"))
+        parser.add_argument('--device', help=_("Device path"))
         parser.add_argument('--list', action='store_true', help=_("list connected devices"))
         parser.add_argument('--mode', help=_("set the compatibility mode"))
         parser.add_argument('--range', type=int, help=_("set the rotation range [40-900]"))
@@ -31,96 +37,92 @@ class Application:
         parser.add_argument('--friction-level', type=int, help=_("set the friction level [0-100]"))
         parser.add_argument('--ffb-leds', action='store_true', default=None, help=_("enable FFBmeter leds"))
         parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
+        parser.add_argument('--center-wheel', action='store_true', default=None, help=_("center wheel"))
+        parser.add_argument('--no-center-wheel', dest='center_wheel', action='store_false', default=None, help=_("don't center wheel"))
+        parser.add_argument('--start-manually', action='store_true', default=None, help=_("run command manually"))
+        parser.add_argument('--no-start-manually', dest='start_manually', action='store_false', default=None,
+                help=_("don't run command manually"))
         parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
         parser.add_argument('-g', '--gui', action='store_true', help=_("start the GUI"))
         parser.add_argument('--debug', action='store_true', help=_("enable debug output"))
         parser.add_argument('--version', action='store_true', help=_("show version"))
 
         args = parser.parse_args(argv[1:])
+        argc = len(sys.argv[1:])
 
         if args.version:
             print("Oversteer v" + self.version)
             sys.exit(0)
 
-        if not args.debug:
-            logging.basicConfig(level=logging.WARNING)
+        if args.debug:
+            argc -= 1
+        else:
+            logging.disable(level=logging.INFO)
 
-        from .device_manager import DeviceManager
         device_manager = DeviceManager()
         device_manager.start()
 
-        if args.device_path is not None:
-            if os.path.exists(args.device_path):
-                device = device_manager.get_device(os.path.realpath(args.device_path))
-            if not device.check_permissions():
-                print(_("You don't have the required permissions to change your " +
-                    "wheel settings. You can fix it yourself by copying the {} " +
-                    "file to the {} directory and rebooting.".format(self.udev_file,
-                    self.target_dir)))
-        else:
-            device = device_manager.first_device()
-
-        if device is None:
-            for arg, value in vars(args).items():
-                if value is not None and value != False and arg not in ['list', 'debug', 'version', 'gui']:
-                    print(_('No compatible device found.'))
-                    exit(1)
-
-
-        model = Model(device)
-
-        nothing_done = True
-        if args.list == True:
+        if args.list:
+            argc -= 1
             devices = device_manager.get_devices()
             print(_("Devices found:"))
             for device in devices:
                 print("  {}: {}".format(device.dev_name, device.name))
-            nothing_done = False
-        if args.mode is not None:
-            model.set_mode(args.mode)
-            nothing_done = False
-        if args.range is not None:
-            model.set_range(args.range)
-            nothing_done = False
-        if args.combine_pedals is not None:
-            model.set_combine_pedals(args.combine_pedals)
-            nothing_done = False
-        if args.autocenter is not None:
-            model.set_autocenter(args.autocenter)
-            nothing_done = False
-        if args.ff_gain is not None:
-            model.set_ff_gain(args.ff_gain)
-            nothing_done = False
-        if args.spring_level is not None:
-            model.set_spring_level(args.spring_level)
-            nothing_done = False
-        if args.damper_level is not None:
-            model.set_damper_level(args.damper_level)
-            nothing_done = False
-        if args.friction_level is not None:
-            model.set_friction_level(args.friction_level)
-            nothing_done = False
-        if args.ffb_leds is not None:
-            model.set_ffb_leds(1 if args.ffb_leds else 0)
-            nothing_done = False
+            sys,exit(0)
+
+        if args.device is not None:
+            argc -= 1
+            if os.path.exists(args.device):
+                device = device_manager.get_device(os.path.realpath(args.device))
+                if not device.check_permissions():
+                    print(_(("You don't have the required permissions to change your " +
+                        "wheel settings. You can fix it yourself by copying the {} " +
+                        "file to the {} directory and rebooting.").format(self.udev_file,
+                        self.target_dir)))
+        else:
+            device = device_manager.first_device()
+
+        model = Model(device)
+
         if args.profile is not None:
             profile_file = os.path.join(save_config_path('oversteer'), 'profiles', args.profile + '.ini')
             if not os.path.exists(profile_file):
                 print(_("This profile doesn't exist."))
-                sys.exit(1)
-            if not args.gui:
-                profile = Profile()
-                profile.load(profile_file)
-                model.load_settings(profile.to_dict())
-            nothing_done = False
-        if args.gui or nothing_done:
+                sys.exit(2)
+            model.load(profile_file)
+
+        if args.start_manually is not None:
+            model.set_start_app_manually(args.start_manually)
+
+        start_gui = args.gui or argc == 0 or (model.get_start_app_manually() and args.command)
+
+        if device is None and not start_gui:
+            print(_("No device available."))
+            sys.exit(1)
+
+        if args.mode is not None:
+            model.set_mode(args.mode)
+        if args.range is not None:
+            model.set_range(args.range)
+        if args.combine_pedals is not None:
+            model.set_combine_pedals(args.combine_pedals)
+        if args.autocenter is not None:
+            model.set_autocenter(args.autocenter)
+        if args.ff_gain is not None:
+            model.set_ff_gain(args.ff_gain)
+        if args.spring_level is not None:
+            model.set_spring_level(args.spring_level)
+        if args.damper_level is not None:
+            model.set_damper_level(args.damper_level)
+        if args.friction_level is not None:
+            model.set_friction_level(args.friction_level)
+        if args.ffb_leds is not None:
+            model.set_ffb_leds(1 if args.ffb_leds else 0)
+        if args.center_wheel is not None:
+            model.set_center_wheel(1 if args.center_wheel else 0)
+        if args.start_manually is not None:
+            model.set_start_app_manually(1 if args.start_manually else 0)
+        if start_gui:
             self.args = args
             self.device_manager = device_manager
-            self.device = device
-            from oversteer.gui import Gui
-            Gui(self, argv)
-
-        device_manager.stop()
-
-        sys.exit(0)
-
+            Gui(self, model, argv)

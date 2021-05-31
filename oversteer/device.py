@@ -1,10 +1,7 @@
-from enum import Enum
 from evdev import ecodes, InputDevice
-import functools
-import glob
+import fcntl
 import logging
 import os
-import pyudev
 import re
 import select
 import time
@@ -75,6 +72,9 @@ class Device:
             return True
         return False
 
+    def get_max_range(self):
+        return self.max_range
+
     def list_modes(self):
         path = self.checked_device_file("alternate_modes")
         if not path:
@@ -124,12 +124,14 @@ class Device:
         if old_mode == emulation_mode:
             return True
         self.disconnect()
-        logging.debug("Setting mode: " + str(emulation_mode))
+        logging.debug("Setting mode: %s", str(emulation_mode))
         with open(path, "w") as file:
             file.write(emulation_mode)
         # Wait for device ready
         while not self.is_ready():
             time.sleep(1)
+        # Wait a bit more
+        time.sleep(5)
         return True
 
     def get_range(self):
@@ -138,17 +140,17 @@ class Device:
             return None
         with open(path, "r") as file:
             data = file.read()
-        range = data.strip()
-        return int(range)
+        wrange = data.strip()
+        return int(wrange)
 
-    def set_range(self, range):
+    def set_range(self, wrange):
         path = self.checked_device_file("range")
         if not path:
             return False
-        range = str(range)
-        logging.debug("Setting range: " + range)
+        wrange = str(wrange)
+        logging.debug("Setting range: %s", wrange)
         with open(path, "w") as file:
-            file.write(range)
+            file.write(wrange)
         return True
 
     def get_combine_pedals(self):
@@ -165,7 +167,7 @@ class Device:
         if not path:
             return False
         combine_pedals = str(combine_pedals)
-        logging.debug("Setting combined pedals: " + combine_pedals)
+        logging.debug("Setting combined pedals: %s", combine_pedals)
         with open(path, "w") as file:
             file.write(combine_pedals)
         return True
@@ -180,8 +182,8 @@ class Device:
         return int(round((int(autocenter) * 100) / 65535))
 
     def set_autocenter(self, autocenter):
-        autocenter = str(autocenter)
-        logging.debug("Setting autocenter strength: " + autocenter)
+        autocenter = str(int(autocenter))
+        logging.debug("Setting autocenter strength: %s", autocenter)
         path = self.checked_device_file("autocenter")
         if path:
             with open(path, "w") as file:
@@ -201,8 +203,8 @@ class Device:
         return int(gain)
 
     def set_ff_gain(self, gain):
-        gain = str(gain)
-        logging.debug("Setting FF gain: " + gain)
+        gain = str(int(gain))
+        logging.debug("Setting FF gain: %s", gain)
         path = self.checked_device_file("gain")
         if path:
             with open(path, "w") as file:
@@ -225,7 +227,7 @@ class Device:
         if not path:
             return False
         level = str(level)
-        logging.debug("Setting spring level: " + level)
+        logging.debug("Setting spring level: %s", level)
         with open(path, "w") as file:
             file.write(level)
         return True
@@ -244,7 +246,7 @@ class Device:
         if not path:
             return False
         level = str(level)
-        logging.debug("Setting damper level: " + level)
+        logging.debug("Setting damper level: %s", level)
         with open(path, "w") as file:
             file.write(level)
         return True
@@ -263,7 +265,7 @@ class Device:
         if not path:
             return False
         level = str(level)
-        logging.debug("Setting friction level: " + level)
+        logging.debug("Setting friction level: %s", level)
         with open(path, "w") as file:
             file.write(level)
         return True
@@ -282,7 +284,7 @@ class Device:
         if not path:
             return False
         ffb_leds = str(ffb_leds)
-        logging.debug("Setting FF leds: " + ffb_leds)
+        logging.debug("Setting FF leds: %s", ffb_leds)
         with open(path, "w") as file:
             file.write(ffb_leds)
         return True
@@ -301,43 +303,15 @@ class Device:
         if not path:
             return False
         peak_ffb_level = str(peak_ffb_level)
-        logging.debug("Setting peak FF level: " + peak_ffb_level)
+        logging.debug("Setting peak FF level: %s", peak_ffb_level)
         with open(path, "w") as file:
             file.write(peak_ffb_level)
         return True
 
-    def load_settings(self, settings):
-        if 'mode' in settings:
-            self.set_mode(settings['mode'])
-        if 'range' in settings:
-            self.set_range(settings['range'])
-        if 'combine_pedals' in settings:
-            self.set_combine_pedals(settings['combine_pedals'])
-        if 'ff_gain' in settings:
-            self.set_ff_gain(settings['ff_gain'])
-        if 'autocenter' in settings:
-            self.set_autocenter(settings['autocenter'])
-        if 'spring_level' in settings:
-            self.set_spring_level(settings['spring_level'])
-        if 'damper_level' in settings:
-            self.set_damper_level(settings['damper_level'])
-        if 'friction_level' in settings:
-            self.set_friction_level(settings['friction_level'])
-        if 'ffb_leds' in settings:
-            self.set_ffb_leds(settings['ffb_leds'])
-
-    def save_settings(self):
-        return {
-            'mode': self.get_mode(),
-            'range': self.get_range(),
-            'combine_pedals': self.get_combine_pedals(),
-            'ff_gain': self.get_ff_gain(),
-            'autocenter': self.get_autocenter(),
-            'spring_level': self.get_spring_level(),
-            'damper_level': self.get_damper_level(),
-            'friction_level': self.get_friction_level(),
-            'ffb_leds': self.get_ffb_leds(),
-        }
+    def center_wheel(self):
+        self.set_autocenter(65535)
+        time.sleep(1)
+        self.set_autocenter(0)
 
     def check_permissions(self):
         if not os.access(self.dev_path, os.F_OK | os.R_OK | os.X_OK):
@@ -375,26 +349,36 @@ class Device:
 
     def read_events(self, timeout):
         input_device = self.get_input_device()
-        if input_device is None or input_device.fd == -1:
-            return None
-        r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
-        if input_device.fd in r:
-            for event in input_device.read():
-                event = self.normalize_event(event)
-                if event.type == ecodes.EV_ABS:
-                    self.last_axis_value[ecodes.ABS_X] = event.value
-                yield event
+        if input_device is not None and input_device.fd != -1:
+            r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
+            if input_device.fd in r:
+                for event in input_device.read():
+                    event = self.normalize_event(event)
+                    if event.type == ecodes.EV_ABS:
+                        self.last_axis_value[ecodes.ABS_X] = event.value
+                    yield event
 
     def normalize_event(self, event):
         if event.type == ecodes.EV_ABS:
             if event.code == ecodes.ABS_X:
-                if self.usb_id not in [self.device_manager.LG_G29, self.device_manager.TM_T300RS]:
+                if self.usb_id in [self.device_manager.LG_WFG, self.device_manager.LG_WFFG]:
+                    event.value = event.value * 64
+                elif self.usb_id not in [self.device_manager.LG_G29, self.device_manager.TM_T300RS] and self.vendor_id != self.device_manager.VENDOR_FANATEC:
                     event.value = event.value * 4
-            elif self.usb_id not in [self.device_manager.LG_DFGT, self.device_manager.LG_DFP, self.device_manager.LG_G920]:
+            elif self.usb_id in [self.device_manager.LG_G25, self.device_manager.LG_G27, self.device_manager.LG_G29, self.device_manager.TM_T300RS]:
                 if event.code == ecodes.ABS_Y:
                     event.code = ecodes.ABS_RZ
                 elif event.code == ecodes.ABS_Z:
                     event.code = ecodes.ABS_Y
                 elif event.code == ecodes.ABS_RZ:
                     event.code = ecodes.ABS_Z
+            elif self.vendor_id == self.device_manager.VENDOR_FANATEC:
+                if event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
+                    event.value = int(event.value / 257)
+                if event.code == ecodes.ABS_RZ:
+                    event.code = ecodes.ABS_Z
+                elif event.code == ecodes.ABS_Y:
+                    event.code = ecodes.ABS_RZ
+                elif event.code == ecodes.ABS_Z:
+                    event.code = ecodes.ABS_Y
         return event

@@ -1,10 +1,8 @@
-from locale import gettext as _
 import gi
 import logging
 import math
 import os
 from .gtk_handlers import GtkHandlers
-
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
 
@@ -12,7 +10,6 @@ class GtkUi:
 
     def __init__(self, controller, argv):
         self.controller = controller
-        handlers = GtkHandlers(self, controller)
 
         self.ffbmeter_timer = False
         self.current_test_canvas = None
@@ -51,15 +48,24 @@ class GtkUi:
         self.emulation_mode_combobox.set_id_column(0)
 
         self.set_range_overlay('never')
+        self.disable_save_profile()
 
-        self.builder.connect_signals(handlers)
-
-    def main(self):
-        self.window.show_all()
+    def reset_view(self):
         self.new_profile_name_entry.hide()
+        self.start_app.hide()
         self.switch_test_panel(None)
 
+    def start(self):
+        handlers = GtkHandlers(self, self.controller)
+        self.builder.connect_signals(handlers)
+        self.window.show_all()
+        self.reset_view()
+
+    def main(self):
         Gtk.main()
+
+    def quit(self):
+        Gtk.main_quit()
 
     def safe_call(self, callback, *args):
         GLib.idle_add(callback, *args)
@@ -72,14 +78,14 @@ class GtkUi:
         return response == Gtk.ResponseType.OK
 
     def info_dialog(self, message, secondary_text = ''):
-        dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.INFO,
+        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO,
                 Gtk.ButtonsType.OK, message)
         dialog.format_secondary_text(secondary_text)
         dialog.run()
         dialog.destroy()
 
     def error_dialog(self, message, secondary_text = ''):
-        dialog = Gtk.MessageDialog(self.preferences_window, 0, Gtk.MessageType.ERROR,
+        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.ERROR,
                 Gtk.ButtonsType.OK, message)
         dialog.format_secondary_text(secondary_text)
         dialog.run()
@@ -127,7 +133,7 @@ class GtkUi:
 
     def set_app_icon(self, icon):
         if not os.access(icon, os.R_OK):
-            logging.debug("Icon not found: " + icon)
+            logging.debug("Icon not found: %s", icon)
             return
         self.window.set_icon_from_file(icon)
 
@@ -170,13 +176,11 @@ class GtkUi:
 
     def disable_controls(self):
         self.profile_combobox.set_sensitive(False)
-        self.save_profile_button.set_sensitive(False)
         self.test_start_button.set_sensitive(False)
         self.test_start_button.set_sensitive(False)
 
     def enable_controls(self):
         self.profile_combobox.set_sensitive(True)
-        self.save_profile_button.set_sensitive(True)
         self.test_start_button.set_sensitive(True)
         self.test_start_button.set_sensitive(True)
 
@@ -201,11 +205,6 @@ class GtkUi:
         self.profile_combobox.set_model(model)
         self.profile_combobox.set_active_id(active_id)
 
-        if active_id == '':
-            self.disable_save_profile()
-        else:
-            self.enable_save_profile()
-
     def profile_listbox_add(self, profile_name):
         label = Gtk.Label(label=profile_name)
         label.set_xalign(0)
@@ -224,53 +223,49 @@ class GtkUi:
 
     def set_profile(self, profile):
         self.profile_combobox.set_active_id(profile)
-        if profile == '':
-            self.disable_save_profile()
-        else:
-            self.enable_save_profile()
 
-    def set_modes(self, modes, startup = False):
-        if startup:
-            if modes is None:
-                self.emulation_mode_combobox.set_sensitive(False)
-                return
-            else:
-                self.emulation_mode_combobox.set_sensitive(True)
+    def set_max_range(self, max_range):
+        self.wheel_range_setup.set_upper(max_range / 10)
+        self._set_range_markers(max_range)
+
+    def set_modes(self, modes):
+        self.change_emulation_mode_button.set_sensitive(False)
         model = self.emulation_mode_combobox.get_model()
         if model is None:
             model = Gtk.ListStore(str, str)
         else:
             self.emulation_mode_combobox.set_model(None)
             model.clear()
-        for key, values in enumerate(modes):
-            model.append(values[:2])
-            if values[2]:
-                self.emulation_mode_combobox.set_active(key)
+        if not modes:
+            self.emulation_mode_combobox.set_sensitive(False)
+        else:
+            for key, values in enumerate(modes):
+                model.append(values[:2])
+                if values[2]:
+                    self.emulation_mode_combobox.set_active(key)
+            self.emulation_mode_combobox.set_sensitive(True)
         self.emulation_mode_combobox.set_model(model)
 
     def set_mode(self, mode):
-        if mode is None:
-            self.emulation_mode_combobox.set_sensitive(False)
-            self.change_emulation_mode_button.set_sensitive(False)
-        else:
+        model = self.emulation_mode_combobox.get_model()
+        if model and len(model) != 0:
             self.emulation_mode_combobox.set_sensitive(True)
             self.change_emulation_mode_button.set_sensitive(True)
             self.emulation_mode_combobox.set_active_id(mode)
 
-    def set_range(self, range):
-        if range is None:
+    def set_range(self, wrange):
+        if wrange is None:
             self.wheel_range.set_sensitive(False)
             self.wheel_range_overlay_always.set_sensitive(False)
             self.wheel_range_overlay_auto.set_sensitive(False)
             return
-        else:
-            self.wheel_range.set_sensitive(True)
-            self.wheel_range_overlay_always.set_sensitive(True)
-            self.wheel_range_overlay_auto.set_sensitive(True)
-            range = int(range) / 10
-            self.wheel_range.set_value(range)
-            range = str(round(range * 10))
-            self.overlay_wheel_range.set_label(range)
+        self.wheel_range.set_sensitive(True)
+        self.wheel_range_overlay_always.set_sensitive(True)
+        self.wheel_range_overlay_auto.set_sensitive(True)
+        wrange = int(wrange) / 10
+        self.wheel_range.set_value(wrange)
+        wrange = str(round(wrange * 10))
+        self.overlay_wheel_range.set_label(wrange)
 
     def set_combine_pedals(self, combine_pedals):
         if combine_pedals is None:
@@ -338,23 +333,26 @@ class GtkUi:
             self.ffbmeter_overlay.set_active(state)
             self.update_overlay()
 
-    def set_range_overlay(self, id):
+    def set_range_overlay(self, sid):
         self.wheel_range_overlay_never.set_active(False)
         self.wheel_range_overlay_always.set_active(False)
         self.wheel_range_overlay_auto.set_active(False)
-        if id == 'always':
+        if sid == 'always':
             self.wheel_range_overlay_always.set_active(True)
-        elif id == 'auto':
+        elif sid == 'auto':
             self.wheel_range_overlay_auto.set_active(True)
         else:
             self.wheel_range_overlay_never.set_active(True)
 
     def set_use_buttons(self, state):
-        if  state is None:
+        if state is None:
             self.wheel_buttons.set_sensitive(False)
         else:
             self.wheel_buttons.set_sensitive(True)
             self.wheel_buttons.set_state(state)
+
+    def set_center_wheel(self, state):
+        self.center_wheel.set_state(state)
 
     def set_new_profile_name(self, name):
         self.new_profile_name.set_text(name)
@@ -423,7 +421,6 @@ class GtkUi:
         if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
-                self.overlay_window.move(self.overlay_window_pos[0], self.overlay_window_pos[1])
             if not self.ffbmeter_timer and self.overlay_window.props.visible and ffbmeter_overlay:
                 self.ffbmeter_timer = True
                 GLib.timeout_add(250, self._update_ffbmeter_overlay)
@@ -438,19 +435,21 @@ class GtkUi:
         else:
             self.overlay_window.hide()
 
-    def set_overlay_window_pos(self, position):
-        self.overlay_window_pos = position
-        self.overlay_window.move(position[0], position[1])
-
-    def update_overlay_window_pos(self, position):
-        self.overlay_window_pos = position
-
     def enable_save_profile(self):
         if self.profile_combobox.get_active_id() != '':
             self.save_profile_button.set_sensitive(True)
 
     def disable_save_profile(self):
         self.save_profile_button.set_sensitive(False)
+
+    def enable_start_app(self):
+        self.start_app.show()
+
+    def disable_start_app(self):
+        self.start_app.hide()
+
+    def set_start_app_manually(self, state):
+        self.start_app_manually.set_state(state)
 
     def on_test_ready(self):
         if self.device_combobox.get_active_id() is not None:
@@ -574,6 +573,7 @@ class GtkUi:
         self.emulation_mode_combobox = self.builder.get_object('emulation_mode')
         self.change_emulation_mode_button = self.builder.get_object('change_emulation_mode')
         self.wheel_range = self.builder.get_object('wheel_range')
+        self.wheel_range_setup = self.builder.get_object('wheel_range_setup')
         self.combine_none = self.builder.get_object('combine_none')
         self.combine_brakes = self.builder.get_object('combine_brakes')
         self.combine_clutch = self.builder.get_object('combine_clutch')
@@ -596,8 +596,11 @@ class GtkUi:
         self.overlay_led_3 = self.builder.get_object('overlay_led_3')
         self.overlay_led_4 = self.builder.get_object('overlay_led_4')
         self.wheel_buttons = self.builder.get_object('wheel_buttons')
+        self.center_wheel = self.builder.get_object('center_wheel')
         self.start_define_buttons = self.builder.get_object('start_define_buttons')
         self.define_buttons_text = self.start_define_buttons.get_label()
+        self.start_app = self.builder.get_object('start_app')
+        self.start_app_manually = self.builder.get_object('start_app_manually')
 
         self.steering_left_input = self.builder.get_object('steering_left_input')
         self.steering_right_input = self.builder.get_object('steering_right_input')
@@ -613,15 +616,16 @@ class GtkUi:
             self.btn_input[i] = self.builder.get_object('btn' + str(i) + '_input')
 
         self.profile_listbox = self.builder.get_object('profile_listbox')
+
         def sort_profiles(row1, row2):
             text1 = row1.get_children()[0].get_text().lower()
             text2 = row2.get_children()[0].get_text().lower()
             if text1 < text2:
                 return -1
-            elif text1 > text2:
+            if text1 > text2:
                 return 1
-            else:
-                return 0
+            return 0
+
         self.profile_listbox.set_sort_func(sort_profiles)
 
         self.test_container = self.builder.get_object('test_container')
@@ -661,13 +665,6 @@ class GtkUi:
         self.test_panel_run = self.builder.get_object('test_panel_run')
 
     def _set_markers(self):
-        self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')
-        self.wheel_range.add_mark(27, Gtk.PositionType.BOTTOM, '270')
-        self.wheel_range.add_mark(36, Gtk.PositionType.BOTTOM, '360')
-        self.wheel_range.add_mark(45, Gtk.PositionType.BOTTOM, '450')
-        self.wheel_range.add_mark(54, Gtk.PositionType.BOTTOM, '540')
-        self.wheel_range.add_mark(72, Gtk.PositionType.BOTTOM, '720')
-        self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
         self.autocenter.add_mark(20, Gtk.PositionType.BOTTOM, '20')
         self.autocenter.add_mark(40, Gtk.PositionType.BOTTOM, '40')
         self.autocenter.add_mark(60, Gtk.PositionType.BOTTOM, '60')
@@ -694,3 +691,21 @@ class GtkUi:
         self.ff_friction_level.add_mark(80, Gtk.PositionType.BOTTOM, '80')
         self.ff_friction_level.add_mark(100, Gtk.PositionType.BOTTOM, '100')
 
+    def _set_range_markers(self, max_range):
+        self.wheel_range.clear_marks()
+        if max_range >= 180:
+            self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')
+        if max_range >= 270:
+            self.wheel_range.add_mark(27, Gtk.PositionType.BOTTOM, '270')
+        if max_range >= 360:
+            self.wheel_range.add_mark(36, Gtk.PositionType.BOTTOM, '360')
+        if max_range >= 450:
+            self.wheel_range.add_mark(45, Gtk.PositionType.BOTTOM, '450')
+        if max_range >= 540:
+            self.wheel_range.add_mark(54, Gtk.PositionType.BOTTOM, '540')
+        if max_range >= 720:
+            self.wheel_range.add_mark(72, Gtk.PositionType.BOTTOM, '720')
+        if max_range >= 900:
+            self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
+        if max_range >= 1080:
+            self.wheel_range.add_mark(108, Gtk.PositionType.BOTTOM, '1080')

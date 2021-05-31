@@ -14,9 +14,8 @@ class CombinedChart:
 
         ax1.title.set_text(_('Linear response test'))
         p11, = ax1.plot(*zip(*self.linear_chart.get_fixed_input_values()), label=_('Input force'), color='blue')
-        p12, = ax1.plot(*zip(*self.linear_chart.get_linearity_values()), label=_('Angular velocity'), color='purple')
-        ax1.set_ylabel(_('Input force'))
-        ax1.set_ylabel(_('Output force'))
+        p12, = ax1.plot(*zip(*self.linear_chart.get_linearity_values()), label=_('Output force'), color='purple')
+        ax1.set_ylabel(_('Force level'))
         ax1.grid(True)
 
         ax2.axis('off')
@@ -55,9 +54,9 @@ class CombinedChart:
             _('Time max. accel. = {:.0f} ms'),
             _('Max. decel. = {:.0f} RPM/s'),
             _('Time max. decel. = {:.0f} ms'),
-            _('Residual decel. = {:.0f} ms'),
+            _('Residual decel. = {:.0f} RPM/s'),
             _('Estimated SNR = {:.0f} dB'),
-            _('Minimum force level = {:.1f} %'),
+            _('Min. force level = {:.1f} %'),
         ]
         values = [
             self.performance_chart.get_latency() * 1000,
@@ -75,7 +74,7 @@ class CombinedChart:
         ax2.text(0, 0.9, '\n'.join(text).format(*values), transform=ax2.transAxes, fontsize=10, verticalalignment='top', bbox=props)
         fig.subplots_adjust(left=0.1, right=0.8)
 
-        subplots = [p11, p12, p32, p33, p34, p35, p41, p42]
+        subplots = [p11, p12, p32, p33, p34, p35, p42, p43]
         plt.figlegend(subplots, [p.get_label() for p in subplots], loc='upper center', mode=None, ncol=3)
 
         self.align_yaxis(ax3, 0, ax3b, 0)

@@ -43,6 +43,7 @@ class PerformanceChart:
         for t, v in posdata:
             if abs(v - v0) > noiselevel:
                 return t - self.input.get_period_start(1)
+        return None
 
     def get_max_velocity(self):
         return max([abs(v[1]) for v in self.fveldata.slice(*self.input.get_range(1, 2))])
@@ -75,6 +76,7 @@ class PerformanceChart:
         for t, v in self.fveldata.slice(*self.input.get_range(1, 2)):
             if abs(v) >= max_velocity:
                 return abs(v) / (t - self.get_latency())
+        return None
 
     def get_mean_decel(self):
         t1 = self.input.get_period_start(2)

@@ -1,8 +1,9 @@
 import gi
 from locale import gettext as _
-
+import threading
+import traceback
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GLib
+from gi.repository import Gtk, Gdk
 
 class GtkHandlers:
 
@@ -17,13 +18,8 @@ class GtkHandlers:
     def format_wheel_range_value(self, scale, value):
         return str(round(value * 10))
 
-    def on_overlay_window_configure(self, window, event):
-        if event.type == Gdk.EventType.CONFIGURE:
-            self.ui.update_overlay_window_pos((event.x, event.y))
-            self.model.set_overlay_window_pos((event.x, event.y))
-
     def on_main_window_destroy(self, *args):
-        Gtk.main_quit()
+        self.ui.quit()
 
     def on_preferences_window_delete_event(self, *args):
         self.controller.on_close_preferences()
@@ -59,29 +55,30 @@ class GtkHandlers:
     def on_change_emulation_mode_clicked(self, widget):
         mode = self.ui.emulation_mode_combobox.get_active_id()
         self.model.set_mode(mode)
+        self.model.flush_ui()
         self.ui.change_emulation_mode_button.set_sensitive(False)
 
     def on_emulation_mode_changed(self, widget):
         self.ui.change_emulation_mode_button.set_sensitive(True)
 
     def on_wheel_range_value_changed(self, widget):
-        range = int(widget.get_value() * 10)
-        self.model.set_range(range)
-        self.ui.overlay_wheel_range.set_label(str(range))
+        wrange = int(widget.get_value() * 10)
+        self.model.set_range(wrange)
+        self.ui.overlay_wheel_range.set_label(str(wrange))
 
     def on_overlay_decrange_clicked(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() - step)
-        range = self.ui.wheel_range.get_value() * 10
-        self.ui.overlay_wheel_range.set_label(range)
+        wrange = int(self.ui.wheel_range.get_value() * 10)
+        self.ui.overlay_wheel_range.set_label(str(wrange))
 
     def on_overlay_incrange_clicked(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() + step)
-        range = self.ui.wheel_range.get_value() * 10
-        self.ui.overlay_wheel_range.set_label(range)
+        wrange = int(self.ui.wheel_range.get_value() * 10)
+        self.ui.overlay_wheel_range.set_label(str(wrange))
 
     def on_combine_none_clicked(self, widget):
         self.model.set_combine_pedals(0)
@@ -137,6 +134,9 @@ class GtkHandlers:
     def on_wheel_buttons_state_set(self, widget, state):
         self.model.set_use_buttons(state)
 
+    def on_center_wheel_state_set(self, widget, state):
+        threading.Thread(target = self.model.set_center_wheel, args = [state], daemon = True).start()
+
     def on_profile_changed(self, combobox):
         self.controller.load_profile(combobox.get_active_id())
 
@@ -167,21 +167,24 @@ class GtkHandlers:
             raise
         except Exception as e:
             if str(e) != '':
-                self.ui.error_dialog(_('Error creating profile'), str(e))
+                self.ui.error_dialog(_('Error creating profile'), traceback.format_exc())
 
     def on_rename_profile_clicked(self, widget):
         row = self.ui.profile_listbox.get_selected_row()
         if row is None:
             return
+
         def on_rename_profile_focus_out(widget, event):
             entry.disconnect_by_func(on_rename_profile_focus_out)
             row.remove(widget)
             row.add(label)
+
         def on_rename_profile_key_release(widget, event):
             if event.keyval == Gdk.KEY_Escape:
                 entry.disconnect_by_func(on_rename_profile_focus_out)
                 row.remove(widget)
                 row.add(label)
+
         def on_rename_profile_activate(widget):
             entry.disconnect_by_func(on_rename_profile_focus_out)
             source_profile_name = label.get_text()
@@ -277,3 +280,9 @@ class GtkHandlers:
 
     def on_test_panel_run_clicked(self, widget):
         self.controller.run_test()
+
+    def on_start_app_manually_state_set(self, widget, state):
+        self.model.set_start_app_manually(state)
+
+    def on_start_app_clicked(self, widget):
+        self.controller.start_app()

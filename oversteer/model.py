@@ -1,3 +1,6 @@
+import configparser
+import logging
+
 class Model:
 
     defaults = {
@@ -12,20 +15,52 @@ class Model:
         'ffb_leds': None,
         'ffb_overlay': None,
         'range_overlay': None,
-        'overlay_window_pos': (20, 20),
         'use_buttons': None,
+        'center_wheel': None,
+        'start_app_manually': None,
+    }
+
+    types = {
+        'mode': 'string',
+        'range': 'integer',
+        'ff_gain': 'integer',
+        'autocenter': 'integer',
+        'combine_pedals': 'integer',
+        'spring_level': 'integer',
+        'damper_level': 'integer',
+        'friction_level': 'integer',
+        'ffb_leds': 'integer',
+        'ffb_overlay': 'boolean',
+        'range_overlay': 'string',
+        'use_buttons': 'boolean',
+        'center_wheel': 'boolean',
+        'start_app_manually': 'boolean',
     }
 
     def __init__(self, device, ui = None):
         self.device = device
         self.ui = ui
-        self.data = self.defaults.copy()
         self.reference_values = None
-        if device is not None:
-            self.read_device_settings()
+        self.data = self.defaults.copy()
+        if self.device is not None:
+            self.update_from_device_settings()
+            self.flush_device() # Some settings are read incorrectly sometimes
+
+    def set_ui(self, ui):
+        self.ui = ui
+        self.update_save_profile_button()
+        self.flush_ui()
+
+    def update_save_profile_button(self):
+        self.ui.disable_save_profile()
+        if self.ui is None or self.reference_values is None:
+            return
+        for (key, value) in self.reference_values.items():
+            if self.data[key] != value:
+                self.ui.enable_save_profile()
 
     def read_device_settings(self):
-        self.data.update({
+        return {
             'mode': self.device.get_mode(),
             'range': self.device.get_range(),
             'ff_gain': self.device.get_ff_gain() * 100 / 65535,
@@ -36,98 +71,93 @@ class Model:
             'friction_level': self.device.get_friction_level(),
             'ffb_leds': self.device.get_ffb_leds(),
             'ffb_overlay': False if self.device.get_peak_ffb_level() is not None else None,
-            'range_overlay': False if self.device.get_peak_ffb_level() is not None else None,
+            'range_overlay': 'never' if self.device.get_peak_ffb_level() is not None else None,
             'use_buttons': False if self.device.get_range() is not None else None,
-        })
-        # Some settings are read incorrectly sometimes
-        self.flush_device()
+            'center_wheel': False,
+            'start_app_manually': False,
+        }
 
-    def load_settings(self, data):
-        data = dict(self.defaults, **data)
-        if data['mode'] is not None:
+    def update_from_device_settings(self):
+        self.data.update(self.read_device_settings())
+
+    def load(self, profile_file):
+        config = configparser.ConfigParser()
+        config.read(profile_file)
+        data = self.defaults.copy()
+        for (key, value) in config['DEFAULT'].items():
+            if key not in self.types:
+                logging.warning("Unknown profile setting name: %s", key)
+                continue
+            if value is None:
+                continue
+            if self.types[key] == 'string':
+                data[key] = value
+            elif self.types[key] == 'integer':
+                data[key] = int(value)
+            elif self.types[key] == 'boolean':
+                data[key] = bool(int(value))
+            elif self.types[key] == 'tuple':
+                data[key] = tuple(map(int, value.split(',')))
+
+        if data['mode'] is not None and self.device is not None:
             self.set_mode(data['mode'])
+
+        self.data = data
+        self.save_reference_values()
+
+        if self.device is not None:
+            base_settings = self.read_device_settings()
+            for (key, value) in base_settings.items():
+                if self.data[key] is None:
+                    self.data[key] = value
+            self.flush_device()
+
         if self.ui is not None:
-            self.flush_ui(data)
-        else:
-            self.flush_device(data)
+            self.flush_ui()
+            self.update_save_profile_button()
 
-    def flush_device(self, data = None):
-        if data is None:
-            data = self.data
-        if data['range'] is not None:
-            self.set_range(data['range'])
-        if data['combine_pedals'] is not None:
-            self.set_combine_pedals(data['combine_pedals'])
-        if data['autocenter'] is not None:
-            self.set_autocenter(data['autocenter'])
-        if data['ff_gain'] is not None:
-            self.set_ff_gain(data['ff_gain'])
-        if data['spring_level'] is not None:
-            self.set_spring_level(data['spring_level'])
-        if data['damper_level'] is not None:
-            self.set_damper_level(data['damper_level'])
-        if data['friction_level'] is not None:
-            self.set_friction_level(data['friction_level'])
-        if data['ffb_leds'] is not None:
-            self.set_ffb_leds(data['ffb_leds'])
-        if data['ffb_overlay'] is not None:
-            self.set_ffb_overlay(data['ffb_overlay'])
-        if data['range_overlay'] is not None:
-            self.set_range_overlay(data['range_overlay'])
-        self.set_overlay_window_pos(data['overlay_window_pos'])
-        if data['use_buttons'] is not None:
-            self.set_use_buttons(data['use_buttons'])
+    def save(self, profile_file):
+        data = {}
+        for key, value in self.data.items():
+            if value is None:
+                continue
+            if self.types[key] == 'string':
+                data[key] = value
+            elif self.types[key] == 'integer':
+                data[key] = int(value)
+            elif self.types[key] == 'boolean':
+                data[key] = int(bool(value))
+            elif self.types[key] == 'tuple':
+                data[key] = ','.join(map(str, value))
 
-    def flush_ui(self, data = None):
-        if data is None:
-            data = self.data
-        self.ui.set_mode(data['mode'])
-        self.ui_set_range(data['range'])
-        self.ui_set_combine_pedals(data['combine_pedals'])
-        self.ui_set_autocenter(data['autocenter'])
-        self.ui_set_ff_gain(data['ff_gain'])
-        self.ui_set_spring_level(data['spring_level'])
-        self.ui_set_damper_level(data['damper_level'])
-        self.ui_set_friction_level(data['friction_level'])
-        self.ui_set_ffb_leds(data['ffb_leds'])
-        self.ui_set_ffb_overlay(data['ffb_overlay'])
-        self.ui_set_range_overlay(data['range_overlay'])
-        self.ui_set_overlay_window_pos(data['overlay_window_pos'])
-        self.ui_set_use_buttons(data['use_buttons'])
+        config = configparser.ConfigParser()
+        config['DEFAULT'] = data
+        with open(profile_file, 'w') as configfile:
+            config.write(configfile)
 
-    def to_dict(self):
-        return self.data.copy()
+        self.save_reference_values()
 
     def save_reference_values(self):
-        self.reference_values = self.data.copy()
-        self.ui.disable_save_profile()
-
-    def clear_reference_values(self):
-        self.reference_values = None
-        self.ui.disable_save_profile()
-
-    def get_mode_list(self):
-        return self.device.list_modes()
+        data = self.data.copy()
+        self.reference_values = data
+        if self.ui is not None:
+            self.ui.disable_save_profile()
 
     def set_if_changed(self, key, value):
         if self.data[key] != value:
             self.data[key] = value
             if self.ui is not None:
-                if self.reference_values is not None:
-                    self.ui.disable_save_profile()
-                    for k, v in self.data.items():
-                        if self.reference_values[k] != v:
-                            self.ui.enable_save_profile()
-                            break
+                self.update_save_profile_button()
             return True
         return False
+
+    def get_mode_list(self):
+        return self.device.list_modes()
 
     def set_mode(self, value):
         if self.set_if_changed('mode', value):
             self.device.set_mode(value)
-            self.read_device_settings()
-            if self.ui is not None:
-                self.flush_ui()
+            self.update_from_device_settings()
 
     def get_mode(self):
         return self.data['mode']
@@ -208,53 +238,59 @@ class Model:
     def get_range_overlay(self):
         return self.data['range_overlay']
 
-    def set_overlay_window_pos(self, value):
-        self.set_if_changed('overlay_window_pos', value)
-
-    def get_overlay_window_pos(self):
-        return self.data['overlay_window_pos']
-
     def set_use_buttons(self, value):
         self.set_if_changed('use_buttons', bool(value))
 
     def get_use_buttons(self):
         return self.data['use_buttons']
 
-    def ui_set_mode(self, value):
-        self.ui.set_mode(value)
+    def set_center_wheel(self, value):
+        value = bool(value)
+        if self.set_if_changed('center_wheel', value) and value:
+            self.device.center_wheel()
 
-    def ui_set_range(self, value):
-        self.ui.set_range(value)
+    def set_start_app_manually(self, value):
+        value = bool(value)
+        self.set_if_changed('start_app_manually', value)
 
-    def ui_set_ff_gain(self, value):
-        self.ui.set_ff_gain(value)
+    def get_start_app_manually(self):
+        return self.data['start_app_manually']
 
-    def ui_set_autocenter(self, value):
-        self.ui.set_autocenter(value)
+    def flush_device(self):
+        if self.data['range'] is not None:
+            self.device.set_range(self.data['range'])
+        if self.data['combine_pedals'] is not None:
+            self.device.set_combine_pedals(self.data['combine_pedals'])
+        if self.data['center_wheel']:
+            self.device.center_wheel()
+        if self.data['autocenter'] is not None:
+            self.device.set_autocenter(self.data['autocenter'])
+        if self.data['ff_gain'] is not None:
+            self.device.set_ff_gain(self.data['ff_gain'] * 65535 / 100)
+        if self.data['spring_level'] is not None:
+            self.device.set_spring_level(self.data['spring_level'])
+        if self.data['damper_level'] is not None:
+            self.device.set_damper_level(self.data['damper_level'])
+        if self.data['friction_level'] is not None:
+            self.device.set_friction_level(self.data['friction_level'])
+        if self.data['ffb_leds'] is not None:
+            self.device.set_ffb_leds(self.data['ffb_leds'])
 
-    def ui_set_combine_pedals(self, value):
-        self.ui.set_combine_pedals(value)
+    def flush_ui(self, data = None):
+        if data is None:
+            data = self.data
+        self.ui.set_mode(data['mode'])
+        self.ui.set_range(data['range'])
+        self.ui.set_ff_gain(data['ff_gain'])
+        self.ui.set_autocenter(data['autocenter'])
+        self.ui.set_combine_pedals(data['combine_pedals'])
+        self.ui.set_spring_level(data['spring_level'])
+        self.ui.set_damper_level(data['damper_level'])
+        self.ui.set_friction_level(data['friction_level'])
+        self.ui.set_ffb_leds(data['ffb_leds'])
+        self.ui.set_ffb_overlay(data['ffb_overlay'])
+        self.ui.set_range_overlay(data['range_overlay'])
+        self.ui.set_use_buttons(data['use_buttons'])
+        self.ui.set_center_wheel(data['center_wheel'])
+        self.ui.set_start_app_manually(data['start_app_manually'])
 
-    def ui_set_spring_level(self, value):
-        self.ui.set_spring_level(value)
-
-    def ui_set_damper_level(self, value):
-        self.ui.set_damper_level(value)
-
-    def ui_set_friction_level(self, value):
-        self.ui.set_friction_level(value)
-
-    def ui_set_ffb_leds(self, value):
-        self.ui.set_ffb_leds(value)
-
-    def ui_set_ffb_overlay(self, value):
-        self.ui.set_ffb_overlay(value)
-
-    def ui_set_range_overlay(self, value):
-        self.ui.set_range_overlay(value)
-
-    def ui_set_overlay_window_pos(self, value):
-        self.ui.set_overlay_window_pos(value)
-
-    def ui_set_use_buttons(self, value):
-        self.ui.set_use_buttons(value)

@@ -1,4 +1,3 @@
-import numpy as np
 from .signal import Signal
 
 class LinearChart:
@@ -25,8 +24,8 @@ class LinearChart:
 
         self.linearity = Signal(self.normalize(self.input.get_values(), linearity_values))
 
-    def normalize(self, input, output):
-        max_input = max([abs(v[1]) for v in input])
+    def normalize(self, signal, output):
+        max_input = max([abs(v[1]) for v in signal])
         max_output = max([abs(v[1]) for v in output])
         return [(v[0], v[1] * max_input / max_output) for v in output]
 

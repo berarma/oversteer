@@ -1,0 +1,11 @@
+# Match kernel name of device, rather than ATTRS{idProduct} and ATTRS{idVendor}
+# so we can access the range file and leds directory. Set rw access to these 
+# files for everyone.
+# Avoid blanket matching all Thrustmaster devices, as that causes issues with mice,
+# keyboards, and other non-wheel devices.
+
+# Thrustmaster T300RS Racing Wheel (USB)
+SUBSYSTEMS=="hid", KERNELS=="0003:044F:B66E.????", DRIVERS=="t300rs", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range spring_level damper_level friction_level'"
+
+# Thrustmaster T150 Racing Wheel (USB)
+SUBSYSTEMS=="hid", KERNELS=="0003:044F:B677.????", DRIVERS=="t150", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range gain autocenter'"
