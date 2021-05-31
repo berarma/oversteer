@@ -25,6 +25,7 @@ class DeviceManager:
     LG_WFFG = '046d:c293'
     TM_T150 = '044f:b677'
     TM_T300RS = '044f:b66e'
+    TM_T500RS = '044f:b65e'
     FT_CSL_ELITE = '0eb7:0e03'
     FT_CSL_ELITE_PS4 = '0eb7:0005'
     FT_CSV2 = '0eb7:0001'
@@ -47,6 +48,7 @@ class DeviceManager:
             self.LG_WFFG: 180,
             self.TM_T150: 1080,
             self.TM_T300RS: 1080,
+            self.TM_T500RS: 1080,
             self.FT_CSL_ELITE: 1080,
             self.FT_CSL_ELITE_PS4: 1080,
             self.FT_CSV2: 900,
