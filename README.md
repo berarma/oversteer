@@ -41,6 +41,7 @@ This software supports the following Logitech wheels:
 
 These other wheels are getting suppport as their drivers mature:
 
+- Thrustmaster T150 with [https://github.com/scarburato/t150_driver].
 - Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
 - Thrustmaster T500RS with [https://github.com/Kimplul/hid-tmff2].
 - FANATEC CSL Elite Wheel Base with [https://github.com/gotzl/hid-fanatecff].
