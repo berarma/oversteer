@@ -1,4 +1,4 @@
-# Oversteer - Steering Wheel Manager for Linux
+# Oversteer - Steering Wheel Manager for Linux [![Packaging status](https://repology.org/badge/tiny-repos/oversteer.svg)](https://repology.org/project/oversteer/versions)
 
 [https://github.com/berarma/oversteer]
 
@@ -56,6 +56,8 @@ with other devices. The Logitech G923 wheel is currently unsupported.
 Use at your own risk. Suggestions, bugs and pull requests welcome.
 
 ## Installation
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/oversteer.svg)](https://repology.org/project/oversteer/versions)
 
 ### Arch
 
