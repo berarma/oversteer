@@ -7,7 +7,7 @@ i18n = import('i18n')
 pymod = import('python')
 prefix = get_option('prefix')
 pkgdatadir = join_paths(prefix, get_option('datadir'), meson.project_name())
-py_installation = pymod.find_installation('python3')
+py_installation = pymod.find_installation(get_option('python'))
 py_path = py_installation.get_path('purelib')
 
 python3_required_modules = ['gi', 'pyudev', 'xdg', 'evdev', 'gettext', 'matplotlib', 'scipy', 'numpy']
