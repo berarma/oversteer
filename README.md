@@ -1,4 +1,4 @@
-# Oversteer - Steering Wheel Manager for Linux
+# Oversteer - Steering Wheel Manager for Linux [![Packaging status](https://repology.org/badge/tiny-repos/oversteer.svg)](https://repology.org/project/oversteer/versions)
 
 [https://github.com/berarma/oversteer]
 
@@ -41,7 +41,9 @@ This software supports the following Logitech wheels:
 
 These other wheels are getting suppport as their drivers mature:
 
+- Thrustmaster T150 with [https://github.com/scarburato/t150_driver].
 - Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
+- Thrustmaster T500RS with [https://github.com/Kimplul/hid-tmff2].
 - FANATEC CSL Elite Wheel Base with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC CSL Elite Wheel Base PS4 with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC ClubSport Wheel Base V2 with [https://github.com/gotzl/hid-fanatecff].
@@ -54,6 +56,8 @@ with other devices. The Logitech G923 wheel is currently unsupported.
 Use at your own risk. Suggestions, bugs and pull requests welcome.
 
 ## Installation
+
+[![Packaging status](https://repology.org/badge/vertical-allrepos/oversteer.svg)](https://repology.org/project/oversteer/versions)
 
 ### Arch
 

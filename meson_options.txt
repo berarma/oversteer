@@ -1,0 +1,4 @@
+option('python',
+       description: 'Override the name of the Python executable',
+       type: 'string',
+       value: 'python3')

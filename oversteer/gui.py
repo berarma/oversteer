@@ -42,6 +42,7 @@ class Gui:
         ('ru_RU', _('Russian')),
         ('es_ES', _('Spanish')),
         ('ca_ES', _('Valencian')),
+        ('fi_FI', _('Finnish')),
     ]
 
     def __init__(self, application, model, argv):
