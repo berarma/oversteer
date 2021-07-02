@@ -2,3 +2,7 @@ option('python',
        description: 'Override the name of the Python executable',
        type: 'string',
        value: 'python3')
+option('udev_rules_dir',
+       description: 'Installation path for udev rules',
+       type: 'string',
+       value: 'auto')
