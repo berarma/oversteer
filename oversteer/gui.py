@@ -430,8 +430,7 @@ class Gui:
                     button = event.code - 288
                 if event.code >= 704 and event.code <= 712:
                     button = event.code - 688
-                if event.code >= 304 and event.code <= 316:
-                    button = event.code - 304
+
                 if button is not None:
                     self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
                     self.on_button_press(button, event.value)
