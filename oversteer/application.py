@@ -2,7 +2,6 @@ import argparse
 from locale import gettext as _
 import logging
 import os
-from oversteer.gui import Gui
 from .device_manager import DeviceManager
 from .model import Model
 import sys
@@ -125,4 +124,5 @@ class Application:
         if start_gui:
             self.args = args
             self.device_manager = device_manager
+            from oversteer.gui import Gui
             Gui(self, model, argv)

@@ -18,6 +18,12 @@ foreach p : python3_required_modules
   endif
 endforeach
 
+udev_rules_dir = get_option('udev_rules_dir')
+if udev_rules_dir == 'auto'
+  udev_dep = dependency('udev')
+  udev_rules_dir = udev_dep.get_pkgconfig_variable('udevdir') + '/rules.d'
+endif
+
 install_subdir('oversteer', install_dir: py_path)
 subdir('data')
 subdir('bin')

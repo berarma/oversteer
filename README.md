@@ -97,24 +97,23 @@ permissions to access the device settings to any user.
 
 #### Build and install
 
-Build:
+Prepare build system:
 
 ```shell
 meson build
-ninja -C build
+cd build
 ```
-
-Trying it without installing:
-
-`ninja -C build run`
 
 Installing (needs administration rights):
 
-`sudo ninja -C build install`
+`ninja install`
 
 Uninstalling (needs administration rights):
 
-`sudo ninja -C build uninstall`
+`ninja uninstall`
+
+Updating should be done by first uninstalling the previous version, updating
+the code, then doing the full procedure again to install.
 
 ## Using it
 
@@ -142,9 +141,11 @@ An example that would work for any Steam game would be:
 
 ## Updating translations (for translators)
 
+From the project root directory:
+
 ```shell
-ninja -C build oversteer-pot
-ninja -C build oversteer-update-po
+ninja oversteer-pot
+ninja oversteer-update-po
 ```
 
 ## Contributing

@@ -32,7 +32,8 @@ install_data(app_id + '.svg',
 )
 
 install_subdir('udev',
-  install_dir: pkgdatadir
+  install_dir: udev_rules_dir,
+  strip_directory: true
 )
 
 # ---- Tests ----
