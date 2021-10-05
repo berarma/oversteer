@@ -363,9 +363,9 @@ class Device:
             if event.code == ecodes.ABS_X:
                 if self.usb_id in [self.device_manager.LG_WFG, self.device_manager.LG_WFFG]:
                     event.value = event.value * 64
-                elif self.usb_id not in [self.device_manager.LG_G29, self.device_manager.TM_T300RS, self.device_manager.TM_T500RS] and self.vendor_id != self.device_manager.VENDOR_FANATEC:
+                elif self.usb_id not in [self.device_manager.LG_G923, self.device_manager.LG_G29, self.device_manager.TM_T300RS, self.device_manager.TM_T500RS] and self.vendor_id != self.device_manager.VENDOR_FANATEC:
                     event.value = event.value * 4
-            elif self.usb_id in [self.device_manager.LG_G25, self.device_manager.LG_G27, self.device_manager.LG_G29, self.device_manager.TM_T300RS, self.device_manager.TM_T500RS]:
+            elif self.usb_id in [self.device_manager.LG_G923, self.device_manager.LG_G25, self.device_manager.LG_G27, self.device_manager.LG_G29, self.device_manager.TM_T300RS, self.device_manager.TM_T500RS]:
                 if event.code == ecodes.ABS_Y:
                     event.code = ecodes.ABS_RZ
                 elif event.code == ecodes.ABS_Z:
