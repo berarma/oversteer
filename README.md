@@ -2,10 +2,12 @@
 
 [https://github.com/berarma/oversteer]
 
-Oversteer is an application to configure steering wheels on Linux.
+This is an application to configure steering wheels on Linux. It doesn't
+provide direct hardware support, you'll still need a driver module that
+provides the hardware support.
 
-Oversteer recognizes the following Logitech wheels and provides full support
-when using the default kernel module:
+Oversteer recognizes the following Logitech wheels fully supported the default
+kernel module:
 
 - Wingman Formula GP
 - Wingman Formula Force GP
@@ -20,8 +22,8 @@ when using the default kernel module:
 - G29 Driving Force Racing Wheel
 - G920 Driving Force Racing Wheel
 
-The G923 model is still not supported by the Logitech module but there's some
-working going on to get them working. [Patch for PS4
+The G923 models is not supported yet by the Logitech module but there's some
+work going on to get them supported. [Patch for PS4
 version](https://github.com/berarma/new-lg4ff/pull/50) and [patch for XBox
 version](https://patchwork.kernel.org/project/linux-input/list/?series=489571).
 
