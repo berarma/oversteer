@@ -2,3 +2,4 @@
 /po/oversteer.pot
 /po/*.mo
 __pycache__
+/extra
