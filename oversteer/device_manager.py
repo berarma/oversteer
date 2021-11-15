@@ -2,60 +2,35 @@ import logging
 import os
 import pyudev
 from .device import Device
+from . import wheel_ids as wid
 
 logging.basicConfig(level=logging.DEBUG)
 
 class DeviceManager:
 
-    VENDOR_LOGITECH = '046d'
-    VENDOR_THRUSTMASTER = '044f'
-    VENDOR_FANATEC = '0eb7'
-
-    LG_G29 = '046d:c24f'
-    LG_G920 = '046d:c262'
-    LG_G923 = '046d:c266'
-    LG_DF = '046d:c294'
-    LG_MOMO = '046d:c295'
-    LG_DFP = '046d:c298'
-    LG_G25 = '046d:c299'
-    LG_DFGT = '046d:c29a'
-    LG_G27 = '046d:c29b'
-    LG_SFW = '046d:c29c'
-    LG_MOMO2 = '046d:ca03'
-    LG_WFG = '046d:c20e'
-    LG_WFFG = '046d:c293'
-    TM_T150 = '044f:b677'
-    TM_T300RS = '044f:b66e'
-    TM_T500RS = '044f:b65e'
-    FT_CSL_ELITE = '0eb7:0e03'
-    FT_CSL_ELITE_PS4 = '0eb7:0005'
-    FT_CSV2 = '0eb7:0001'
-    FT_CSV25 = '0eb7:0004'
-    FT_PDD1 = '0eb7:0006'
-
     def __init__(self):
         self.supported_wheels = {
-            self.LG_G29: 900,
-            self.LG_G920: 900,
-            self.LG_G923: 900,
-            self.LG_DF: 270,
-            self.LG_MOMO: 270,
-            self.LG_DFP: 900,
-            self.LG_G25: 900,
-            self.LG_DFGT: 900,
-            self.LG_G27: 900,
-            self.LG_SFW: 270,
-            self.LG_MOMO2: 270,
-            self.LG_WFG: 180,
-            self.LG_WFFG: 180,
-            self.TM_T150: 1080,
-            self.TM_T300RS: 1080,
-            self.TM_T500RS: 1080,
-            self.FT_CSL_ELITE: 1080,
-            self.FT_CSL_ELITE_PS4: 1080,
-            self.FT_CSV2: 900,
-            self.FT_CSV25: 900,
-            self.FT_PDD1: 1080,
+            wid.LG_G29: 900,
+            wid.LG_G920: 900,
+            wid.LG_G923: 900,
+            wid.LG_DF: 270,
+            wid.LG_MOMO: 270,
+            wid.LG_DFP: 900,
+            wid.LG_G25: 900,
+            wid.LG_DFGT: 900,
+            wid.LG_G27: 900,
+            wid.LG_SFW: 270,
+            wid.LG_MOMO2: 270,
+            wid.LG_WFG: 180,
+            wid.LG_WFFG: 180,
+            wid.TM_T150: 1080,
+            wid.TM_T300RS: 1080,
+            wid.TM_T500RS: 1080,
+            wid.FT_CSL_ELITE: 1080,
+            wid.FT_CSL_ELITE_PS4: 1080,
+            wid.FT_CSV2: 900,
+            wid.FT_CSV25: 900,
+            wid.FT_PDD1: 1080,
         }
         self.devices = {}
         self.changed = True

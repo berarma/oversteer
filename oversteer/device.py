@@ -5,6 +5,7 @@ import os
 import re
 import select
 import time
+from . import wheel_ids as wid
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -360,25 +361,18 @@ class Device:
 
     def normalize_event(self, event):
         if event.type == ecodes.EV_ABS:
+            if self.vendor_id == wid.VENDOR_FANATEC and event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
+                event.value = int(event.value / 257)
             if event.code == ecodes.ABS_X:
-                if self.usb_id in [self.device_manager.LG_WFG, self.device_manager.LG_WFFG]:
+                if self.usb_id in [wid.LG_WFG, wid.LG_WFFG]:
                     event.value = event.value * 64
-                elif self.usb_id not in [self.device_manager.LG_G923, self.device_manager.LG_G920, self.device_manager.LG_G29, self.device_manager.TM_T300RS, self.device_manager.TM_T500RS] and self.vendor_id != self.device_manager.VENDOR_FANATEC:
+                elif self.usb_id in [wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP, wid.LG_DFGT, wid.LG_G25, wid.LG_G27, wid.TM_T150]:
                     event.value = event.value * 4
-            elif self.usb_id in [self.device_manager.LG_G923, self.device_manager.LG_G25, self.device_manager.LG_G27, self.device_manager.LG_G29, self.device_manager.TM_T300RS, self.device_manager.TM_T500RS]:
+            elif self.usb_id in [wid.LG_WFG, wid.LG_WFFG, wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP, wid.LG_DFGT, wid.TM_T150]:
                 if event.code == ecodes.ABS_Y:
-                    event.code = ecodes.ABS_RZ
+                    event.code = ecodes.ABS_Z
                 elif event.code == ecodes.ABS_Z:
-                    event.code = ecodes.ABS_Y
+                    event.code = ecodes.ABS_RZ
                 elif event.code == ecodes.ABS_RZ:
-                    event.code = ecodes.ABS_Z
-            elif self.vendor_id == self.device_manager.VENDOR_FANATEC:
-                if event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
-                    event.value = int(event.value / 257)
-                if event.code == ecodes.ABS_RZ:
-                    event.code = ecodes.ABS_Z
-                elif event.code == ecodes.ABS_Y:
-                    event.code = ecodes.ABS_RZ
-                elif event.code == ecodes.ABS_Z:
                     event.code = ecodes.ABS_Y
         return event

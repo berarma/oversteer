@@ -399,11 +399,11 @@ class Gui:
                         self.test.append_data(event.timestamp(), event.value)
                     else:
                         self.ui.safe_call(self.ui.set_steering_input, event.value)
-                elif event.code == ecodes.ABS_Y:
-                    self.ui.safe_call(self.ui.set_accelerator_input, event.value)
                 elif event.code == ecodes.ABS_Z:
-                    self.ui.safe_call(self.ui.set_brakes_input, event.value)
+                    self.ui.safe_call(self.ui.set_accelerator_input, event.value)
                 elif event.code == ecodes.ABS_RZ:
+                    self.ui.safe_call(self.ui.set_brakes_input, event.value)
+                elif event.code == ecodes.ABS_Y:
                     self.ui.safe_call(self.ui.set_clutch_input, event.value)
                 elif event.code == ecodes.ABS_HAT0X:
                     self.ui.safe_call(self.ui.set_hatx_input, event.value)
