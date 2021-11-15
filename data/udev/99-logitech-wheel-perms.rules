@@ -4,8 +4,11 @@
 # Avoid blanket matching all Logitech devices, as that causes issues with mice,
 # keyboards, and other non-wheel devices.
 
-# Logitech G923 Driving Force Racing Wheel
+# Logitech G923 Racing Wheel for PlayStation 4 and PC
 SUBSYSTEMS=="hid", KERNELS=="0003:046D:C266.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level leds/*/brightness; chmod 777 leds/ leds/*'"
+
+# Logitech G923 Racing Wheel for Xbox One and PC
+SUBSYSTEMS=="hid", KERNELS=="0003:046D:C26D.????", DRIVERS=="logitech", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"
 
 # Logitech G920 Driving Force Racing Wheel
 SUBSYSTEMS=="hid", KERNELS=="0003:046D:C262.????", DRIVERS=="logitech-hidpp-device", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"

@@ -12,7 +12,8 @@ class DeviceManager:
         self.supported_wheels = {
             wid.LG_G29: 900,
             wid.LG_G920: 900,
-            wid.LG_G923: 900,
+            wid.LG_G923X: 900,
+            wid.LG_G923P: 900,
             wid.LG_DF: 270,
             wid.LG_MOMO: 270,
             wid.LG_DFP: 900,
