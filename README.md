@@ -4,27 +4,8 @@
 
 Oversteer is an application to configure steering wheels on Linux.
 
-Features (when supported by the device and the driver):
-
-- Change emulation mode.
-- Change rotation range.
-- Combine accelerator/brakes pedals for games that use just one axis.
-- Change autocentering force strength.
-- Change force feedback gain.
-- Device configuration profiles.
-- Fix system permissions to access all device features.
-- Overlay window to display/configure range.
-- Use wheel buttons to configure range.
-- Hardware performance testing.
-
-Additional features when using [new-lg4ff](https://github.com/berarma/new-lg4ff):
-
-- Combine accelerator/clutch pedals (for flight simulators).
-- Change global force feedback gain.
-- Change each conditional force feedback effect type gain.
-- FFBmeter to monitor FFB clipping using wheel leds or overlay window.
-
-This software supports the following Logitech wheels:
+Oversteer recognizes the following Logitech wheels and provides full support
+when using the default kernel module:
 
 - Wingman Formula GP
 - Wingman Formula Force GP
@@ -39,7 +20,16 @@ This software supports the following Logitech wheels:
 - G29 Driving Force Racing Wheel
 - G920 Driving Force Racing Wheel
 
-These other wheels are getting suppport as their drivers mature:
+The G923 model is still not supported by the Logitech module but there's some
+working going on to get them working. [Patch for PS4
+version](https://github.com/berarma/new-lg4ff/pull/50) and [patch for XBox
+version](https://patchwork.kernel.org/project/linux-input/list/?series=489571).
+
+Additionally, more features are available for these wheels when using
+[new-lg4ff](https://github.com/berarma/new-lg4ff) where possible. Not supported
+by Logitech G920 and G923 XBox version.
+
+These other wheels need custom driver modules that are still being worked on:
 
 - Thrustmaster T150 with [https://github.com/scarburato/t150_driver].
 - Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
@@ -50,8 +40,31 @@ These other wheels are getting suppport as their drivers mature:
 - FANATEC ClubSport Wheel Base V2.5 with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC Podium Wheel Base DD1 with [https://github.com/gotzl/hid-fanatecff].
 
+The features available on these wheels will depend on the state of the driver.
+
+Features (when supported by the device and the driver):
+
+- Change emulation mode.
+- Change rotation range.
+- Combine accelerator/brakes pedals for games that use just one axis.
+- Change autocentering force strength.
+- Change force feedback gain.
+- Device configuration profiles.
+- Fix system permissions to access all device features.
+- Overlay window to display/configure range.
+- Use wheel buttons to configure range.
+- Hardware performance testing.
+- (only new-lg4ff) Combine accelerator/clutch pedals, useful for flight
+  simulators.
+- (only new-lg4ff) Change global force feedback gain (with new-lg4ff).
+- (only new-lg4ff) Change each conditional force feedback effect type gain.
+- (only new-lg4ff) FFBmeter to monitor FFB clipping using wheel leds or overlay
+  window.
+
 I can test only on a Logitech G29 Driving Force. Please, report your results
-with other devices. The Logitech G923 wheel is currently unsupported.
+with other devices.
+
+More wheel models will be added to this list as they are requested.
 
 Use at your own risk. Suggestions, bugs and pull requests welcome.
 
