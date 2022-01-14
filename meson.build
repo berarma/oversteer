@@ -19,9 +19,15 @@ foreach p : python3_required_modules
 endforeach
 
 udev_rules_dir = get_option('udev_rules_dir')
-if udev_rules_dir == 'auto'
-  udev_dep = dependency('udev')
-  udev_rules_dir = udev_dep.get_pkgconfig_variable('udevdir') + '/rules.d'
+if udev_rules_dir == ''
+  if prefix == '/usr/local'
+    udev_rules_dir = '/usr/local/lib/udev/rules.d'
+  else
+    udev_dep = dependency('udev')
+    udev_rules_dir = udev_dep.get_pkgconfig_variable('udevdir') + '/rules.d'
+  endif
+elif udev_rules_dir == 'packed'
+  udev_rules_dir = pkgdatadir + '/udev'
 endif
 
 install_subdir('oversteer', install_dir: py_path)

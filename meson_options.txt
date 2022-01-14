@@ -5,4 +5,4 @@ option('python',
 option('udev_rules_dir',
        description: 'Installation path for udev rules',
        type: 'string',
-       value: 'auto')
+       value: '')

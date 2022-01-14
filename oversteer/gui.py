@@ -121,8 +121,6 @@ class Gui:
         sys.exit(0)
 
     def install_udev_files(self):
-        if not self.check_permissions:
-            return
         while True:
             affirmative = self.ui.confirmation_dialog(_("You don't have the " +
                 "required permissions to change your wheel settings. You can " +
@@ -130,9 +128,7 @@ class Gui:
                 "and rebooting.").format(self.app.udev_path, self.app.target_dir) + "\n\n" +
                 _("Do you want us to make this change for you?"))
             if affirmative:
-                copy_cmd = ''
-                for udev_file in self.app.udev_files:
-                    copy_cmd += 'cp -f ' + udev_file + ' ' + self.app.target_dir + ' && '
+                copy_cmd = 'cp -f ' + self.app.udev_path + '* ' + self.app.target_dir + ' && '
                 return_code = subprocess.call([
                     'pkexec',
                     '/bin/sh',
@@ -177,7 +173,7 @@ class Gui:
         if self.device is None or not self.device.is_ready():
             return
 
-        if not self.device.check_permissions():
+        if not self.device.check_permissions() and self.check_permissions and self.app.udev_path:
             self.install_udev_files()
 
         if self.device.get_id() in self.models:

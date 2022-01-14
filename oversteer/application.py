@@ -14,12 +14,10 @@ class Application:
         self.datadir = pkgdatadir
         self.icondir = icondir
         self.udev_path = self.datadir + '/udev/'
-        self.udev_files = [
-            self.udev_path + '99-logitech-wheel-perms.rules',
-            self.udev_path + '99-thrustmaster-wheel-perms.rules',
-            self.udev_path + '99-fanatec-wheel-perms.rules',
-        ]
         self.target_dir = '/etc/udev/rules.d/'
+
+        if not os.path.isdir(self.udev_path):
+            self.udev_path = None
 
     def run(self, argv):
         parser = argparse.ArgumentParser(prog=argv[0], description=_("Oversteer - Steering Wheel Manager"))
