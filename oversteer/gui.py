@@ -53,6 +53,7 @@ class Gui:
         self.check_permissions = True
         self.device_manager = self.app.device_manager
         self.device = None
+        self.pedals = None
         self.grab_input = False
         self.test = None
         self.linear_chart = None
@@ -113,7 +114,7 @@ class Gui:
 
     def start_app(self):
         self.ui.disable_start_app()
-        Thread(target=self.run_command).start() 
+        Thread(target=self.run_command).start()
 
     def sig_int_handler(self, signal, frame):
         sys.exit(0)
@@ -154,6 +155,13 @@ class Gui:
                     device_list.append((device.get_id(), device.name))
             self.ui.set_devices(device_list)
 
+    def populate_pedals(self):
+        pedal_list = []
+        for pedals in self.device_manager.get_pedals():
+            if pedals.is_ready():
+                pedal_list.append((pedals.get_id(), pedals.name))
+        self.ui.set_pedals(pedal_list)
+
     def populate_profiles(self):
         profiles = []
         for profile_file in glob.iglob(os.path.join(self.profile_path, "*.ini")):
@@ -163,6 +171,7 @@ class Gui:
 
     def populate_window(self):
         self.populate_devices()
+        self.populate_pedals()
         self.populate_profiles()
 
     def change_device(self, device_id):
@@ -187,6 +196,14 @@ class Gui:
 
         self.ui.set_modes(self.model.get_mode_list())
         self.model.flush_ui()
+
+    def change_pedals(self, pedals_id):
+        if pedals_id == 0:
+            self.pedals = None
+        else:
+            self.pedals = self.device_manager.get_pedal(pedals_id)
+
+        logging.debug('TODO: advance `change_pedals`')
 
     def load_profile(self, profile_name):
         if profile_name is None or profile_name == '':
@@ -448,6 +465,7 @@ class Gui:
                 time.sleep(1)
             if self.device_manager.is_changed():
                 self.ui.safe_call(self.populate_devices)
+                self.ui.safe_call(self.populate_pedals)
 
     def run_command(self):
         proc = subprocess.Popen(self.app.args.command, shell=True)

@@ -38,6 +38,11 @@ class GtkUi:
         self.device_combobox.set_id_column(0)
 
         cell_renderer = Gtk.CellRendererText()
+        self.pedals_combobox.pack_start(cell_renderer, True)
+        self.pedals_combobox.add_attribute(cell_renderer, 'text', 1)
+        self.pedals_combobox.set_id_column(0)
+
+        cell_renderer = Gtk.CellRendererText()
         self.profile_combobox.pack_start(cell_renderer, True)
         self.profile_combobox.add_attribute(cell_renderer, 'text', 0)
         self.profile_combobox.set_id_column(0)
@@ -173,6 +178,22 @@ class GtkUi:
             self.enable_controls()
         else:
             self.disable_controls()
+
+    def set_pedals(self, pedals):
+        model = self.pedals_combobox.get_model()
+        if model is None:
+            model = Gtk.ListStore(str, str)
+        else:
+            self.pedals_combobox.set_model(None)
+            model.clear()
+        self.pedals_combobox.set_model(model)
+
+        model.append(['Default', 'Default'])
+        self.pedals_combobox.set_active(0)
+
+        if pedals:
+            for pair in pedals:
+                model.append(pair)
 
     def disable_controls(self):
         self.profile_combobox.set_sensitive(False)
@@ -566,6 +587,7 @@ class GtkUi:
         self.check_permissions = self.builder.get_object('check_permissions')
 
         self.device_combobox = self.builder.get_object('device')
+        self.pedals_combobox = self.builder.get_object('pedals')
         self.profile_combobox = self.builder.get_object('profile')
         self.new_profile_name_entry = self.builder.get_object('new_profile_name')
         self.save_profile_button = self.builder.get_object('save_profile')

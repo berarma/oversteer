@@ -48,6 +48,11 @@ class GtkHandlers:
         if device_id is not None:
             self.controller.change_device(device_id)
 
+    def on_pedals_changed(self, widget):
+        pedals_id = widget.get_active_id()
+        if pedals_id is not None:
+            self.controller.change_pedals(pedals_id)
+
     def on_update_clicked(self, button):
         self.controller.populate_window()
         self.ui.update()
