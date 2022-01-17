@@ -33,7 +33,11 @@ class DeviceManager:
             wid.FT_CSV25: 900,
             wid.FT_PDD1: 1080,
         }
+        self.supported_pedals = {
+            wid.TM_TLCM,
+        }
         self.devices = {}
+        self.pedals = {}
         self.changed = True
 
     def start(self):
@@ -71,8 +75,11 @@ class DeviceManager:
             usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
             if usb_id in self.supported_wheels:
                 self.update_device_list(udevice)
+            if usb_id in self.supported_pedals:
+                self.update_pedal_list(udevice)
 
         logging.debug('Devices: %s', self.devices)
+        logging.debug('Pedals: %s', self.pedals)
 
     def update_device_list(self, udevice):
         seat_id = udevice.get('ID_FOR_SEAT')
@@ -103,6 +110,34 @@ class DeviceManager:
                 'name': udevice.get('NAME').strip('"'),
             })
 
+    def update_pedal_list(self, udevice):
+        seat_id = udevice.get('ID_FOR_SEAT')
+        if seat_id is None:
+            return
+
+        if seat_id not in self.pedals:
+            self.pedals[seat_id] = Device(self, {
+                'seat_id': seat_id,
+            })
+
+        pedals = self.pedals[seat_id]
+
+        if 'DEVNAME' in udevice:
+            if 'event' in udevice.get('DEVNAME'):
+                usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
+                pedals.set({
+                    'vendor_id': udevice.get('ID_VENDOR_ID'),
+                    'product_id': udevice.get('ID_MODEL_ID'),
+                    'usb_id': usb_id,
+                    'dev_name': udevice.get('DEVNAME'),
+                    'max_range': self.supported_wheels[usb_id],
+                })
+        else:
+            pedals.set({
+                'dev_path': os.path.join(udevice.sys_path, 'device'),
+                'name': udevice.get('NAME').strip('"'),
+            })
+
     def first_device(self):
         if self.devices:
             return self.get_device(next(iter(self.devices)))
@@ -111,6 +146,16 @@ class DeviceManager:
     def get_devices(self):
         self.changed = False
         return list(self.devices.values())
+
+    def get_pedals(self):
+        return list(self.pedals.values())
+
+    def get_pedal(self, pid):
+        if pid is None:
+            return None
+        if pid in self.pedals:
+            return self.pedals[pid]
+        return next((item for item in self.pedals.values() if item.dev_name == pid), None)
 
     def get_device(self, did):
         if did is None:

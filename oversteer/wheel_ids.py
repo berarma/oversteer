@@ -2,6 +2,7 @@ VENDOR_LOGITECH = '046d'
 VENDOR_THRUSTMASTER = '044f'
 VENDOR_FANATEC = '0eb7'
 
+# wheels
 LG_G29 = '046d:c24f'
 LG_G920 = '046d:c262'
 LG_G923X = '046d:c26e'
@@ -25,3 +26,5 @@ FT_CSV2 = '0eb7:0001'
 FT_CSV25 = '0eb7:0004'
 FT_PDD1 = '0eb7:0006'
 
+# pedals
+TM_TLCM = '044f:b371'
