@@ -198,7 +198,7 @@ class Gui:
         self.model.flush_ui()
 
     def change_pedals(self, pedals_id):
-        if pedals_id == 0:
+        if pedals_id == 'Default':
             self.pedals = None
         else:
             self.pedals = self.device_manager.get_pedal(pedals_id)
@@ -456,6 +456,11 @@ class Gui:
             if self.device is not None and self.device.is_ready():
                 try:
                     events = self.device.read_events(0.5)
+
+                    if self.pedals is not None and self.pedals.is_ready():
+                        events = self.filter_pedal_input(events)
+                        events = events + self.pedals.read_events(0.5)
+
                     if events is not None:
                         self.process_events(events)
                 except OSError as e:
@@ -466,6 +471,15 @@ class Gui:
             if self.device_manager.is_changed():
                 self.ui.safe_call(self.populate_devices)
                 self.ui.safe_call(self.populate_pedals)
+
+    def filter_pedal_input(events):
+        filtered = []
+
+        for event in events:
+            if event.code != ecodes.ABS_Z | event.code != ecodes.ABS_RZ | event.code == ecodes.ABS_Y:
+                filtered.append(event)
+
+        return filtered
 
     def run_command(self):
         proc = subprocess.Popen(self.app.args.command, shell=True)
