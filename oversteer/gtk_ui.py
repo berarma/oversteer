@@ -189,7 +189,9 @@ class GtkUi:
         self.pedals_combobox.set_model(model)
 
         model.append(['Default', 'Default'])
-        self.pedals_combobox.set_active(0)
+
+        if self.device_combobox.get_active() == -1:
+            self.pedals_combobox.set_active(0)
 
         if pedals:
             for pair in pedals:
