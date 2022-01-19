@@ -74,14 +74,14 @@ class DeviceManager:
         for udevice in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
             usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
             if usb_id in self.supported_wheels:
-                self.update_device_list(udevice)
+                self.update_device_list(udevice, usb_id)
             if usb_id in self.supported_pedals:
-                self.update_pedal_list(udevice)
+                self.update_pedal_list(udevice, usb_id)
 
         logging.debug('Devices: %s', self.devices)
         logging.debug('Pedals: %s', self.pedals)
 
-    def update_device_list(self, udevice):
+    def update_device_list(self, udevice, usb_id):
         seat_id = udevice.get('ID_FOR_SEAT')
         logging.debug("update_device_list: %s", seat_id)
         if seat_id is None:
@@ -96,7 +96,6 @@ class DeviceManager:
 
         if 'DEVNAME' in udevice:
             if 'event' in udevice.get('DEVNAME'):
-                usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
                 device.set({
                     'vendor_id': udevice.get('ID_VENDOR_ID'),
                     'product_id': udevice.get('ID_MODEL_ID'),
@@ -110,33 +109,41 @@ class DeviceManager:
                 'name': udevice.get('NAME').strip('"'),
             })
 
-    def update_pedal_list(self, udevice):
-        seat_id = udevice.get('ID_FOR_SEAT')
-        if seat_id is None:
-            return
+    def update_pedal_list(self, udevice, usb_id):
+        logging.debug("update_pedal_list: %s", usb_id)
 
-        if seat_id not in self.pedals:
-            self.pedals[seat_id] = Device(self, {
-                'seat_id': seat_id,
+        if usb_id not in self.pedals:
+            self.pedals[usb_id] = Device(self, {
+                'usb_id': usb_id,
             })
 
-        pedals = self.pedals[seat_id]
+        pedals = self.pedals[usb_id]
 
-        if 'DEVNAME' in udevice:
-            if 'event' in udevice.get('DEVNAME'):
-                usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
-                pedals.set({
-                    'vendor_id': udevice.get('ID_VENDOR_ID'),
-                    'product_id': udevice.get('ID_MODEL_ID'),
-                    'usb_id': usb_id,
-                    'dev_name': udevice.get('DEVNAME'),
-                    'max_range': self.supported_wheels[usb_id],
-                })
-        else:
-            pedals.set({
-                'dev_path': os.path.join(udevice.sys_path, 'device'),
-                'name': udevice.get('NAME').strip('"'),
-            })
+        if pedals.vendor_id is None:
+            pedals.vendor_id = udevice.get('ID_VENDOR_ID')
+
+        if pedals.product_id is None:
+            pedals.product_id = udevice.get('ID_MODEL_ID')
+
+        if pedals.seat_id is None:
+            seat_id = udevice.get('ID_FOR_SEAT')
+            if seat_id is not None:
+                pedals.seat_id = seat_id
+
+        if pedals.dev_path is None:
+            dev_path = os.path.join(udevice.sys_path, 'device')
+            if dev_path is not None:
+                pedals.dev_path = dev_path
+
+        if pedals.name is None:
+            name = udevice.get('NAME').strip('"')
+            if name is not None:
+                pedals.name = name
+
+        if pedals.dev_name is None:
+            dev_name = udevice.get('DEVNAME')
+            if dev_name is not None and 'event' in dev_name:
+                pedals.dev_name = dev_name
 
     def first_device(self):
         if self.devices:
