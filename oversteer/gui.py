@@ -11,7 +11,7 @@ import shutil
 import signal
 import subprocess
 import sys
-from threading import Thread
+from threading import Thread, Lock
 import time
 from xdg.BaseDirectory import save_config_path
 from .gtk_ui import GtkUi
@@ -54,6 +54,7 @@ class Gui:
         self.device_manager = self.app.device_manager
         self.device = None
         self.pedals = None
+        self.pedals_mutex = Lock()
         self.grab_input = False
         self.test = None
         self.linear_chart = None
@@ -159,7 +160,7 @@ class Gui:
         pedal_list = []
         for pedals in self.device_manager.get_pedals():
             if pedals.is_ready():
-                pedal_list.append((pedals.get_id(), pedals.name))
+                pedal_list.append((pedals.usb_id, pedals.name))
         self.ui.set_pedals(pedal_list)
 
     def populate_profiles(self):
@@ -198,10 +199,12 @@ class Gui:
         self.model.flush_ui()
 
     def change_pedals(self, pedals_id):
+        self.pedals_mutex.acquire()
         if pedals_id == 'Default':
             self.pedals = None
         else:
             self.pedals = self.device_manager.get_pedal(pedals_id)
+        self.pedals_mutex.release()
 
         logging.debug('TODO: advance `change_pedals`')
 
@@ -404,6 +407,22 @@ class Gui:
             self.device.set_peak_ffb_level(0)
         return level
 
+    def ecode_to_string(self, ecode):
+        if ecode == ecodes.ABS_X:
+            return 'ABS_X'
+        if ecode == ecodes.ABS_Y:
+            return 'ABS_Y'
+        if ecode == ecodes.ABS_Z:
+            return 'ABS_Z'
+        if ecode == ecodes.ABS_RX:
+            return 'ABS_RX'
+        if ecode == ecodes.ABS_RY:
+            return 'ABS_RY'
+        if ecode == ecodes.ABS_RZ:
+            return 'ABS_RZ'
+        else:
+            return 'UNKNOWN'
+
     def process_events(self, events):
         for event in events:
             if event.type == ecodes.EV_ABS:
@@ -455,11 +474,12 @@ class Gui:
         while 1:
             if self.device is not None and self.device.is_ready():
                 try:
-                    events = self.device.read_events(0.5)
+                    events = self.device.read_events(0.25)
 
+                    self.pedals_mutex.acquire()
                     if self.pedals is not None and self.pedals.is_ready():
-                        events = self.filter_pedal_input(events)
-                        events = events + self.pedals.read_events(0.5)
+                        events = self.filter_pedal_input(events) + list(self.pedals.read_events(0.25))
+                    self.pedals_mutex.release()
 
                     if events is not None:
                         self.process_events(events)
@@ -472,12 +492,15 @@ class Gui:
                 self.ui.safe_call(self.populate_devices)
                 self.ui.safe_call(self.populate_pedals)
 
-    def filter_pedal_input(events):
+    def filter_pedal_input(self, events):
         filtered = []
 
         for event in events:
-            if event.code != ecodes.ABS_Z | event.code != ecodes.ABS_RZ | event.code == ecodes.ABS_Y:
+            if not (event.code == ecodes.ABS_Z or event.code == ecodes.ABS_RZ or event.code == ecodes.ABS_Y):
+                logging.debug('passed: ' + self.ecode_to_string(event.code))
                 filtered.append(event)
+            else:
+                logging.debug('filtered: ' + self.ecode_to_string(event.code))
 
         return filtered
 
