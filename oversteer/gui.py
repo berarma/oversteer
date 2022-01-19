@@ -231,7 +231,7 @@ class Gui:
             if os.path.exists(profile_file):
                 if not self.ui.confirmation_dialog(_("This profile already exists. Are you sure?")):
                     raise Exception()
-        self.model.save(profile_file)
+        self.model.save(profile_file, self.pedals.usb_id)
 
     def rename_profile(self, current_name, new_name):
         current_file = os.path.join(self.profile_path, current_name + '.ini')

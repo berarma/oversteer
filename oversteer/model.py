@@ -18,6 +18,7 @@ class Model:
         'use_buttons': None,
         'center_wheel': None,
         'start_app_manually': None,
+        'pedals': None,
     }
 
     types = {
@@ -35,6 +36,7 @@ class Model:
         'use_buttons': 'boolean',
         'center_wheel': 'boolean',
         'start_app_manually': 'boolean',
+        'pedals': 'string',
     }
 
     def __init__(self, device, ui = None):
@@ -75,6 +77,7 @@ class Model:
             'use_buttons': False if self.device.get_range() is not None else None,
             'center_wheel': False,
             'start_app_manually': False,
+            'pedals': None,
         }
 
     def update_from_device_settings(self):
@@ -116,7 +119,7 @@ class Model:
             self.flush_ui()
             self.update_save_profile_button()
 
-    def save(self, profile_file):
+    def save(self, profile_file, pedals):
         data = {}
         for key, value in self.data.items():
             if value is None:
@@ -129,6 +132,8 @@ class Model:
                 data[key] = int(bool(value))
             elif self.types[key] == 'tuple':
                 data[key] = ','.join(map(str, value))
+
+        data['pedals'] = pedals
 
         config = configparser.ConfigParser()
         config['DEFAULT'] = data
@@ -293,4 +298,5 @@ class Model:
         self.ui.set_use_buttons(data['use_buttons'])
         self.ui.set_center_wheel(data['center_wheel'])
         self.ui.set_start_app_manually(data['start_app_manually'])
+        self.ui.controller.change_pedals(data['pedals'])
 
