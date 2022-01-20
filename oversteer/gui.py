@@ -470,15 +470,36 @@ class Gui:
                     self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
                     self.on_button_press(button, event.value)
 
+    def read_events(self, timeout):
+        rdescriptors = []
+
+        input_device = self.device.get_input_device()
+        if input_device is not None and input_device.fd != -1:
+            rdescriptors.append(input_device.fd)
+
+        if self.pedals:
+            input_pedals = self.pedals.get_input_device()
+            if input_pedals is not None and input_pedals.fd != -1:
+                rdescriptors.append(input_pedals.fd)
+
+        r, _, _ = select.select(rdescriptors, [], [], timeout)
+
+        if input_device.fd in r:
+            events = list(self.device.read_events(input_device))
+
+        if self.pedals:
+            events = self.filter_pedal_input(events)
+            if input_pedals.fd in r:
+                events = events + list(self.pedals.read_events(input_pedals))
+
+        return events
+
     def input_thread(self):
         while 1:
             if self.device is not None and self.device.is_ready():
                 try:
-                    events = self.device.read_events(0.25)
-
                     self.pedals_mutex.acquire()
-                    if self.pedals is not None and self.pedals.is_ready():
-                        events = self.filter_pedal_input(events) + list(self.pedals.read_events(0.25))
+                    events = self.read_events(0.5)
                     self.pedals_mutex.release()
 
                     if events is not None:
