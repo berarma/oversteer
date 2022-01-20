@@ -7,113 +7,113 @@ msgid ""
 msgstr ""
 "Project-Id-Version: oversteer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 19:00+0100\n"
-"PO-Revision-Date: 2021-03-25 19:01+0100\n"
+"POT-Creation-Date: 2022-01-20 10:33+0100\n"
+"PO-Revision-Date: 2022-01-20 10:33+0100\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#: oversteer/application.py:26
+#: oversteer/application.py:23
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Configurador de volants"
 
-#: oversteer/application.py:27
+#: oversteer/application.py:24
 msgid "Run as command's companion"
 msgstr "Arrancar com a complementari del comandament"
 
-#: oversteer/application.py:28
+#: oversteer/application.py:25
 msgid "Device path"
 msgstr "Ruta del dispositiu"
 
-#: oversteer/application.py:29
+#: oversteer/application.py:26
 msgid "list connected devices"
 msgstr "llista dispositius conectats"
 
-#: oversteer/application.py:30
+#: oversteer/application.py:27
 msgid "set the compatibility mode"
 msgstr "establix el modo de compatibilitat"
 
-#: oversteer/application.py:31
+#: oversteer/application.py:28
 msgid "set the rotation range [40-900]"
 msgstr "establix el ranc de rotació [40-900]"
 
-#: oversteer/application.py:32
+#: oversteer/application.py:29
 msgid "combine pedals [0-2]"
 msgstr "combina pedals [0-2]"
 
-#: oversteer/application.py:33
+#: oversteer/application.py:30
 msgid "set the autocenter strength [0-100]"
 msgstr "establix la força d'autocentrat [0-100]"
 
-#: oversteer/application.py:34
+#: oversteer/application.py:31
 msgid "set the FF gain [0-100]"
 msgstr "establix la ganància de FF [0-100]"
 
-#: oversteer/application.py:35
+#: oversteer/application.py:32
 msgid "set the spring level [0-100]"
 msgstr "establix el nivell d'efecte moll [0-100]"
 
-#: oversteer/application.py:36
+#: oversteer/application.py:33
 msgid "set the damper level [0-100]"
 msgstr "establix el nivell d'efecte d'amortiguament [0-100]"
 
-#: oversteer/application.py:37
+#: oversteer/application.py:34
 msgid "set the friction level [0-100]"
 msgstr "establix el nivell d'efecte de fricció [0-100]"
 
-#: oversteer/application.py:38
+#: oversteer/application.py:35
 msgid "enable FFBmeter leds"
 msgstr "activa el FFBmeter en els leds"
 
-#: oversteer/application.py:39
+#: oversteer/application.py:36
 msgid "disable FFBmeter leds"
 msgstr "desactiva el FFBmeter en els leds"
 
-#: oversteer/application.py:40
+#: oversteer/application.py:37
 msgid "center wheel"
 msgstr "centrar volant"
 
-#: oversteer/application.py:41
+#: oversteer/application.py:38
 msgid "don't center wheel"
 msgstr "no centrar volant"
 
-#: oversteer/application.py:42
+#: oversteer/application.py:39
 msgid "run command manually"
 msgstr "eixecutar comandament manualment"
 
-#: oversteer/application.py:44
+#: oversteer/application.py:41
 msgid "don't run command manually"
 msgstr "no eixecutar comandament manualment"
 
-#: oversteer/application.py:45
+#: oversteer/application.py:42
 msgid "load settings from a profile"
 msgstr "carrega els ajusts d'un perfil"
 
-#: oversteer/application.py:46
+#: oversteer/application.py:43
 msgid "start the GUI"
 msgstr "inicia la interfaç gràfica"
 
-#: oversteer/application.py:47
+#: oversteer/application.py:44
 msgid "enable debug output"
 msgstr "activa l'eixida de depuració"
 
-#: oversteer/application.py:48
+#: oversteer/application.py:45
 msgid "show version"
 msgstr "mostrar versió"
 
-#: oversteer/application.py:68
+#: oversteer/application.py:65
 msgid "Devices found:"
 msgstr "Dispositius trobats:"
 
-#: oversteer/application.py:90
+#: oversteer/application.py:87
 msgid "This profile doesn't exist."
 msgstr "Este perfil no existix."
 
-#: oversteer/application.py:100
+#: oversteer/application.py:97
 msgid "No device available."
 msgstr "No hi han dispositius disponibles."
 
@@ -177,29 +177,43 @@ msgstr "Castellà"
 msgid "Valencian"
 msgstr "Valencià"
 
+#: oversteer/gui.py:45
+msgid "Finnish"
+msgstr ""
+
+#: oversteer/gui.py:46
+msgid "Turkish"
+msgstr ""
+
+#: oversteer/gui.py:47
+msgid "German"
+msgstr ""
+
+#: oversteer/gui.py:123 oversteer/gui.py:178
+msgid "You don't have the required permissions to change your wheel settings."
+msgstr "No tens els permissos requerits per a canviar els ajusts del volant."
+
 #: oversteer/gui.py:124
 msgid ""
-"You don't have the required permissions to change your wheel settings. You "
-"can fix it yourself by copying the files in {} to the {} directory and "
+"You can fix it yourself by copying the files in {} to the {} directory and "
 "rebooting."
 msgstr ""
-"No tens els permissos requerits per a canviar els ajusts del volant. Pots "
-"arreglar-ho tu mateixa copiant els fichers de {} al directori {} i "
+"Pots arreglar-ho tu mateixa copiant els fichers de {} al directori {} i "
 "reiniciant."
 
-#: oversteer/gui.py:128
+#: oversteer/gui.py:127
 msgid "Do you want us to make this change for you?"
 msgstr "¿Vols que faça el canvi per tu?"
 
-#: oversteer/gui.py:141
+#: oversteer/gui.py:138
 msgid "Permissions rules installed."
 msgstr "Regles de permissos instalades."
 
-#: oversteer/gui.py:142
+#: oversteer/gui.py:139
 msgid "In some cases, a system restart might be needed."
 msgstr "En alguns casos pot ser necessari reiniciar."
 
-#: oversteer/gui.py:144
+#: oversteer/gui.py:141
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
@@ -243,11 +257,11 @@ msgstr "Erro en el canvi d'idioma"
 msgid "Make sure locale '{}.UTF8' is generated on your system."
 msgstr "Assegura't de que la localisació '{}.UTF8' existix en el teu sistema."
 
-#: oversteer/gui.py:450
+#: oversteer/gui.py:456
 msgid "Command error"
 msgstr "Erro del comandament"
 
-#: oversteer/gui.py:451
+#: oversteer/gui.py:457
 msgid ""
 "The supplied command failed:\n"
 "{}"
@@ -255,35 +269,35 @@ msgstr ""
 "El comandament proporcionat ha fallat:\n"
 "{}"
 
-#: oversteer/gui.py:476
+#: oversteer/gui.py:482
 msgid "Steering wheel not responding."
 msgstr "El volant no respon."
 
-#: oversteer/gui.py:476
+#: oversteer/gui.py:482
 msgid "No wheel movement could be registered."
 msgstr "No s'ha registrat cap moviment del volant."
 
-#: oversteer/gui.py:519
+#: oversteer/gui.py:525
 msgid "CSV file to import"
 msgstr "Ficher CSV a importar"
 
-#: oversteer/gui.py:553
+#: oversteer/gui.py:559
 msgid "Test data imported."
 msgstr "Senyes de les proves importades."
 
-#: oversteer/gui.py:554
+#: oversteer/gui.py:560
 msgid "New test data imported from CSV file."
 msgstr "Noves senyes de les proves importades del ficher CSV."
 
-#: oversteer/gui.py:561
+#: oversteer/gui.py:567
 msgid "CSV file to export"
 msgstr "Ficher CSV al que exportar"
 
-#: oversteer/gui.py:575
+#: oversteer/gui.py:581
 msgid "Test data exported."
 msgstr "Senyes de les proves exportades."
 
-#: oversteer/gui.py:576
+#: oversteer/gui.py:582
 msgid "Current test data has been exported to a CSV file."
 msgstr "Les senyes actuals de les proves s'han exportat a un ficher CSV."
 
@@ -894,13 +908,12 @@ msgstr "Nivell mín. força = {:.1f} %"
 msgid "Steering Wheel Manager"
 msgstr "Configurador de volants"
 
-#: data/org.berarma.Oversteer.desktop.in:10
-msgid "org.berarma.Oversteer"
-msgstr "org.berarma.Oversteer"
-
 #: data/org.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "jocs;carreres;coches;volants"
+
+#~ msgid "org.berarma.Oversteer"
+#~ msgstr "org.berarma.Oversteer"
 
 #~ msgid "Activation Switch"
 #~ msgstr "Botó d'activació"

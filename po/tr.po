@@ -7,114 +7,114 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-14 19:00+0100\n"
-"PO-Revision-Date: 2021-08-14 20:11+0300\n"
-"Last-Translator: Hüseyin Fahri Uzun <mail@fahriuzun.com>\n"
+"POT-Creation-Date: 2022-01-20 10:33+0100\n"
+"PO-Revision-Date: 2022-01-20 10:39+0100\n"
+"Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: \n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: oversteer/application.py:26
+#: oversteer/application.py:23
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Direksiyon Yöneticisi"
 
-#: oversteer/application.py:27
+#: oversteer/application.py:24
 msgid "Run as command's companion"
 msgstr "Komut arkadaşı olarak çalıştır"
 
-#: oversteer/application.py:28
+#: oversteer/application.py:25
 msgid "Device path"
 msgstr "Cihaz yolu"
 
-#: oversteer/application.py:29
+#: oversteer/application.py:26
 msgid "list connected devices"
 msgstr "bağlı cihazları listele"
 
-#: oversteer/application.py:30
+#: oversteer/application.py:27
 msgid "set the compatibility mode"
 msgstr "uyumluluk modunu ayarla"
 
-#: oversteer/application.py:31
+#: oversteer/application.py:28
 msgid "set the rotation range [40-900]"
 msgstr "dönüş açısını ayarla [40-900]"
 
-#: oversteer/application.py:32
+#: oversteer/application.py:29
 msgid "combine pedals [0-2]"
 msgstr "pedalları birleştir [0-2]"
 
-#: oversteer/application.py:33
+#: oversteer/application.py:30
 msgid "set the autocenter strength [0-100]"
 msgstr "oto merkezleme gücünü ayarla [0-100]"
 
-#: oversteer/application.py:34
+#: oversteer/application.py:31
 msgid "set the FF gain [0-100]"
 msgstr "gücü (FF) ayarla [0-100]"
 
-#: oversteer/application.py:35
+#: oversteer/application.py:32
 msgid "set the spring level [0-100]"
 msgstr "yay seviyesini ayarla [0-100]"
 
-#: oversteer/application.py:36
+#: oversteer/application.py:33
 msgid "set the damper level [0-100]"
 msgstr "damper seviyesini ayarla [0-100]"
 
-#: oversteer/application.py:37
+#: oversteer/application.py:34
 msgid "set the friction level [0-100]"
 msgstr "sürtünme seviyesini ayarla [0-100]"
 
-#: oversteer/application.py:38
+#: oversteer/application.py:35
 msgid "enable FFBmeter leds"
 msgstr "ledleri (FFBmeter) aktif et"
 
-#: oversteer/application.py:39
+#: oversteer/application.py:36
 msgid "disable FFBmeter leds"
 msgstr "ledleri (FFBmeter) devre dışı bırak"
 
-#: oversteer/application.py:40
+#: oversteer/application.py:37
 msgid "center wheel"
 msgstr "direksiyonu merkezle"
 
-#: oversteer/application.py:41
+#: oversteer/application.py:38
 msgid "don't center wheel"
 msgstr "direksiyonu merkezleme"
 
-#: oversteer/application.py:42
+#: oversteer/application.py:39
 msgid "run command manually"
 msgstr "komutu manuel çalıştır"
 
-#: oversteer/application.py:44
+#: oversteer/application.py:41
 msgid "don't run command manually"
 msgstr "komutu manuel çalıştırma"
 
-#: oversteer/application.py:45
+#: oversteer/application.py:42
 msgid "load settings from a profile"
 msgstr "bir profilden ayarları yükle"
 
-#: oversteer/application.py:46
+#: oversteer/application.py:43
 msgid "start the GUI"
 msgstr "arayüz (GUI) çalıştır"
 
-#: oversteer/application.py:47
+#: oversteer/application.py:44
 msgid "enable debug output"
 msgstr "hata ayıklama çıktısını aktif et"
 
-#: oversteer/application.py:48
+#: oversteer/application.py:45
 msgid "show version"
 msgstr "versiyonu göster"
 
-#: oversteer/application.py:68
+#: oversteer/application.py:65
 msgid "Devices found:"
 msgstr "Bulunan cihazlar:"
 
-#: oversteer/application.py:90
+#: oversteer/application.py:87
 msgid "This profile doesn't exist."
 msgstr "Bu profil mevcut değil."
 
-#: oversteer/application.py:100
+#: oversteer/application.py:97
 msgid "No device available."
 msgstr "Uygun cihaz yok."
 
@@ -178,29 +178,44 @@ msgstr "İspanyolca"
 msgid "Valencian"
 msgstr "Valencian"
 
+#: oversteer/gui.py:45
+msgid "Finnish"
+msgstr ""
+
+#: oversteer/gui.py:46
+msgid "Turkish"
+msgstr ""
+
+#: oversteer/gui.py:47
+msgid "German"
+msgstr ""
+
+#: oversteer/gui.py:123 oversteer/gui.py:178
+msgid "You don't have the required permissions to change your wheel settings."
+msgstr ""
+"Direksiyon ayarlarını değiştirmek için gerekli izinlere sahip değilsiniz."
+
 #: oversteer/gui.py:124
 msgid ""
-"You don't have the required permissions to change your wheel settings. You "
-"can fix it yourself by copying the files in {} to the {} directory and "
+"You can fix it yourself by copying the files in {} to the {} directory and "
 "rebooting."
 msgstr ""
-"Direksiyon ayarlarını değiştirmek için gerekli izinlere sahip değilsiniz. "
 "Bunu, {} klasöründe bulunan {} dosyalarını kopyalayarak ve yeniden "
 "başlatarak kendiniz düzeltebilirsiniz."
 
-#: oversteer/gui.py:128
+#: oversteer/gui.py:127
 msgid "Do you want us to make this change for you?"
 msgstr "Bu değişikliği sizin için yapmamızı ister misin?"
 
-#: oversteer/gui.py:141
+#: oversteer/gui.py:138
 msgid "Permissions rules installed."
 msgstr "İzin ayarları yüklendi."
 
-#: oversteer/gui.py:142
+#: oversteer/gui.py:139
 msgid "In some cases, a system restart might be needed."
 msgstr "Bazı durumlarda sistemin yeniden başlaması gerekebilir."
 
-#: oversteer/gui.py:144
+#: oversteer/gui.py:141
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
@@ -244,11 +259,11 @@ msgstr "Dil değiştirirken hata"
 msgid "Make sure locale '{}.UTF8' is generated on your system."
 msgstr "Lokal '{}.UTF8' sisteminizde oluşturulduğundan emin olunuz."
 
-#: oversteer/gui.py:450
+#: oversteer/gui.py:456
 msgid "Command error"
 msgstr "Komut hatası"
 
-#: oversteer/gui.py:451
+#: oversteer/gui.py:457
 msgid ""
 "The supplied command failed:\n"
 "{}"
@@ -256,35 +271,35 @@ msgstr ""
 "Verilen komut başarısız:\n"
 "{}"
 
-#: oversteer/gui.py:476
+#: oversteer/gui.py:482
 msgid "Steering wheel not responding."
 msgstr "Direksiyon cevap vermiyor."
 
-#: oversteer/gui.py:476
+#: oversteer/gui.py:482
 msgid "No wheel movement could be registered."
 msgstr "Hiç bir direksiyon hareketi yakalanamadı."
 
-#: oversteer/gui.py:519
+#: oversteer/gui.py:525
 msgid "CSV file to import"
 msgstr "İçeri aktarmak için CSV dosyası"
 
-#: oversteer/gui.py:553
+#: oversteer/gui.py:559
 msgid "Test data imported."
 msgstr "Test verisi içeri aktarıldı."
 
-#: oversteer/gui.py:554
+#: oversteer/gui.py:560
 msgid "New test data imported from CSV file."
 msgstr "Yeni test verisi CSV dosyasından aktarıldı."
 
-#: oversteer/gui.py:561
+#: oversteer/gui.py:567
 msgid "CSV file to export"
 msgstr "Dışa aktarım için CSV dosyası"
 
-#: oversteer/gui.py:575
+#: oversteer/gui.py:581
 msgid "Test data exported."
 msgstr "Test verisi dışarı aktarıldı."
 
-#: oversteer/gui.py:576
+#: oversteer/gui.py:582
 msgid "Current test data has been exported to a CSV file."
 msgstr "Geçerli test verisi CSV dosyasına aktarıldı."
 
@@ -893,13 +908,12 @@ msgstr "Min. güç seviyesi = {:.1f} %"
 msgid "Steering Wheel Manager"
 msgstr "Direksiyon Yöneticisi"
 
-#: data/org.berarma.Oversteer.desktop.in:10
-msgid "org.berarma.Oversteer"
-msgstr "org.berarma.Oversteer"
-
 #: data/org.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "oyun;yarış;arabalar;direksiyonlar"
+
+#~ msgid "org.berarma.Oversteer"
+#~ msgstr "org.berarma.Oversteer"
 
 #~ msgid "Angular velocity"
 #~ msgstr "Velocidad angular"

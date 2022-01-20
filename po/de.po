@@ -6,114 +6,114 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-03 10:51+0200\n"
-"PO-Revision-Date: 2021-09-04 13:53+0200\n"
-"Last-Translator: Matthias Müller <matmue@gmx.de>\n"
+"POT-Creation-Date: 2022-01-20 10:33+0100\n"
+"PO-Revision-Date: 2022-01-20 10:34+0100\n"
+"Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 21.08.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: oversteer/application.py:26
+#: oversteer/application.py:23
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Lenkrad Manager"
 
-#: oversteer/application.py:27
+#: oversteer/application.py:24
 msgid "Run as command's companion"
 msgstr "Starte als Befehls-Companion-App"
 
-#: oversteer/application.py:28
+#: oversteer/application.py:25
 msgid "Device path"
 msgstr "Geräte Pfad"
 
-#: oversteer/application.py:29
+#: oversteer/application.py:26
 msgid "list connected devices"
 msgstr "Verbundene Geräte auflisten"
 
-#: oversteer/application.py:30
+#: oversteer/application.py:27
 msgid "set the compatibility mode"
 msgstr "Kompatibilitätsmodus einstellen"
 
-#: oversteer/application.py:31
+#: oversteer/application.py:28
 msgid "set the rotation range [40-900]"
 msgstr "Rotationsbereich einstellen [40-900]"
 
-#: oversteer/application.py:32
+#: oversteer/application.py:29
 msgid "combine pedals [0-2]"
 msgstr "Pedale kombinieren [0-2]"
 
-#: oversteer/application.py:33
+#: oversteer/application.py:30
 msgid "set the autocenter strength [0-100]"
 msgstr "Zentrierungsstärke einstellen [0-100]"
 
-#: oversteer/application.py:34
+#: oversteer/application.py:31
 msgid "set the FF gain [0-100]"
 msgstr "ForceFeedback-Gain einstellen [0-100]"
 
-#: oversteer/application.py:35
+#: oversteer/application.py:32
 msgid "set the spring level [0-100]"
 msgstr "Federrate einstellen [0-100]"
 
-#: oversteer/application.py:36
+#: oversteer/application.py:33
 msgid "set the damper level [0-100]"
 msgstr "Dämpferrate einstellen [0-100]"
 
-#: oversteer/application.py:37
+#: oversteer/application.py:34
 msgid "set the friction level [0-100]"
 msgstr "Reibungsstärke einstellen [0-100]"
 
-#: oversteer/application.py:38
+#: oversteer/application.py:35
 msgid "enable FFBmeter leds"
 msgstr "FFBmeter LEDs aktivieren"
 
-#: oversteer/application.py:39
+#: oversteer/application.py:36
 msgid "disable FFBmeter leds"
 msgstr "FFBmeter LEDs deaktivieren"
 
-#: oversteer/application.py:40
+#: oversteer/application.py:37
 msgid "center wheel"
 msgstr "Lenkrad zentrieren"
 
-#: oversteer/application.py:41
+#: oversteer/application.py:38
 msgid "don't center wheel"
 msgstr "Lenkrad nicht zentrieren"
 
-#: oversteer/application.py:42
+#: oversteer/application.py:39
 msgid "run command manually"
 msgstr "Befehl manuell ausführen"
 
-#: oversteer/application.py:44
+#: oversteer/application.py:41
 msgid "don't run command manually"
 msgstr "Befehl nicht manuell ausführen"
 
-#: oversteer/application.py:45
+#: oversteer/application.py:42
 msgid "load settings from a profile"
 msgstr "Einstellungen aus Profil laden"
 
-#: oversteer/application.py:46
+#: oversteer/application.py:43
 msgid "start the GUI"
 msgstr "GUI starten"
 
-#: oversteer/application.py:47
+#: oversteer/application.py:44
 msgid "enable debug output"
 msgstr "Debug-Output aktivieren"
 
-#: oversteer/application.py:48
+#: oversteer/application.py:45
 msgid "show version"
 msgstr "Zeige Version"
 
-#: oversteer/application.py:68
+#: oversteer/application.py:65
 msgid "Devices found:"
 msgstr "Geräte gefunden:"
 
-#: oversteer/application.py:90
+#: oversteer/application.py:87
 msgid "This profile doesn't exist."
 msgstr "Dieses Profil existiert nicht."
 
-#: oversteer/application.py:100
+#: oversteer/application.py:97
 msgid "No device available."
 msgstr "Kein Gerät verfügbar."
 
@@ -177,28 +177,41 @@ msgstr "Spanisch"
 msgid "Valencian"
 msgstr "Valiencianisch"
 
+#: oversteer/gui.py:45
+msgid "Finnish"
+msgstr ""
+
+#: oversteer/gui.py:46
+msgid "Turkish"
+msgstr ""
+
+#: oversteer/gui.py:47
+msgid "German"
+msgstr ""
+
+#: oversteer/gui.py:123 oversteer/gui.py:178
+msgid "You don't have the required permissions to change your wheel settings."
+msgstr "Keine Berechtigung, die Einstellungen des Lenkrads zu ändern."
+
 #: oversteer/gui.py:124
 msgid ""
-"You don't have the required permissions to change your wheel settings. You "
-"can fix it yourself by copying the files in {} to the {} directory and "
+"You can fix it yourself by copying the files in {} to the {} directory and "
 "rebooting."
-msgstr ""
-"Keine Berechtigung, die Einstellungen des Lenkrads zu ändern."
-"Zum Beheben bitte die Dateien aus {} nach {} kopieren und neu starten."
+msgstr "Zum Beheben bitte die Dateien aus {} nach {} kopieren und neu starten."
 
-#: oversteer/gui.py:128
+#: oversteer/gui.py:127
 msgid "Do you want us to make this change for you?"
 msgstr "Soll Oversteer diese Änderung vornehmen?"
 
-#: oversteer/gui.py:141
+#: oversteer/gui.py:138
 msgid "Permissions rules installed."
 msgstr "Berechtigungs-Regeln installiert."
 
-#: oversteer/gui.py:142
+#: oversteer/gui.py:139
 msgid "In some cases, a system restart might be needed."
 msgstr "In manchen Fällen kann ein Neustart nötig sein."
 
-#: oversteer/gui.py:144
+#: oversteer/gui.py:141
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
@@ -241,11 +254,11 @@ msgstr "Sprache ändern fehlgeschlagen"
 msgid "Make sure locale '{}.UTF8' is generated on your system."
 msgstr "Vergewissere dich, dass '{}.UTF8' auf diesem system generiert wurde."
 
-#: oversteer/gui.py:450
+#: oversteer/gui.py:456
 msgid "Command error"
 msgstr "Befehlsfehler"
 
-#: oversteer/gui.py:451
+#: oversteer/gui.py:457
 msgid ""
 "The supplied command failed:\n"
 "{}"
@@ -253,35 +266,35 @@ msgstr ""
 "Der bereitgestellte Befehl schlug fehl:\n"
 "{}"
 
-#: oversteer/gui.py:476
+#: oversteer/gui.py:482
 msgid "Steering wheel not responding."
 msgstr "Lenkrad reagiert nicht."
 
-#: oversteer/gui.py:476
+#: oversteer/gui.py:482
 msgid "No wheel movement could be registered."
 msgstr "Es konnte keine Bewegung des Lenkrads festgestellt werden."
 
-#: oversteer/gui.py:519
+#: oversteer/gui.py:525
 msgid "CSV file to import"
 msgstr "CSV-Datei zum Import"
 
-#: oversteer/gui.py:553
+#: oversteer/gui.py:559
 msgid "Test data imported."
 msgstr "Test-Daten importiert"
 
-#: oversteer/gui.py:554
+#: oversteer/gui.py:560
 msgid "New test data imported from CSV file."
 msgstr "Neue Test-Daten aus CSV-Datei importiert."
 
-#: oversteer/gui.py:561
+#: oversteer/gui.py:567
 msgid "CSV file to export"
 msgstr "CSV-Datei zum Export"
 
-#: oversteer/gui.py:575
+#: oversteer/gui.py:581
 msgid "Test data exported."
 msgstr "Test-Daten exportiert."
 
-#: oversteer/gui.py:576
+#: oversteer/gui.py:582
 msgid "Current test data has been exported to a CSV file."
 msgstr "Die aktuellen Test-Daten wurden in eine CSV-Datei exportiert."
 
@@ -344,16 +357,16 @@ msgstr "Anwenden"
 #: oversteer/main.ui:516
 msgid "Apply changes (the wheel may move when changing the emulation mode)."
 msgstr ""
-"Änderungen annehmen (das Lenkrad bewegt sich eventuell bei Änderung des"
-" Emulationsmodus)."
+"Änderungen annehmen (das Lenkrad bewegt sich eventuell bei Änderung des "
+"Emulationsmodus)."
 
 #: oversteer/main.ui:550
 msgid ""
 "Range in degrees that the wheel will be able to rotate both ways. It will "
 "affect the sensitivity."
 msgstr ""
-"Winkel, um den sich das Lenkrad in beide Richtungen drehen kann."
-"Das hat Auswirkung auf die Empfindlichkeit."
+"Winkel, um den sich das Lenkrad in beide Richtungen drehen kann.Das hat "
+"Auswirkung auf die Empfindlichkeit."
 
 #: oversteer/main.ui:558
 msgid "Rotation range"
@@ -363,8 +376,8 @@ msgstr "Rotationsbereich"
 msgid ""
 "Combine two pedals into one axe. Useful for old games and flight simulators."
 msgstr ""
-"Zwei Pedale in eine Achse kombinieren. Nützlich für ältere Spiele oder"
-" Flugsimulatoren."
+"Zwei Pedale in eine Achse kombinieren. Nützlich für ältere Spiele oder "
+"Flugsimulatoren."
 
 #: oversteer/main.ui:619
 msgid "Combine pedals"
@@ -442,7 +455,8 @@ msgstr "Dämpfer-Effekt-Level"
 msgid ""
 "Gain applied to friction effects. Higher values may produce more clipping."
 msgstr ""
-"Stärke aller Reibungs-Effekte. Höhere Werte können mehr Clipping verursachen. "
+"Stärke aller Reibungs-Effekte. Höhere Werte können mehr Clipping "
+"verursachen. "
 
 #: oversteer/main.ui:1957
 msgid "Friction effect gain"
@@ -526,8 +540,8 @@ msgid ""
 "Use wheel buttons to control some wheel settings. The buttons must be "
 "defined in the preferences window."
 msgstr ""
-"Lenkradeinstellungen über Lenkrad-Knöpfe steuern. Die Knöpfe müssen "
-"in den Einstellungen definiert werden."
+"Lenkradeinstellungen über Lenkrad-Knöpfe steuern. Die Knöpfe müssen in den "
+"Einstellungen definiert werden."
 
 #: oversteer/main.ui:2359
 msgid "Enable wheel buttons"
@@ -559,11 +573,10 @@ msgid ""
 "Be careful when running the tests and follow the instructions as closely as "
 "possible for safety and valid results."
 msgstr ""
-"Keine Test-Daten verfügbar. Bitte Test-Daten importieren oder neuen Test"
-" starten.\n"
-"Vorsicht beim Ausführen des Tests - Anweisungen genau befolgen, um Sicherheit"
-" und "
-"korrekte Test-Ergebnisse zu gewährleisten."
+"Keine Test-Daten verfügbar. Bitte Test-Daten importieren oder neuen Test "
+"starten.\n"
+"Vorsicht beim Ausführen des Tests - Anweisungen genau befolgen, um "
+"Sicherheit und korrekte Test-Ergebnisse zu gewährleisten."
 
 #: oversteer/main.ui:2519
 msgid "page1"
@@ -574,9 +587,8 @@ msgid ""
 "The lowest torque test measures the minimum force level that the wheel can "
 "deliver. Your help is required for this test."
 msgstr ""
-"Der Test des Minimalmoments misst die geringste Kraft, die das Lenkrad"
-" übermitteln kann. "
-"Benutzer-Eingriff ist für diesen Test erforderlich."
+"Der Test des Minimalmoments misst die geringste Kraft, die das Lenkrad "
+"übermitteln kann. Benutzer-Eingriff ist für diesen Test erforderlich."
 
 #: oversteer/main.ui:2545
 msgid "page2"
@@ -595,8 +607,8 @@ msgid ""
 "The step test measures several performance parameters at the highest force "
 "levels."
 msgstr ""
-"Der Schritt-Test misst einige Leistungsparameter bei höchsten"
-" Krafteinstellungen."
+"Der Schritt-Test misst einige Leistungsparameter bei höchsten "
+"Krafteinstellungen."
 
 #: oversteer/main.ui:2597
 msgid "page3"
@@ -664,11 +676,9 @@ msgid ""
 "your hands and move it slowly around its middle position. When you notice a "
 "slight resistance or pulsation press any button in the wheel."
 msgstr ""
-"Für die Dauer dieses Tests das Lenkrad fest greifen und langsam um die"
-" Mittellage "
-"herum bewegen. Sobald ein leichter Widerstand oder ein Pulsieren bemerkbar"
-" ist "
-"einen beliebigen Knopf am Lenkrad drücken."
+"Für die Dauer dieses Tests das Lenkrad fest greifen und langsam um die "
+"Mittellage herum bewegen. Sobald ein leichter Widerstand oder ein Pulsieren "
+"bemerkbar ist einen beliebigen Knopf am Lenkrad drücken."
 
 #: oversteer/main.ui:3001
 msgid "Press any wheel button when ready to start the test."
@@ -687,8 +697,8 @@ msgid ""
 "WARNING: Don't touch the wheel and leave a clear space around it to avoid "
 "accidents or unreliable results."
 msgstr ""
-"WARNUNG: Lenkrad nicht berühren und Bereich um das Lenkrad freihalten "
-"um Unfälle oder verfälschte Ergebnisse zu vermeiden."
+"WARNUNG: Lenkrad nicht berühren und Bereich um das Lenkrad freihalten um "
+"Unfälle oder verfälschte Ergebnisse zu vermeiden."
 
 #: oversteer/main.ui:3065
 msgid "Back"
@@ -743,9 +753,8 @@ msgid ""
 "Check permissions to read/write device settings and propose changes to make "
 "them available to normal users."
 msgstr ""
-"Berechtigungen zum Lesen/Schreiben von Geräteeinstellungen prüfen und"
-" Anpassungen "
-"vorschlagen um dies normalen Nutzern zu ermöglichen."
+"Berechtigungen zum Lesen/Schreiben von Geräteeinstellungen prüfen und "
+"Anpassungen vorschlagen um dies normalen Nutzern zu ermöglichen."
 
 #: oversteer/main.ui:3441
 msgid "Check permissions"
@@ -756,8 +765,8 @@ msgid ""
 "Change the interface language. You'll need to restart the application to "
 "apply."
 msgstr ""
-"Sprache der Benutzeroberfläche ändern. Die Anwendung muss neu gestartet"
-" werden."
+"Sprache der Benutzeroberfläche ändern. Die Anwendung muss neu gestartet "
+"werden."
 
 #: oversteer/main.ui:3481
 msgid "Language"
@@ -768,9 +777,8 @@ msgid ""
 "Pressing start will begin configuration of wheel buttons. Just press the "
 "button in the wheel that you want to use for every displayed action."
 msgstr ""
-"\"Start\" beginnt die Konfiguration der Lenkradknöpfe. Zur Zuweisung der"
-" gezeigten "
-"Aktion den gewünschten Knopf drücken."
+"\"Start\" beginnt die Konfiguration der Lenkradknöpfe. Zur Zuweisung der "
+"gezeigten Aktion den gewünschten Knopf drücken."
 
 #: oversteer/main.ui:3518
 msgid "Define buttons"
@@ -896,11 +904,9 @@ msgstr "Min. Kraft-Level = {:.1f} %"
 msgid "Steering Wheel Manager"
 msgstr "Lenkradmanager"
 
-#: data/org.berarma.Oversteer.desktop.in:10
-msgid "org.berarma.Oversteer"
-msgstr "org.berarma.Oversteer"
-
 #: data/org.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "Spiele;Rennen;Autos;Lenkrad"
 
+#~ msgid "org.berarma.Oversteer"
+#~ msgstr "org.berarma.Oversteer"

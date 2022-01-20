@@ -95,15 +95,13 @@ class Gui:
         else:
             self.models = {}
 
-        if model.device is not None:
-            self.ui.set_device_id(model.device.get_id())
-            self.change_device(model.device.get_id())
-
-        self.ui.update()
-
         Thread(target=self.input_thread, daemon = True).start()
 
         self.ui.start()
+
+        if model.device is not None:
+            self.ui.set_device_id(model.device.get_id())
+            self.change_device(model.device.get_id())
 
         if self.app.args.command:
             if not model.get_start_app_manually():
@@ -123,7 +121,7 @@ class Gui:
     def install_udev_files(self):
         while True:
             affirmative = self.ui.confirmation_dialog(_("You don't have the " +
-                "required permissions to change your wheel settings. You can " +
+                "required permissions to change your wheel settings.") + "\n\n" + _("You can " +
                 "fix it yourself by copying the files in {} to the {} directory " +
                 "and rebooting.").format(self.app.udev_path, self.app.target_dir) + "\n\n" +
                 _("Do you want us to make this change for you?"))
@@ -173,8 +171,11 @@ class Gui:
         if self.device is None or not self.device.is_ready():
             return
 
-        if not self.device.check_permissions() and self.check_permissions and self.app.udev_path:
-            self.install_udev_files()
+        if not self.device.check_permissions() and self.check_permissions:
+            if self.app.udev_path:
+                self.install_udev_files()
+            else:
+                self.ui.info_dialog(_("You don't have the required permissions to change your wheel settings."))
 
         if self.device.get_id() in self.models:
             self.model = self.models[self.device.get_id()]

@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-12 17:32+0300\n"
-"PO-Revision-Date: 2021-06-12 18:15+0300\n"
-"Last-Translator: Kim Kuparinen <kimi.h.kuparinen@gmail.com>\n"
+"POT-Creation-Date: 2022-01-20 10:33+0100\n"
+"PO-Revision-Date: 2022-01-20 10:39+0100\n"
+"Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: \n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -19,103 +19,103 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: oversteer/application.py:26
+#: oversteer/application.py:23
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Rattimanageri"
 
-#: oversteer/application.py:27
+#: oversteer/application.py:24
 msgid "Run as command's companion"
 msgstr "Suorita komennon apulaisena"
 
-#: oversteer/application.py:28
+#: oversteer/application.py:25
 msgid "Device path"
 msgstr "Laitepolku"
 
-#: oversteer/application.py:29
+#: oversteer/application.py:26
 msgid "list connected devices"
 msgstr "luettele yhdistetyt laitteet"
 
-#: oversteer/application.py:30
+#: oversteer/application.py:27
 msgid "set the compatibility mode"
 msgstr "aseta yhteensopivuustila"
 
-#: oversteer/application.py:31
+#: oversteer/application.py:28
 msgid "set the rotation range [40-900]"
 msgstr "aseta pyörimiskulma [40-900]"
 
-#: oversteer/application.py:32
+#: oversteer/application.py:29
 msgid "combine pedals [0-2]"
 msgstr "yhdistä polkimet [0-2]"
 
-#: oversteer/application.py:33
+#: oversteer/application.py:30
 msgid "set the autocenter strength [0-100]"
 msgstr "aseta keskitysvoima [0-100]"
 
-#: oversteer/application.py:34
+#: oversteer/application.py:31
 msgid "set the FF gain [0-100]"
 msgstr "aseta efektien voima [0-100]"
 
-#: oversteer/application.py:35
+#: oversteer/application.py:32
 msgid "set the spring level [0-100]"
 msgstr "aseta jousivoima [0-100]"
 
-#: oversteer/application.py:36
+#: oversteer/application.py:33
 msgid "set the damper level [0-100]"
 msgstr "aseta vaimennustaso [0-100]"
 
-#: oversteer/application.py:37
+#: oversteer/application.py:34
 msgid "set the friction level [0-100]"
 msgstr "aseta kitkataso [0-100]"
 
-#: oversteer/application.py:38
+#: oversteer/application.py:35
 msgid "enable FFBmeter leds"
 msgstr "kytke FFB-mittari -ledivalot päälle"
 
-#: oversteer/application.py:39
+#: oversteer/application.py:36
 msgid "disable FFBmeter leds"
 msgstr "kytke FFB-mittari -ledivalot pois päältä"
 
-#: oversteer/application.py:40
+#: oversteer/application.py:37
 msgid "center wheel"
 msgstr "keskitä ratti"
 
-#: oversteer/application.py:41
+#: oversteer/application.py:38
 msgid "don't center wheel"
 msgstr "älä keskitä rattia"
 
-#: oversteer/application.py:42
+#: oversteer/application.py:39
 msgid "run command manually"
 msgstr "suorita komento manuaalisesti"
 
-#: oversteer/application.py:44
+#: oversteer/application.py:41
 msgid "don't run command manually"
 msgstr "älä suorita komentoa manuaalisesti"
 
-#: oversteer/application.py:45
+#: oversteer/application.py:42
 msgid "load settings from a profile"
 msgstr "lataa asetukset profiilista"
 
-#: oversteer/application.py:46
+#: oversteer/application.py:43
 msgid "start the GUI"
 msgstr "käynnistä graafinen käyttöliittymä"
 
-#: oversteer/application.py:47
+#: oversteer/application.py:44
 msgid "enable debug output"
 msgstr "aktivoi debuggaustulostus"
 
-#: oversteer/application.py:48
+#: oversteer/application.py:45
 msgid "show version"
 msgstr "näytä versio"
 
-#: oversteer/application.py:68
+#: oversteer/application.py:65
 msgid "Devices found:"
 msgstr "Löytyneet laitteet:"
 
-#: oversteer/application.py:90
+#: oversteer/application.py:87
 msgid "This profile doesn't exist."
 msgstr "Tätä profiilia ei ole olemassa."
 
-#: oversteer/application.py:100
+#: oversteer/application.py:97
 msgid "No device available."
 msgstr "Ei laitteita saatavissa."
 
@@ -183,29 +183,39 @@ msgstr "valenciankieli"
 msgid "Finnish"
 msgstr "suomi"
 
-#: oversteer/gui.py:125
+#: oversteer/gui.py:46
+msgid "Turkish"
+msgstr ""
+
+#: oversteer/gui.py:47
+msgid "German"
+msgstr ""
+
+#: oversteer/gui.py:123 oversteer/gui.py:178
+msgid "You don't have the required permissions to change your wheel settings."
+msgstr "Sinulla ei ole tarvittavia oikeuksia muuttaa rattiasetuksia."
+
+#: oversteer/gui.py:124
 msgid ""
-"You don't have the required permissions to change your wheel settings. You "
-"can fix it yourself by copying the files in {} to the {} directory and "
+"You can fix it yourself by copying the files in {} to the {} directory and "
 "rebooting."
 msgstr ""
-"Sinulla ei ole tarvittavia oikeuksia muuttaa rattiasetuksia.Voit korjata "
-"tilanteen itse kopioimalla kaikki tiedostot kansiosta {} kansioon {} ja "
-"käynnistämällä tietokoneen uudelleen."
+"Voit korjata tilanteen itse kopioimalla kaikki tiedostot kansiosta {} "
+"kansioon {} ja käynnistämällä tietokoneen uudelleen."
 
-#: oversteer/gui.py:129
+#: oversteer/gui.py:127
 msgid "Do you want us to make this change for you?"
 msgstr "Haluatko tämän muutoksen tehdyksi automaattisesti?"
 
-#: oversteer/gui.py:142
+#: oversteer/gui.py:138
 msgid "Permissions rules installed."
 msgstr "Lupa-asetukset asennettu."
 
-#: oversteer/gui.py:143
+#: oversteer/gui.py:139
 msgid "In some cases, a system restart might be needed."
 msgstr "Joissakin tapauksissa järjestelmän uudelleenkäynnistys on tarpeen."
 
-#: oversteer/gui.py:145
+#: oversteer/gui.py:141
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
@@ -213,47 +223,47 @@ msgstr ""
 "Virhe lupa-asetuksia asennettaessa. Ystävällisesti yritä uudelleen, ja "
 "varmista, että käytät oikeaa salasanaa."
 
-#: oversteer/gui.py:198
+#: oversteer/gui.py:197
 msgid "Error opening profile"
 msgstr "Virhe profiilia avattaessa"
 
-#: oversteer/gui.py:198
+#: oversteer/gui.py:197
 msgid "The selected profile can't be loaded."
 msgstr "Valittua profiilia ei voida ladata."
 
-#: oversteer/gui.py:213
+#: oversteer/gui.py:212
 msgid "This profile already exists. Are you sure?"
 msgstr "Tämä profiili on jo olemassa. Oletko varma?"
 
-#: oversteer/gui.py:225
+#: oversteer/gui.py:224
 msgid "This profile will be deleted, are you sure?"
 msgstr "Tämä profiili poistetaan, oletko varma?"
 
-#: oversteer/gui.py:232
+#: oversteer/gui.py:231
 msgid "Invalid extension."
 msgstr "Epäkelpo tiedostopääte."
 
-#: oversteer/gui.py:236
+#: oversteer/gui.py:235
 msgid "A profile with that name already exists."
 msgstr "Profiili tuolla nimellä on jo olemassa."
 
-#: oversteer/gui.py:243
+#: oversteer/gui.py:242
 msgid "File already exists, overwrite?"
 msgstr "Tiedosto on jo olemassa, kirjoita päälle?"
 
-#: oversteer/gui.py:275
+#: oversteer/gui.py:274
 msgid "Failed to change language"
 msgstr "Kielen vaihto epäonnistui"
 
-#: oversteer/gui.py:276
+#: oversteer/gui.py:275
 msgid "Make sure locale '{}.UTF8' is generated on your system."
 msgstr "Varmista, että lokaali '{}.UTF8' on asennettuna."
 
-#: oversteer/gui.py:453
+#: oversteer/gui.py:456
 msgid "Command error"
 msgstr "Komentovirhe"
 
-#: oversteer/gui.py:454
+#: oversteer/gui.py:457
 msgid ""
 "The supplied command failed:\n"
 "{}"
@@ -261,35 +271,35 @@ msgstr ""
 "Annettu komento epäonnistui\n"
 "{}"
 
-#: oversteer/gui.py:479
+#: oversteer/gui.py:482
 msgid "Steering wheel not responding."
 msgstr "Ratti ei vastaa."
 
-#: oversteer/gui.py:479
+#: oversteer/gui.py:482
 msgid "No wheel movement could be registered."
 msgstr "Ratin liikettä ei voitu havaita."
 
-#: oversteer/gui.py:522
+#: oversteer/gui.py:525
 msgid "CSV file to import"
 msgstr "Ladattava CSV-tiedosto"
 
-#: oversteer/gui.py:556
+#: oversteer/gui.py:559
 msgid "Test data imported."
 msgstr "Testidata ladattu."
 
-#: oversteer/gui.py:557
+#: oversteer/gui.py:560
 msgid "New test data imported from CSV file."
 msgstr "Uutta testidataa ladattu CSV-tiedostosta."
 
-#: oversteer/gui.py:564
+#: oversteer/gui.py:567
 msgid "CSV file to export"
 msgstr "Tallennettava CSV-tiedosto"
 
-#: oversteer/gui.py:578
+#: oversteer/gui.py:581
 msgid "Test data exported."
 msgstr "Testidata tallennettu."
 
-#: oversteer/gui.py:579
+#: oversteer/gui.py:582
 msgid "Current test data has been exported to a CSV file."
 msgstr "Testidata tallennettu CSV-tiedostoon."
 
