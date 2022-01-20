@@ -348,16 +348,12 @@ class Device:
                 self.input_device = InputDevice(self.dev_name)
         return self.input_device
 
-    def read_events(self, timeout):
-        input_device = self.get_input_device()
-        if input_device is not None and input_device.fd != -1:
-            r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
-            if input_device.fd in r:
-                for event in input_device.read():
-                    event = self.normalize_event(event)
-                    if event.type == ecodes.EV_ABS:
-                        self.last_axis_value[ecodes.ABS_X] = event.value
-                    yield event
+    def read_events(self, input_device):
+        for event in input_device.read():
+            event = self.normalize_event(event)
+            if event.type == ecodes.EV_ABS:
+                self.last_axis_value[ecodes.ABS_X] = event.value
+            yield event
 
     def normalize_event(self, event):
         if event.type == ecodes.EV_ABS:
