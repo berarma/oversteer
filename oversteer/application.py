@@ -14,12 +14,6 @@ class Application:
         self.datadir = pkgdatadir
         self.icondir = icondir
         self.udev_path = self.datadir + '/udev/'
-        self.udev_files = [
-            self.udev_path + '99-logitech-wheel-perms.rules',
-            self.udev_path + '99-thrustmaster-wheel-perms.rules',
-            self.udev_path + '99-thrustmaster-pedal-perms.rules',
-            self.udev_path + '99-fanatec-wheel-perms.rules',
-        ]
         self.target_dir = '/etc/udev/rules.d/'
 
     def run(self, argv):
