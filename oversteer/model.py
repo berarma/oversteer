@@ -298,5 +298,13 @@ class Model:
         self.ui.set_use_buttons(data['use_buttons'])
         self.ui.set_center_wheel(data['center_wheel'])
         self.ui.set_start_app_manually(data['start_app_manually'])
-        self.ui.controller.change_pedals(data['pedals'])
 
+        pedal_id = data['pedals']
+
+        if pedal_id:
+            for index, row in enumerate(self.ui.pedals_combobox.get_model()):
+                value = row[0]
+
+                if value == pedal_id:
+                    self.ui.pedals_combobox.set_active(index)
+                    # self.ui.controller.change_pedals(pedal_id)
