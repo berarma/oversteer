@@ -307,4 +307,3 @@ class Model:
 
                 if value == pedal_id:
                     self.ui.pedals_combobox.set_active(index)
-                    # self.ui.controller.change_pedals(pedal_id)
