@@ -11,6 +11,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import select
 from threading import Thread, Lock
 import time
 from xdg.BaseDirectory import save_config_path
@@ -483,6 +484,8 @@ class Gui:
                 rdescriptors.append(input_pedals.fd)
 
         r, _, _ = select.select(rdescriptors, [], [], timeout)
+
+        events = []
 
         if input_device.fd in r:
             events = list(self.device.read_events(input_device))
