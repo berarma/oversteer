@@ -1,8 +1,0 @@
-# Match kernel name of device, rather than ATTRS{idProduct} and ATTRS{idVendor}
-# so we can access the range file and leds directory. Set rw access to these
-# files for everyone.
-# Avoid blanket matching all Thrustmaster devices, as that causes issues with mice,
-# keyboards, and other non-wheel devices.
-
-# Thrustmaster T-LCM Pedals (USB)
-SUBSYSTEM=="input", KERNELS=="0003:044F:B371.????", MODE="0666", ENV{ID_INPUT_JOYSTICK}="1"
