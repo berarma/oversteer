@@ -408,22 +408,6 @@ class Gui:
             self.device.set_peak_ffb_level(0)
         return level
 
-    def ecode_to_string(self, ecode):
-        if ecode == ecodes.ABS_X:
-            return 'ABS_X'
-        if ecode == ecodes.ABS_Y:
-            return 'ABS_Y'
-        if ecode == ecodes.ABS_Z:
-            return 'ABS_Z'
-        if ecode == ecodes.ABS_RX:
-            return 'ABS_RX'
-        if ecode == ecodes.ABS_RY:
-            return 'ABS_RY'
-        if ecode == ecodes.ABS_RZ:
-            return 'ABS_RZ'
-        else:
-            return 'UNKNOWN'
-
     def process_events(self, events):
         for event in events:
             if event.type == ecodes.EV_ABS:
@@ -521,10 +505,7 @@ class Gui:
 
         for event in events:
             if not (event.code == ecodes.ABS_Z or event.code == ecodes.ABS_RZ or event.code == ecodes.ABS_Y):
-                logging.debug('passed: ' + self.ecode_to_string(event.code))
                 filtered.append(event)
-            else:
-                logging.debug('filtered: ' + self.ecode_to_string(event.code))
 
         return filtered
 
