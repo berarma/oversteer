@@ -22,7 +22,7 @@ default kernel module:
 - G29 Driving Force Racing Wheel
 - G920 Driving Force Racing Wheel
 
-The G923 models is not supported yet by the Logitech module but there's some
+The G923 models are not yet supported by the existing modules but there's some
 work going on to get them supported. [Patch for PS4
 version](https://github.com/berarma/new-lg4ff/pull/50) and [patch for XBox
 version](https://patchwork.kernel.org/project/linux-input/list/?series=489571).
@@ -31,7 +31,9 @@ Additionally, more features are available for these wheels when using
 [new-lg4ff](https://github.com/berarma/new-lg4ff), except the Logitech
 G920 and G923 for XBox which aren't supported by this driver.
 
-These other wheels need custom driver modules that are still being worked on:
+The following wheels need custom driver modules that are still being worked on.
+**I'm not claiming that they fully work, please, check the working status of
+these drivers by yourself**:
 
 - Thrustmaster T150 with [https://github.com/scarburato/t150_driver].
 - Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
@@ -104,8 +106,10 @@ will have similar names.
 
 #### Permissions
 
-Accessing the wheel settings requires some permissions. _Oversteer_ will
-install udev rules to grant these permissions to any user in the system.
+Accessing the wheel settings requires some permissions.
+
+**_Oversteer_ will automatically install udev rules to grant these permissions
+to any user in the system after a reboot.**
 
 By default, the udev rules will be installed at
 `/usr/local/lib/udev/rules.d` when installing to prefix `/usr/local` or
@@ -136,12 +140,9 @@ Installing (needs administration rights):
 
 `ninja install`
 
-Uninstalling (needs administration rights):
-
-`ninja uninstall`
-
-Updating should be done by first uninstalling the previous version, updating
-the code, then doing the full procedure again to install.
+A reboot will be needed to reload the newly installed udev rules.
+Alternatively, running the command `udevadm control --reload-rules && udevadm
+trigger` will do the same.
 
 #### Uninstalling
 
