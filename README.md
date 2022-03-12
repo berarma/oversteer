@@ -42,7 +42,8 @@ these drivers by yourself**:
 - FANATEC CSL Elite Wheel Base PS4 with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC ClubSport Wheel Base V2 with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC ClubSport Wheel Base V2.5 with [https://github.com/gotzl/hid-fanatecff].
-- FANATEC Podium Wheel Base DD1 with [https://github.com/gotzl/hid-fanatecff].
+- FANATEC Podium Wheel Base DD1/DD2 with [https://github.com/gotzl/hid-fanatecff].
+- FANATEC CSL DD / GT DD Pro Wheel with [https://github.com/gotzl/hid-fanatecff].
 
 Features (when supported by the device and the driver):
 
