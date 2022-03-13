@@ -1,18 +1,28 @@
 # Match kernel name of device, rather than ATTRS{idProduct} and ATTRS{idVendor}
 # so we can access the range file and leds directory. Set rw access to these 
 # files for everyone.
+SUBSYSTEMS=="hid", DRIVERS=="ftec_csl_elite", GOTO="fanatec_device"
+GOTO="fanatec_end"
+
+LABEL="fanatec_device"
 
 # FANATEC CSL Elite Wheel Base
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0E03.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
+KERNELS=="0003:0EB7:0E03.????", GOTO="fanatec_setperms"
 # FANATEC CSL Elite Wheel Base PS44
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0005.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
+KERNELS=="0003:0EB7:0005.????", GOTO="fanatec_setperms"
 # FANATEC ClubSport Wheel Base V2
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0001.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
+KERNELS=="0003:0EB7:0001.????", GOTO="fanatec_setperms"
 # FANATEC ClubSport Wheel Base V2.5
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0004.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
-
+KERNELS=="0003:0EB7:0004.????", GOTO="fanatec_setperms"
 # FANATEC Podium Wheel Base DD1
-SUBSYSTEMS=="hid", KERNELS=="0003:0EB7:0006.????", DRIVERS=="ftec_csl_elite", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range'"
+KERNELS=="0003:0EB7:0006.????", GOTO="fanatec_setperms"
+# FANATEC Podium Wheel Base DD2
+KERNELS=="0003:0EB7:0007.????", GOTO="fanatec_setperms"
+# FANATEC CSL DD
+KERNELS=="0003:0EB7:0020.????", GOTO="fanatec_setperms"
+GOTO="fanatec_end"
+
+LABEL="fanatec_setperms"
+RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range display leds/*/brightness'"
+
+LABEL="fanatec_end"
