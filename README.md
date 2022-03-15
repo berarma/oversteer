@@ -189,6 +189,13 @@ An example that would work for any Steam game would be:
 
 `oversteer -p myprofile -g "%command%"`
 
+## Known issues
+
+- Most drivers don't support Global Gain and Autocenter settings, only
+  `new-lg4ff` for now. The Linux API is used instead when they aren't
+  available. If this happens, Oversteer has to reset their values everytime it
+  starts. Also, games will be able to override these settings.
+
 ## Updating translations (for translators)
 
 From the project root directory:
