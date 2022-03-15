@@ -48,7 +48,7 @@ class Test:
             pass
 
         self.device.set_range(900)
-        self.device.set_ff_gain(65535)
+        self.device.set_ff_gain(100)
         self.device.set_autocenter(0)
 
     def stop(self):
@@ -106,7 +106,7 @@ class Test:
 
     def center_wheel(self):
         # Center wheel
-        self.device.set_autocenter(65535)
+        self.device.set_autocenter(100)
         time.sleep(1)
         self.device.set_autocenter(0)
 

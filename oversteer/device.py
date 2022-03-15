@@ -187,7 +187,9 @@ class Device:
         return int(round((int(autocenter) * 100) / 65535))
 
     def set_autocenter(self, autocenter):
-        autocenter = str(int(autocenter))
+        if autocenter > 100:
+            autocenter = 100
+        autocenter = str(int(autocenter / 100.0 * 65535))
         logging.debug("Setting autocenter strength: %s", autocenter)
         path = self.checked_device_file("autocenter")
         if path:
@@ -203,16 +205,18 @@ class Device:
         if not path:
             capabilities = self.get_capabilities()
             if ecodes.FF_GAIN in capabilities[ecodes.EV_FF]:
-                return 65535
+                return 100
             else:
                 return None
         with open(path, "r") as file:
             data = file.read()
         gain = int(data.strip())
-        return int(gain)
+        return int(round((int(gain) * 100) / 65535))
 
     def set_ff_gain(self, gain):
-        gain = str(int(gain))
+        if gain > 100:
+            gain = 100
+        gain = str(int(gain / 100.0 * 65535))
         logging.debug("Setting FF gain: %s", gain)
         path = self.checked_device_file("gain")
         if path:
@@ -318,7 +322,7 @@ class Device:
         return True
 
     def center_wheel(self):
-        self.set_autocenter(65535)
+        self.set_autocenter(100)
         time.sleep(1)
         self.set_autocenter(0)
 

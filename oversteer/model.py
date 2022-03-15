@@ -63,8 +63,8 @@ class Model:
         return {
             'mode': self.device.get_mode(),
             'range': self.device.get_range(),
-            'ff_gain': self.device.get_ff_gain() * 100 / 65535,
-            'autocenter': self.device.get_autocenter() * 100 * 65535,
+            'ff_gain': self.device.get_ff_gain(),
+            'autocenter': self.device.get_autocenter(),
             'combine_pedals': self.device.get_combine_pedals(),
             'spring_level': self.device.get_spring_level(),
             'damper_level': self.device.get_damper_level(),
@@ -173,7 +173,7 @@ class Model:
     def set_ff_gain(self, value):
         value = int(value)
         if self.set_if_changed('ff_gain', value):
-            self.device.set_ff_gain(value * 65535 / 100)
+            self.device.set_ff_gain(value)
 
     def get_ff_gain(self):
         return self.data['ff_gain']
@@ -181,7 +181,7 @@ class Model:
     def set_autocenter(self, value):
         value = int(value)
         if self.set_if_changed('autocenter', value):
-            self.device.set_autocenter(value * 65535 / 100)
+            self.device.set_autocenter(value)
 
     def get_autocenter(self):
         return self.data['autocenter']
@@ -266,7 +266,7 @@ class Model:
         if self.data['autocenter'] is not None:
             self.device.set_autocenter(self.data['autocenter'])
         if self.data['ff_gain'] is not None:
-            self.device.set_ff_gain(self.data['ff_gain'] * 65535 / 100)
+            self.device.set_ff_gain(self.data['ff_gain'])
         if self.data['spring_level'] is not None:
             self.device.set_spring_level(self.data['spring_level'])
         if self.data['damper_level'] is not None:
