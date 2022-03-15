@@ -176,7 +176,11 @@ class Device:
     def get_autocenter(self):
         path = self.checked_device_file("autocenter")
         if not path:
-            return 0
+            capabilities = self.get_capabilities()
+            if ecodes.FF_AUTOCENTER in capabilities[ecodes.EV_FF]:
+                return 0
+            else:
+                return None
         with open(path, "r") as file:
             data = file.read()
         autocenter = data.strip()
@@ -197,7 +201,11 @@ class Device:
     def get_ff_gain(self):
         path = self.checked_device_file("gain")
         if not path:
-            return 65535
+            capabilities = self.get_capabilities()
+            if ecodes.FF_GAIN in capabilities[ecodes.EV_FF]:
+                return 65535
+            else:
+                return None
         with open(path, "r") as file:
             data = file.read()
         gain = int(data.strip())
@@ -347,6 +355,9 @@ class Device:
             if os.access(self.dev_name, os.R_OK):
                 self.input_device = InputDevice(self.dev_name)
         return self.input_device
+
+    def get_capabilities(self):
+        return self.get_input_device().capabilities()
 
     def read_events(self, timeout):
         input_device = self.get_input_device()
