@@ -31,13 +31,14 @@ Additionally, more features are available for these wheels when using
 [new-lg4ff](https://github.com/berarma/new-lg4ff), except the Logitech
 G920 and G923 for XBox which aren't supported by this driver.
 
-The following wheels need custom driver modules that are still being worked on.
-**I'm not claiming that they fully work, please, check the working status of
-these drivers by yourself**:
+The following wheels need custom driver modules that are still being worked on:
+
+**(I'm NOT claiming they will work at all, please, check the driver projects
+for more information.)**
 
 - Thrustmaster T150 with [https://github.com/scarburato/t150_driver].
 - Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
-- Thrustmaster T500RS with [https://github.com/Kimplul/hid-tmff2].
+- Thrustmaster T500RS, no driver support yet.
 - FANATEC CSL Elite Wheel Base with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC CSL Elite Wheel Base PS4 with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC ClubSport Wheel Base V2 with [https://github.com/gotzl/hid-fanatecff].
