@@ -1,5 +1,4 @@
 from evdev import ecodes, InputDevice
-import fcntl
 import logging
 import os
 import re
@@ -29,6 +28,7 @@ class Device:
         self.dev_name = None
         self.name = None
         self.ready = True
+        self.max_range = None
 
         self.set(data)
 
@@ -105,6 +105,8 @@ class Device:
             return None
         with open(path, "r") as file:
             data = file.read()
+
+        mode_id = None
         lines = data.splitlines()
         reg = re.compile("([^:]+): (.*)")
         for line in lines:

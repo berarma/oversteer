@@ -98,6 +98,8 @@ class GtkUi:
         elif action == 'save':
             action = Gtk.FileChooserAction.SAVE
             action_button = Gtk.STOCK_SAVE
+        else:
+            return None
 
         dialog = Gtk.FileChooserDialog(
             title=title, parent=self.window, action=action
@@ -407,6 +409,7 @@ class GtkUi:
         self.start_define_buttons.set_label(self.define_buttons_text)
 
     def get_wheel_range_overlay(self):
+        wheel_range_overlay = None
         if self.wheel_range_overlay_never.get_active():
             wheel_range_overlay = 'never'
         elif self.wheel_range_overlay_always.get_active():

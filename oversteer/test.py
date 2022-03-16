@@ -1,6 +1,6 @@
 from evdev import ecodes, ff
 import numpy as np
-from threading import Thread, Event
+from threading import Thread
 import time
 
 class Test:

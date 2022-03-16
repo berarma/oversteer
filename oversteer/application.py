@@ -65,8 +65,9 @@ class Application:
             print(_("Devices found:"))
             for device in devices:
                 print("  {}: {}".format(device.dev_name, device.name))
-            sys,exit(0)
+            sys.exit(0)
 
+        device = None
         if args.device is not None:
             argc -= 1
             if os.path.exists(args.device):
