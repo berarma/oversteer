@@ -392,4 +392,11 @@ class Device:
                     event.code = ecodes.ABS_RZ
                 elif event.code == ecodes.ABS_RZ:
                     event.code = ecodes.ABS_Y
+            elif self.usb_id in [wid.TM_T248]:
+                if event.code == ecodes.ABS_RZ:
+                    event.code = ecodes.ABS_Z
+                elif event.code == ecodes.ABS_Y:
+                    event.code = ecodes.ABS_RZ
+                elif event.code == ecodes.ABS_THROTTLE:
+                    event.code = ecodes.ABS_Y
         return event
