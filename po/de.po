@@ -391,6 +391,18 @@ msgstr "Gaspedal + Kupplung"
 msgid "Accelerator + Brakes"
 msgstr "Gaspedal + Bremse"
 
+#: oversteer/main.ui:704
+msgid "Toggle Advanced Mode"
+msgstr "Erweiterten Modus umschalten"
+
+#: oversteer/main.ui:712
+msgid "Advanced Mode"
+msgstr "Erweiterter Modus"
+
+#: oversteer/main.ui:722
+msgid "Toggle"
+msgstr "Umschalten"
+
 #: oversteer/main.ui:665
 msgid "None"
 msgstr "Keine"
