@@ -281,6 +281,11 @@ class GtkUi:
         else:
             self.combine_none.set_active(True)
 
+    def set_advanced_mode(self, advanced_mode):
+        advanced_mode = bool(advanced_mode)
+        if advanced_mode is False:
+            self.advanced_mode.set_sensitive(False)
+
     def set_autocenter(self, autocenter):
         if autocenter is None:
             self.autocenter.set_sensitive(False)
@@ -577,6 +582,7 @@ class GtkUi:
         self.combine_none = self.builder.get_object('combine_none')
         self.combine_brakes = self.builder.get_object('combine_brakes')
         self.combine_clutch = self.builder.get_object('combine_clutch')
+        self.advanced_mode = self.builder.get_object('advanced_mode')
         self.autocenter = self.builder.get_object('autocenter')
         self.ff_gain = self.builder.get_object('ff_gain')
         self.ff_spring_level = self.builder.get_object('ff_spring_level')

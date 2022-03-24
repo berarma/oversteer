@@ -89,6 +89,9 @@ class GtkHandlers:
     def on_combine_clutch_clicked(self, widget):
         self.model.set_combine_pedals(2)
 
+    def on_advanced_mode_toggled(self, widget):
+        threading.Thread(target = self.model.toggle_advanced_mode, daemon = True).start()
+
     def on_ff_gain_value_changed(self, widget):
         ff_gain = int(widget.get_value())
         self.model.set_ff_gain(ff_gain)

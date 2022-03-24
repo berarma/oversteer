@@ -9,6 +9,7 @@ class Model:
         'ff_gain': None,
         'autocenter': None,
         'combine_pedals': None,
+        'advanced_mode': None,
         'spring_level': None,
         'damper_level': None,
         'friction_level': None,
@@ -26,6 +27,7 @@ class Model:
         'ff_gain': 'integer',
         'autocenter': 'integer',
         'combine_pedals': 'integer',
+        'advanced_mode': 'boolean',
         'spring_level': 'integer',
         'damper_level': 'integer',
         'friction_level': 'integer',
@@ -66,6 +68,7 @@ class Model:
             'ff_gain': self.device.get_ff_gain(),
             'autocenter': self.device.get_autocenter(),
             'combine_pedals': self.device.get_combine_pedals(),
+            'advanced_mode': self.device.get_advanced_mode(),
             'spring_level': self.device.get_spring_level(),
             'damper_level': self.device.get_damper_level(),
             'friction_level': self.device.get_friction_level(),
@@ -194,6 +197,9 @@ class Model:
     def get_combine_pedals(self):
         return self.data['combine_pedals']
 
+    def toggle_advanced_mode(self):
+        self.device.toggle_advanced_mode()
+
     def set_spring_level(self, value):
         value = int(value)
         if self.set_if_changed('spring_level', value):
@@ -284,6 +290,7 @@ class Model:
         self.ui.set_ff_gain(data['ff_gain'])
         self.ui.set_autocenter(data['autocenter'])
         self.ui.set_combine_pedals(data['combine_pedals'])
+        self.ui.set_advanced_mode(data['advanced_mode'])
         self.ui.set_spring_level(data['spring_level'])
         self.ui.set_damper_level(data['damper_level'])
         self.ui.set_friction_level(data['friction_level'])

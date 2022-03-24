@@ -173,6 +173,21 @@ class Device:
             file.write(combine_pedals)
         return True
 
+    def get_advanced_mode(self):
+        path = self.checked_device_file("adv_mode")
+        if not path:
+            return False
+        return True
+
+    def toggle_advanced_mode(self):
+        path = self.checked_device_file("adv_mode")
+        if not path:
+            return False
+        logging.debug("Toggling advanced_mode")
+        with open(path, "w") as file:
+            file.write('1')
+        return True
+
     def get_autocenter(self):
         path = self.checked_device_file("autocenter")
         if not path:
@@ -334,6 +349,8 @@ class Device:
         if not self.check_file_permissions('range'):
             return False
         if not self.check_file_permissions('combine_pedals'):
+            return False
+        if not self.check_file_permissions('adv_mode'):
             return False
         if not self.check_file_permissions('gain'):
             return False
