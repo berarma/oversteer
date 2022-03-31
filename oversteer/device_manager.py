@@ -1,10 +1,9 @@
 import logging
 import os
 import pyudev
+import time
 from .device import Device
 from . import wheel_ids as wid
-
-logging.basicConfig(level=logging.DEBUG)
 
 class DeviceManager:
 
@@ -60,12 +59,15 @@ class DeviceManager:
         if action == 'add':
             self.update_device_list(udevice)
             device = self.get_device(seat_id)
-            device.reconnect()
-            self.changed = True
+            if device and device.dev_name:
+                time.sleep(5)
+                device.reconnect()
+                self.changed = True
         if action == 'remove':
             device = self.get_device(seat_id)
-            device.disconnect()
-            self.changed = True
+            if device:
+                device.disconnect()
+                self.changed = True
 
     def init_device_list(self):
         context = pyudev.Context()

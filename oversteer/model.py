@@ -37,7 +37,7 @@ class Model:
         'start_app_manually': 'boolean',
     }
 
-    def __init__(self, device, ui = None):
+    def __init__(self, device = None, ui = None):
         self.device = device
         self.ui = ui
         self.reference_values = None
@@ -45,6 +45,9 @@ class Model:
         if self.device is not None:
             self.update_from_device_settings()
             self.flush_device() # Some settings are read incorrectly sometimes
+
+    def set_device(self, device):
+        self.device = device
 
     def set_ui(self, ui):
         self.ui = ui

@@ -47,10 +47,11 @@ class Gui:
         ('de_DE', _('German')),
     ]
 
-    def __init__(self, application, model, argv):
+    def __init__(self, application, argv):
         self.app = application
         self.locale = ''
         self.check_permissions = True
+        self.model = None
         self.device_manager = self.app.device_manager
         self.device = None
         self.grab_input = False
@@ -62,6 +63,7 @@ class Gui:
         self.button_config = [-1] * 9
         self.button_config[0] = [-1]
         self.pressed_button_count = 0
+        self.first_device_seen = True
 
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
@@ -69,9 +71,8 @@ class Gui:
 
         self.load_preferences()
 
-        self.profile_path = os.path.join(self.config_path, 'profiles')
-        if not os.path.isdir(self.profile_path):
-            os.makedirs(self.profile_path, 0o700)
+        if not os.path.isdir(self.app.profile_path):
+            os.makedirs(self.app.profile_path, 0o700)
 
         self.ui = GtkUi(self, argv)
         self.ui.set_app_version(self.app.version)
@@ -81,33 +82,33 @@ class Gui:
         self.ui.set_language(self.locale)
         self.ui.set_check_permissions(self.check_permissions)
 
+        self.models = {}
+
+        self.ui.start()
+
         self.populate_window()
+
+        model = Model()
+        self.app.apply_args(model, self.app.args)
 
         if self.app.args.profile is not None:
             self.ui.set_profile(self.app.args.profile)
 
-        self.model = None
-        if model.device is not None:
-            model.set_ui(self.ui)
-            self.models = {
-                model.device.get_id(): model,
-            }
-        else:
-            self.models = {}
+        start_manually = self.app.args.start_manually
+        if start_manually is None:
+            start_manually = model.get_start_app_manually()
 
-        Thread(target=self.input_thread, daemon = True).start()
-
-        self.ui.start()
-
-        if model.device is not None:
-            self.ui.set_device_id(model.device.get_id())
-            self.change_device(model.device.get_id())
+        if not model.device:
+            self.ui.info_dialog("No device available.")
+            start_manually = True
 
         if self.app.args.command:
-            if not model.get_start_app_manually():
-                self.start_app()
-            else:
+            if start_manually:
                 self.ui.enable_start_app()
+            else:
+                self.start_app()
+
+        Thread(target=self.input_thread, daemon = True).start()
 
         self.ui.main()
 
@@ -156,7 +157,7 @@ class Gui:
 
     def populate_profiles(self):
         profiles = []
-        for profile_file in glob.iglob(os.path.join(self.profile_path, "*.ini")):
+        for profile_file in glob.iglob(os.path.join(self.app.profile_path, "*.ini")):
             profile_name = os.path.splitext(os.path.basename(profile_file))[0]
             profiles.append(profile_name)
         self.ui.set_profiles(profiles)
@@ -181,6 +182,9 @@ class Gui:
             self.model = self.models[self.device.get_id()]
         else:
             self.model = Model(self.device, self.ui)
+            if self.first_device_seen:
+                self.app.apply_args(self.model, self.app.args)
+                self.first_device_seen = False
             self.models[self.device.get_id()] = self.model
 
         self.ui.set_max_range(self.device.get_max_range())
@@ -192,7 +196,7 @@ class Gui:
         if profile_name is None or profile_name == '':
             return
 
-        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        profile_file = os.path.join(self.app.profile_path, profile_name + '.ini')
         if not os.path.exists(profile_file):
             self.ui.info_dialog(_("Error opening profile"), _("The selected profile can't be loaded."))
             return
@@ -206,7 +210,7 @@ class Gui:
         if profile_name is None or profile_name == '':
             return
 
-        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        profile_file = os.path.join(self.app.profile_path, profile_name + '.ini')
         if check_exists:
             if os.path.exists(profile_file):
                 if not self.ui.confirmation_dialog(_("This profile already exists. Are you sure?")):
@@ -214,13 +218,13 @@ class Gui:
         self.model.save(profile_file)
 
     def rename_profile(self, current_name, new_name):
-        current_file = os.path.join(self.profile_path, current_name + '.ini')
-        new_file = os.path.join(self.profile_path, new_name + '.ini')
+        current_file = os.path.join(self.app.profile_path, current_name + '.ini')
+        new_file = os.path.join(self.app.profile_path, new_name + '.ini')
         os.rename(current_file, new_file)
 
     def delete_profile(self, profile_name):
         if profile_name != '' and profile_name is not None:
-            profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+            profile_file = os.path.join(self.app.profile_path, profile_name + '.ini')
             if self.ui.confirmation_dialog(_("This profile will be deleted, are you sure?")):
                 os.remove(profile_file)
             else:
@@ -230,14 +234,14 @@ class Gui:
         if not path.endswith('.ini'):
             raise Exception(_('Invalid extension.'))
         profile_name = os.path.splitext(os.path.basename(path))[0]
-        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        profile_file = os.path.join(self.app.profile_path, profile_name + '.ini')
         if os.path.exists(profile_file):
             raise Exception(_('A profile with that name already exists.'))
         shutil.copyfile(path, profile_file)
         return profile_name
 
     def export_profile(self, profile_name, path):
-        profile_file = os.path.join(self.profile_path, profile_name + '.ini')
+        profile_file = os.path.join(self.app.profile_path, profile_name + '.ini')
         if os.path.exists(path):
             if not self.ui.confirmation_dialog(_('File already exists, overwrite?')):
                 raise Exception()
