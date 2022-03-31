@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-20 10:33+0100\n"
-"PO-Revision-Date: 2022-01-20 10:38+0100\n"
+"PO-Revision-Date: 2022-03-31 15:21+0200\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -116,7 +116,7 @@ msgstr "Este perfil no existe."
 
 #: oversteer/application.py:97
 msgid "No device available."
-msgstr "No ha dispositivos disponibles."
+msgstr "No hay dispositivos disponibles."
 
 #: oversteer/gui.py:27
 msgid "Press toggle button/s"
