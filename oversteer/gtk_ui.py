@@ -60,6 +60,7 @@ class GtkUi:
         self.builder.connect_signals(handlers)
         self.window.show_all()
         self.reset_view()
+        self._set_range_markers(1080)
 
     def main(self):
         Gtk.main()
