@@ -72,11 +72,13 @@ class Application:
             argc -= 1
             if os.path.exists(args.device):
                 device = device_manager.get_device(os.path.realpath(args.device))
-                if not device.check_permissions():
-                    print(_(("You don't have the required permissions to change your " +
-                        "wheel settings. You can fix it yourself by copying the {} " +
-                        "file to the {} directory and rebooting.").format(self.udev_file,
-                        self.target_dir)))
+                if device and not device.check_permissions():
+                    if self.udev_path:
+                        print(_("You don't have the required permissions to change your wheel settings.") + " " +
+                                _("You can fix it yourself by copying the files in {} to the {} directory and rebooting.")
+                                .format(self.udev_path, self.target_dir)
+                    else:
+                        print(_("You don't have the required permissions to change your wheel settings."))
         else:
             device = device_manager.first_device()
 
