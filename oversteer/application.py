@@ -2,6 +2,7 @@ import argparse
 from locale import gettext as _
 import logging
 import os
+import subprocess
 from .device_manager import DeviceManager
 from .model import Model
 import sys
@@ -135,4 +136,6 @@ class Application:
         else:
             model = Model()
             self.apply_args(model, args)
+            if args.command:
+                subprocess.Popen(args.command, shell=True)
 
