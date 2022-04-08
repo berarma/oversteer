@@ -38,6 +38,7 @@ for more information.)**
 
 - Thrustmaster T150 with [https://github.com/scarburato/t150_driver].
 - Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
+- Thrustmaster T248 with [https://github.com/Kimplul/hid-tmff2].
 - Thrustmaster T500RS, no driver support yet.
 - FANATEC CSL Elite Wheel Base with [https://github.com/gotzl/hid-fanatecff].
 - FANATEC CSL Elite Wheel Base PS4 with [https://github.com/gotzl/hid-fanatecff].
