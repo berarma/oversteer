@@ -8,7 +8,7 @@
 SUBSYSTEMS=="hid", KERNELS=="0003:044F:B65E.????", DRIVERS=="t500rs", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range spring_level damper_level friction_level'"
 
 # Thrustmaster T300RS Racing Wheel (USB)
-SUBSYSTEMS=="hid", KERNELS=="0003:044F:B66E.????", DRIVERS=="t300rs", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range spring_level damper_level friction_level'"
+SUBSYSTEMS=="hid", KERNELS=="0003:044F:B66E.????", DRIVERS=="tmff2", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range spring_level damper_level friction_level alternate_modes'"
 
 # Thrustmaster T248 Racing Wheel (USB)
 SUBSYSTEMS=="hid", KERNELS=="0003:044F:B696.????", DRIVERS=="tmff2", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range spring_level damper_level friction_level'"
