@@ -387,7 +387,8 @@ class Device:
                     event.value = event.value * 4
                 elif self.usb_id in [wid.TM_T150]:
                     event.value = event.value * 16
-            elif self.usb_id in [wid.LG_WFG, wid.LG_WFFG, wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP, wid.LG_DFGT, wid.TM_T150]:
+            elif self.usb_id in [wid.LG_WFG, wid.LG_WFFG, wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP,
+                    wid.LG_DFGT, wid.LG_G920, wid.TM_T150]:
                 if event.code == ecodes.ABS_Y:
                     event.code = ecodes.ABS_Z
                 elif event.code == ecodes.ABS_Z:
