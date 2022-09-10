@@ -324,9 +324,9 @@ class GtkUi:
         else:
             self.combine_brakes.set_sensitive(True)
             self.combine_clutch.set_sensitive(True)
-        if combine_pedals == 1:
+        if combine_pedals == pedal_mode.CombinedPedals.COMBINE_BRAKES:
             self.combine_brakes.set_active(True)
-        elif combine_pedals == 2:
+        elif combine_pedals == pedal_mode.CombinedPedals.COMBINE_CLUTCH:
             self.combine_clutch.set_active(True)
         else:
             self.combine_none.set_active(True)
