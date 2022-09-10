@@ -104,7 +104,7 @@ class DeviceManager:
                 })
         else:
             device.set({
-                'dev_path': os.path.join(udevice.sys_path, 'device'),
+                'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device')),
                 'name': udevice.get('NAME').strip('"'),
             })
 

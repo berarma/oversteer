@@ -1,6 +1,8 @@
 from evdev import ecodes, InputDevice
+import grp
 import logging
 import os
+import pwd
 import re
 import select
 import time
@@ -69,6 +71,9 @@ class Device:
         path = self.device_file(filename)
         if not os.access(path, os.F_OK):
             return True
+        status = os.stat(path)
+        logging.debug("check_file_permissions mode: %s user: %s group: %s file: %s", oct(status.st_mode & 0o777),
+                pwd.getpwuid(status.st_uid)[0], grp.getgrgid(status.st_gid)[0], path)
         if os.access(path, os.R_OK | os.W_OK):
             return True
         return False
@@ -329,6 +334,7 @@ class Device:
         self.set_autocenter(0)
 
     def check_permissions(self):
+        logging.debug("chech_permissions: %s", self.dev_path)
         if not os.access(self.dev_path, os.F_OK | os.R_OK | os.X_OK):
             return False
         if not self.check_file_permissions('alternate_modes'):
