@@ -1,4 +1,4 @@
-from evdev import ecodes, InputDevice
+from evdev import ecodes, InputDevice, UInput
 import grp
 import logging
 import os
@@ -7,6 +7,7 @@ import re
 import select
 import time
 from . import wheel_ids as wid
+from .pedal_mode import AxisMode, get_modified_value
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -22,6 +23,9 @@ class Device:
     def __init__(self, device_manager, data):
         self.device_manager = device_manager
         self.input_device = None
+        self.injector_device = None
+        self.injector_active = False
+        self.pedal_mode = None
         self.seat_id = None
         self.vendor_id = None
         self.product_id = None
@@ -141,6 +145,15 @@ class Device:
         # Wait a bit more
         time.sleep(5)
         return True
+
+    def get_pedal_mode(self):
+        if self.pedal_mode is None:
+            self.set_pedal_mode(AxisMode.NORMAL.value.id)
+        return self.pedal_mode
+
+    def set_pedal_mode(self, mode):
+        self.pedal_mode = list(AxisMode)[mode]
+        self.set_active_event_device()
 
     def get_range(self):
         path = self.checked_device_file("range")
@@ -368,6 +381,16 @@ class Device:
                 self.input_device = InputDevice(self.dev_name)
         return self.input_device
 
+    def set_active_event_device(self):
+        if self.pedal_mode != AxisMode.NORMAL and not self.injector_active:
+            self.injector_device = UInput.from_device(self.input_device, name="Custom pedal mode wheel")
+            self.input_device.grab()
+            self.injector_active = True
+        elif self.pedal_mode == AxisMode.NORMAL and self.input_device is not None and self.injector_active:
+            self.injector_device = None
+            self.input_device.ungrab()
+            self.injector_active = False
+
     def get_capabilities(self):
         return self.get_input_device().capabilities()
 
@@ -380,6 +403,10 @@ class Device:
                     event = self.normalize_event(event)
                     if event.type == ecodes.EV_ABS:
                         self.last_axis_value[ecodes.ABS_X] = event.value
+
+                    if self.pedal_mode != AxisMode.NORMAL and self.injector_device is not None:
+                        self.injector_device.write_event(event)
+
                     yield event
 
     def normalize_event(self, event):
@@ -408,4 +435,6 @@ class Device:
                     event.code = ecodes.ABS_RZ
                 elif event.code == ecodes.ABS_THROTTLE:
                     event.code = ecodes.ABS_Y
+            elif self.pedal_mode != AxisMode.NORMAL and event.code in [ecodes.ABS_RZ, ecodes.ABS_Y, ecodes.ABS_Z]:
+                event.value = get_modified_value(self.pedal_mode, event.value)
         return event
