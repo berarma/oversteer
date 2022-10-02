@@ -1,13 +1,23 @@
 # Oversteer - Steering Wheel Manager for Linux [![Packaging status](https://repology.org/badge/tiny-repos/oversteer.svg)](https://repology.org/project/oversteer/versions)
 
-[https://github.com/berarma/oversteer]
+[_Oversteer_](https://github.com/berarma/oversteer) manages steering wheels on
+Linux using the features provided by the loaded modules. It doesn't provide
+hardware support, you'll still need a driver module that enables the hardware
+on Linux.
 
-This is an application to configure steering wheels on Linux. It doesn't
-provide direct hardware support, you'll still need a driver module that
-enables the hardware on Linux.
+Most wheels will work on Linux but some won't have FFB without specific
+drivers. Additionally, Oversteer recognizes just a set of wheel devices that
+have been previously tested. Contact me to add yours.
 
-_Oversteer_ recognizes the following Logitech wheels fully supported by the
-default kernel module:
+## Supported devices
+
+This section lists devices recognized by this application. Being in this list
+doesn't imply any level of device support or compatibility in other
+applications or games. When thinking about buying a wheel don't rely solely on
+the information here.
+
+_Oversteer_ recognizes the following Logitech wheels which are supported by the
+default in-kernel module:
 
 - Wingman Formula GP
 - Wingman Formula Force GP
@@ -22,49 +32,49 @@ default kernel module:
 - G29 Driving Force Racing Wheel
 - G920 Driving Force Racing Wheel
 
-The G923 models are not yet supported by the existing modules but there's some
-work going on to get them supported. [Patch for PS4
-version](https://github.com/berarma/new-lg4ff/pull/50) and [patch for XBox
-version](https://patchwork.kernel.org/project/linux-input/list/?series=489571).
+The following wheels will need custom driver modules for improved support.
+These drivers are still being worked on. **(I'm NOT claiming they will fully
+work. Please, check the related projects for more information.)**:
 
-Additionally, more features are available for these wheels when using
-[new-lg4ff](https://github.com/berarma/new-lg4ff), except the Logitech
-G920 and G923 for XBox which aren't supported by this driver.
-
-The following wheels need custom driver modules that are still being worked on:
-
-**(I'm NOT claiming they will work at all, please, check the driver projects
-for more information.)**
-
-- Thrustmaster T150 with [https://github.com/scarburato/t150_driver].
-- Thrustmaster T300RS with [https://github.com/Kimplul/hid-tmff2].
-- Thrustmaster T248 with [https://github.com/Kimplul/hid-tmff2].
+- Logitech G923 TRUEFORCE Sim Racing Wheel for PS/PC with
+  [new-lg4ff](https://github.com/berarma/new-lg4ff).
+- Thrustmaster T150 with [t150_driver](https://github.com/scarburato/t150_driver).
+- Thrustmaster T300RS with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
+- Thrustmaster T248 with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
 - Thrustmaster T500RS, no driver support yet.
-- FANATEC CSL Elite Wheel Base with [https://github.com/gotzl/hid-fanatecff].
-- FANATEC CSL Elite Wheel Base PS4 with [https://github.com/gotzl/hid-fanatecff].
-- FANATEC ClubSport Wheel Base V2 with [https://github.com/gotzl/hid-fanatecff].
-- FANATEC ClubSport Wheel Base V2.5 with [https://github.com/gotzl/hid-fanatecff].
-- FANATEC Podium Wheel Base DD1/DD2 with [https://github.com/gotzl/hid-fanatecff].
-- FANATEC CSL DD / GT DD Pro Wheel with [https://github.com/gotzl/hid-fanatecff].
+- FANATEC CSL Elite Wheel Base with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC CSL Elite Wheel Base PS4 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC ClubSport Wheel Base V2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC ClubSport Wheel Base V2.5 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC Podium Wheel Base DD1/DD2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC CSL DD / GT DD Pro Wheel with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+
+The Logitech G923 TRUEFORCE Sim Racing Wheel for XBOX/PC should be supported by
+the in-kernel HIDPP module when [this
+patch](https://patchwork.kernel.org/project/linux-input/list/?series=489571) is
+accepted upstream.
+
+Most Logitech wheels, except XBOX/PC versions, can get improved support from
+[new-lg4ff](https://github.com/berarma/new-lg4ff) with more effects and
+features. Some games won't have full FFB without it.
 
 Features (when supported by the device and the driver):
 
-- Change emulation mode.
 - Change rotation range.
+- Change emulation/working modes.
 - Combine accelerator/brakes pedals for games that use just one axis.
 - Change autocentering force strength.
 - Change force feedback gain.
 - Device configuration profiles.
-- Fix system permissions to access all device features.
 - Overlay window to display/configure range.
 - Use wheel buttons to configure range.
 - Hardware performance testing.
-- (only new-lg4ff) Combine accelerator/clutch pedals. Useful for flight
-  simulators.
-- (only new-lg4ff) Change global force feedback gain (with new-lg4ff).
-- (only new-lg4ff) Change each conditional force feedback effect type gain.
-- (only new-lg4ff) FFBmeter to monitor FFB clipping using wheel leds or overlay
-  window.
+- Combine accelerator/clutch pedals. Useful for flight
+  simulators. (Not supported with in-kernel modules)
+- Change global force feedback gain. (Not supported with in-kernel modules)
+- Change each conditional force feedback effect type gain. (Not supported with in-kernel modules)
+- FFBmeter to monitor FFB clipping using wheel leds or overlay
+  window. (Not supported with in-kernel modules)
 
 I can test only on a Logitech G29 Driving Force. Please, report your
 results with other devices. More wheel models will be added to this list
