@@ -23,6 +23,7 @@ class DeviceManager:
             wid.LG_MOMO2: 270,
             wid.LG_WFG: 180,
             wid.LG_WFFG: 180,
+            wid.TM_FFRW: 180,
             wid.TM_T150: 1080,
             wid.TM_T248: 900,
             wid.TM_T300RS: 1080,
