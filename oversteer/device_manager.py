@@ -36,6 +36,7 @@ class DeviceManager:
             wid.FT_PDD1: 1080,
             wid.FT_PDD2: 1080,
             wid.FT_CSL_DD: 1080,
+            wid.XX_FFBOARD: 1080,
         }
         self.devices = {}
         self.changed = True

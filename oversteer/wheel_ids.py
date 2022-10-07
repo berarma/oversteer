@@ -29,4 +29,5 @@ FT_CSV25 = '0eb7:0004'
 FT_PDD1 = '0eb7:0006'
 FT_PDD2 = '0eb7:0007'
 FT_CSL_DD = '0eb7:0020'
+XX_FFBOARD = '1209:ffb0'
 
