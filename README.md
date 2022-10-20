@@ -5,16 +5,23 @@ Linux using the features provided by the loaded modules. It doesn't provide
 hardware support, you'll still need a driver module that enables the hardware
 on Linux.
 
-Most wheels will work on Linux but some won't have FFB without specific
-drivers. Additionally, Oversteer recognizes just a set of wheel devices that
-have been previously tested. Contact me to add yours.
+Most wheels will work but won't have FFB without specific drivers that support
+that feature.
+
+I can test only on a Logitech G29 Driving Force. Please, report your
+results with other devices. More wheel models will be added to this list
+as they are requested.
+
+__Use at your own risk. Suggestions, bugs and pull requests welcome.__
 
 ## Supported devices
 
-This section lists devices recognized by this application. Being in this list
-doesn't imply any level of device support or compatibility in other
-applications or games. When thinking about buying a wheel don't rely solely on
-the information here.
+_Oversteer_ maintains a list of known wheel devices. If your wheel isn't
+recognized, please contact me.
+
+This section lists devices currently recognized. Being in this list doesn't
+imply good hardware support. __When thinking about buying a wheel don't rely
+solely on the information here__.
 
 _Oversteer_ recognizes the following Logitech wheels which are supported by the
 default in-kernel module:
@@ -32,23 +39,6 @@ default in-kernel module:
 - G29 Driving Force Racing Wheel
 - G920 Driving Force Racing Wheel
 
-The following wheels will need custom driver modules for improved support.
-These drivers are still being worked on. **(I'm NOT claiming they will fully
-work. Please, check the related projects for more information.)**:
-
-- Logitech G923 TRUEFORCE Sim Racing Wheel for PS/PC with
-  [new-lg4ff](https://github.com/berarma/new-lg4ff).
-- Thrustmaster T150 with [t150_driver](https://github.com/scarburato/t150_driver).
-- Thrustmaster T300RS with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
-- Thrustmaster T248 with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
-- Thrustmaster T500RS, no driver support yet.
-- FANATEC CSL Elite Wheel Base with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
-- FANATEC CSL Elite Wheel Base PS4 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
-- FANATEC ClubSport Wheel Base V2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
-- FANATEC ClubSport Wheel Base V2.5 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
-- FANATEC Podium Wheel Base DD1/DD2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
-- FANATEC CSL DD / GT DD Pro Wheel with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
-
 The Logitech G923 TRUEFORCE Sim Racing Wheel for XBOX/PC should be supported by
 the in-kernel HIDPP module when [this
 patch](https://patchwork.kernel.org/project/linux-input/list/?series=489571) is
@@ -58,7 +48,37 @@ Most Logitech wheels, except XBOX/PC versions, can get improved support from
 [new-lg4ff](https://github.com/berarma/new-lg4ff) with more effects and
 features. Some games won't have full FFB without it.
 
-Features (when supported by the device and the driver):
+The following wheels are supported by the in-kernel PIDFF module:
+
+- OpenFFBoard, (https://github.com/Ultrawipf/OpenFFBoard).
+
+The following wheels will need custom driver modules for FFB support.
+These drivers are still being worked on. **(I'm NOT claiming they will fully
+work. Please, check the related projects for more information.)**:
+
+- Logitech G923 TRUEFORCE Sim Racing Wheel for PS/PC with
+  [new-lg4ff](https://github.com/berarma/new-lg4ff).
+- Thrustmaster T150 with [t150_driver](https://github.com/scarburato/t150_driver).
+- Thrustmaster T300 RS with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
+- Thrustmaster T248 with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
+- FANATEC CSL Elite Wheel Base with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC CSL Elite Wheel Base PS4 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC ClubSport Wheel Base V2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC ClubSport Wheel Base V2.5 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC Podium Wheel Base DD1/DD2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- FANATEC CSL DD / GT DD Pro Wheel with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+
+These wheels are recognized but don't have driver support (Force Feedback and
+other features won't work):
+
+- Thrustmaster Force Feedback Racing Wheel
+- Thrustmaster TX Racing Wheel.
+- Thrustmaster T500 RS.
+
+
+## Features
+
+When supported by the device and the driver:
 
 - Change rotation range.
 - Change emulation/working modes.
@@ -75,12 +95,6 @@ Features (when supported by the device and the driver):
 - Change each conditional force feedback effect type gain. (Not supported with in-kernel modules)
 - FFBmeter to monitor FFB clipping using wheel leds or overlay
   window. (Not supported with in-kernel modules)
-
-I can test only on a Logitech G29 Driving Force. Please, report your
-results with other devices. More wheel models will be added to this list
-as they are requested.
-
-Use at your own risk. Suggestions, bugs and pull requests welcome.
 
 ## Installation
 
