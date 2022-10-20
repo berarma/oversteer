@@ -29,6 +29,7 @@ class DeviceManager:
             wid.TM_T300RS: 1080,
             wid.TM_T300RS_FF1: 1080,
             wid.TM_T500RS: 1080,
+            wid.TM_TX: 900,
             wid.FT_CSL_ELITE: 1080,
             wid.FT_CSL_ELITE_PS4: 1080,
             wid.FT_CSV2: 900,
