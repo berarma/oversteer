@@ -190,6 +190,8 @@ class Gui:
         self.ui.set_max_range(self.device.get_max_range())
 
         self.ui.set_modes(self.model.get_mode_list())
+        self.model.update_from_device_settings()
+        self.model.flush_device()
         self.model.flush_ui()
 
     def load_profile(self, profile_name):

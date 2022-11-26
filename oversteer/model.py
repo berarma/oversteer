@@ -42,9 +42,6 @@ class Model:
         self.ui = ui
         self.reference_values = None
         self.data = self.defaults.copy()
-        if self.device is not None:
-            self.update_from_device_settings()
-            self.flush_device() # Some settings are read incorrectly sometimes
 
     def set_device(self, device):
         self.device = device
@@ -160,7 +157,6 @@ class Model:
     def set_mode(self, value):
         if self.set_if_changed('mode', value):
             self.device.set_mode(value)
-            self.update_from_device_settings()
 
     def get_mode(self):
         return self.data['mode']
@@ -260,6 +256,7 @@ class Model:
         return self.data['start_app_manually']
 
     def flush_device(self):
+        logging.debug("flush_device")
         if self.data['range'] is not None:
             self.device.set_range(self.data['range'])
         if self.data['combine_pedals'] is not None:
@@ -280,6 +277,7 @@ class Model:
             self.device.set_ffb_leds(self.data['ffb_leds'])
 
     def flush_ui(self, data = None):
+        logging.debug("flush_ui")
         if data is None:
             data = self.data
         self.ui.set_mode(data['mode'])

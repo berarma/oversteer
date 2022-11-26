@@ -65,13 +65,13 @@ class DeviceManager:
             self.update_device_list(udevice)
             device = self.get_device(seat_id)
             if device and device.dev_name:
+                device.enable()
                 time.sleep(5)
-                device.reconnect()
                 self.changed = True
         if action == 'remove':
             device = self.get_device(seat_id)
             if device:
-                device.disconnect()
+                device.disable()
                 self.changed = True
 
     def init_device_list(self):
@@ -82,6 +82,8 @@ class DeviceManager:
                 self.update_device_list(udevice)
 
         logging.debug('Devices: %s', self.devices)
+
+        self.changed = True
 
     def update_device_list(self, udevice):
         seat_id = udevice.get('ID_FOR_SEAT')
@@ -98,6 +100,8 @@ class DeviceManager:
 
         if 'DEVNAME' in udevice:
             if 'event' in udevice.get('DEVNAME'):
+                logging.debug("DEVNAME: %s ID_VENDOR_ID: %s ID_MODEL_ID: %s", udevice.get('DEVNAME'),
+                udevice.get('ID_VENDOR_ID'), udevice.get('ID_MODEL_ID'))
                 usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
                 device.set({
                     'vendor_id': udevice.get('ID_VENDOR_ID'),
@@ -107,6 +111,7 @@ class DeviceManager:
                     'max_range': self.supported_wheels[usb_id],
                 })
         else:
+            logging.debug("NAME: %s", udevice.get('NAME'))
             device.set({
                 'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device')),
                 'name': udevice.get('NAME').strip('"'),

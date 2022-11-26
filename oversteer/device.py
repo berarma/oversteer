@@ -43,11 +43,12 @@ class Device:
             self.input_device.close()
             self.input_device = None
 
-    def disconnect(self):
+    def disable(self):
+        self.dev_name = None
         self.ready = False
         self.close()
 
-    def reconnect(self):
+    def enable(self):
         self.ready = True
 
     def is_ready(self):
@@ -131,7 +132,7 @@ class Device:
         old_mode = self.get_mode()
         if old_mode == emulation_mode:
             return True
-        self.disconnect()
+        self.disable()
         logging.debug("Setting mode: %s", str(emulation_mode))
         with open(path, "w") as file:
             file.write(emulation_mode)
