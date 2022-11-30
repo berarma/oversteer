@@ -335,7 +335,7 @@ class Device:
         self.set_autocenter(0)
 
     def check_permissions(self):
-        logging.debug("chech_permissions: %s", self.dev_path)
+        logging.debug("check_permissions: %s", self.dev_path)
         if not os.access(self.dev_path, os.F_OK | os.R_OK | os.X_OK):
             return False
         if not self.check_file_permissions('alternate_modes'):

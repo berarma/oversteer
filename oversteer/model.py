@@ -3,6 +3,8 @@ import logging
 
 class Model:
 
+    profile = None
+
     defaults = {
         'mode': None,
         'range': None,
@@ -38,18 +40,25 @@ class Model:
     }
 
     def __init__(self, device = None, ui = None):
-        self.device = device
         self.ui = ui
         self.reference_values = None
         self.data = self.defaults.copy()
+        if device != None:
+            self.set_device(device)
+
+    def get_device(self):
+        return self.device
 
     def set_device(self, device):
         self.device = device
+        pending_data = self.data.copy()
+        self.update_from_device_settings()
+        for k, v in pending_data.items():
+            if v != None:
+                self.data[k] = v
 
     def set_ui(self, ui):
         self.ui = ui
-        self.update_save_profile_button()
-        self.flush_ui()
 
     def update_save_profile_button(self):
         self.ui.disable_save_profile()
@@ -80,7 +89,15 @@ class Model:
     def update_from_device_settings(self):
         self.data.update(self.read_device_settings())
 
+    def get_profile(self):
+        return self.profile
+
     def load(self, profile_file):
+        logging.debug('Load')
+
+        if profile_file == self.profile:
+            return
+
         config = configparser.ConfigParser()
         config.read(profile_file)
         data = self.defaults.copy()
@@ -99,22 +116,11 @@ class Model:
             elif self.types[key] == 'tuple':
                 data[key] = tuple(map(int, value.split(',')))
 
-        if data['mode'] is not None and self.device is not None:
-            self.set_mode(data['mode'])
-
         self.data = data
         self.save_reference_values()
+        self.profile = profile_file
 
-        if self.device is not None:
-            base_settings = self.read_device_settings()
-            for (key, value) in base_settings.items():
-                if self.data[key] is None:
-                    self.data[key] = value
-            self.flush_device()
-
-        if self.ui is not None:
-            self.flush_ui()
-            self.update_save_profile_button()
+        logging.debug("\n".join('{0} = {1}'.format(k, v) for k, v in self.data.items()))
 
     def save(self, profile_file):
         data = {}
@@ -148,7 +154,8 @@ class Model:
             self.data[key] = value
             if self.ui is not None:
                 self.update_save_profile_button()
-            return True
+            if self.device:
+                return True
         return False
 
     def get_mode_list(self):
@@ -257,6 +264,8 @@ class Model:
 
     def flush_device(self):
         logging.debug("flush_device")
+        if self.data['mode'] is not None:
+            self.device.set_mode(self.data['mode'])
         if self.data['range'] is not None:
             self.device.set_range(self.data['range'])
         if self.data['combine_pedals'] is not None:
@@ -294,4 +303,5 @@ class Model:
         self.ui.set_use_buttons(data['use_buttons'])
         self.ui.set_center_wheel(data['center_wheel'])
         self.ui.set_start_app_manually(data['start_app_manually'])
+        self.update_save_profile_button()
 

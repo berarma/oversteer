@@ -47,11 +47,11 @@ class Gui:
         ('de_DE', _('German')),
     ]
 
-    def __init__(self, application, argv):
+    def __init__(self, application, model, argv):
         self.app = application
         self.locale = ''
         self.check_permissions = True
-        self.model = None
+        self.model = model
         self.device_manager = self.app.device_manager
         self.device = None
         self.grab_input = False
@@ -63,7 +63,6 @@ class Gui:
         self.button_config = [-1] * 9
         self.button_config[0] = [-1]
         self.pressed_button_count = 0
-        self.first_device_seen = True
 
         signal.signal(signal.SIGINT, self.sig_int_handler)
 
@@ -86,17 +85,16 @@ class Gui:
 
         self.ui.start()
 
-        self.populate_window()
+        self.model.set_ui(self.ui)
 
-        model = Model()
-        self.app.apply_args(model, self.app.args)
+        self.populate_window()
 
         if self.app.args.profile is not None:
             self.ui.set_profile(self.app.args.profile)
 
         start_manually = self.app.args.start_manually
         if start_manually is None:
-            start_manually = model.get_start_app_manually()
+            start_manually = self.model.get_start_app_manually()
 
         if not model.device:
             self.ui.info_dialog("No device available.")
@@ -178,21 +176,23 @@ class Gui:
             else:
                 self.ui.info_dialog(_("You don't have the required permissions to change your wheel settings."))
 
+        if not self.models:
+            self.model.set_device(self.device)
+            self.models[self.device.get_id()] = self.model
         if self.device.get_id() in self.models:
             self.model = self.models[self.device.get_id()]
         else:
             self.model = Model(self.device, self.ui)
-            if self.first_device_seen:
-                self.app.apply_args(self.model, self.app.args)
-                self.first_device_seen = False
             self.models[self.device.get_id()] = self.model
 
         self.ui.set_max_range(self.device.get_max_range())
-
         self.ui.set_modes(self.model.get_mode_list())
-        self.model.update_from_device_settings()
-        self.model.flush_device()
-        self.model.flush_ui()
+
+        if self.model.get_profile():
+            self.ui.set_profile(self.model.get_profile())
+        else:
+            self.model.flush_device()
+            self.model.flush_ui()
 
     def load_profile(self, profile_name):
         if profile_name is None or profile_name == '':
@@ -204,6 +204,8 @@ class Gui:
             return
 
         self.model.load(profile_file)
+        self.model.flush_device()
+        self.model.flush_ui()
 
     def save_profile(self, profile_name, check_exists = False):
         if self.device is None:
