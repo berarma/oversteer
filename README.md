@@ -156,6 +156,14 @@ The installed udev rules files will have these names:
 
 #### Build and install
 
+Start by downloading `Oversteer` and change your working directory to it. It
+could be a release package or the master branch.
+
+```
+git clone https://github.com/berarma/oversteer.git
+cd oversteer
+```
+
 Prepare build system:
 
 ```shell
