@@ -162,9 +162,13 @@ class Gui:
             profiles.append(profile_name)
         self.ui.set_profiles(profiles)
 
+    def populate_pedal_modes(self):
+        self.ui.set_pedal_modes()
+
     def populate_window(self):
         self.populate_devices()
         self.populate_profiles()
+        self.populate_pedal_modes()
 
     def change_device(self, device_id):
         self.device = self.device_manager.get_device(device_id)

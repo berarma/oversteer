@@ -18,6 +18,7 @@ class Model:
         'use_buttons': None,
         'center_wheel': None,
         'start_app_manually': None,
+        'pedal_mode': None,
     }
 
     types = {
@@ -35,6 +36,7 @@ class Model:
         'use_buttons': 'boolean',
         'center_wheel': 'boolean',
         'start_app_manually': 'boolean',
+        'pedal_mode': 'integer',
     }
 
     def __init__(self, device = None, ui = None):
@@ -78,6 +80,7 @@ class Model:
             'use_buttons': False if self.device.get_range() is not None else None,
             'center_wheel': False,
             'start_app_manually': False,
+            'pedal_mode': self.device.get_pedal_mode().value.id
         }
 
     def update_from_device_settings(self):
@@ -164,6 +167,14 @@ class Model:
 
     def get_mode(self):
         return self.data['mode']
+
+    def get_pedal_mode(self):
+        return self.data['pedal_mode']
+
+    def set_pedal_mode(self, value):
+        value = int(value)
+        if self.set_if_changed('pedal_mode', value):
+            self.device.set_pedal_mode(value)
 
     def set_range(self, value):
         value = int(value)
@@ -278,6 +289,8 @@ class Model:
             self.device.set_friction_level(self.data['friction_level'])
         if self.data['ffb_leds'] is not None:
             self.device.set_ffb_leds(self.data['ffb_leds'])
+        if self.data['pedal_mode'] is not None:
+            self.device.set_pedal_mode(self.data['pedal_mode'])
 
     def flush_ui(self, data = None):
         if data is None:
@@ -296,4 +309,6 @@ class Model:
         self.ui.set_use_buttons(data['use_buttons'])
         self.ui.set_center_wheel(data['center_wheel'])
         self.ui.set_start_app_manually(data['start_app_manually'])
+        self.ui.set_pedal_mode(data['pedal_mode'])
+        self.ui.set_pedal_levels()
 

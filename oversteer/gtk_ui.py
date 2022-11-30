@@ -5,6 +5,7 @@ import os
 from .gtk_handlers import GtkHandlers
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk, GLib
+from . import pedal_mode
 
 class GtkUi:
 
@@ -46,6 +47,11 @@ class GtkUi:
         self.emulation_mode_combobox.pack_start(cell_renderer, True)
         self.emulation_mode_combobox.add_attribute(cell_renderer, 'text', 1)
         self.emulation_mode_combobox.set_id_column(0)
+
+        cell_renderer = Gtk.CellRendererText()
+        self.pedal_mode_combobox.pack_start(cell_renderer, True)
+        self.pedal_mode_combobox.add_attribute(cell_renderer, 'text', 1)
+        self.pedal_mode_combobox.set_id_column(0)
 
         self.set_range_overlay('never')
         self.disable_save_profile()
@@ -256,6 +262,47 @@ class GtkUi:
             self.change_emulation_mode_button.set_sensitive(True)
             self.emulation_mode_combobox.set_active_id(mode)
 
+    def set_pedal_modes(self):
+        model = self.pedal_mode_combobox.get_model()
+        if model is None:
+            model = Gtk.ListStore(int, str)
+
+        for mode in pedal_mode.AxisMode:
+            model.append(mode.value)
+        self.pedal_mode_combobox.set_model(model)
+        self.set_pedal_mode(pedal_mode.AxisMode.NORMAL.value.id)
+
+    def set_pedal_mode(self, mode):
+        if self.pedal_mode_combobox.get_model() is None:
+            return
+
+        set_mode = list(pedal_mode.AxisMode)[mode]
+        self.pedal_mode_combobox.set_active(set_mode.value.id)
+        self.set_pedal_levels()
+
+    def set_pedal_levels(self):
+        combine_mode = self.controller.device.get_combine_pedals()
+        axis_mode = self.controller.device.get_pedal_mode()
+
+        acceleration_out = pedal_mode.get_modified_value(axis_mode, 255)
+        acceleration_in = pedal_mode.get_modified_value(axis_mode, 0)
+        brakes_out = pedal_mode.get_modified_value(axis_mode, 255)
+        clutch_out = pedal_mode.get_modified_value(axis_mode, 255)
+
+        accel = acceleration_out
+
+        if combine_mode == pedal_mode.CombinedPedals.COMBINE_BRAKES:
+            accel = acceleration_in + (acceleration_out - acceleration_in) / 2
+            brakes_out = 255
+        elif combine_mode == pedal_mode.CombinedPedals.COMBINE_CLUTCH:
+            accel = acceleration_in + (acceleration_out - acceleration_in) / 2
+            clutch_out = 255
+
+        self.safe_call(self.set_accelerator_input, int(accel))
+        self.safe_call(self.set_brakes_input, int(brakes_out))
+        self.safe_call(self.set_clutch_input, int(clutch_out))
+
+
     def set_range(self, wrange):
         if wrange is None:
             self.wheel_range.set_sensitive(False)
@@ -277,9 +324,9 @@ class GtkUi:
         else:
             self.combine_brakes.set_sensitive(True)
             self.combine_clutch.set_sensitive(True)
-        if combine_pedals == 1:
+        if combine_pedals == pedal_mode.CombinedPedals.COMBINE_BRAKES:
             self.combine_brakes.set_active(True)
-        elif combine_pedals == 2:
+        elif combine_pedals == pedal_mode.CombinedPedals.COMBINE_CLUTCH:
             self.combine_clutch.set_active(True)
         else:
             self.combine_none.set_active(True)
@@ -611,6 +658,7 @@ class GtkUi:
         self.clutch_input = self.builder.get_object('clutch_input')
         self.accelerator_input = self.builder.get_object('accelerator_input')
         self.brakes_input = self.builder.get_object('brakes_input')
+        self.pedal_mode_combobox = self.builder.get_object('pedal_mode')
         self.hat_up_input = self.builder.get_object('hat_up_input')
         self.hat_down_input = self.builder.get_object('hat_down_input')
         self.hat_left_input = self.builder.get_object('hat_left_input')

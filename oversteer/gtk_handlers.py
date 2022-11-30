@@ -4,6 +4,7 @@ import threading
 import traceback
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gdk
+from .pedal_mode import CombinedPedals
 
 class GtkHandlers:
 
@@ -81,13 +82,16 @@ class GtkHandlers:
         self.ui.overlay_wheel_range.set_label(str(wrange))
 
     def on_combine_none_clicked(self, widget):
-        self.model.set_combine_pedals(0)
+        self.model.set_combine_pedals(CombinedPedals.NONE)
+        self.ui.set_pedal_levels()
 
     def on_combine_brakes_clicked(self, widget):
-        self.model.set_combine_pedals(1)
+        self.model.set_combine_pedals(CombinedPedals.COMBINE_BRAKES)
+        self.ui.set_pedal_levels()
 
     def on_combine_clutch_clicked(self, widget):
-        self.model.set_combine_pedals(2)
+        self.model.set_combine_pedals(CombinedPedals.COMBINE_CLUTCH)
+        self.ui.set_pedal_levels()
 
     def on_ff_gain_value_changed(self, widget):
         ff_gain = int(widget.get_value())
@@ -286,3 +290,8 @@ class GtkHandlers:
 
     def on_start_app_clicked(self, widget):
         self.controller.start_app()
+
+    def on_pedal_mode_changed(self, widget):
+        mode = self.ui.pedal_mode_combobox.get_active()
+        self.model.set_pedal_mode(mode)
+        self.model.flush_ui()
