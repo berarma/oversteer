@@ -41,7 +41,7 @@ default in-kernel module:
 
 The Logitech G923 TRUEFORCE Sim Racing Wheel for XBOX/PC should be supported by
 the in-kernel HIDPP module when [this
-patch](https://patchwork.kernel.org/project/linux-input/list/?series=489571) is
+patch](https://www.spinics.net/lists/linux-input/msg73531.html) is
 accepted upstream.
 
 Most Logitech wheels, except XBOX/PC versions, can get improved support from
