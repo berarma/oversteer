@@ -17,4 +17,4 @@ SUBSYSTEMS=="hid", KERNELS=="0003:044F:B66F.????", DRIVERS=="tmff2", RUN+="/bin/
 SUBSYSTEMS=="hid", KERNELS=="0003:044F:B696.????", DRIVERS=="tmff2", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range gain spring_level damper_level friction_level'"
 
 # Thrustmaster T150 Racing Wheel (USB)
-SUBSYSTEMS=="hid", KERNELS=="0003:044F:B677.????", DRIVERS=="t150", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range gain autocenter'"
+SUBSYSTEMS=="hid", KERNELS=="0003:044F:B677.????", DRIVERS=="hid-t150", RUN+="/bin/sh -c 'cd %S%p/../../../; chmod 666 range gain autocenter'"
