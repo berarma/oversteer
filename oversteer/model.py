@@ -4,6 +4,7 @@ import logging
 class Model:
 
     profile = None
+    device = None
 
     defaults = {
         'mode': None,
