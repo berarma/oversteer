@@ -36,7 +36,7 @@ default in-kernel module:
 - Speed Force Wireless
 - G25 Racing Wheel
 - G27 Racing Wheel
-- G29 Driving Force Racing Wheel
+- G29 Driving Force Racing Wheel (PS3 mode)
 - G920 Driving Force Racing Wheel
 
 The Logitech G923 TRUEFORCE Sim Racing Wheel for XBOX/PC should be supported by
