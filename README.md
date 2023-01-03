@@ -115,21 +115,26 @@ User gripped has created a [Gentoo ebuild](https://github.com/gripped/Logitech-w
 
 #### Requirements
 
-You can install all dependencies on Debian systems with the following command
-(I'm using the meson package in Buster backports):
+Install all dependencies on Debian systems with the following command:
 
 `apt install python3 python3-distutils python3-gi python3-pyudev python3-xdg
 python3-evdev gettext meson appstream-util desktop-file-utils
 python3-matplotlib python3-scipy`
 
-You can install all dependencies on Fedora systems with the following command:
+Install all dependencies on Fedora systems with the following command:
 
 `dnf install python3 python3-distutils-extra python3-gobject python3-pyudev
 python3-pyxdg python3-evdev gettext meson appstream desktop-file-utils
 python3-matplotlib-gtk3 python3-scipy`
 
-In other distributions, use the available tools to install the packages that
-will have similar names.
+Install all dependencies on OpenSUSE systems with the following command:
+
+`zypper in python3 python3-distutils-extra python3-gobject python3-pyudev
+python3-pyxdg python3-evdev meson AppStream desktop-file-utils
+python3-matplotlib-gtk3 python3-scipy gettext-runtime gettext-tools`
+
+For other distributions, use your package manager to find and install the
+equivalent packages.
 
 #### Permissions
 
