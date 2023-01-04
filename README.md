@@ -131,7 +131,7 @@ Install all dependencies on OpenSUSE systems with the following command:
 
 `zypper in python3 python3-distutils-extra python3-gobject python3-pyudev
 python3-pyxdg python3-evdev meson AppStream desktop-file-utils
-python3-matplotlib-gtk3 python3-scipy gettext-runtime gettext-tools`
+python3-matplotlib-gtk3 python3-scipy gettext-tools`
 
 For other distributions, use your package manager to find and install the
 equivalent packages.
