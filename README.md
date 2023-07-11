@@ -72,8 +72,9 @@ These wheels are recognized but don't have driver support (Force Feedback and
 other features won't work):
 
 - Thrustmaster Force Feedback Racing Wheel
-- Thrustmaster TX Racing Wheel.
-- Thrustmaster T500 RS.
+- Thrustmaster TX Racing Wheel
+- Thrustmaster T500 RS
+- Thrustmaster T80
 
 
 ## Features
