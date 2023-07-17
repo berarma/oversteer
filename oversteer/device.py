@@ -185,7 +185,7 @@ class Device:
         path = self.checked_device_file("autocenter")
         if not path:
             capabilities = self.get_capabilities()
-            if ecodes.FF_AUTOCENTER in capabilities[ecodes.EV_FF]:
+            if ecodes.EV_FF in capabilities and ecodes.FF_AUTOCENTER in capabilities[ecodes.EV_FF]:
                 return 0
             else:
                 return None
@@ -212,7 +212,7 @@ class Device:
         path = self.checked_device_file("gain")
         if not path:
             capabilities = self.get_capabilities()
-            if ecodes.FF_GAIN in capabilities[ecodes.EV_FF]:
+            if ecodes.EV_FF in capabilities and ecodes.FF_GAIN in capabilities[ecodes.EV_FF]:
                 return 100
             else:
                 return None
