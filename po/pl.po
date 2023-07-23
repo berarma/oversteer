@@ -59,7 +59,7 @@ msgid "set the spring level [0-100]"
 msgstr "ustaw poziom sprężyny [0-100]"
 
 #: oversteer/application.py:33
-msgid " [0-100]"
+msgid "set the damper level [0-100]"
 msgstr "ustaw poziom tłumienia [0-100]"
 
 #: oversteer/application.py:34
