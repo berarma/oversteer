@@ -24,7 +24,7 @@ msgstr "Oversteer - Menadżer kierownic"
 
 #: oversteer/application.py:24
 msgid "Run as command's companion"
-msgstr "Ejecutar como complementario del comando"
+msgstr ""
 
 #: oversteer/application.py:25
 msgid "Device path"
@@ -36,7 +36,7 @@ msgstr "lista podłączonych urządzeń"
 
 #: oversteer/application.py:27
 msgid "set the compatibility mode"
-msgstr "ustaw tryb kompatybilnośco"
+msgstr "ustaw tryb kompatybilności"
 
 #: oversteer/application.py:28
 msgid "set the rotation range [40-900]"
@@ -48,7 +48,7 @@ msgstr "połącz manipulatory [0-2]"
 
 #: oversteer/application.py:30
 msgid "set the autocenter strength [0-100]"
-msgstr "automatyczne zcentruj siłę [0-100]"
+msgstr "ustaw siłę automatycznego centrowania [0-100]"
 
 #: oversteer/application.py:31
 msgid "set the FF gain [0-100]"
@@ -59,8 +59,8 @@ msgid "set the spring level [0-100]"
 msgstr "ustaw poziom sprężyny [0-100]"
 
 #: oversteer/application.py:33
-msgid "ustaw poziom tłumienia [0-100]"
-msgstr " [0-100]"
+msgid " [0-100]"
+msgstr "ustaw poziom tłumienia [0-100]"
 
 #: oversteer/application.py:34
 msgid "set the friction level [0-100]"
@@ -116,7 +116,7 @@ msgstr "Ten profil nie istnieje."
 
 #: oversteer/application.py:97
 msgid "No device available."
-msgstr "Brak dostępnych urządzeń/"
+msgstr "Brak dostępnych urządzeń."
 
 #: oversteer/gui.py:27
 msgid "Press toggle button/s"
@@ -199,7 +199,7 @@ msgid ""
 "You can fix it yourself by copying the files in {} to the {} directory and "
 "rebooting."
 msgstr ""
-"Możesz to sam naprawić kopiując pliki w {} do {} ścieżki i zrestartuj komputer."
+"Możesz to sam naprawić kopiując pliki w {} do {} ścieżki i restartując komputer."
 
 #: oversteer/gui.py:127
 msgid "Do you want us to make this change for you?"
@@ -291,11 +291,11 @@ msgstr "Nowe dane testowe zimportowane z plik CSV."
 
 #: oversteer/gui.py:567
 msgid "CSV file to export"
-msgstr "Plik CSV do zexportowania"
+msgstr "Plik CSV do zeksportowania"
 
 #: oversteer/gui.py:581
 msgid "Test data exported."
-msgstr "Testowae dane zexportowane."
+msgstr "Testowae dane zeksportowane."
 
 #: oversteer/gui.py:582
 msgid "Current test data has been exported to a CSV file."
@@ -367,7 +367,7 @@ msgid ""
 "Range in degrees that the wheel will be able to rotate both ways. It will "
 "affect the sensitivity."
 msgstr ""
-"Zakres w stopniach w którym kierownica będzie mogła się obracać w obu kierunkach. \n"
+"Zakres stopnii w którym kierownica będzie mogła się obracać w obu kierunkach. \n"
 "To wpłynie na czułość."
 
 #: oversteer/main.ui:558
@@ -410,11 +410,11 @@ msgstr "Hamulce"
 
 #: oversteer/main.ui:860
 msgid "Accel."
-msgstr "Przyspieszenie."
+msgstr "Przyśp."
 
 #: oversteer/main.ui:884
 msgid "Hat"
-msgstr "Poprzeczka"
+msgstr "Limit"
 
 #: oversteer/main.ui:1024
 msgid "Buttons"
@@ -437,7 +437,6 @@ msgid ""
 "Gain applied to spring effects. Higher values may produce more clipping."
 msgstr ""
 "Wzmocnienie do efektu sprężyny. Większe wartości mogę powodować większe ucinanie."
-"producir saturación."
 
 #: oversteer/main.ui:1858
 msgid "Spring effect gain"
@@ -480,7 +479,7 @@ msgid ""
 "Center the wheel immediately after this option is enabled. Works also when "
 "setting it from a profile."
 msgstr ""
-"Scentruj kierownicę  natychmiast gdy ta opcja jest włączona. Działa również gdy "
+"Scentruj kierownicę natychmiast gdy ta opcja jest włączona. Działa również gdy "
 "ustawia się z profilu."
 
 #: oversteer/main.ui:2106
@@ -489,7 +488,7 @@ msgstr "Scentruj kierownicę"
 
 #: oversteer/main.ui:2141
 msgid "Start the companion application manually from the GUI."
-msgstr "Uruchom aplikację pomocniczą ręcznie w interfejse GUI."
+msgstr "Uruchom aplikację pomocniczą ręcznie w interfejsie GUI."
 
 #: oversteer/main.ui:2149
 msgid "Start application manually"
@@ -541,7 +540,7 @@ msgid ""
 "Use wheel buttons to control some wheel settings. The buttons must be "
 "defined in the preferences window."
 msgstr ""
-"Użyj kierownicy do strrowania niektórymi ustawieniami kierownicy. Przyciski "
+"Użyj kierownicy do sterowania niektórymi ustawieniami kierownicy. Przyciski "
 "muszą zostać przypisane w zakładce preferencji."
 
 #: oversteer/main.ui:2359
@@ -677,7 +676,7 @@ msgid ""
 "slight resistance or pulsation press any button in the wheel."
 msgstr ""
 "Podczas trwania testu musisz mocno trzymać kierownicę i powoli poruszać nią"
-"dopóki nie wyczuje się oporu lub pulsacji. Wtedy proszę nacisnąć dowolny przycisk "
+"dopóki nie wyczuje się oporu lub pulsacji. Wtedy proszę nacisnąć dowolny przycisk na kierownicy."
 
 #: oversteer/main.ui:3001
 msgid "Press any wheel button when ready to start the test."
