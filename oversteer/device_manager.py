@@ -25,6 +25,7 @@ class DeviceManager:
             wid.LG_WFFG: 180,
             wid.TM_FFRW: 180,
             wid.TM_T80: 240,
+            wid.TM_F458: 240,
             wid.TM_T150: 1080,
             wid.TM_T248: 900,
             wid.TM_T300RS: 1080,
