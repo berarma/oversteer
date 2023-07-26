@@ -1,6 +1,6 @@
 project('oversteer',
   version: '0.7.2',
-  meson_version: '>= 0.50.0'
+  meson_version: '>= 0.56.0'
 )
 
 i18n = import('i18n')
@@ -13,7 +13,7 @@ py_path = py_installation.get_path('purelib')
 python3_required_modules = ['gi', 'pyudev', 'xdg', 'evdev', 'gettext', 'matplotlib', 'scipy', 'numpy']
 foreach p : python3_required_modules
   script = 'import importlib.util; import sys; exit(1) if importlib.util.find_spec(\''+ p +'\') is None else exit(0)'
-  if run_command(py_installation, '-c', script).returncode() != 0
+  if run_command(py_installation, '-c', script, check: true).returncode() != 0
     error('Required Python3 module \'' + p + '\' not found')
   endif
 endforeach
