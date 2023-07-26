@@ -8,7 +8,7 @@ pymod = import('python')
 prefix = get_option('prefix')
 pkgdatadir = join_paths(prefix, get_option('datadir'), meson.project_name())
 py_installation = pymod.find_installation(get_option('python'))
-py_path = py_installation.get_path('purelib')
+py_path = py_installation.get_install_dir()
 
 python3_required_modules = ['gi', 'pyudev', 'xdg', 'evdev', 'gettext', 'matplotlib', 'scipy', 'numpy']
 foreach p : python3_required_modules
