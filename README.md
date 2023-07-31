@@ -196,11 +196,11 @@ ninja uninstall
 
 #### Updating
 
-To avoid leaving old files behind, it's recommended to uninstall the old
+To avoid leaving old files behind, it's recommended to always uninstall the old
 version first, then install the new version.
 
-Follow the uninstall instructions inside the old version directory, then
-follow the install instructions inside the new version directory.
+Follow the uninstall instructions for the old version, then follow the install
+instructions for the new version.
 
 ## Using it
 
