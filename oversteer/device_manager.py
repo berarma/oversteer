@@ -56,22 +56,19 @@ class DeviceManager:
         self.observer.stop()
 
     def register_event(self, action, udevice):
-        usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
-        if usb_id not in self.supported_wheels:
+        id = udevice.device_path
+        if id is None:
             return
-        seat_id = udevice.get('ID_FOR_SEAT')
-        logging.debug("%s: %s", action, seat_id)
-        if seat_id is None:
-            return
+        logging.debug("%s: %s", action, id)
         if action == 'add':
             self.update_device_list(udevice)
-            device = self.get_device(seat_id)
-            if device and device.dev_name:
+            device = self.get_device(id)
+            if device:
                 device.enable()
                 time.sleep(5)
                 self.changed = True
         if action == 'remove':
-            device = self.get_device(seat_id)
+            device = self.get_device(id)
             if device:
                 device.disable()
                 self.changed = True
@@ -79,44 +76,42 @@ class DeviceManager:
     def init_device_list(self):
         context = pyudev.Context()
         for udevice in context.list_devices(subsystem='input', ID_INPUT_JOYSTICK=1):
-            usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
-            if usb_id in self.supported_wheels:
-                self.update_device_list(udevice)
+            self.update_device_list(udevice)
 
         logging.debug('Devices: %s', self.devices)
 
         self.changed = True
 
     def update_device_list(self, udevice):
-        seat_id = udevice.get('ID_FOR_SEAT')
-        logging.debug("update_device_list: %s", seat_id)
-        if seat_id is None:
+        id = udevice.device_path
+        device_node = udevice.device_node
+
+        if not id or not device_node or not 'event' in udevice.get('DEVNAME'):
             return
 
-        if seat_id not in self.devices:
-            self.devices[seat_id] = Device(self, {
-                'seat_id': seat_id,
-            })
+        usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
+        if not usb_id in self.supported_wheels:
+            return
 
-        device = self.devices[seat_id]
+        logging.debug("update_device_list: %s %s", id, device_node)
 
-        if 'DEVNAME' in udevice:
-            if 'event' in udevice.get('DEVNAME'):
-                logging.debug("DEVNAME: %s ID_VENDOR_ID: %s ID_MODEL_ID: %s", udevice.get('DEVNAME'),
-                udevice.get('ID_VENDOR_ID'), udevice.get('ID_MODEL_ID'))
-                usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
-                device.set({
-                    'vendor_id': udevice.get('ID_VENDOR_ID'),
-                    'product_id': udevice.get('ID_MODEL_ID'),
-                    'usb_id': usb_id,
-                    'dev_name': udevice.get('DEVNAME'),
-                    'max_range': self.supported_wheels[usb_id],
-                })
-        else:
-            logging.debug("NAME: %s", udevice.get('NAME'))
-            device.set({
-                'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device')),
-                'name': udevice.get('NAME').strip('"'),
+        if id not in self.devices:
+            self.devices[id] = Device(self, {})
+
+        device = self.devices[id]
+
+        logging.debug("%s: ID_VENDOR_ID: %s ID_MODEL_ID: %s", device_node,
+                      udevice.get('ID_VENDOR_ID'), udevice.get('ID_MODEL_ID'))
+
+        device.set({
+            'vendor_id': udevice.get('ID_VENDOR_ID'),
+            'product_id': udevice.get('ID_MODEL_ID'),
+            'usb_id': usb_id,
+            'dev_name': device_node,
+            'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device')),
+            'name': bytes(udevice.get('ID_VENDOR_ENC') + ' ' + udevice.get('ID_MODEL_ENC'),
+                          'utf-8').decode('unicode_escape'),
+            'max_range': self.supported_wheels[usb_id],
             })
 
     def first_device(self):
