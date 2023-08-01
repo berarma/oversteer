@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-24 15:52+0200\n"
+"POT-Creation-Date: 2022-01-20 10:33+0100\n"
 "PO-Revision-Date: 2022-01-20 10:34+0100\n"
 "Last-Translator: Bernat Arlandis Mañó <berarma@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -17,114 +17,103 @@ msgstr ""
 "X-Generator: Poedit 2.4.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: oversteer/application.py:26
+#: oversteer/application.py:23
 msgid "Oversteer - Steering Wheel Manager"
 msgstr "Oversteer - Lenkrad Manager"
 
-#: oversteer/application.py:27
+#: oversteer/application.py:24
 msgid "Run as command's companion"
 msgstr "Starte als Befehls-Companion-App"
 
-#: oversteer/application.py:28
+#: oversteer/application.py:25
 msgid "Device path"
 msgstr "Geräte Pfad"
 
-#: oversteer/application.py:29
+#: oversteer/application.py:26
 msgid "list connected devices"
 msgstr "Verbundene Geräte auflisten"
 
-#: oversteer/application.py:30
+#: oversteer/application.py:27
 msgid "set the compatibility mode"
 msgstr "Kompatibilitätsmodus einstellen"
 
-#: oversteer/application.py:31
+#: oversteer/application.py:28
 msgid "set the rotation range [40-900]"
 msgstr "Rotationsbereich einstellen [40-900]"
 
-#: oversteer/application.py:32
+#: oversteer/application.py:29
 msgid "combine pedals [0-2]"
 msgstr "Pedale kombinieren [0-2]"
 
-#: oversteer/application.py:33
+#: oversteer/application.py:30
 msgid "set the autocenter strength [0-100]"
 msgstr "Zentrierungsstärke einstellen [0-100]"
 
-#: oversteer/application.py:34
+#: oversteer/application.py:31
 msgid "set the FF gain [0-100]"
 msgstr "ForceFeedback-Gain einstellen [0-100]"
 
-#: oversteer/application.py:35
+#: oversteer/application.py:32
 msgid "set the spring level [0-100]"
 msgstr "Federrate einstellen [0-100]"
 
-#: oversteer/application.py:36
+#: oversteer/application.py:33
 msgid "set the damper level [0-100]"
 msgstr "Dämpferrate einstellen [0-100]"
 
-#: oversteer/application.py:37
+#: oversteer/application.py:34
 msgid "set the friction level [0-100]"
 msgstr "Reibungsstärke einstellen [0-100]"
 
-#: oversteer/application.py:38
+#: oversteer/application.py:35
 msgid "enable FFBmeter leds"
 msgstr "FFBmeter LEDs aktivieren"
 
-#: oversteer/application.py:39
+#: oversteer/application.py:36
 msgid "disable FFBmeter leds"
 msgstr "FFBmeter LEDs deaktivieren"
 
-#: oversteer/application.py:40
+#: oversteer/application.py:37
 msgid "center wheel"
 msgstr "Lenkrad zentrieren"
 
-#: oversteer/application.py:41
+#: oversteer/application.py:38
 msgid "don't center wheel"
 msgstr "Lenkrad nicht zentrieren"
 
-#: oversteer/application.py:42
+#: oversteer/application.py:39
 msgid "run command manually"
 msgstr "Befehl manuell ausführen"
 
-#: oversteer/application.py:44
+#: oversteer/application.py:41
 msgid "don't run command manually"
 msgstr "Befehl nicht manuell ausführen"
 
-#: oversteer/application.py:45
+#: oversteer/application.py:42
 msgid "load settings from a profile"
 msgstr "Einstellungen aus Profil laden"
 
-#: oversteer/application.py:46
+#: oversteer/application.py:43
 msgid "start the GUI"
 msgstr "GUI starten"
 
-#: oversteer/application.py:47
+#: oversteer/application.py:44
 msgid "enable debug output"
 msgstr "Debug-Output aktivieren"
 
-#: oversteer/application.py:48
+#: oversteer/application.py:45
 msgid "show version"
 msgstr "Zeige Version"
 
-#: oversteer/application.py:68
+#: oversteer/application.py:65
 msgid "Devices found:"
 msgstr "Geräte gefunden:"
 
-#: oversteer/application.py:76
+#: oversteer/application.py:87
 msgid "This profile doesn't exist."
 msgstr "Dieses Profil existiert nicht."
 
-#: oversteer/application.py:93 oversteer/application.py:97 oversteer/gui.py:122
-#: oversteer/gui.py:177
-msgid "You don't have the required permissions to change your wheel settings."
-msgstr "Keine Berechtigung, die Einstellungen des Lenkrads zu ändern."
-
-#: oversteer/application.py:94 oversteer/gui.py:123
-msgid ""
-"You can fix it yourself by copying the files in {} to the {} directory and "
-"rebooting."
-msgstr "Zum Beheben bitte die Dateien aus {} nach {} kopieren und neu starten."
-
-#: oversteer/application.py:101
+#: oversteer/application.py:97
 msgid "No device available."
 msgstr "Kein Gerät verfügbar."
 
@@ -200,66 +189,76 @@ msgstr ""
 msgid "German"
 msgstr ""
 
-#: oversteer/gui.py:126
+#: oversteer/gui.py:123 oversteer/gui.py:178
+msgid "You don't have the required permissions to change your wheel settings."
+msgstr "Keine Berechtigung, die Einstellungen des Lenkrads zu ändern."
+
+#: oversteer/gui.py:124
+msgid ""
+"You can fix it yourself by copying the files in {} to the {} directory and "
+"rebooting."
+msgstr "Zum Beheben bitte die Dateien aus {} nach {} kopieren und neu starten."
+
+#: oversteer/gui.py:127
 msgid "Do you want us to make this change for you?"
 msgstr "Soll Oversteer diese Änderung vornehmen?"
 
-#: oversteer/gui.py:137
+#: oversteer/gui.py:138
 msgid "Permissions rules installed."
 msgstr "Berechtigungs-Regeln installiert."
 
-#: oversteer/gui.py:138
+#: oversteer/gui.py:139
 msgid "In some cases, a system restart might be needed."
 msgstr "In manchen Fällen kann ein Neustart nötig sein."
 
-#: oversteer/gui.py:140
+#: oversteer/gui.py:141
 msgid ""
 "Error installing permissions rules. Please, try again and make sure you use "
 "the right password for the administrator user."
 msgstr ""
 "Fehler beim Installieren der Berechtigungs-Regeln. Bitte erneut versuchen."
 
-#: oversteer/gui.py:203
+#: oversteer/gui.py:197
 msgid "Error opening profile"
 msgstr "Fehler beim Öffnen des Profils"
 
-#: oversteer/gui.py:203
+#: oversteer/gui.py:197
 msgid "The selected profile can't be loaded."
 msgstr "Das ausgewählte Profil kann nicht geladen werden."
 
-#: oversteer/gui.py:220
+#: oversteer/gui.py:212
 msgid "This profile already exists. Are you sure?"
 msgstr "Dieses Profil existiert bereit. Fortfahren?"
 
-#: oversteer/gui.py:232
+#: oversteer/gui.py:224
 msgid "This profile will be deleted, are you sure?"
 msgstr "Dieses Profil wird gelöscht. Fortfahren?"
 
-#: oversteer/gui.py:239
+#: oversteer/gui.py:231
 msgid "Invalid extension."
 msgstr "Ungültige Dateiendung."
 
-#: oversteer/gui.py:243
+#: oversteer/gui.py:235
 msgid "A profile with that name already exists."
 msgstr "Ein Profil mit diesem Namen existiert bereits."
 
-#: oversteer/gui.py:250
+#: oversteer/gui.py:242
 msgid "File already exists, overwrite?"
 msgstr "Datei existiert bereits. Überschreiben?"
 
-#: oversteer/gui.py:282
+#: oversteer/gui.py:274
 msgid "Failed to change language"
 msgstr "Sprache ändern fehlgeschlagen"
 
-#: oversteer/gui.py:283
+#: oversteer/gui.py:275
 msgid "Make sure locale '{}.UTF8' is generated on your system."
 msgstr "Vergewissere dich, dass '{}.UTF8' auf diesem system generiert wurde."
 
-#: oversteer/gui.py:464
+#: oversteer/gui.py:456
 msgid "Command error"
 msgstr "Befehlsfehler"
 
-#: oversteer/gui.py:465
+#: oversteer/gui.py:457
 msgid ""
 "The supplied command failed:\n"
 "{}"
@@ -267,35 +266,35 @@ msgstr ""
 "Der bereitgestellte Befehl schlug fehl:\n"
 "{}"
 
-#: oversteer/gui.py:490
+#: oversteer/gui.py:482
 msgid "Steering wheel not responding."
 msgstr "Lenkrad reagiert nicht."
 
-#: oversteer/gui.py:490
+#: oversteer/gui.py:482
 msgid "No wheel movement could be registered."
 msgstr "Es konnte keine Bewegung des Lenkrads festgestellt werden."
 
-#: oversteer/gui.py:533
+#: oversteer/gui.py:525
 msgid "CSV file to import"
 msgstr "CSV-Datei zum Import"
 
-#: oversteer/gui.py:567
+#: oversteer/gui.py:559
 msgid "Test data imported."
 msgstr "Test-Daten importiert"
 
-#: oversteer/gui.py:568
+#: oversteer/gui.py:560
 msgid "New test data imported from CSV file."
 msgstr "Neue Test-Daten aus CSV-Datei importiert."
 
-#: oversteer/gui.py:575
+#: oversteer/gui.py:567
 msgid "CSV file to export"
 msgstr "CSV-Datei zum Export"
 
-#: oversteer/gui.py:589
+#: oversteer/gui.py:581
 msgid "Test data exported."
 msgstr "Test-Daten exportiert."
 
-#: oversteer/gui.py:590
+#: oversteer/gui.py:582
 msgid "Current test data has been exported to a CSV file."
 msgstr "Die aktuellen Test-Daten wurden in eine CSV-Datei exportiert."
 
@@ -905,10 +904,9 @@ msgstr "Min. Kraft-Level = {:.1f} %"
 msgid "Steering Wheel Manager"
 msgstr "Lenkradmanager"
 
-#: data/org.berarma.Oversteer.desktop.in:10
-msgid "org.berarma.Oversteer"
-msgstr "org.berarma.Oversteer"
-
 #: data/org.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "Spiele;Rennen;Autos;Lenkrad"
+
+#~ msgid "org.berarma.Oversteer"
+#~ msgstr "org.berarma.Oversteer"
