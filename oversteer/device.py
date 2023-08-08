@@ -22,7 +22,7 @@ class Device:
     def __init__(self, device_manager, data):
         self.device_manager = device_manager
         self.input_device = None
-        self.seat_id = None
+        self.id = None
         self.vendor_id = None
         self.product_id = None
         self.usb_id = None
@@ -55,7 +55,7 @@ class Device:
         return self.ready
 
     def get_id(self):
-        return self.seat_id
+        return self.id
 
     def device_file(self, filename):
         return os.path.join(self.dev_path, filename)

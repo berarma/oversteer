@@ -104,6 +104,7 @@ class DeviceManager:
                       udevice.get('ID_VENDOR_ID'), udevice.get('ID_MODEL_ID'))
 
         device.set({
+            'id': id,
             'vendor_id': udevice.get('ID_VENDOR_ID'),
             'product_id': udevice.get('ID_MODEL_ID'),
             'usb_id': usb_id,
