@@ -80,6 +80,9 @@ class DeviceManager:
 
         logging.debug('Devices: %s', self.devices)
 
+        for key in self.devices:
+            logging.debug("%s: %s", key, vars(self.devices[key]))
+
         self.changed = True
 
     def update_device_list(self, udevice):
