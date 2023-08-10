@@ -109,7 +109,7 @@ class DeviceManager:
             'product_id': udevice.get('ID_MODEL_ID'),
             'usb_id': usb_id,
             'dev_name': device_node,
-            'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device')),
+            'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device', 'device')),
             'name': bytes(udevice.get('ID_VENDOR_ENC') + ' ' + udevice.get('ID_MODEL_ENC'),
                           'utf-8').decode('unicode_escape'),
             'max_range': self.supported_wheels[usb_id],
