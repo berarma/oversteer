@@ -38,26 +38,18 @@ default in-kernel module:
 - G27 Racing Wheel
 - G29 Driving Force Racing Wheel (PS3 mode)
 - G920 Driving Force Racing Wheel
-
-The Logitech G923 TRUEFORCE Sim Racing Wheel for XBOX/PC should be supported by
-the in-kernel HIDPP module when [this
-patch](https://www.spinics.net/lists/linux-input/msg73531.html) is
-accepted upstream.
-
-Most Logitech wheels, except XBOX/PC versions, can get improved support from
-[new-lg4ff](https://github.com/berarma/new-lg4ff) with more effects and
-features. Some games won't have full FFB without it.
-
-The following wheels are supported by the in-kernel PIDFF module:
-
+- Logitech G923 for XBox (since Linux 6.3)
 - OpenFFBoard, (https://github.com/Ultrawipf/OpenFFBoard).
+
+Wheels using the Logitech driver (except XBOX/PC versions) can get improved
+support using [new-lg4ff](https://github.com/berarma/new-lg4ff), with more
+effects and features. Some games won't have full FFB without it.
 
 The following wheels will need custom driver modules for FFB support.
 These drivers are still being worked on. **(I'm NOT claiming they will fully
 work. Please, check the related projects for more information.)**:
 
-- Logitech G923 TRUEFORCE Sim Racing Wheel for PS/PC with
-  [new-lg4ff](https://github.com/berarma/new-lg4ff).
+- Logitech G923 for PS/PC with [new-lg4ff](https://github.com/berarma/new-lg4ff).
 - Thrustmaster T150 with [t150_driver](https://github.com/scarburato/t150_driver).
 - Thrustmaster T300 RS with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
 - Thrustmaster T248 with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
@@ -75,6 +67,7 @@ other features won't work):
 - Thrustmaster TX Racing Wheel
 - Thrustmaster T500 RS
 - Thrustmaster T80
+- Thrustmaster Ferrari 458
 
 
 ## Features
