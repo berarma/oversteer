@@ -7,19 +7,19 @@ GOTO="fanatec_end"
 LABEL="fanatec_device"
 
 # FANATEC CSL Elite Wheel Base
-ATTRS{idVendor}=="0EB7", ATTRS{idProduct}=="0E03", GOTO="fanatec_setperms"
+ATTRS{idVendor}=="0eb7", ATTRS{idProduct}=="0e03", GOTO="fanatec_setperms"
 # FANATEC CSL Elite Wheel Base PS44
-ATTRS{idVendor}=="0EB7", ATTRS{idProduct}=="0005", GOTO="fanatec_setperms"
+ATTRS{idVendor}=="0eb7", ATTRS{idProduct}=="0005", GOTO="fanatec_setperms"
 # FANATEC ClubSport Wheel Base V2
-ATTRS{idVendor}=="0EB7", ATTRS{idProduct}=="0001", GOTO="fanatec_setperms"
+ATTRS{idVendor}=="0eb7", ATTRS{idProduct}=="0001", GOTO="fanatec_setperms"
 # FANATEC ClubSport Wheel Base V2.5
-ATTRS{idVendor}=="0EB7", ATTRS{idProduct}=="0004", GOTO="fanatec_setperms"
+ATTRS{idVendor}=="0eb7", ATTRS{idProduct}=="0004", GOTO="fanatec_setperms"
 # FANATEC Podium Wheel Base DD1
-ATTRS{idVendor}=="0EB7", ATTRS{idProduct}=="0006", GOTO="fanatec_setperms"
+ATTRS{idVendor}=="0eb7", ATTRS{idProduct}=="0006", GOTO="fanatec_setperms"
 # FANATEC Podium Wheel Base DD2
-ATTRS{idVendor}=="0EB7", ATTRS{idProduct}=="0007", GOTO="fanatec_setperms"
+ATTRS{idVendor}=="0eb7", ATTRS{idProduct}=="0007", GOTO="fanatec_setperms"
 # FANATEC CSL DD
-ATTRS{idVendor}=="0EB7", ATTRS{idProduct}=="0020", GOTO="fanatec_setperms"
+ATTRS{idVendor}=="0eb7", ATTRS{idProduct}=="0020", GOTO="fanatec_setperms"
 GOTO="fanatec_end"
 
 LABEL="fanatec_setperms"
