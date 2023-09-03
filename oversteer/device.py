@@ -384,6 +384,19 @@ class Device:
                     yield event
 
     def normalize_event(self, event):
+        if self.usb_id == wid.LG_GPRO:
+            if event.type == ecodes.EV_ABS:
+                if event.code == ecodes.ABS_RX:
+                    event.code = ecodes.ABS_Z
+                    event.value = int(257 - event.value / 257)
+                elif event.code == ecodes.ABS_RY:
+                    event.code = ecodes.ABS_RZ
+                    event.value = int(257 - event.value / 257)
+                elif event.code == ecodes.ABS_RZ:
+                    event.code = ecodes.ABS_Y
+                    event.value = int(257 - event.value / 257)
+            return event
+
         if event.type == ecodes.EV_ABS:
             if self.vendor_id == wid.VENDOR_FANATEC and event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
                 event.value = int(event.value / 257)
