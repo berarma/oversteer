@@ -48,3 +48,6 @@ ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c20
 
 # Logitech WingMan Formula (Yellow) (USB)
 ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c202", DRIVER=="logitech", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range'"
+
+# Logitech Speed Force Wireless
+ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c29c", DRIVER=="logitech", RUN+="/bin/sh -c 'cd %S%p; chmod 666 combine_pedals range'"
