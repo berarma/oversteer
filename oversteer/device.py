@@ -430,10 +430,10 @@ class Device:
                     event.code = ecodes.ABS_Y
         elif self.usb_id == wid.LG_G923X:
             if event.code == ecodes.ABS_Y:
-                event.code = ecodes.ABS_RZ
-            elif event.code == ecodes.ABS_RZ:
                 event.code = ecodes.ABS_Z
-            elif event.code == ecodes.ABS_Z:
+            elif event.code == ecodes.ABS_RZ:
                 event.code = ecodes.ABS_Y
+            elif event.code == ecodes.ABS_Z:
+                event.code = ecodes.ABS_RZ
 
         return event
