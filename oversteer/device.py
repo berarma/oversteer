@@ -384,40 +384,49 @@ class Device:
                     yield event
 
     def normalize_event(self, event):
-        if self.usb_id == wid.LG_GPRO:
-            if event.type == ecodes.EV_ABS:
-                if event.code == ecodes.ABS_RX:
-                    event.code = ecodes.ABS_Z
-                    event.value = int(257 - event.value / 257)
-                elif event.code == ecodes.ABS_RY:
-                    event.code = ecodes.ABS_RZ
-                    event.value = int(257 - event.value / 257)
-                elif event.code == ecodes.ABS_RZ:
-                    event.code = ecodes.ABS_Y
-                    event.value = int(257 - event.value / 257)
+        #
+        # Oversteer expects axes as follows:
+        #
+        # - Steering wheel direction: ABS_X [0, 65535]
+        # - Throttle: ABS_Z [0, 255]
+        # - Brakes: ABS_RZ [0, 255]
+        # - Clutch: ABS_Y [0, 255]
+        # - Hat X: ABS_HAT0X [-1, 1]
+        # - Hat Y: ABS_HAT0Y [-1, 1]
+        #
+        if event.type != ecodes.EV_ABS:
             return event
 
-        if event.type == ecodes.EV_ABS:
-            if self.vendor_id == wid.VENDOR_FANATEC and event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
-                event.value = int(event.value / 257)
-            if event.code == ecodes.ABS_X:
-                if self.usb_id in [wid.LG_WFG, wid.LG_WFFG]:
-                    event.value = event.value * 64
-                elif self.usb_id in [wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP, wid.LG_DFGT, wid.LG_G25, wid.LG_G27]:
-                    event.value = event.value * 4
-            elif self.usb_id in [wid.LG_WFG, wid.LG_WFFG, wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP,
-                    wid.LG_DFGT, wid.LG_G920]:
-                if event.code == ecodes.ABS_Y:
+        if event.code == ecodes.ABS_X:
+            if self.usb_id in [wid.LG_WFG, wid.LG_WFFG]:
+                event.value = event.value * 64
+            elif self.usb_id in [wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP, wid.LG_DFGT, wid.LG_G25, wid.LG_G27]:
+                event.value = event.value * 4
+        elif self.usb_id in [wid.LG_WFG, wid.LG_WFFG, wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP,
+                wid.LG_DFGT, wid.LG_G920]:
+            if event.code == ecodes.ABS_Y:
+                event.code = ecodes.ABS_Z
+            elif event.code == ecodes.ABS_Z:
+                event.code = ecodes.ABS_RZ
+            elif event.code == ecodes.ABS_RZ:
+                event.code = ecodes.ABS_Y
+        elif self.usb_id in [wid.TM_T248, wid.TM_T150]:
+            if event.code == ecodes.ABS_RZ:
+                event.code = ecodes.ABS_Z
+            elif event.code == ecodes.ABS_Y:
+                event.code = ecodes.ABS_RZ
+            elif event.code == ecodes.ABS_THROTTLE:
+                event.code = ecodes.ABS_Y
+        elif self.vendor_id == wid.VENDOR_FANATEC and event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
+            event.value = int(event.value + 32768 / 257)
+        elif self.usb_id == wid.LG_GPRO:
+            if event.code in [ecodes.ABS_RX, ecodes.ABS_RY, ecodes.ABS_RZ]:
+                event.value = int(255 - event.value / 257)
+                if event.code == ecodes.ABS_RX:
                     event.code = ecodes.ABS_Z
-                elif event.code == ecodes.ABS_Z:
+                elif event.code == ecodes.ABS_RY:
                     event.code = ecodes.ABS_RZ
                 elif event.code == ecodes.ABS_RZ:
                     event.code = ecodes.ABS_Y
-            elif self.usb_id in [wid.TM_T248, wid.TM_T150]:
-                if event.code == ecodes.ABS_RZ:
-                    event.code = ecodes.ABS_Z
-                elif event.code == ecodes.ABS_Y:
-                    event.code = ecodes.ABS_RZ
-                elif event.code == ecodes.ABS_THROTTLE:
-                    event.code = ecodes.ABS_Y
+
         return event
