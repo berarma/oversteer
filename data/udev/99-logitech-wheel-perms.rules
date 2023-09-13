@@ -4,6 +4,9 @@
 # Avoid blanket matching all Logitech devices, as that causes issues with mice,
 # keyboards, and other non-wheel devices.
 
+# Logitech G PRO Racing Wheel for Xbox One and PC
+ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c272", DRIVER=="logitech-hidpp-device", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"
+
 # Logitech G923 Racing Wheel for PlayStation 4 and PC
 ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c266", DRIVER=="logitech", RUN+="/bin/sh -c 'cd %S%p; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level leds/*/brightness; chmod 777 leds/ leds/*'"
 
