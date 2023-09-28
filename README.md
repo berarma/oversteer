@@ -111,7 +111,7 @@ User gripped has created a [Gentoo ebuild](https://github.com/gripped/Logitech-w
 
 Install all dependencies on Debian systems with the following command:
 
-`apt install python3 python3-distutils python3-gi python-gi-cairo
+`apt install python3 python3-distutils python3-gi python3-gi-cairo
 python3-pyudev python3-xdg python3-evdev gettext meson appstream-util
 desktop-file-utils python3-matplotlib python3-scipy`
 
