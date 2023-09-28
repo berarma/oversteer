@@ -615,8 +615,8 @@ class GtkUi:
         self.hat_down_input = self.builder.get_object('hat_down_input')
         self.hat_left_input = self.builder.get_object('hat_left_input')
         self.hat_right_input = self.builder.get_object('hat_right_input')
-        self.btn_input = [None] * 25
-        for i in range(0, 25):
+        self.btn_input = [None] * 30
+        for i in range(30):
             self.btn_input[i] = self.builder.get_object('btn' + str(i) + '_input')
 
         self.profile_listbox = self.builder.get_object('profile_listbox')

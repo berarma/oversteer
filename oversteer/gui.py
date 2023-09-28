@@ -435,7 +435,7 @@ class Gui:
 
                 if event.code >= 288 and event.code <= 303:
                     button = event.code - 288
-                if event.code >= 704 and event.code <= 712:
+                if event.code >= 704 and event.code <= 715:
                     button = event.code - 688
 
                 if button is not None:
