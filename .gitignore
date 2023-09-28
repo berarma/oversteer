@@ -3,3 +3,4 @@
 /po/*.mo
 __pycache__
 /extra
+*~
