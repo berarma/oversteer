@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: oversteer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-14 08:14+0100\n"
-"PO-Revision-Date: 2023-11-14 08:34+0100\n"
+"PO-Revision-Date: 2023-11-14 08:51+0100\n"
 "Last-Translator: Kálmán „KAMI” Szalai <kami911@gmail.com>\n"
 "Language-Team: \n"
 "Language: hu_HU\n"
@@ -290,11 +290,11 @@ msgstr "Az importálandó CVS-fájl"
 
 #: oversteer/gui.py:567
 msgid "Test data imported."
-msgstr "A tesztadatok importálva lettek."
+msgstr "A vizsgálati adatok importálva lettek."
 
 #: oversteer/gui.py:568
 msgid "New test data imported from CSV file."
-msgstr "Új tesztadatok importálva CSV-fájlból."
+msgstr "Új vizsgálati adatok lettek importálva a CSV-fájlból."
 
 #: oversteer/gui.py:575
 msgid "CSV file to export"
@@ -302,11 +302,11 @@ msgstr "Az exportálandó CVS-fájl"
 
 #: oversteer/gui.py:589
 msgid "Test data exported."
-msgstr "Exportált tesztadatok."
+msgstr "Vizsgálati adatok exportálva."
 
 #: oversteer/gui.py:590
 msgid "Current test data has been exported to a CSV file."
-msgstr "Az aktuális tesztadatok CSV-fájlba lettek exportálva."
+msgstr "Az aktuális vizsgálati adatok CSV-fájlba lettek exportálva."
 
 #: oversteer/main.ui:41
 msgid "Preferences"
@@ -386,6 +386,8 @@ msgstr "Forgatási tartomány"
 msgid ""
 "Combine two pedals into one axe. Useful for old games and flight simulators."
 msgstr ""
+"Két pedál kombinálása egyetlen tengelyre. Hasznos lehet régi játékokhoz és "
+"repülésszimulátorokhoz."
 
 #: oversteer/main.ui:619
 msgid "Combine pedals"
@@ -433,11 +435,11 @@ msgstr "Vezérlőelemek"
 
 #: oversteer/main.ui:1922
 msgid "Global strength for all force feedback effects."
-msgstr ""
+msgstr "Általános erősség az összes erő-visszacsatolási hatáshoz."
 
 #: oversteer/main.ui:1930
 msgid "Global feedback gain"
-msgstr "Globális visszacsatolási erősítés"
+msgstr "Általános visszacsatolási erősítés"
 
 #: oversteer/main.ui:1971
 msgid ""
@@ -498,21 +500,24 @@ msgstr "Kormánykerék középre állás"
 
 #: oversteer/main.ui:2262
 msgid "Start the companion application manually from the GUI."
-msgstr ""
+msgstr "Saját maga indítsa el a társalkalmazást a felhasználói felületről."
 
 #: oversteer/main.ui:2270
 msgid "Start application manually"
-msgstr ""
+msgstr "Alkalmazás indítása"
 
 #: oversteer/main.ui:2306
 msgid ""
 "Enable wheel range settings in the window overlay. When set to auto, it will "
 "be displayed only when being set using the wheel buttons."
 msgstr ""
+"Kormánykerék-tartomány beállítások engedélyezése az átfedő ablakban. Ha "
+"automatikusra van állítva, akkor csak akkor jelenik meg, ha a kerékgombok "
+"segítségével történik a beállítás."
 
 #: oversteer/main.ui:2314
 msgid "Wheel range display"
-msgstr ""
+msgstr "Kormánykerék-tartomány kijelző"
 
 #: oversteer/main.ui:2328
 msgid "Auto"
@@ -529,6 +534,8 @@ msgstr "Soha"
 #: oversteer/main.ui:2399
 msgid "Enable FFBmeter using the leds in the wheel or the window overlay."
 msgstr ""
+"Engedélyezze az FFBmeter használatát a korménykerékben lévő ledek vagy az "
+"átfedő ablak segítségével."
 
 #: oversteer/main.ui:2407
 msgid "FFBmeter"
@@ -580,6 +587,10 @@ msgid ""
 "Be careful when running the tests and follow the instructions as closely as "
 "possible for safety and valid results."
 msgstr ""
+"Nem állnak rendelkezésre vizsgálati adatok. Kérjük, importáljon "
+"tesztadatokat vagy indítson új tesztet.\n"
+"Legyen óvatos a tesztek futtatásakor, és a biztonság és az érvényes "
+"eredmények érdekében a lehető legpontosabban kövesse az utasításokat."
 
 #: oversteer/main.ui:2640
 msgid "page1"
@@ -590,6 +601,8 @@ msgid ""
 "The lowest torque test measures the minimum force level that the wheel can "
 "deliver. Your help is required for this test."
 msgstr ""
+"A legalacsonyabb nyomatékvizsgálat azt a minimális erőszintet méri, amelyet "
+"a kerék képes kifejteni. Ehhez a teszthez az Ön segítségére van szükség."
 
 #: oversteer/main.ui:2666
 msgid "page2"
@@ -597,7 +610,7 @@ msgstr "oldal2"
 
 #: oversteer/main.ui:2679
 msgid "The linearity test measures the linear force response."
-msgstr ""
+msgstr "A linearitás vizsgálat a lineáris erőreakciót méri."
 
 #: oversteer/main.ui:2692
 msgid "page5"
@@ -608,6 +621,7 @@ msgid ""
 "The step test measures several performance parameters at the highest force "
 "levels."
 msgstr ""
+"A lépéspróba számos teljesítményparamétert mér a legmagasabb erőszinteken."
 
 #: oversteer/main.ui:2718
 msgid "page3"
@@ -615,7 +629,7 @@ msgstr "oldal3"
 
 #: oversteer/main.ui:2731
 msgid "The test is running, please, don't touch the wheel and wait."
-msgstr ""
+msgstr "A vizsgálat fut. Kérem, ne nyúljon a kormánykerékhez és várjon."
 
 #: oversteer/main.ui:2745
 msgid "page4"
@@ -682,6 +696,8 @@ msgstr ""
 #: oversteer/main.ui:3122
 msgid "Press any wheel button when ready to start the test."
 msgstr ""
+"Nyomja meg bármelyik kormánykerék gombot, amikor készen áll a vizsgálat "
+"elindítására."
 
 #: oversteer/main.ui:3136
 msgid "Now running the test."
@@ -880,19 +896,19 @@ msgstr "Csúcsgyorsulás = {:.0f} RPM/s"
 
 #: oversteer/combined_chart.py:54
 msgid "Time max. accel. = {:.0f} ms"
-msgstr ""
+msgstr "Maximális gyorsulás időintervalluma = {:.0f} ms"
 
 #: oversteer/combined_chart.py:55
 msgid "Max. decel. = {:.0f} RPM/s"
-msgstr ""
+msgstr "Maximális lassulás = {:.0f} RPM/s"
 
 #: oversteer/combined_chart.py:56
 msgid "Time max. decel. = {:.0f} ms"
-msgstr ""
+msgstr "Maximális lassulás időintervalluma = {:.0f} ms"
 
 #: oversteer/combined_chart.py:57
 msgid "Residual decel. = {:.0f} RPM/s"
-msgstr ""
+msgstr "Maradvány lassulás = {:.0f} RPM/s"
 
 #: oversteer/combined_chart.py:58
 msgid "Estimated SNR = {:.0f} dB"
