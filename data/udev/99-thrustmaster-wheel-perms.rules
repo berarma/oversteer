@@ -18,3 +18,6 @@ ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b69
 
 # Thrustmaster T150 Racing Wheel (USB)
 ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b677", DRIVER=="hid-t150", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
+
+# Thrustmaster TMX Racing Wheel (USB)
+ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b67f", DRIVER=="hid-t150", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
