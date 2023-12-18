@@ -1,0 +1,930 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the oversteer package.
+# Kálmán „KAMI” Szalai <kami911@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: oversteer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-14 08:14+0100\n"
+"PO-Revision-Date: 2023-11-14 08:55+0100\n"
+"Last-Translator: Kálmán „KAMI” Szalai <kami911@gmail.com>\n"
+"Language-Team: \n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: oversteer/application.py:26
+msgid "Oversteer - Steering Wheel Manager"
+msgstr "Oversteer - Kormánykerék-kezelő"
+
+#: oversteer/application.py:27
+msgid "Run as command's companion"
+msgstr "Futtatás a parancs után"
+
+#: oversteer/application.py:28
+msgid "Device path"
+msgstr "Eszközútvonal"
+
+#: oversteer/application.py:29
+msgid "list connected devices"
+msgstr "csatlakoztatott eszközök listája"
+
+#: oversteer/application.py:30
+msgid "set the compatibility mode"
+msgstr "kompatibilitási üzemmód beállítása"
+
+#: oversteer/application.py:31
+msgid "set the rotation range [40-900]"
+msgstr "egyéni forgatási szög beállítása [40-900]"
+
+#: oversteer/application.py:32
+msgid "combine pedals [0-2]"
+msgstr "pedálok kombinálása [0-2]"
+
+#: oversteer/application.py:33
+msgid "set the autocenter strength [0-100]"
+msgstr "az automatikus középre állás erősségének beállítása [0-100]"
+
+#: oversteer/application.py:34
+msgid "set the FF gain [0-100]"
+msgstr "az erővisszacsatolás erősítés beállítása [0-100]"
+
+#: oversteer/application.py:35
+msgid "set the spring level [0-100]"
+msgstr "a rugóerő beállítása [0-100]"
+
+#: oversteer/application.py:36
+msgid "set the damper level [0-100]"
+msgstr "a csillapító szintjének beállítása [0-100]"
+
+#: oversteer/application.py:37
+msgid "set the friction level [0-100]"
+msgstr "a súrlódás beállítása [0-100]"
+
+#: oversteer/application.py:38
+msgid "enable FFBmeter leds"
+msgstr "az FFBmeter ledek engedélyezése"
+
+#: oversteer/application.py:39
+msgid "disable FFBmeter leds"
+msgstr "az FFBmeter ledek letiltása"
+
+#: oversteer/application.py:40
+msgid "center wheel"
+msgstr "kormánykerék középre állás"
+
+#: oversteer/application.py:41
+msgid "don't center wheel"
+msgstr "ne legyen kormánykerék középre állás"
+
+#: oversteer/application.py:42
+msgid "run command manually"
+msgstr "parancs futtatása kézzel"
+
+#: oversteer/application.py:44
+msgid "don't run command manually"
+msgstr "ne legyen parancs futtatása kézzel"
+
+#: oversteer/application.py:45
+msgid "load settings from a profile"
+msgstr "beállítások betöltése egy profilból"
+
+#: oversteer/application.py:46
+msgid "start the GUI"
+msgstr "felhasználói felület indítása"
+
+#: oversteer/application.py:47
+msgid "enable debug output"
+msgstr "hibakeresési kimenet engedélyezése"
+
+#: oversteer/application.py:48
+msgid "show version"
+msgstr "verzió megjelenítése"
+
+#: oversteer/application.py:68
+msgid "Devices found:"
+msgstr "Megtalált eszközök:"
+
+#: oversteer/application.py:76
+msgid "This profile doesn't exist."
+msgstr "Ez a profil nem létezik."
+
+#: oversteer/application.py:93 oversteer/application.py:97 oversteer/gui.py:122
+#: oversteer/gui.py:177
+msgid "You don't have the required permissions to change your wheel settings."
+msgstr ""
+"Nem rendelkezik a kormánykerék beállítások módosításához szükséges "
+"jogosultságokkal."
+
+#: oversteer/application.py:94 oversteer/gui.py:123
+msgid ""
+"You can fix it yourself by copying the files in {} to the {} directory and "
+"rebooting."
+msgstr ""
+"Ez meg tudja javítani, ha a(z) {} könyvtárban lévő fájlokat átmásolja a(z) "
+"{} könyvtárba, majd újraindítja a rendszert."
+
+#: oversteer/application.py:101
+msgid "No device available."
+msgstr "Nem található eszköz."
+
+#: oversteer/gui.py:27
+msgid "Press toggle button/s"
+msgstr "Nyomja meg a átváltógombo(ka)t"
+
+#: oversteer/gui.py:28
+msgid "Press button to set 270°"
+msgstr "270° gomb"
+
+#: oversteer/gui.py:29
+msgid "Press button to set 360°"
+msgstr "360° gomb"
+
+#: oversteer/gui.py:30
+msgid "Press button to set 540°"
+msgstr "540° gomb"
+
+#: oversteer/gui.py:31
+msgid "Press button to set 900°"
+msgstr "900° gomb"
+
+#: oversteer/gui.py:32
+msgid "Press button for +10°"
+msgstr "+10° gomb"
+
+#: oversteer/gui.py:33
+msgid "Press button for -10°"
+msgstr "-10° gomb"
+
+#: oversteer/gui.py:34
+msgid "Press button for +90°"
+msgstr "+90° gomb"
+
+#: oversteer/gui.py:35
+msgid "Press button for -90°"
+msgstr "-90° gomb"
+
+#: oversteer/gui.py:39
+msgid "System default"
+msgstr "Rendszer alapértelmezés"
+
+#: oversteer/gui.py:40
+msgid "English"
+msgstr "Angol"
+
+#: oversteer/gui.py:41
+msgid "Galician"
+msgstr "Galíciai"
+
+#: oversteer/gui.py:42
+msgid "Russian"
+msgstr "Orosz"
+
+#: oversteer/gui.py:43
+msgid "Spanish"
+msgstr "Spanyol"
+
+#: oversteer/gui.py:44
+msgid "Valencian"
+msgstr "Valenciai"
+
+#: oversteer/gui.py:45
+msgid "Finnish"
+msgstr "Finn"
+
+#: oversteer/gui.py:46
+msgid "Turkish"
+msgstr "Török"
+
+#: oversteer/gui.py:47
+msgid "German"
+msgstr "Német"
+
+#: oversteer/gui.py:126
+msgid "Do you want us to make this change for you?"
+msgstr "El kívánja végezni ezt a változtatást?"
+
+#: oversteer/gui.py:137
+msgid "Permissions rules installed."
+msgstr "Engedélyezési szabályok telepítve."
+
+#: oversteer/gui.py:138
+msgid "In some cases, a system restart might be needed."
+msgstr "Bizonyos esetekben szükség lehet a rendszer újraindítására."
+
+#: oversteer/gui.py:140
+msgid ""
+"Error installing permissions rules. Please, try again and make sure you use "
+"the right password for the administrator user."
+msgstr ""
+"Hiba az engedélyezési szabályok telepítésében. Kérjük, próbálja meg újra, és "
+"győződjön meg róla, hogy a megfelelő jelszót használja a rendszergazda "
+"felhasználóhoz."
+
+#: oversteer/gui.py:203
+msgid "Error opening profile"
+msgstr "Hiba lépett fel a profil megnyitása során"
+
+#: oversteer/gui.py:203
+msgid "The selected profile can't be loaded."
+msgstr "A kiválasztott profil nem tölthető be."
+
+#: oversteer/gui.py:220
+msgid "This profile already exists. Are you sure?"
+msgstr "Ez a profil már létezik. Biztos benne, hogy lecseréli?"
+
+#: oversteer/gui.py:232
+msgid "This profile will be deleted, are you sure?"
+msgstr "Ez a profil törölve lesz. Biztos benne, hogy letörli?"
+
+#: oversteer/gui.py:239
+msgid "Invalid extension."
+msgstr "Érvénytelen kiegészítő."
+
+#: oversteer/gui.py:243
+msgid "A profile with that name already exists."
+msgstr "Egy profil ugyanezzel a névvel már létezik."
+
+#: oversteer/gui.py:250
+msgid "File already exists, overwrite?"
+msgstr "A fájl már létezik. Biztos benne, hogy felülírja?"
+
+#: oversteer/gui.py:282
+msgid "Failed to change language"
+msgstr "Nem sikerült a nyelvi beállítások módosítása"
+
+#: oversteer/gui.py:283
+msgid "Make sure locale '{}.UTF8' is generated on your system."
+msgstr ""
+"Győződjön meg róla, hogy a '{}.UTF8' nyelvterület létre van hozva a "
+"rendszerén."
+
+#: oversteer/gui.py:464
+msgid "Command error"
+msgstr "Parancs hiba"
+
+#: oversteer/gui.py:465
+msgid ""
+"The supplied command failed:\n"
+"{}"
+msgstr ""
+"A megadott parancs sikertelen volt:\n"
+"{}"
+
+#: oversteer/gui.py:490
+msgid "Steering wheel not responding."
+msgstr "A kormánykerék nem reagál."
+
+#: oversteer/gui.py:490
+msgid "No wheel movement could be registered."
+msgstr "A kormánykerék mozgását nem lehetett érzékelni."
+
+#: oversteer/gui.py:533
+msgid "CSV file to import"
+msgstr "Az importálandó CVS-fájl"
+
+#: oversteer/gui.py:567
+msgid "Test data imported."
+msgstr "A vizsgálati adatok importálva lettek."
+
+#: oversteer/gui.py:568
+msgid "New test data imported from CSV file."
+msgstr "Új vizsgálati adatok lettek importálva a CSV-fájlból."
+
+#: oversteer/gui.py:575
+msgid "CSV file to export"
+msgstr "Az exportálandó CVS-fájl"
+
+#: oversteer/gui.py:589
+msgid "Test data exported."
+msgstr "Vizsgálati adatok exportálva."
+
+#: oversteer/gui.py:590
+msgid "Current test data has been exported to a CSV file."
+msgstr "Az aktuális vizsgálati adatok CSV-fájlba lettek exportálva."
+
+#: oversteer/main.ui:41
+msgid "Preferences"
+msgstr "Beállítások"
+
+#: oversteer/main.ui:66
+msgid "About Oversteer"
+msgstr "Az Oversteer névjegye"
+
+#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+msgid "Oversteer"
+msgstr "Oversteer"
+
+#: oversteer/main.ui:291
+msgid "Speed test"
+msgstr "Sebesség vizsgálat"
+
+#: oversteer/main.ui:295
+msgid "Curve test"
+msgstr "Kanyar vizsgálat"
+
+#: oversteer/main.ui:329
+msgid "Select the wheel controller you want to configure."
+msgstr "Válassza ki a beállítani kívánt kormánykereket."
+
+#: oversteer/main.ui:336
+msgid "Device"
+msgstr "Eszköz"
+
+#: oversteer/main.ui:370
+msgid "Select a profile to load the saved settings."
+msgstr "Válasszon ki egy profilt a mentett beállítások betöltéséhez."
+
+#: oversteer/main.ui:390
+msgid "Save"
+msgstr "Mentés"
+
+#: oversteer/main.ui:394
+msgid "Save profile"
+msgstr "Profil mentése"
+
+#: oversteer/main.ui:422
+msgid "Profile"
+msgstr "Profil"
+
+#: oversteer/main.ui:478
+msgid "Select an emulation mode from the ones supported."
+msgstr "Válasszon ki egyet a támogatott emulációs módok közül."
+
+#: oversteer/main.ui:486
+msgid "Compatibility mode"
+msgstr "Kompatibilitási üzemmód"
+
+#: oversteer/main.ui:512
+msgid "Apply"
+msgstr "Alkalmaz"
+
+#: oversteer/main.ui:516
+msgid "Apply changes (the wheel may move when changing the emulation mode)."
+msgstr ""
+"Alkalmazza a változtatásokat (az emulációs üzemmód megváltoztatásakor a "
+"kormánykerék elmozdulhat)."
+
+#: oversteer/main.ui:550
+msgid ""
+"Range in degrees that the wheel will be able to rotate both ways. It will "
+"affect the sensitivity."
+msgstr ""
+"Az a tartomány fokokban megadva, amelyet a kormány mindkét irányba el tud "
+"forgatni. Ez befolyásolja az érzékenységet is."
+
+#: oversteer/main.ui:558
+msgid "Rotation range"
+msgstr "Forgatási tartomány"
+
+#: oversteer/main.ui:611
+msgid ""
+"Combine two pedals into one axe. Useful for old games and flight simulators."
+msgstr ""
+"Két pedál kombinálása egyetlen tengelyre. Hasznos lehet régi játékokhoz és "
+"repülésszimulátorokhoz."
+
+#: oversteer/main.ui:619
+msgid "Combine pedals"
+msgstr "Pedálok kombinálása"
+
+#: oversteer/main.ui:633
+msgid "Accelerator + Clutch"
+msgstr "Gyorsítás + Váltó"
+
+#: oversteer/main.ui:649
+msgid "Accelerator + Brakes"
+msgstr "Gyorsítás + Fékek"
+
+#: oversteer/main.ui:665
+msgid "None"
+msgstr "Nincs"
+
+#: oversteer/main.ui:723
+msgid "Steering"
+msgstr "Kormányzás"
+
+#: oversteer/main.ui:806
+msgid "Clutch"
+msgstr "Váltó"
+
+#: oversteer/main.ui:833
+msgid "Brakes"
+msgstr "Fékek"
+
+#: oversteer/main.ui:860
+msgid "Accel."
+msgstr "Gyorsítás"
+
+#: oversteer/main.ui:884
+msgid "Hat"
+msgstr "Hat"
+
+#: oversteer/main.ui:1024
+msgid "Buttons"
+msgstr "Gombok listája"
+
+#: oversteer/main.ui:1888
+msgid "Controls"
+msgstr "Vezérlőelemek"
+
+#: oversteer/main.ui:1922
+msgid "Global strength for all force feedback effects."
+msgstr "Általános erősség az összes erő-visszacsatolási hatáshoz."
+
+#: oversteer/main.ui:1930
+msgid "Global feedback gain"
+msgstr "Általános visszacsatolási erősítés"
+
+#: oversteer/main.ui:1971
+msgid ""
+"Gain applied to spring effects. Higher values may produce more clipping."
+msgstr ""
+"A rugóhatásokra alkalmazott erősítés. A magasabb értékek nagyobb mértékű "
+"vágást eredményezhetnek."
+
+#: oversteer/main.ui:1979
+msgid "Spring effect gain"
+msgstr "Rugó hatás erősítése"
+
+#: oversteer/main.ui:2020
+msgid ""
+"Gain applied to damper effects. Higher values may produce more clipping."
+msgstr ""
+"A csillapító effektusokra alkalmazott erősítés. A magasabb értékek nagyobb "
+"mértékű vágást eredményezhetnek."
+
+#: oversteer/main.ui:2028
+msgid "Damper effect gain"
+msgstr "Csappantyú hatás erősítése"
+
+#: oversteer/main.ui:2070
+msgid ""
+"Gain applied to friction effects. Higher values may produce more clipping."
+msgstr ""
+"A súrlódási hatásokra alkalmazott erősítés. A magasabb értékek nagyobb "
+"mértékű vágást eredményezhetnek."
+
+#: oversteer/main.ui:2078
+msgid "Friction effect gain"
+msgstr "Súrlódási hatás erősítése"
+
+#: oversteer/main.ui:2131
+msgid "Continuous autocenter force strength."
+msgstr "Folyamatos középállás visszatérítés erőssége."
+
+#: oversteer/main.ui:2139
+msgid "Autocenter strength"
+msgstr "Középállás visszatérítés ereje"
+
+#: oversteer/main.ui:2188
+msgid "Force Feedback"
+msgstr "Erővisszacsatolás"
+
+#: oversteer/main.ui:2219
+msgid ""
+"Center the wheel immediately after this option is enabled. Works also when "
+"setting it from a profile."
+msgstr ""
+"Közvetlenül a kerék középállásba visszaállítása után engedélyezze ezt a "
+"beállítást. Profilból történő beállításkor is működik."
+
+#: oversteer/main.ui:2227
+msgid "Center wheel"
+msgstr "Kormánykerék középre állás"
+
+#: oversteer/main.ui:2262
+msgid "Start the companion application manually from the GUI."
+msgstr "Saját maga indítsa el a társalkalmazást a felhasználói felületről."
+
+#: oversteer/main.ui:2270
+msgid "Start application manually"
+msgstr "Alkalmazás indítása"
+
+#: oversteer/main.ui:2306
+msgid ""
+"Enable wheel range settings in the window overlay. When set to auto, it will "
+"be displayed only when being set using the wheel buttons."
+msgstr ""
+"Kormánykerék-tartomány beállítások engedélyezése az átfedő ablakban. Ha "
+"automatikusra van állítva, akkor csak akkor jelenik meg, ha a kerékgombok "
+"segítségével történik a beállítás."
+
+#: oversteer/main.ui:2314
+msgid "Wheel range display"
+msgstr "Kormánykerék-tartomány kijelző"
+
+#: oversteer/main.ui:2328
+msgid "Auto"
+msgstr "Auto"
+
+#: oversteer/main.ui:2344
+msgid "Always"
+msgstr "Mindig"
+
+#: oversteer/main.ui:2360
+msgid "Never"
+msgstr "Soha"
+
+#: oversteer/main.ui:2399
+msgid "Enable FFBmeter using the leds in the wheel or the window overlay."
+msgstr ""
+"Engedélyezze az FFBmeter használatát a korménykerékben lévő ledek vagy az "
+"átfedő ablak segítségével."
+
+#: oversteer/main.ui:2407
+msgid "FFBmeter"
+msgstr "FFBmeter"
+
+#: oversteer/main.ui:2421
+msgid "Leds"
+msgstr "LED-ek"
+
+#: oversteer/main.ui:2435
+msgid "Overlay"
+msgstr "Rávetítés"
+
+#: oversteer/main.ui:2472
+msgid ""
+"Use wheel buttons to control some wheel settings. The buttons must be "
+"defined in the preferences window."
+msgstr ""
+"A kormánygombok segítségével egyes kormánybeállításokat vezérelhet. A gombok "
+"jelentését a beállítások ablakban kell megadni."
+
+#: oversteer/main.ui:2480
+msgid "Enable wheel buttons"
+msgstr "Kormánykerék gombok engedélyezése"
+
+#: oversteer/main.ui:2523
+msgid "Tools"
+msgstr "Eszközök"
+
+#: oversteer/main.ui:2548
+msgid "Start new"
+msgstr "Új indítása"
+
+#: oversteer/main.ui:2562
+msgid "Import CSV"
+msgstr "Importálás CSV-ből"
+
+#: oversteer/main.ui:2576
+msgid "Export CSV"
+msgstr "Exportálás CSV-be"
+
+#: oversteer/main.ui:2590
+msgid "Open chart"
+msgstr "Táblázat megnyitása"
+
+#: oversteer/main.ui:2625
+msgid ""
+"No test data available. Please, import test data or start a new test.\n"
+"Be careful when running the tests and follow the instructions as closely as "
+"possible for safety and valid results."
+msgstr ""
+"Nem állnak rendelkezésre vizsgálati adatok. Kérjük, importáljon vizsgálati "
+"adatokat vagy indítson egy új vizsgálatot.\n"
+"Legyen óvatos a vizsgálatok futtatásakor, és a biztonság és az érvényes "
+"eredmények érdekében a lehető legpontosabban kövesse az utasításokat."
+
+#: oversteer/main.ui:2640
+msgid "page1"
+msgstr "oldal1"
+
+#: oversteer/main.ui:2652
+msgid ""
+"The lowest torque test measures the minimum force level that the wheel can "
+"deliver. Your help is required for this test."
+msgstr ""
+"A legalacsonyabb nyomatékvizsgálat azt a minimális erőszintet méri, amelyet "
+"a kerék képes kifejteni. Ehhez a vizsgálathoz az Ön segítségére van szükség."
+
+#: oversteer/main.ui:2666
+msgid "page2"
+msgstr "oldal2"
+
+#: oversteer/main.ui:2679
+msgid "The linearity test measures the linear force response."
+msgstr "A linearitás vizsgálat az arányos erőreakciót méri."
+
+#: oversteer/main.ui:2692
+msgid "page5"
+msgstr "oldal5"
+
+#: oversteer/main.ui:2705
+msgid ""
+"The step test measures several performance parameters at the highest force "
+"levels."
+msgstr ""
+"A lépéspróba számos teljesítményparamétert mér a legmagasabb erőszinteken."
+
+#: oversteer/main.ui:2718
+msgid "page3"
+msgstr "oldal3"
+
+#: oversteer/main.ui:2731
+msgid "The test is running, please, don't touch the wheel and wait."
+msgstr "A vizsgálat fut. Kérem, ne nyúljon a kormánykerékhez és várjon."
+
+#: oversteer/main.ui:2745
+msgid "page4"
+msgstr "oldal4"
+
+#: oversteer/main.ui:2771
+msgid "Max. angular acceleration (RPM/s):"
+msgstr "Maximális szöggyorsulás (RPM/s):"
+
+#: oversteer/main.ui:2786
+msgid "Max. angular deceleration (RPM/s):"
+msgstr "Maximális szöglassulás (RPM/s):"
+
+#: oversteer/main.ui:2801
+msgid "Mean angular acceleration (RPM/s):"
+msgstr "Átlagos szöggyorsulás (RPM/s):"
+
+#: oversteer/main.ui:2816
+msgid "Residual angular deceleration (RPM/s):"
+msgstr "Maradék szöglassulás (RPM/s):"
+
+#: oversteer/main.ui:2831
+msgid "Latency (ms):"
+msgstr "Késleltetés (ms)"
+
+#: oversteer/main.ui:2846
+msgid "Min. force level (%):"
+msgstr "Minimális erőszint (%):"
+
+#: oversteer/main.ui:2926
+msgid "Max. angular velocity (RPM):"
+msgstr "Maximális szögsebesség (RPM):"
+
+#: oversteer/main.ui:2941
+msgid "Mean angular deceleration (RPM/s):"
+msgstr "Átlagos szöglassulás (RPM/s):"
+
+#: oversteer/main.ui:2956
+msgid "Time to max. angular acceleration (ms):"
+msgstr "Maximális szöggyorsulás időintervalluma (ms):"
+
+#: oversteer/main.ui:2971
+msgid "Time to max. angular deceleration (ms):"
+msgstr "Maximális szöglassulás időintervalluma (ms):"
+
+#: oversteer/main.ui:2986
+msgid "Estimated SNR (dB):"
+msgstr "Becsült jel-zaj viszony (dB)"
+
+#: oversteer/main.ui:3094
+msgid "page0"
+msgstr "oldal0"
+
+#: oversteer/main.ui:3107
+msgid ""
+"For the duration of this test you have to hold your steering wheel firmly in "
+"your hands and move it slowly around its middle position. When you notice a "
+"slight resistance or pulsation press any button in the wheel."
+msgstr ""
+"A vizsgálat időtartama alatt a kormánykereket erősen tartsa, és lassan "
+"mozgassa a középső állás körül. Amikor enyhe ellenállást vagy lüktetést "
+"észlel, nyomja meg a kormánykerék bármelyik gombját."
+
+#: oversteer/main.ui:3122
+msgid "Press any wheel button when ready to start the test."
+msgstr ""
+"Nyomja meg bármelyik kormánykerék gombot, amikor készen áll a vizsgálat "
+"elindítására."
+
+#: oversteer/main.ui:3136
+msgid "Now running the test."
+msgstr "Éppen vizsgálat történik."
+
+#: oversteer/main.ui:3149
+msgid "page6"
+msgstr "oldal6"
+
+#: oversteer/main.ui:3164
+msgid ""
+"WARNING: Don't touch the wheel and leave a clear space around it to avoid "
+"accidents or unreliable results."
+msgstr ""
+"FIGYELMEZTETÉS: Ne érintse meg a kormánykereket, és hagyjon szabad helyet "
+"körülötte a balesetek vagy a nem megfelelő eredmény elkerülése érdekében."
+
+#: oversteer/main.ui:3186
+msgid "Back"
+msgstr "Vissza"
+
+#: oversteer/main.ui:3200
+msgid "Run"
+msgstr "Futtatás"
+
+#: oversteer/main.ui:3234
+msgid "Tests"
+msgstr "Vizsgálatok"
+
+#: oversteer/main.ui:3313
+msgid "New"
+msgstr "Új"
+
+#: oversteer/main.ui:3327
+msgid "Rename"
+msgstr "Átnevezés"
+
+#: oversteer/main.ui:3341
+msgid "Delete"
+msgstr "Törlés"
+
+#: oversteer/main.ui:3355
+msgid "Import"
+msgstr "Importálás"
+
+#: oversteer/main.ui:3369
+msgid "Export"
+msgstr "Exportálás"
+
+#: oversteer/main.ui:3397
+msgid "Profiles"
+msgstr "Profilok"
+
+#: oversteer/main.ui:3413
+msgid "Start Application"
+msgstr "Alkalmazás elindítása"
+
+#: oversteer/main.ui:3464
+msgid "Re-scan wheel devices and update window."
+msgstr ""
+"A kormány típusú eszközök eszközök ismételt keresése és az ablak frissítése."
+
+#: oversteer/main.ui:3524
+msgid "Oversteer preferences"
+msgstr "Oversteer beállítások"
+
+#: oversteer/main.ui:3554
+msgid ""
+"Check permissions to read/write device settings and propose changes to make "
+"them available to normal users."
+msgstr ""
+"Ellenőrizze az eszköz olvasási és írási jogosultságait, és végezze el a "
+"szükséges módosításokat, hogy azok a normál felhasználók számára is "
+"elérhetővé váljanak."
+
+#: oversteer/main.ui:3562
+msgid "Check permissions"
+msgstr "Jogosultságok ellenőrzése"
+
+#: oversteer/main.ui:3594
+msgid ""
+"Change the interface language. You'll need to restart the application to "
+"apply."
+msgstr ""
+"Az alkalmazás kezelőfelület nyelvének módosítása. A beállítások érvényre "
+"juttatásához újra kell indítania az alkalmazást."
+
+#: oversteer/main.ui:3602
+msgid "Language"
+msgstr "Nyelv"
+
+#: oversteer/main.ui:3633
+msgid ""
+"Pressing start will begin configuration of wheel buttons. Just press the "
+"button in the wheel that you want to use for every displayed action."
+msgstr ""
+"A start gomb megnyomásával megkezdődik a kormánygombok beállítása. Csak "
+"nyomja meg azt a gombot a kormányon, amelyet az éppen megjelenített "
+"művelethez használni szeretne."
+
+#: oversteer/main.ui:3639
+msgid "Define buttons"
+msgstr "Gombok megadása"
+
+#: oversteer/main.ui:3649
+msgid "Start"
+msgstr "Indulás"
+
+#: oversteer/combined_chart.py:15
+msgid "Linear response test"
+msgstr "Lineáris válaszvizsgálat"
+
+#: oversteer/combined_chart.py:16 oversteer/combined_chart.py:25
+msgid "Input force"
+msgstr "Bemeneti erő"
+
+#: oversteer/combined_chart.py:17
+msgid "Output force"
+msgstr "Kimeneti erő"
+
+#: oversteer/combined_chart.py:18
+msgid "Force level"
+msgstr "Erősség"
+
+#: oversteer/combined_chart.py:24
+msgid "Step test (angular velocity + position)"
+msgstr "Próba (szögsebesség és pozíció)"
+
+#: oversteer/combined_chart.py:26
+msgid "Angular displacement (raw)"
+msgstr "Szögeltolódás (nyers)"
+
+#: oversteer/combined_chart.py:27
+msgid "Angular displacement (smoothed)"
+msgstr "Szögeltolódás (kiegyenlített)"
+
+#: oversteer/combined_chart.py:28
+msgid "Angular velocity (raw)"
+msgstr "Szögsebesség (nyers)"
+
+#: oversteer/combined_chart.py:29
+msgid "Angular velocity (smoothed)"
+msgstr "Szögsebesség (kiegyenlített)"
+
+#: oversteer/combined_chart.py:30 oversteer/combined_chart.py:42
+msgid "Time (s)"
+msgstr "Idő: (mp)"
+
+#: oversteer/combined_chart.py:31
+msgid "Position"
+msgstr "Pozíció"
+
+#: oversteer/combined_chart.py:32
+msgid "RPM"
+msgstr "RPM"
+
+#: oversteer/combined_chart.py:38
+msgid "Step test (angular acceleration)"
+msgstr "Próba (szöggyorsulás)"
+
+#: oversteer/combined_chart.py:39
+msgid "Input Force"
+msgstr "Bemeneti erő"
+
+#: oversteer/combined_chart.py:40
+msgid "Angular acceleration (raw)"
+msgstr "Szöggyorsulás (nyers)"
+
+#: oversteer/combined_chart.py:41
+msgid "Angular acceleration (smoothed)"
+msgstr "Szöggyorsulás (kiegyenlített)"
+
+#: oversteer/combined_chart.py:43
+msgid "RPM/s"
+msgstr "RPM/s"
+
+#: oversteer/combined_chart.py:49
+msgid "Latency = {:.0f} ms"
+msgstr "Késleltetés = {:.0f} ms"
+
+#: oversteer/combined_chart.py:50
+msgid "Max. velocity = {:.0f} RPM"
+msgstr "Csúcssebesség = {:.0f} RPM"
+
+#: oversteer/combined_chart.py:51
+msgid "Mean accel. = {:.0f} RPM/s"
+msgstr "Átlag gyorsulás = {:.0f} RPM/s"
+
+#: oversteer/combined_chart.py:52
+msgid "Mean decel. = {:.0f} RPM/s"
+msgstr "Átlag lassulás = {:.0f} RPM/s"
+
+#: oversteer/combined_chart.py:53
+msgid "Max. accel. = {:.0f} RPM/s"
+msgstr "Csúcsgyorsulás = {:.0f} RPM/s"
+
+#: oversteer/combined_chart.py:54
+msgid "Time max. accel. = {:.0f} ms"
+msgstr "Maximális gyorsulás időintervalluma = {:.0f} ms"
+
+#: oversteer/combined_chart.py:55
+msgid "Max. decel. = {:.0f} RPM/s"
+msgstr "Maximális lassulás = {:.0f} RPM/s"
+
+#: oversteer/combined_chart.py:56
+msgid "Time max. decel. = {:.0f} ms"
+msgstr "Maximális lassulás időintervalluma = {:.0f} ms"
+
+#: oversteer/combined_chart.py:57
+msgid "Residual decel. = {:.0f} RPM/s"
+msgstr "Maradvány lassulás = {:.0f} RPM/s"
+
+#: oversteer/combined_chart.py:58
+msgid "Estimated SNR = {:.0f} dB"
+msgstr "Becsült jel-zaj viszony = {:.0f} dB"
+
+#: oversteer/combined_chart.py:59
+msgid "Min. force level = {:.1f} %"
+msgstr "Minimális erőszint = {:.1f} %"
+
+#: data/org.berarma.Oversteer.desktop.in:4
+msgid "Steering Wheel Manager"
+msgstr "Kormánykerék-kezelő"
+
+#: data/org.berarma.Oversteer.desktop.in:12
+msgid "game;racing;cars;wheels"
+msgstr "game;racing;cars;wheels;játék;verseny;autók;kormánykerék"
+
+#~ msgid "org.berarma.Oversteer"
+#~ msgstr "org.berarma.Oversteer"
