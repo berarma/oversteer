@@ -1,7 +1,7 @@
 # Match kernel name of device, rather than ATTRS{idProduct} and ATTRS{idVendor}
 # so we can access the range file and leds directory. Set rw access to these 
 # files for everyone.
-ACTION=="add", SUBSYSTEM=="hid", DRIVER=="ftec_csl_elite", GOTO="fanatec_device"
+ACTION=="bind", SUBSYSTEM=="hid", DRIVER=="ftec_csl_elite", GOTO="fanatec_device"
 GOTO="fanatec_end"
 
 LABEL="fanatec_device"

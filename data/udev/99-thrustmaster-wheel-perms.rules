@@ -5,19 +5,19 @@
 # keyboards, and other non-wheel devices.
 
 # Thrustmaster T500RS Racing Wheel (USB)
-ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b65e", DRIVER=="t500rs", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b65e", DRIVER=="t500rs", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
 
 # Thrustmaster T300RS Racing Wheel (USB)
-ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66e", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66e", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
 
 # Thrustmaster Ferrari F1 Wheel Advanced T300 (USB)
-ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66f", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66f", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
 
 # Thrustmaster T248 Racing Wheel (USB)
-ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b696", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b696", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
 
 # Thrustmaster T150 Racing Wheel (USB)
-ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b677", DRIVER=="hid-t150", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b677", DRIVER=="hid-t150", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
 
 # Thrustmaster TMX Racing Wheel (USB)
-ACTION=="add", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b67f", DRIVER=="hid-t150", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b67f", DRIVER=="hid-t150", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
