@@ -51,6 +51,7 @@ work. Please, check the related projects for more information.)**:
 
 - Logitech G923 for PS/PC with [new-lg4ff](https://github.com/berarma/new-lg4ff).
 - Thrustmaster T150 with [t150_driver](https://github.com/scarburato/t150_driver).
+- Thrustmaster TMX Force Feedback with [t150_driver](https://github.com/scarburato/t150_driver).
 - Thrustmaster T300 RS with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
 - Thrustmaster T248 with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
 - FANATEC CSL Elite Wheel Base with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
