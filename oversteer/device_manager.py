@@ -30,6 +30,7 @@ class DeviceManager:
             wid.LG_MOMO2: 270,
             wid.LG_MOMO: 270,
             wid.LG_SFW: 270,
+            wid.LG_WFF: 180,
             wid.LG_WFFG: 180,
             wid.LG_WFG: 180,
             wid.TM_F458: 240,

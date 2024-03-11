@@ -397,6 +397,16 @@ class Device:
         if event.type != ecodes.EV_ABS:
             return event
 
+        if self.usb_id in [wid.LG_WFF]:
+            if event.code == ecodes.ABS_WHEEL:
+                event.code = ecodes.ABS_X
+                event.value = (event.value + 2048) * 16
+            elif event.code == ecodes.ABS_GAS:
+                event.code = ecodes.ABS_Z
+            elif event.code == ecodes.ABS_BRAKE:
+                event.code = ecodes.ABS_RZ
+            elif event.code in [ecodes.BTN_GEAR_DOWN, ecodes.BTN_GEAR_UP]:
+                event.code = event.code - ecodes.BTN_GEAR_DOWN + ecodes.BTN_TRIGGER
         if event.code == ecodes.ABS_X:
             if self.usb_id in [wid.LG_WFG, wid.LG_WFFG]:
                 event.value = event.value * 64
