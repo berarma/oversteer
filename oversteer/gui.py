@@ -425,7 +425,6 @@ class Gui:
                     elif event.value == 1:
                         self.on_button_press(103, 1)
             if event.type == ecodes.EV_KEY:
-                button = None
                 if event.value:
                     delay = 0
                     if self.test and self.test.is_awaiting_action():
