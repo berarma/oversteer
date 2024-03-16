@@ -394,6 +394,12 @@ class Device:
         # - Hat X: ABS_HAT0X [-1, 1]
         # - Hat Y: ABS_HAT0Y [-1, 1]
         #
+
+        if event.type == ecodes.EV_KEY:
+            if self.usb_id in [wid.LG_WFF]:
+                if event.code in [ecodes.BTN_GEAR_DOWN, ecodes.BTN_GEAR_UP]:
+                    event.code = event.code - ecodes.BTN_GEAR_DOWN + ecodes.BTN_TRIGGER
+
         if event.type != ecodes.EV_ABS:
             return event
 
@@ -405,8 +411,6 @@ class Device:
                 event.code = ecodes.ABS_Z
             elif event.code == ecodes.ABS_BRAKE:
                 event.code = ecodes.ABS_RZ
-            elif event.code in [ecodes.BTN_GEAR_DOWN, ecodes.BTN_GEAR_UP]:
-                event.code = event.code - ecodes.BTN_GEAR_DOWN + ecodes.BTN_TRIGGER
         if event.code == ecodes.ABS_X:
             if self.usb_id in [wid.LG_WFG, wid.LG_WFFG]:
                 event.value = event.value * 64
