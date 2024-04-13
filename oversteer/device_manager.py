@@ -39,6 +39,7 @@ class DeviceManager:
             wid.TM_T248: 900,
             wid.TM_T300RS: 1080,
             wid.TM_T300RS_FF1: 1080,
+            wid.TM_T300RS_GT: 1080,
             wid.TM_T500RS: 1080,
             wid.TM_T80: 240,
             wid.TM_TMX: 900,
