@@ -15,6 +15,10 @@ ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b6
 ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66f", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
 ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66f", DRIVER=="hid-tmff-new", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
 
+# Thrustmaster T300RS GT Racing Wheel (USB)
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66d", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
+ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b66d", DRIVER=="hid-tmff-new", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level alternate_modes'"
+
 # Thrustmaster T248 Racing Wheel (USB)
 ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b696", DRIVER=="tmff2", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
 ACTION=="bind", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", ATTRS{idProduct}=="b696", DRIVER=="hid-tmff-new", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
