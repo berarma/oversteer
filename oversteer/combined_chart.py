@@ -84,8 +84,8 @@ class CombinedChart:
 
         return canvas
 
-    def get_navigation_toolbar(self, canvas, window):
-        return NavigationToolbar(canvas, window)
+    def get_navigation_toolbar(self, canvas):
+        return NavigationToolbar(canvas)
 
     def align_yaxis(self, ax1, v1, ax2, v2):
         """adjust ax2 ylimit so that v2 in ax2 is aligned to v1 in ax1"""
