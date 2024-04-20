@@ -1,0 +1,33 @@
+app-id: org.berarma.Oversteer
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: oversteer
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=ipc
+  - --filesystem=/run/udev
+  - --filesystem=/sys/class/leds
+  - --filesystem=/sys/devices
+  - --device=all
+modules:
+  - shared-modules/lzo/lzo.json
+  - name: cairo
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://cairographics.org/releases/cairo-1.18.0.tar.xz
+        sha256: 243a0736b978a33dee29f9cca7521733b78a65b5418206fef7bd1c3d4cf10b64
+  - python-dependencies.yaml
+  - name: oversteer
+    buildsystem: meson
+    build-commands:
+      - ninja install
+    sources:
+      - type: git
+        url: https://github.com/berarma/oversteer.git
+        tag: 0.8.1
+        commit: 6f983170af984b3ed0a53f417ad599521dddb9ca
+      - type: patch
+        path: oversteer-udev-workaround.patch
