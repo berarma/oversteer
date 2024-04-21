@@ -43,6 +43,7 @@ class DeviceManager:
             wid.TM_T500RS: 1080,
             wid.TM_T80: 240,
             wid.TM_TMX: 900,
+            wid.TM_TSXW: 1080,
             wid.TM_TX: 900,
             wid.XX_FFBOARD: 1080,
         }
