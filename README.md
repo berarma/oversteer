@@ -54,6 +54,7 @@ work. Please, check the related projects for more information.)**:
 - Thrustmaster TMX Force Feedback with [t150_driver](https://github.com/scarburato/t150_driver).
 - Thrustmaster T300 RS with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
 - Thrustmaster T248 with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
+- Thrustmaster TS-XW Racer with [hid-tmff2](https://github.com/Kimplul/hid-tmff2).
 - FANATEC CSL Elite Wheel Base with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
 - FANATEC CSL Elite Wheel Base PS4 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
 - FANATEC ClubSport Wheel Base V2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
