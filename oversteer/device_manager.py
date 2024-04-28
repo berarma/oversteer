@@ -65,13 +65,13 @@ class DeviceManager:
         id = udevice.device_path
         if id is None:
             return
-        logging.debug("%s: %s", action, id)
+        logging.debug("Udev event %s: %s", action, id)
         if action == 'add':
             self.update_device_list(udevice)
             device = self.get_device(id)
             if device:
-                device.enable()
                 time.sleep(5)
+                device.enable()
                 self.changed = True
         if action == 'remove':
             device = self.get_device(id)
@@ -130,7 +130,6 @@ class DeviceManager:
         return None
 
     def get_devices(self):
-        self.changed = False
         return list(self.devices.values())
 
     def get_device(self, did):
@@ -141,4 +140,6 @@ class DeviceManager:
         return next((item for item in self.devices.values() if item.dev_name == did), None)
 
     def is_changed(self):
-        return self.changed
+        changed = self.changed
+        self.changed = False
+        return changed
