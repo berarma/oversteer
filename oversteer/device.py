@@ -137,11 +137,11 @@ class Device:
         with open(path, "w") as file:
             file.write(emulation_mode)
         # Wait for device ready
-        while not self.is_ready():
+        for i in range(10):
+            if self.is_ready():
+                return True
             time.sleep(1)
-        # Wait a bit more
-        time.sleep(5)
-        return True
+        return False
 
     def get_range(self):
         path = self.checked_device_file("range")
