@@ -3,4 +3,5 @@
 /po/*.mo
 __pycache__
 /extra
+flatpak/.flatpak-builder/
 *~
