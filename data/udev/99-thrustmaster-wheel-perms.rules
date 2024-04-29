@@ -9,7 +9,7 @@ GOTO="end"
 
 LABEL="thrustmaster-rules"
 
-DRIVER="tmff2" GOTO="tmff2"
+DRIVER="tmff2" GOTO="tmff-new"
 DRIVER="hid-tmff-new" GOTO="tmff-new"
 DRIVER="hid-t150" GOTO="t150"
 DRIVER!="t500rs" GOTO="end"

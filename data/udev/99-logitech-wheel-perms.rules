@@ -10,16 +10,16 @@ GOTO="end"
 LABEL="logitech-rules"
 
 DRIVER=="logitech" GOTO="logitech-driver"
-DRIVER!="logitech-hidpp-device" GOTO="logitech-hidpp-driver" GOTO="end"
+DRIVER!="logitech-hidpp-device" GOTO="end"
 
 # Logitech G PRO Racing Wheel for Xbox One and PC
 ATTRS{idProduct}=="c272", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"
 
 # Logitech G923 Racing Wheel for Xbox One and PC
-ATTRS{idProduct}=="c26e", DRIVER=="logitech-hidpp-device", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"
+ATTRS{idProduct}=="c26e", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"
 
 # Logitech G920 Driving Force Racing Wheel
-ATTRS{idProduct}=="c262", DRIVER=="logitech-hidpp-device", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range'"
+ATTRS{idProduct}=="c262", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range'"
 
 GOTO="end"
 
