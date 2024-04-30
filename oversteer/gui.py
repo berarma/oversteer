@@ -148,6 +148,7 @@ class Gui:
                 break
 
     def populate_devices(self):
+        logging.debug("populate_devices")
         if self.device_manager.is_changed():
             device_list = []
             for device in self.device_manager.get_devices():

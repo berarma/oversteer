@@ -38,5 +38,6 @@ TM_T500RS = '044f:b65e'
 TM_T80 = '044f:b668'
 TM_TMX = '044f:b67f'
 TM_TX = '044f:b664'
+TM_TSXW = '044f:b692'
 XX_FFBOARD = '1209:ffb0'
 
