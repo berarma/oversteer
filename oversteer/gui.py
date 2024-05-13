@@ -532,7 +532,7 @@ class Gui:
         self.ui.on_test_ready()
 
     def import_test_values(self):
-        filename = self.ui.file_chooser(_('CSV file to import'), 'open')
+        filename = self.ui.file_chooser(_('CSV file to import'), 'open', file_type='csv')
         if filename is None:
             return
 
@@ -574,7 +574,7 @@ class Gui:
             return
 
         default_filename = 'report-' + datetime.now().strftime('%Y%m%d%H%M%S') + '.csv'
-        filename = self.ui.file_chooser(_('CSV file to export'), 'save', default_filename)
+        filename = self.ui.file_chooser(_('CSV file to export'), 'save', default_filename, 'csv')
         if filename is None:
             return
 

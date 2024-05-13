@@ -1,0 +1,115 @@
+diff --git a/oversteer/gtk_handlers.py b/oversteer/gtk_handlers.py
+index 0c4dab6..21ee5e1 100644
+--- a/oversteer/gtk_handlers.py
++++ b/oversteer/gtk_handlers.py
+@@ -228,7 +228,7 @@ class GtkHandlers:
+                 self.ui.error_dialog(_('Error deleting profile'), str(e))
+ 
+     def on_import_profile_clicked(self, widget):
+-        profile_file = self.ui.file_chooser(_('Choose profile file to import'), 'open')
++        profile_file = self.ui.file_chooser(_('Choose profile file to import'), 'open', 'ini')
+         if profile_file is None:
+             return
+         try:
+@@ -245,7 +245,7 @@ class GtkHandlers:
+         if row is None:
+             return
+         profile_name = row.get_children()[0].get_text()
+-        export_file = self.ui.file_chooser(_('Export profile to'), 'save', profile_name + '.ini')
++        export_file = self.ui.file_chooser(_('Export profile to'), 'save', profile_name + '.ini', 'ini')
+         if export_file is None:
+             return
+         try:
+diff --git a/oversteer/gtk_ui.py b/oversteer/gtk_ui.py
+index 06acad6..e926c89 100644
+--- a/oversteer/gtk_ui.py
++++ b/oversteer/gtk_ui.py
+@@ -1,10 +1,12 @@
+ import gi
++import locale as Locale
++from locale import gettext as _
+ import logging
+ import math
+ import os
+-from .gtk_handlers import GtkHandlers
+ gi.require_version('Gtk', '3.0')
+ from gi.repository import Gtk, Gdk, GLib
++from .gtk_handlers import GtkHandlers
+ 
+ class GtkUi:
+ 
+@@ -92,34 +94,40 @@ class GtkUi:
+         dialog.run()
+         dialog.destroy()
+ 
+-    def file_chooser(self, title, action, default_name = None):
++    def file_chooser(self, title, action, default_name = None, file_type = 'all'):
+         if action == 'open':
+             action = Gtk.FileChooserAction.OPEN
+-            action_button = Gtk.STOCK_OPEN
+         elif action == 'save':
+             action = Gtk.FileChooserAction.SAVE
+-            action_button = Gtk.STOCK_SAVE
+         else:
+             return None
+ 
+-        dialog = Gtk.FileChooserDialog(
+-            title=title, parent=self.window, action=action
++        dialog = Gtk.FileChooserNative(
++            title=title, transient_for=self.window, action=action
+         )
+ 
+         if action == Gtk.FileChooserAction.SAVE:
+             if default_name is not None:
+                 dialog.set_current_name(default_name)
+ 
+-        dialog.add_buttons(
+-            Gtk.STOCK_CANCEL,
+-            Gtk.ResponseType.CANCEL,
+-            action_button,
+-            Gtk.ResponseType.OK,
+-        )
++        file_filter = Gtk.FileFilter()
++
++        if file_type == 'csv':
++            file_filter.set_name('CSV')
++            file_filter.add_pattern('*.csv')
++        elif file_type == 'ini':
++            file_filter.set_name('INI')
++            file_filter.add_pattern('*.ini')
++        elif file_type == 'all':
++            file_filter.set_name(_('All files'))
++            file_filter.add_pattern('*')
++
++        dialog.add_filter(file_filter)
++        dialog.set_filter(file_filter)
+ 
+         response = dialog.run()
+ 
+-        if response == Gtk.ResponseType.OK:
++        if response == Gtk.ResponseType.ACCEPT:
+             filename = dialog.get_filename()
+         else:
+             filename = None
+diff --git a/oversteer/gui.py b/oversteer/gui.py
+index a2f31f4..82b88d2 100644
+--- a/oversteer/gui.py
++++ b/oversteer/gui.py
+@@ -532,7 +532,7 @@ class Gui:
+         self.ui.on_test_ready()
+ 
+     def import_test_values(self):
+-        filename = self.ui.file_chooser(_('CSV file to import'), 'open')
++        filename = self.ui.file_chooser(_('CSV file to import'), 'open', file_type='csv')
+         if filename is None:
+             return
+ 
+@@ -574,7 +574,7 @@ class Gui:
+             return
+ 
+         default_filename = 'report-' + datetime.now().strftime('%Y%m%d%H%M%S') + '.csv'
+-        filename = self.ui.file_chooser(_('CSV file to export'), 'save', default_filename)
++        filename = self.ui.file_chooser(_('CSV file to export'), 'save', default_filename, 'csv')
+         if filename is None:
+             return
+ 

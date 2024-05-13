@@ -228,7 +228,7 @@ class GtkHandlers:
                 self.ui.error_dialog(_('Error deleting profile'), str(e))
 
     def on_import_profile_clicked(self, widget):
-        profile_file = self.ui.file_chooser(_('Choose profile file to import'), 'open')
+        profile_file = self.ui.file_chooser(_('Choose profile file to import'), 'open', file_type='ini')
         if profile_file is None:
             return
         try:
@@ -245,7 +245,7 @@ class GtkHandlers:
         if row is None:
             return
         profile_name = row.get_children()[0].get_text()
-        export_file = self.ui.file_chooser(_('Export profile to'), 'save', profile_name + '.ini')
+        export_file = self.ui.file_chooser(_('Export profile to'), 'save', profile_name + '.ini', file_type='ini')
         if export_file is None:
             return
         try:
