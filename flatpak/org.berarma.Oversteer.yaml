@@ -4,7 +4,9 @@ runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 command: oversteer
 finish-args:
+  # Wayland support
   - --socket=wayland
+  # X11 fallback support
   - --socket=fallback-x11
   - --share=ipc
   - --filesystem=/run/udev
@@ -29,5 +31,5 @@ modules:
     sources:
       - type: git
         url: https://github.com/berarma/oversteer.git
-        tag: 0.8.1
-        commit: 6f983170af984b3ed0a53f417ad599521dddb9ca
+        tag: v0.8.2
+        commit: 4c7062ecec343295fe76b6bc10490c690d187407

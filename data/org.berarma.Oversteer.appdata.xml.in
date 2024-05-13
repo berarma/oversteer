@@ -1,16 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop">
-  <id>org.berarma.Oversteer.desktop</id>
-  <metadata_license>CC0</metadata_license>
-  <project_license>GPL-3.0+</project_license>
+  <id>org.berarma.Oversteer</id>
+  <launchable type="desktop-id">org.berarma.Oversteer.desktop</launchable>
   <name>Oversteer</name>
   <summary>Steering Wheel Manager</summary>
+  <metadata_license>CC0</metadata_license>
+  <project_license>GPL-3.0+</project_license>
   <description>
     <p translatable="yes">Oversteer allows configuration of supported steering wheels.</p>
   </description>
   <launchable type="desktop-id">org.berarma.Oversteer.desktop</launchable>
+  <releases>
+    <release version="v0.8.2" date="2024-04-28"/>
+      <description>
+        <p>Fix freeze when changing compatibility mode.</p>
+      </description>
+    <release version="0.8.1" date="2024-01-22"/>
+      <description>
+        <ul>
+          <li>Fix device permissions issue when booting with the device already connected. Regression in 0.8.0.</li>
+          <li>Add Hungarian translation by KAMI911 in #168.</li>
+          <li>Add Thrustmaster TMX Force Feedback by pastaq in #169.</li>
+        </ul>
+      </description>
+    <release version="0.8.0" date="2023-10-09"/>
+      <description>
+        <ul>
+          <li>Added device: Thrustmaster Ferrari F1 wheel attachment.</li>
+          <li>Added device: Thrustmaster Force Feedback.</li>
+          <li>Added device: Open FFBoard.</li>
+          <li>Added device: Thrustmaster TX Racing Wheel.</li>
+          <li>Added device: Thrustmaster T80.</li>
+          <li>Added device: Thrustmaster Ferrari 458.</li>
+          <li>Added device: Logitech Pro Racing Wheel (XBox/PC).</li>
+          <li>Fixed the mapping of pedals for Logitech G923 (XBox/PC).</li>
+          <li>Fixed the mapping of controls for the Thustmaster T150.</li>
+          <li>Fixed wmclass in desktop file (thanks BlueManCZ).</li>
+          <li>Fixed issues when synch'ing settings to the device.</li>
+          <li>Fix default installation path to use prefix /usr/local instead of /usr.</li>
+          <li>Allowed overriding of profile settings from the command line.</li>
+          <li>Added check for available FFB support before trying to use it and thus avoid errors.</li>
+          <li>Changed the way devices are detected to avoid issues in some setups.</li>
+          <li>Added Polish translation (thanks @mmarusiak).</li>
+          <li>Increased number of buttons displayed to 30.</li>
+          <li>Improved UDEV rules by making them more specific and simpler (thanks alxwk).</li>
+          <li>Updated to Meson 0.56.</li>
+          <li>Other smaller fixes.</li>
+        </ul>
+      </description>
+    <release version="0.7.2" date="2022-09-20"/>
+      <description>
+        <p>Fix permissions issue for Thrustmaster devices.</p>
+      </description>
+    <release version="0.7.1" date="2022-05-30"/>
+      <description>
+        <ul>
+          <li>Fix permission warnings/errors.</li>
+          <li>More Fanatec devices added and udev rules cleanup.</li>
+          <li>Check FFB capabilities before using them.</li>
+          <li>Normalize values to 0-100 in CLI.</li>
+          <li>Wait for devices before applying settings.</li>
+          <li>Run supplied command when in CLI mode.</li>
+          <li>Add Thrustmaster T248 and update udev rules for T300RS.</li>
+          <li>Fix pedals in Logitech G920.</li>
+        </ul>
+      </description>
+    <release version="0.7.0" date="2022-01-20"/>
+      <description>
+        <ul>
+          <li>Added Logitech G923, Thrustmaster T150 and T500RS to the list of supported wheels.</li>
+          <li>Added German, Finnish and Turkish translations.</li>
+          <li>Install udev rules by default in more sensible locations (check the README in case you need to remove the old files.)</li>
+          <li>Bug fixes.</li>
+        </ul>
+      </description>
+    <release version="0.6.0" date="2021-03-26"/>
+      <description>
+        <ul>
+          <li>New profile manager.</li>
+          <li>New feature to run as game/app companion. The game/app launcher needs changes to run Oversteer instead and launch the game. More info in the README.</li>
+          <li>New force feedback wheel testing.</li>
+          <li>Added more steering wheels: Thrustmaster T300RS, FANATEC CSL Elite, FANATEC ClubSport V2/2.5 and FANATEC Podium DD1. They need drivers that are still under development. See README.</li>
+          <li>Added more Logitech wheels: Logitech Wingman FG and Wingman FFG.</li>
+          <li>Max wheel range changes to match the wheel's max range.</li>
+          <li>The feature to change the wheel range from the wheel now can be toggled by simultaneously pressing several buttons to avoid rendering one wheel button useless.</li>
+          <li>Improved compatibility when loading/saving profiles.</li>
+          <li>New feature to center the wheel on command.</li>
+          <li>Changes to the UI to make it more compact and a more logic layout for some widgets.</li>
+          <li>Fixed issues in the detection of some devices and their features.</li>
+          <li>Fixed issues launching Oversteer from Steam.</li>
+          <li>Fixed issues with modal dialogs positioning.</li>
+          <li>Fixed several errors related to handling the settings.</li>
+          <li>Fixed reading of pedals in the Logitech Momo wheel.</li>
+        </ul>
+      </description>
+    <release version="0.5.4" date="2021-01-03"/>
+      <description>
+        <p>Fix error on startup in some system configurations.</p>
+      </description>
+    <release version="0.5.5" date="2020-09-17"/>
+      <description>
+        <p>Fix saving profile when the ffbmeter isn't supported.</p>
+      </description>
+    <release version="0.5.3" date="2020-09-06"/>
+      <description>
+        <ul>
+          <li>Profile fixes when saving/loading. Thanks mitaa.</li>
+          <li>Added Russian translation. Thanks @TotalCaesar659</li>.
+        </ul>
+      </description>
+    <release version="0.5.2" date="2020-07-27"/>
+      <description>
+        <p>Fixes device discovery and --list option.</p>
+      </description>
+    <release version="0.5.1" date="2020-07-26"/>
+      <description>
+        <p>Fix startup on some systems.</p>
+      </description>
+    <release version="0.5.0" date="2020-07-25"/>
+      <description>
+        <ul>
+          <li>Fixed swapped pedal axes in the Logitech G920 wheel.</li>
+          <li>Removed fake dead zones in the display of the steering wheel and pedals due to errors in some GTK themes.</li>
+          <li>Fixed hot-plugging of devices with proper detection of disconnections and connection.</li>
+          <li>Fixed warnings in the build/install process by upgrading requirements to Meson 0.50.</li>
+          <li>Fixed enabling the screen ffbmeter when loading a profile.</li>
+          <li>Added proper desktop environment identification of the app.</li>
+          <li>New style for the overlay window with transparency and a title bar to ease relocation.</li>
+          <li>The overlay window position will keep its position when in automatic display mode.</li>
+          <li>The overlay window position is now saved in profiles.</li>
+          <li>Experimental support for the Thrustmaster T300RS wheel.</li>
+          <li>And other smaller fixes.</li>
+        </ul>
+      </description>
+    <release version="0.4.1" date="2020-03-17"/>
+    <release version="0.4.0" date="2020-02-06"/>
+    <release version="0.3.1" date="2019-09-27"/>
+    <release version="0.3.0" date="2019-09-27"/>
+    <release version="0.2.3" date="2019-08-11"/>
+    <release version="0.2.2" date="2019-06-30"/>
+    <release version="0.2.1" date="2019-04-12"/>
+    <release version="0.2.0" date="2019-04-10"/>
+    <release version="0.1.4" date="2019-04-03"/>
+  </releases>
   <url type="homepage">https://github.com/berarma/oversteer</url>
   <url type="bugtracker">https://github.com/berarma/oversteer/issues</url>
+  <content_rating type="oars-1.0"/>
   <update_contact>berarma@hotmail.com</update_contact>
   <translation type="gettext">oversteer</translation>
 </component>

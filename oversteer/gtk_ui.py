@@ -1,4 +1,6 @@
 import gi
+import locale as Locale
+from locale import gettext as _
 import logging
 import math
 import os
@@ -92,34 +94,40 @@ class GtkUi:
         dialog.run()
         dialog.destroy()
 
-    def file_chooser(self, title, action, default_name = None):
+    def file_chooser(self, title, action, default_name = None, file_type = 'all'):
         if action == 'open':
             action = Gtk.FileChooserAction.OPEN
-            action_button = Gtk.STOCK_OPEN
         elif action == 'save':
             action = Gtk.FileChooserAction.SAVE
-            action_button = Gtk.STOCK_SAVE
         else:
             return None
 
-        dialog = Gtk.FileChooserDialog(
-            title=title, parent=self.window, action=action
+        dialog = Gtk.FileChooserNative(
+            title=title, transient_for=self.window, action=action
         )
 
         if action == Gtk.FileChooserAction.SAVE:
             if default_name is not None:
                 dialog.set_current_name(default_name)
 
-        dialog.add_buttons(
-            Gtk.STOCK_CANCEL,
-            Gtk.ResponseType.CANCEL,
-            action_button,
-            Gtk.ResponseType.OK,
-        )
+        file_filter = Gtk.FileFilter()
+
+        if file_type == 'csv':
+            file_filter.set_name('CSV')
+            file_filter.add_pattern('*.csv')
+        elif file_type == 'ini':
+            file_filter.set_name('INI')
+            file_filter.add_pattern('*.ini')
+        elif file_type == 'all':
+            file_filter.set_name(_('All files'))
+            file_filter.add_pattern('*')
+
+        dialog.add_filter(file_filter)
+        dialog.set_filter(file_filter)
 
         response = dialog.run()
 
-        if response == Gtk.ResponseType.OK:
+        if response == Gtk.ResponseType.ACCEPT:
             filename = dialog.get_filename()
         else:
             filename = None
