@@ -1,21 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<component type="desktop">
+<component type="desktop-application">
   <id>org.berarma.Oversteer</id>
   <launchable type="desktop-id">org.berarma.Oversteer.desktop</launchable>
   <name>Oversteer</name>
   <summary>Steering Wheel Manager</summary>
+  <developer id="org.berarma">
+    <name>berarma</name>
+  </developer>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <description>
-    <p translatable="yes">Oversteer allows configuration of supported steering wheels.</p>
+    <p translatable="yes">Oversteer manages steering wheels on Linux using the features provided by the loaded modules.</p>
+    <p translatable="yes">Features:</p>
+      <ul>
+        <li>Change rotation range.</li>
+        <li>Change emulation/working modes.</li>
+        <li>Combine accelerator/brakes pedals for games that use just one axis.</li>
+        <li>Change autocentering force strength.</li>
+        <li>Change force feedback gain.</li>
+        <li>Device configuration profiles.</li>
+        <li>Overlay window to display/configure range.</li>
+        <li>Use wheel buttons to configure range.</li>
+        <li>Hardware performance testing.</li>
+        <li>Combine accelerator/clutch pedals. Useful for flight simulators. (Not supported with in-kernel modules)</li>
+        <li>Change global force feedback gain. (Not supported with in-kernel modules)</li>
+        <li>Change each conditional force feedback effect type gain. (Not supported with in-kernel modules)</li>
+        <li>FFBmeter to monitor FFB clipping using wheel leds or overlay window. (Not supported with in-kernel modules)</li>
+      </ul>
   </description>
   <launchable type="desktop-id">org.berarma.Oversteer.desktop</launchable>
   <releases>
-    <release version="v0.8.2" date="2024-04-28"/>
+    <release version="v0.8.2" date="2024-04-28">
       <description>
         <p>Fix freeze when changing compatibility mode.</p>
       </description>
-    <release version="0.8.1" date="2024-01-22"/>
+    </release>
+    <release version="0.8.1" date="2024-01-22">
       <description>
         <ul>
           <li>Fix device permissions issue when booting with the device already connected. Regression in 0.8.0.</li>
@@ -23,7 +43,8 @@
           <li>Add Thrustmaster TMX Force Feedback by pastaq in #169.</li>
         </ul>
       </description>
-    <release version="0.8.0" date="2023-10-09"/>
+    </release>
+    <release version="0.8.0" date="2023-10-09">
       <description>
         <ul>
           <li>Added device: Thrustmaster Ferrari F1 wheel attachment.</li>
@@ -48,11 +69,13 @@
           <li>Other smaller fixes.</li>
         </ul>
       </description>
-    <release version="0.7.2" date="2022-09-20"/>
+    </release>
+    <release version="0.7.2" date="2022-09-20">
       <description>
         <p>Fix permissions issue for Thrustmaster devices.</p>
       </description>
-    <release version="0.7.1" date="2022-05-30"/>
+    </release>
+    <release version="0.7.1" date="2022-05-30">
       <description>
         <ul>
           <li>Fix permission warnings/errors.</li>
@@ -65,7 +88,8 @@
           <li>Fix pedals in Logitech G920.</li>
         </ul>
       </description>
-    <release version="0.7.0" date="2022-01-20"/>
+    </release>
+    <release version="0.7.0" date="2022-01-20">
       <description>
         <ul>
           <li>Added Logitech G923, Thrustmaster T150 and T500RS to the list of supported wheels.</li>
@@ -74,7 +98,8 @@
           <li>Bug fixes.</li>
         </ul>
       </description>
-    <release version="0.6.0" date="2021-03-26"/>
+    </release>
+    <release version="0.6.0" date="2021-03-26">
       <description>
         <ul>
           <li>New profile manager.</li>
@@ -94,30 +119,36 @@
           <li>Fixed reading of pedals in the Logitech Momo wheel.</li>
         </ul>
       </description>
-    <release version="0.5.4" date="2021-01-03"/>
+    </release>
+    <release version="0.5.4" date="2021-01-03">
       <description>
         <p>Fix error on startup in some system configurations.</p>
       </description>
-    <release version="0.5.5" date="2020-09-17"/>
+    </release>
+    <release version="0.5.5" date="2020-09-17">
       <description>
         <p>Fix saving profile when the ffbmeter isn't supported.</p>
       </description>
-    <release version="0.5.3" date="2020-09-06"/>
+    </release>
+    <release version="0.5.3" date="2020-09-06">
       <description>
         <ul>
           <li>Profile fixes when saving/loading. Thanks mitaa.</li>
           <li>Added Russian translation. Thanks @TotalCaesar659</li>.
         </ul>
       </description>
-    <release version="0.5.2" date="2020-07-27"/>
+    </release>
+    <release version="0.5.2" date="2020-07-27">
       <description>
         <p>Fixes device discovery and --list option.</p>
       </description>
-    <release version="0.5.1" date="2020-07-26"/>
+    </release>
+    <release version="0.5.1" date="2020-07-26">
       <description>
         <p>Fix startup on some systems.</p>
       </description>
-    <release version="0.5.0" date="2020-07-25"/>
+    </release>
+    <release version="0.5.0" date="2020-07-25">
       <description>
         <ul>
           <li>Fixed swapped pedal axes in the Logitech G920 wheel.</li>
@@ -133,6 +164,7 @@
           <li>And other smaller fixes.</li>
         </ul>
       </description>
+    </release>
     <release version="0.4.1" date="2020-03-17"/>
     <release version="0.4.0" date="2020-02-06"/>
     <release version="0.3.1" date="2019-09-27"/>

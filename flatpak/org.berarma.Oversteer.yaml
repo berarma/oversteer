@@ -13,6 +13,16 @@ finish-args:
   - --filesystem=/sys/class/leds
   - --filesystem=/sys/devices
   - --device=all
+cleanup:
+  - '/include'
+  - '/lib/pkgconfig'
+  - '/man'
+  - '/share/cmake'
+  - '/share/doc'
+  - '/share/man'
+  - '/share/vala'
+  - '*.la'
+  - '*.a'
 modules:
   - shared-modules/lzo/lzo.json
   - name: cairo
