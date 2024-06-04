@@ -4,7 +4,7 @@
 # Avoid blanket matching all Logitech devices, as that causes issues with mice,
 # keyboards, and other non-wheel devices.
 
-ACTION!="add", ACTION!="unbind", ACTION!="remove", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d" GOTO="logitech-rules"
+ACTION!="unbind", ACTION!="remove", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d" GOTO="logitech-rules"
 GOTO="end"
 
 LABEL="logitech-rules"

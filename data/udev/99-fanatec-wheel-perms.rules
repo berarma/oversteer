@@ -1,4 +1,5 @@
 # Copied from https://github.com/gotzl/hid-fanatecff/blob/master/fanatec.rules
+# with some changes so that anyone can change configs
 
 ACTION!="add|change", GOTO="fanatec_end"
 SUBSYSTEM=="hid", DRIVER=="fanatec", GOTO="ftec_module_settings"
@@ -7,9 +8,7 @@ SUBSYSTEMS=="usb", ATTRS{idVendor}=="0eb7", MODE="0666"
 GOTO="fanatec_end"
 
 LABEL="ftec_module_settings"
-# let everyone in games group read/write device attributes, such as tuning-menu entries, range, display, LEDs
-# FIXME: this should be narrowed down in the future!
-RUN+="/bin/sh -c 'cd %S%p; chown -f :games range display load rumble leds/*/brightness tuning_menu/*; chmod -f 660 leds/*/brightness'"
+RUN+="/bin/sh -c 'cd %S%p; chmod 666 range display load rumble leds/*/brightness tuning_menu/*"
 GOTO="fanatec_end"
 
 LABEL="ftec_input_settings"
