@@ -6,6 +6,6 @@ Terminal=false
 Type=Application
 StartupNotify=true
 StartupWMClass=oversteer
-Icon=org.berarma.Oversteer
+Icon=io.github.berarma.Oversteer
 Categories=Game;Utility;
 Keywords=game;racing;cars;wheels

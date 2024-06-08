@@ -1,5 +1,9 @@
 # Oversteer - Steering Wheel Manager for Linux [![Packaging status](https://repology.org/badge/tiny-repos/oversteer.svg)](https://repology.org/project/oversteer/versions)
 
+<p align="center">
+  <img src="data/oversteer-readme.png">
+</p>
+
 [_Oversteer_](https://github.com/berarma/oversteer) manages steering wheels on
 Linux using the features provided by the loaded modules. It doesn't provide
 hardware support, you'll still need a driver module that enables the hardware

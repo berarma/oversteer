@@ -313,7 +313,7 @@ msgstr "Preferencje"
 msgid "About Oversteer"
 msgstr "O Oversteer"
 
-#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/io.github.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
@@ -907,14 +907,14 @@ msgstr "Przybliżone SNR = {:.0f} dB"
 msgid "Min. force level = {:.1f} %"
 msgstr "Min. poziom siły = {:.1f} %"
 
-#: data/org.berarma.Oversteer.desktop.in:4
+#: data/io.github.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
 msgstr "Menadźer Kierownicy"
 
-#: data/org.berarma.Oversteer.desktop.in:10
-msgid "org.berarma.Oversteer"
+#: data/io.github.berarma.Oversteer.desktop.in:10
+msgid "io.github.berarma.Oversteer"
 msgstr "Oversteer"
 
-#: data/org.berarma.Oversteer.desktop.in:12
+#: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "gra;wyścigi;auta;kierownice;"

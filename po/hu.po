@@ -316,7 +316,7 @@ msgstr "Beállítások"
 msgid "About Oversteer"
 msgstr "Az Oversteer névjegye"
 
-#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/io.github.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
@@ -918,13 +918,13 @@ msgstr "Becsült jel-zaj viszony = {:.0f} dB"
 msgid "Min. force level = {:.1f} %"
 msgstr "Minimális erőszint = {:.1f} %"
 
-#: data/org.berarma.Oversteer.desktop.in:4
+#: data/io.github.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
 msgstr "Kormánykerék-kezelő"
 
-#: data/org.berarma.Oversteer.desktop.in:12
+#: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "game;racing;cars;wheels;játék;verseny;autók;kormánykerék"
 
-#~ msgid "org.berarma.Oversteer"
-#~ msgstr "org.berarma.Oversteer"
+#~ msgid "io.github.berarma.Oversteer"
+#~ msgstr "io.github.berarma.Oversteer"

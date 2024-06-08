@@ -311,7 +311,7 @@ msgstr "Asetukset"
 msgid "About Oversteer"
 msgstr "Tietoja"
 
-#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/io.github.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
@@ -902,10 +902,10 @@ msgstr "Arvioitu SNR = {:.0f} dB"
 msgid "Min. force level = {:.1f} %"
 msgstr "Pienin voimataso = {:.1f} %"
 
-#: data/org.berarma.Oversteer.desktop.in:4
+#: data/io.github.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
 msgstr "Rattimanageri"
 
-#: data/org.berarma.Oversteer.desktop.in:12
+#: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "peli;ajo;autot;ratit"

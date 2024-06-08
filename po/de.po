@@ -306,7 +306,7 @@ msgstr "Einstellungen"
 msgid "About Oversteer"
 msgstr "Über Oversteer"
 
-#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/io.github.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
@@ -900,13 +900,13 @@ msgstr "Geschätzter Rauschabst. = {:.0f} dB"
 msgid "Min. force level = {:.1f} %"
 msgstr "Min. Kraft-Level = {:.1f} %"
 
-#: data/org.berarma.Oversteer.desktop.in:4
+#: data/io.github.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
 msgstr "Lenkradmanager"
 
-#: data/org.berarma.Oversteer.desktop.in:12
+#: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "Spiele;Rennen;Autos;Lenkrad"
 
-#~ msgid "org.berarma.Oversteer"
-#~ msgstr "org.berarma.Oversteer"
+#~ msgid "io.github.berarma.Oversteer"
+#~ msgstr "io.github.berarma.Oversteer"

@@ -1,4 +1,4 @@
-app_id = 'org.berarma.Oversteer'
+app_id = 'io.github.berarma.Oversteer'
 
 desktop_conf = configuration_data()
 desktop_conf.set('bindir', join_paths(prefix, get_option('bindir')))
