@@ -32,6 +32,11 @@
       </ul>
     <p>Note: The udev rules found in the GitHub repository need to be installed for the application to work properly.</p>
   </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/berarma/oversteer/master/data/oversteer-readme.png</image>
+    </screenshot>
+  </screenshots>
   <releases>
     <release version="0.8.2" date="2024-04-28">
       <description>
