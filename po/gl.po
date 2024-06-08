@@ -310,7 +310,7 @@ msgstr "Preferencias"
 msgid "About Oversteer"
 msgstr "Sobre Oversteer"
 
-#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/io.github.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
@@ -905,16 +905,16 @@ msgstr "SNR estimada = {:.0f} dB"
 msgid "Min. force level = {:.1f} %"
 msgstr "Nivel de forza min. = {:.1f} %"
 
-#: data/org.berarma.Oversteer.desktop.in:4
+#: data/io.github.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
 msgstr "Configurador de Volantes"
 
-#: data/org.berarma.Oversteer.desktop.in:12
+#: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "xogo;carreiras;coches;volantes"
 
-#~ msgid "org.berarma.Oversteer"
-#~ msgstr "org.berarma.Oversteer"
+#~ msgid "io.github.berarma.Oversteer"
+#~ msgstr "io.github.berarma.Oversteer"
 
 #~ msgid "Activation Switch"
 #~ msgstr "Interruptor de activación"

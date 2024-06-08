@@ -309,7 +309,7 @@ msgstr "Настройки"
 msgid "About Oversteer"
 msgstr "Об Oversteer"
 
-#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/io.github.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
@@ -905,13 +905,13 @@ msgstr "Предп. отн. сигнал/шум = {:.0f} (дБ)"
 msgid "Min. force level = {:.1f} %"
 msgstr "Мин. уровень силы = {:.1f} %"
 
-#: data/org.berarma.Oversteer.desktop.in:4
+#: data/io.github.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
 msgstr "Мастер настройки руля"
 
-#: data/org.berarma.Oversteer.desktop.in:12
+#: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "игра;гонки;автомобили;рули"
 
-#~ msgid "org.berarma.Oversteer"
-#~ msgstr "org.berarma.Oversteer"
+#~ msgid "io.github.berarma.Oversteer"
+#~ msgstr "io.github.berarma.Oversteer"

@@ -77,7 +77,7 @@ class Gui:
 
         self.ui = GtkUi(self, argv)
         self.ui.set_app_version(self.app.version)
-        self.ui.set_app_icon(os.path.join(self.app.icondir, 'org.berarma.Oversteer.svg'))
+        self.ui.set_app_icon(os.path.join(self.app.icondir, 'io.github.berarma.Oversteer.svg'))
         self.ui.set_languages(self.languages)
 
         self.ui.set_language(self.locale)

@@ -311,7 +311,7 @@ msgstr "Seçenekler"
 msgid "About Oversteer"
 msgstr "Oversteer Hakkında"
 
-#: oversteer/main.ui:234 data/org.berarma.Oversteer.desktop.in:3
+#: oversteer/main.ui:234 data/io.github.berarma.Oversteer.desktop.in:3
 msgid "Oversteer"
 msgstr "Oversteer"
 
@@ -904,16 +904,16 @@ msgstr "Tahimini SNR = {:.0f} dB"
 msgid "Min. force level = {:.1f} %"
 msgstr "Min. güç seviyesi = {:.1f} %"
 
-#: data/org.berarma.Oversteer.desktop.in:4
+#: data/io.github.berarma.Oversteer.desktop.in:4
 msgid "Steering Wheel Manager"
 msgstr "Direksiyon Yöneticisi"
 
-#: data/org.berarma.Oversteer.desktop.in:12
+#: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "oyun;yarış;arabalar;direksiyonlar"
 
-#~ msgid "org.berarma.Oversteer"
-#~ msgstr "org.berarma.Oversteer"
+#~ msgid "io.github.berarma.Oversteer"
+#~ msgstr "io.github.berarma.Oversteer"
 
 #~ msgid "Angular velocity"
 #~ msgstr "Velocidad angular"
