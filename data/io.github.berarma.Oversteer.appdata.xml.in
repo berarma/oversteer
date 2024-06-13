@@ -34,6 +34,7 @@
   </description>
   <screenshots>
     <screenshot type="default">
+      <caption>Home page</caption>
       <image>https://raw.githubusercontent.com/berarma/oversteer/master/data/oversteer-readme.png</image>
     </screenshot>
   </screenshots>
@@ -128,14 +129,14 @@
         </ul>
       </description>
     </release>
-    <release version="0.5.4" date="2021-01-03">
-      <description>
-        <p>Fix error on startup in some system configurations.</p>
-      </description>
-    </release>
     <release version="0.5.5" date="2020-09-17">
       <description>
         <p>Fix saving profile when the ffbmeter isn't supported.</p>
+      </description>
+    </release>
+    <release version="0.5.4" date="2021-01-03">
+      <description>
+        <p>Fix error on startup in some system configurations.</p>
       </description>
     </release>
     <release version="0.5.3" date="2020-09-06">
