@@ -172,7 +172,7 @@ cd oversteer
 Prepare build system:
 
 ```shell
-meson build
+meson setup build
 cd build
 ```
 
