@@ -36,6 +36,9 @@ ATTRS{idProduct}=="b696", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring
 # Thrustmaster TS-XW Racing Wheel (USB)
 ATTRS{idProduct}=="b692", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
 
+# Thrustmaster TS-PC Racing Wheel (USB)
+ATTRS{idProduct}=="b689", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
+
 GOTO="end"
 
 LABEL="t150"
