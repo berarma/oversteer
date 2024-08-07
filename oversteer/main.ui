@@ -3490,7 +3490,13 @@ Be careful when running the tests and follow the instructions as closely as poss
     <property name="version">0.0.0</property>
     <property name="copyright">Copyright © 2019-2023 Bernat Arlandis</property>
     <property name="authors">Bernat Arlandis</property>
-    <property name="translator-credits">Leandro Vergara</property>
+    <property name="translator-credits">Hüseyin Fahri Uzun (Turkish)
+Kálmán „KAMI” Szalai (Hungarian)
+Kim Kuparinen (Finnish)
+Leandro Vergara (Galician)
+Marcel Marusiak (Polish)
+Matthias Müller (German)
+TotalCaesar659 (Russian)</property>
     <property name="logo-icon-name"/>
     <property name="license-type">gpl-3-0</property>
     <signal name="delete-event" handler="on_about_window_delete_event" swapped="no"/>
