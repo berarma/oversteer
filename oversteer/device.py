@@ -418,6 +418,8 @@ class Device:
                 event.value = event.value * 4
             elif self.vendor_id == wid.VENDOR_CAMMUS:
                 event.value = event.value + 32768
+            elif self.usb_id in [wid.TM_T80H]:
+                event.value = event.value * 257
         elif self.usb_id in [wid.LG_WFG, wid.LG_WFFG, wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP,
                 wid.LG_DFGT, wid.LG_G920]:
             if event.code == ecodes.ABS_Y:
@@ -433,6 +435,11 @@ class Device:
                 event.code = ecodes.ABS_RZ
             elif event.code == ecodes.ABS_THROTTLE:
                 event.code = ecodes.ABS_Y
+        elif self.usb_id in [wid.TM_T80H]:
+            if event.code == ecodes.ABS_Y:
+                event.code = ecodes.ABS_Z
+            elif event.code == ecodes.ABS_Z:
+                event.code = ecodes.ABS_RZ
         elif self.vendor_id == wid.VENDOR_FANATEC and event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
             event.value = int(event.value + 32768 / 257)
         elif self.usb_id == wid.LG_GPRO:
