@@ -40,5 +40,6 @@ TM_T80H = '044f:b66a'
 TM_TMX = '044f:b67f'
 TM_TX = '044f:b664'
 TM_TSXW = '044f:b692'
+TS_PC  = '044f:b689'
 XX_FFBOARD = '1209:ffb0'
 
