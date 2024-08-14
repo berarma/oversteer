@@ -6,12 +6,16 @@
     </replaces>
   <launchable type="desktop-id">io.github.berarma.Oversteer.desktop</launchable>
   <name>Oversteer</name>
-  <summary>Steering Wheel Manager</summary>
+  <summary>A steering wheel manager</summary>
   <developer id="io.github.berarma">
     <name>Bernat Arlandis</name>
   </developer>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
+  <branding>
+    <color type="primary" scheme_preference="light">#f6f5f4</color>
+    <color type="primary" scheme_preference="dark">#77767b</color>
+  </branding>
   <description>
     <p>Oversteer manages steering wheels on Linux using the features provided by the loaded modules.</p>
     <p>Features:</p>
@@ -39,6 +43,19 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="0.8.3" date="2024-08-14">
+      <description>
+        <ul>
+          <li>Initial Support for Cammus C5 Wheel</li>
+          <li>Removed device_manager.py swap</li>
+          <li>Fix(udev): use new driver name</li>
+          <li>Add Thrustmaster TS-XW Racing Wheel</li>
+          <li>Flatpak port</li>
+          <li>Flatpak submission fixes</li>
+          <li>Fix thrustmaster udev driver key</li>
+        </ul>
+      </description>
+    </release>
     <release version="0.8.2" date="2024-04-28">
       <description>
         <p>Fix freeze when changing compatibility mode.</p>
