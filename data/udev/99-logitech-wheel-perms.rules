@@ -12,6 +12,9 @@ LABEL="logitech-rules"
 DRIVER=="logitech" GOTO="logitech-driver"
 DRIVER!="logitech-hidpp-device" GOTO="end"
 
+# Logitech G PRO Racing Wheel for PlayStation and PC
+ATTRS{idProduct}=="c268", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"
+
 # Logitech G PRO Racing Wheel for Xbox One and PC
 ATTRS{idProduct}=="c272", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"
 
