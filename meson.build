@@ -24,7 +24,7 @@ if udev_rules_dir == ''
     udev_rules_dir = '/usr/local/lib/udev/rules.d'
   else
     udev_dep = dependency('udev')
-    udev_rules_dir = udev_dep.get_pkgconfig_variable('udevdir') + '/rules.d'
+    udev_rules_dir = udev_dep.get_variable(pkgconfig: 'udevdir') + '/rules.d'
   endif
 elif udev_rules_dir == 'packed'
   udev_rules_dir = pkgdatadir + '/udev'
