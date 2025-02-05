@@ -102,14 +102,29 @@ When supported by the device and the driver:
 
 ### Arch
 
-User DNModder has created an [AUR
+@DNModder has kindly created an [AUR
 package](https://aur.archlinux.org/packages/oversteer/). Install following
 the [Arch Wiki
 instructions](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages).
 
 ### Gentoo
 
-User gripped has created a [Gentoo ebuild](https://github.com/gripped/Logitech-wheel-ebuilds).
+@gripped has kindly created a [Gentoo ebuild](https://github.com/gripped/Logitech-wheel-ebuilds).
+
+### Flathub
+
+@jo5huajohn has kindly made a [Flatpak
+package](https://flathub.org/apps/io.github.berarma.Oversteer) available at
+Flathub.
+
+#### Permissions
+
+After installing the Flatpak package, permission files have to be installed manually.
+
+Copy the contents of
+[https://github.com/berarma/oversteer/tree/master/data/udev](https://github.com/berarma/oversteer/tree/master/data/udev)
+into `/usr/lib/udev/rules.d`. Restart your computer, or reload udev rules with
+command `udevadm control --reload-rules && sudo udevadm trigger`.
 
 ### Other distributions
 
