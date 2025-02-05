@@ -140,7 +140,7 @@ Install all dependencies on Fedora systems with the following command:
 
 `dnf install python3 python3-distutils-extra python3-gobject python3-pyudev
 python3-pyxdg python3-evdev gettext meson appstream desktop-file-utils
-python3-matplotlib-gtk3 python3-scipy`
+python3-matplotlib-gtk3 python3-scipy libappstream-glib`
 
 Install all dependencies on OpenSUSE systems with the following command:
 
