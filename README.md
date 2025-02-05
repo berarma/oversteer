@@ -1,8 +1,12 @@
-# Oversteer - Steering Wheel Manager for Linux [![Packaging status](https://repology.org/badge/tiny-repos/oversteer.svg)](https://repology.org/project/oversteer/versions)
+# Oversteer - Steering Wheel Manager for Linux
 
 <p align="center">
   <img src="data/oversteer-readme.png">
 </p>
+
+<a href="https://repology.org/project/unit/versions">
+    <img src="https://repology.org/badge/vertical-allrepos/oversteer.svg" alt="Packaging status" align="right" style="margin-left:2em;">
+</a>
 
 [_Oversteer_](https://github.com/berarma/oversteer) manages steering wheels on
 Linux using the features provided by the loaded modules. It doesn't provide
@@ -98,11 +102,14 @@ When supported by the device and the driver:
 
 ## Installation
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/oversteer.svg)](https://repology.org/project/oversteer/versions)
+DISCLAIMER: When running commands starting with `sudo` you're requesting admin
+rights to perform the operation. These commands will make changes to your
+system that should only performed by a system administrator or someone knowing
+what they're doing.
 
 ### Arch
 
-@DNModder has kindly created an [AUR
+Darvin Delgado (@DNModder) has kindly created an [AUR
 package](https://aur.archlinux.org/packages/oversteer/). Install following
 the [Arch Wiki
 instructions](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_packages).
@@ -113,7 +120,7 @@ instructions](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installi
 
 ### Flathub
 
-@jo5huajohn has kindly made a [Flatpak
+Joshua John (@jo5huajohn) has kindly made a [Flatpak
 package](https://flathub.org/apps/io.github.berarma.Oversteer) available at
 Flathub.
 
@@ -128,13 +135,14 @@ into `/usr/lib/udev/rules.d`.
 If you're using the terminal, these commands will install the permission files:
 
 ```
-wget https://github.com/berarma/oversteer/blob/master/data/udev/99-fanatec-wheel-perms.rules -P /usr/lib/udev/rules.d/
-wget https://github.com/berarma/oversteer/blob/master/data/udev/99-logitech-wheel-perms.rules -P /usr/lib/udev/rules.d/
-wget https://github.com/berarma/oversteer/blob/master/data/udev/99-thrustmaster-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://github.com/berarma/oversteer/blob/master/data/udev/99-fanatec-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://github.com/berarma/oversteer/blob/master/data/udev/99-logitech-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://github.com/berarma/oversteer/blob/master/data/udev/99-thrustmaster-wheel-perms.rules -P /usr/lib/udev/rules.d/
 ```
 
-Restart your computer, or reload udev rules with command `udevadm control
---reload-rules && sudo udevadm trigger`.
+Restart your computer, or reload udev rules with command:
+
+`sudo udevadm control --reload-rules && sudo udevadm trigger`.
 
 ### Other distributions
 
@@ -142,20 +150,20 @@ Restart your computer, or reload udev rules with command `udevadm control
 
 Install all dependencies on Debian systems with the following command:
 
-`apt install python3 python3-distutils python3-gi python3-gi-cairo
+`sudo apt git install python3 python3-distutils python3-gi python3-gi-cairo
 python3-pyudev python3-xdg python3-evdev gettext meson appstream-util
 desktop-file-utils python3-matplotlib python3-scipy`
 
 Install all dependencies on Fedora systems with the following command:
 
-`dnf install python3 python3-distutils-extra python3-gobject python3-pyudev
-python3-pyxdg python3-evdev gettext meson appstream desktop-file-utils
-python3-matplotlib-gtk3 python3-scipy libappstream-glib`
+`sudo dnf git install python3 python3-distutils-extra python3-gobject
+python3-pyudev python3-pyxdg python3-evdev gettext meson appstream
+desktop-file-utils python3-matplotlib-gtk3 python3-scipy libappstream-glib`
 
 Install all dependencies on OpenSUSE systems with the following command:
 
-`zypper in python3 python3-distutils-extra python3-gobject python3-pyudev
-python3-pyxdg python3-evdev meson AppStream desktop-file-utils
+`sudo zypper in git python3 python3-distutils-extra python3-gobject
+python3-pyudev python3-pyxdg python3-evdev meson AppStream desktop-file-utils
 python3-matplotlib-gtk3 python3-scipy gettext-tools`
 
 For other distributions, use your package manager to find and install the
