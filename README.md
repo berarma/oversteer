@@ -123,8 +123,18 @@ After installing the Flatpak package, permission files have to be installed manu
 
 Copy the contents of
 [https://github.com/berarma/oversteer/tree/master/data/udev](https://github.com/berarma/oversteer/tree/master/data/udev)
-into `/usr/lib/udev/rules.d`. Restart your computer, or reload udev rules with
-command `udevadm control --reload-rules && sudo udevadm trigger`.
+into `/usr/lib/udev/rules.d`.
+
+If you're using the terminal, these commands will install the permission files:
+
+```
+wget https://github.com/berarma/oversteer/blob/master/data/udev/99-fanatec-wheel-perms.rules -P /usr/lib/udev/rules.d/
+wget https://github.com/berarma/oversteer/blob/master/data/udev/99-logitech-wheel-perms.rules -P /usr/lib/udev/rules.d/
+wget https://github.com/berarma/oversteer/blob/master/data/udev/99-thrustmaster-wheel-perms.rules -P /usr/lib/udev/rules.d/
+```
+
+Restart your computer, or reload udev rules with command `udevadm control
+--reload-rules && sudo udevadm trigger`.
 
 ### Other distributions
 
