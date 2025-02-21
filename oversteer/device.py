@@ -181,6 +181,16 @@ class Device:
             file.write(combine_pedals)
         return True
 
+    def get_ff_value(self, value):
+        if self.usb_id not in [wid.TM_T150]:
+            value =round((int(value) * 100) / 65535)
+        return int(value)
+
+    def set_ff_value(self, value):
+        if self.usb_id not in [wid.TM_T150]:
+            value = value / 100.0 * 65535
+        return str(int(value))
+
     def get_autocenter(self):
         path = self.checked_device_file("autocenter")
         if not path:
@@ -192,12 +202,12 @@ class Device:
         with open(path, "r") as file:
             data = file.read()
         autocenter = data.strip()
-        return int(round((int(autocenter) * 100) / 65535))
+        return self.get_ff_value(autocenter)
 
     def set_autocenter(self, autocenter):
         if autocenter > 100:
             autocenter = 100
-        autocenter = str(int(autocenter / 100.0 * 65535))
+        autocenter = self.set_ff_value(autocenter)
         logging.debug("Setting autocenter strength: %s", autocenter)
         path = self.checked_device_file("autocenter")
         if path:
@@ -219,12 +229,12 @@ class Device:
         with open(path, "r") as file:
             data = file.read()
         gain = int(data.strip())
-        return int(round((int(gain) * 100) / 65535))
+        return self.get_ff_value(gain)
 
     def set_ff_gain(self, gain):
         if gain > 100:
             gain = 100
-        gain = str(int(gain / 100.0 * 65535))
+        gain = self.set_ff_value(gain)
         logging.debug("Setting FF gain: %s", gain)
         path = self.checked_device_file("gain")
         if path:
