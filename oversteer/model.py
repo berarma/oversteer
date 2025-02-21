@@ -11,6 +11,7 @@ class Model:
         'range': None,
         'ff_gain': None,
         'autocenter': None,
+        'enable_autocenter': None,
         'combine_pedals': None,
         'spring_level': None,
         'damper_level': None,
@@ -28,6 +29,7 @@ class Model:
         'range': 'integer',
         'ff_gain': 'integer',
         'autocenter': 'integer',
+        'enable_autocenter': 'boolean',
         'combine_pedals': 'integer',
         'spring_level': 'integer',
         'damper_level': 'integer',
@@ -75,6 +77,7 @@ class Model:
             'range': self.device.get_range(),
             'ff_gain': self.device.get_ff_gain(),
             'autocenter': self.device.get_autocenter(),
+            'enable_autocenter': self.device.get_autocenter_controlled_by_wheel(),
             'combine_pedals': self.device.get_combine_pedals(),
             'spring_level': self.device.get_spring_level(),
             'damper_level': self.device.get_damper_level(),
@@ -193,6 +196,13 @@ class Model:
     def get_autocenter(self):
         return self.data['autocenter']
 
+    def set_autocenter_controlled_by_wheel(self, value):
+        if self.set_if_changed('enable_autocenter', value):
+            self.device.set_autocenter_controlled_by_wheel(value)
+
+    def get_autocenter_controlled_by_wheel(selfe):
+        return self.data['enable_autocenter']
+
     def set_combine_pedals(self, value):
         value = int(value)
         if self.set_if_changed('combine_pedals', value):
@@ -294,6 +304,7 @@ class Model:
         self.ui.set_range(data['range'])
         self.ui.set_ff_gain(data['ff_gain'])
         self.ui.set_autocenter(data['autocenter'])
+        self.ui.set_autocenter_controlled_by_wheel(data['enable_autocenter'])
         self.ui.set_combine_pedals(data['combine_pedals'])
         self.ui.set_spring_level(data['spring_level'])
         self.ui.set_damper_level(data['damper_level'])

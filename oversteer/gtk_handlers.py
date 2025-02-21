@@ -97,6 +97,9 @@ class GtkHandlers:
         autocenter = int(widget.get_value())
         self.model.set_autocenter(autocenter)
 
+    def on_autocenter_controlled_by_wheel_set(self, widget, state):
+        self.model.set_autocenter_controlled_by_wheel(state)
+
     def on_check_permissions_state_set(self, widget, state):
         self.controller.set_check_permissions(state)
 
