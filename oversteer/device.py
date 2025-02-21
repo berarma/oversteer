@@ -329,11 +329,21 @@ class Device:
             file.write(peak_ffb_level)
         return True
 
-    def center_wheel(self):
-        self.set_autocenter(100)
-        time.sleep(1)
-        self.set_autocenter(0)
-
+    def center_wheel(self, value):
+        if self.usb_id in [wid.TM_T150]:
+            path = self.checked_device_file("enable_autocenter")
+            if not path:
+                return False
+            v = 'n'
+            if value:
+                v = 'y'
+            with open(path, "w") as file:
+                file.write(v)
+        else:
+            self.set_autocenter(100)
+            time.sleep(1)
+            self.set_autocenter(0)
+ 
     def check_permissions(self):
         logging.debug("check_permissions: %s", self.dev_path)
         if not os.access(self.dev_path, os.F_OK | os.R_OK | os.X_OK):

@@ -251,10 +251,10 @@ class Model:
     def get_use_buttons(self):
         return self.data['use_buttons']
 
-    def set_center_wheel(self, value):
+    def set_center_wheel(self, value=True):
         value = bool(value)
-        if self.set_if_changed('center_wheel', value) and value:
-            self.device.center_wheel()
+        if self.set_if_changed('center_wheel', value):
+            self.device.center_wheel(value)
 
     def set_start_app_manually(self, value):
         value = bool(value)
