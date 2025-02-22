@@ -135,9 +135,9 @@ into `/usr/lib/udev/rules.d`.
 If you're using the terminal, these commands will install the permission files:
 
 ```
-sudo wget https://github.com/berarma/oversteer/blob/master/data/udev/99-fanatec-wheel-perms.rules -P /usr/lib/udev/rules.d/
-sudo wget https://github.com/berarma/oversteer/blob/master/data/udev/99-logitech-wheel-perms.rules -P /usr/lib/udev/rules.d/
-sudo wget https://github.com/berarma/oversteer/blob/master/data/udev/99-thrustmaster-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://raw.githubusercontent.com/berarma/oversteer/refs/heads/master/data/udev/99-fanatec-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://raw.githubusercontent.com/berarma/oversteer/refs/heads/master/data/udev/99-logitech-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://raw.githubusercontent.com/berarma/oversteer/refs/heads/master/data/udev/99-thrustmaster-wheel-perms.rules -P /usr/lib/udev/rules.d/
 ```
 
 Restart your computer, or reload udev rules with command:
