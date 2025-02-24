@@ -598,5 +598,5 @@ class Gui:
             return
 
         canvas = self.combined_chart.get_canvas()
-        toolbar = self.combined_chart.get_navigation_toolbar(canvas, self.ui.window)
+        toolbar = self.combined_chart.get_navigation_toolbar(canvas)
         self.ui.show_test_chart(canvas, toolbar)
