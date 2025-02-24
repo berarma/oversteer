@@ -442,7 +442,7 @@ class Device:
                 event.code = ecodes.ABS_RZ
         elif self.vendor_id == wid.VENDOR_FANATEC and event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
             event.value = int(event.value + 32768 / 257)
-        elif self.usb_id == wid.LG_GPRO:
+        elif self.usb_id in [wid.LG_GPRO_PS, wid.LG_GPRO_XBOX]:
             if event.code in [ecodes.ABS_RX, ecodes.ABS_RY, ecodes.ABS_RZ]:
                 event.value = int(255 - event.value / 257)
                 if event.code == ecodes.ABS_RX:
