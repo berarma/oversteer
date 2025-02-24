@@ -1,4 +1,6 @@
 from locale import gettext as _
+import matplotlib
+matplotlib.use("Gtk3Cairo")
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_gtk3cairo import FigureCanvasGTK3Cairo as FigureCanvas
 from matplotlib.backends.backend_gtk3 import NavigationToolbar2GTK3 as NavigationToolbar
