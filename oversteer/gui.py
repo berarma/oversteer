@@ -458,8 +458,7 @@ class Gui:
                     time.sleep(1)
             else:
                 time.sleep(1)
-            if self.device_manager.is_changed():
-                self.ui.safe_call(self.populate_devices)
+            self.ui.safe_call(self.populate_devices)
 
     def run_command(self):
         proc = subprocess.Popen(self.app.args.command, shell=True)
