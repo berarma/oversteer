@@ -299,6 +299,13 @@ class GtkUi:
             self.autocenter.set_sensitive(True)
             self.autocenter.set_value(int(autocenter))
 
+    def set_autocenter_controlled_by_wheel(self, value):
+        if value is None:
+            self.autocenter_controlled_by_wheel.set_sensitive(False)
+        else:
+            self.autocenter_controlled_by_wheel.set_sensitive(True)
+            self.autocenter_controlled_by_wheel.set_state(value)
+
     def set_ff_gain(self, ff_gain):
         if ff_gain is None:
             self.ff_gain.set_sensitive(False)
@@ -590,6 +597,8 @@ class GtkUi:
         self.combine_brakes = self.builder.get_object('combine_brakes')
         self.combine_clutch = self.builder.get_object('combine_clutch')
         self.autocenter = self.builder.get_object('autocenter')
+        self.autocenter_controlled_by_wheel = self.builder.get_object('autocenter_controlled_by_wheel')
+        self.autocenter_controlled_by_wheel_row = self.builder.get_object('autocenter_controlled_by_wheel_row')
         self.ff_gain = self.builder.get_object('ff_gain')
         self.ff_spring_level = self.builder.get_object('ff_spring_level')
         self.ff_damper_level = self.builder.get_object('ff_damper_level')
