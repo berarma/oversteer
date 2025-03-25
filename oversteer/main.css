@@ -1,10 +1,12 @@
 list.list {
     border: 1px solid #ccc;
 }
-list.list > row {
+
+list.list>row {
     padding-left: 16px;
     padding-right: 16px;
 }
+
 levelbar block.filled {
     /*
      * Work around issue in some themes
@@ -15,63 +17,90 @@ levelbar block.filled {
     /* End of workaround */
     background-color: #3584e4;
 }
+
 stacksidebar list row {
     padding-right: 40px;
 }
+
 levelbar#steering-input-left trough {
     padding-right: 0;
-    border-top-right-radius:0;
-    border-bottom-right-radius:0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
+
 levelbar#steering-input-left block.filled,
 levelbar#steering-input-left block.empty {
-    border-top-right-radius:0;
-    border-bottom-right-radius:0;
-    border-right-width:0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right-width: 0;
 }
+
 levelbar#steering-input-right trough {
     padding-left: 0;
-    border-top-left-radius:0;
-    border-bottom-left-radius:0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
+
 levelbar#steering-input-right block.filled,
 levelbar#steering-input-right block.empty {
-    border-top-left-radius:0;
-    border-bottom-left-radius:0;
-    border-left-width:0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 0;
 }
+
 window#overlay-window {
     background-color: rgba(50, 50, 50, 0.85);
 }
+
 window#overlay-window * {
     background-color: transparent;
     color: #fcfcfc;
 }
+
 window#overlay-window decoration {
     border-radius: 0;
 }
+
 window#overlay-window .titlebar {
     border-radius: 0;
     background-color: rgba(80, 80, 80, 0.85);
 }
+
 window#overlay-window levelbar trough {
     margin: 0 1px;
 }
+
 window#overlay-window levelbar trough {
     padding: 0;
     background-color: #fcfcfc;
 }
+
 window#overlay-window .overlay-leds levelbar:nth-child(1) block.filled,
 window#overlay-window .overlay-leds levelbar:nth-child(2) block.filled {
     border-color: #00e000;
     background-color: #00e000;
 }
+
 window#overlay-window .overlay-leds levelbar:nth-child(3) block.filled,
 window#overlay-window .overlay-leds levelbar:nth-child(4) block.filled {
     border-color: #e0e000;
     background-color: #e0e000;
 }
+
 window#overlay-window .overlay-leds levelbar:nth-child(5) block.filled {
     border-color: #e00000;
     background-color: #e00000;
+}
+
+.indicators label {
+    padding: 0.3em 0.7em;
+    border: 3px double #ccc;
+    border-radius: 3px;
+}
+
+.indicators label.on {
+    padding: 0.3em 0.7em;
+    border: 3px double #ccc;
+    border-radius: 3px;
+    background-color: #8bf;
 }

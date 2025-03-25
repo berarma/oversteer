@@ -20,6 +20,7 @@ from .test import Test
 from .combined_chart import CombinedChart
 from .linear_chart import LinearChart
 from .performance_chart import PerformanceChart
+from .device_event_type import EventType
 
 class Gui:
 
@@ -188,7 +189,7 @@ class Gui:
             self.model = Model(self.device, self.ui)
             self.models[self.device.get_id()] = self.model
 
-        self.ui.set_max_range(self.device.get_max_range())
+        self.ui.set_max_range(self.device.get_rotation())
         self.ui.set_modes(self.model.get_mode_list())
 
         if self.model.get_profile():
@@ -380,7 +381,7 @@ class Gui:
                     self.pressed_button_count -= 1
 
     def add_range(self, delta):
-        max_range = self.device.get_max_range()
+        max_range = self.device.get_rotation()
         wrange = self.model.get_range()
         wrange = wrange + delta
         if wrange < 40:
@@ -400,51 +401,64 @@ class Gui:
 
     def process_events(self, events):
         for event in events:
-            if event.type == ecodes.EV_ABS:
-                if event.code == ecodes.ABS_X:
-                    self.last_wheel_axis_value = event.value
-                    if self.test and self.test.is_collecting_data():
-                        self.test.append_data(event.timestamp(), event.value)
-                    else:
-                        self.ui.safe_call(self.ui.set_steering_input, event.value)
-                elif event.code == ecodes.ABS_Z:
-                    self.ui.safe_call(self.ui.set_accelerator_input, event.value)
-                elif event.code == ecodes.ABS_RZ:
-                    self.ui.safe_call(self.ui.set_brakes_input, event.value)
-                elif event.code == ecodes.ABS_Y:
-                    self.ui.safe_call(self.ui.set_clutch_input, event.value)
-                elif event.code == ecodes.ABS_HAT0X:
-                    self.ui.safe_call(self.ui.set_hatx_input, event.value)
-                    if event.value == -1:
-                        self.on_button_press(100, 1)
-                    elif event.value == 1:
-                        self.on_button_press(101, 1)
-                elif event.code == ecodes.ABS_HAT0Y:
-                    self.ui.safe_call(self.ui.set_haty_input, event.value)
-                    if event.value == -1:
-                        self.on_button_press(102, 1)
-                    elif event.value == 1:
-                        self.on_button_press(103, 1)
-            if event.type == ecodes.EV_KEY:
-                if event.value:
-                    delay = 0
-                    if self.test and self.test.is_awaiting_action():
-                        self.test.trigger_action()
+            if event.code == EventType.STEERING:
+                self.last_wheel_axis_value = event.value
+                if self.test and self.test.is_collecting_data():
+                    self.test.append_data(event.timestamp(), event.value)
                 else:
-                    delay = 100
-
-                button = None
-
-                if event.code >= 288 and event.code <= 303:
-                    button = event.code - 288
-                if event.code >= 304 and event.code <= 316:
-                    button = event.code - 304
-                if event.code >= 704 and event.code <= 715:
-                    button = event.code - 688
-
-                if button is not None:
-                    self.ui.safe_call(self.ui.set_btn_input, button, event.value, delay)
-                    self.on_button_press(button, event.value)
+                    self.ui.safe_call(self.ui.set_steering_input, event.value)
+            elif event.code == EventType.THROTTLE:
+                self.ui.safe_call(self.ui.set_accelerator_input, event.value / 257)
+            elif event.code == EventType.BRAKES:
+                self.ui.safe_call(self.ui.set_brakes_input, event.value / 257)
+            elif event.code == EventType.CLUTCH:
+                self.ui.safe_call(self.ui.set_clutch_input, event.value / 257)
+            elif event.code == EventType.HANDBRAKE:
+                self.ui.safe_call(self.ui.set_handbrake_input, event.value / 257)
+            elif event.code == EventType.HAT0_X:
+                self.ui.safe_call(self.ui.set_hatx_input, event.value)
+                if event.value == 0:
+                    self.on_button_press(100, 1)
+                elif event.value == 65535:
+                    self.on_button_press(101, 1)
+            elif event.code == EventType.HAT0_Y:
+                self.ui.safe_call(self.ui.set_haty_input, event.value)
+                if event.value == 0:
+                    self.on_button_press(102, 1)
+                elif event.value == 65535:
+                    self.on_button_press(103, 1)
+            if event.is_button():
+                if event.code >= EventType.BTN_0:
+                    if event.value:
+                        delay = 0
+                        if self.test and self.test.is_awaiting_action():
+                            self.test.trigger_action()
+                    else:
+                        delay = 100
+                    self.ui.safe_call(self.ui.set_btn_input, event.get_button(), event.get_value(), delay)
+                    self.on_button_press(event.code, event.get_value())
+                elif event.code == EventType.GEAR_UP:
+                    self.ui.safe_call(self.ui.set_gear_up, event.value)
+                elif event.code == EventType.GEAR_DOWN:
+                    self.ui.safe_call(self.ui.set_gear_down, event.value)
+                elif event.code == EventType.GEAR_1:
+                    self.ui.safe_call(self.ui.set_gear_one, event.value)
+                elif event.code == EventType.GEAR_2:
+                    self.ui.safe_call(self.ui.set_gear_two, event.value)
+                elif event.code == EventType.GEAR_3:
+                    self.ui.safe_call(self.ui.set_gear_three, event.value)
+                elif event.code == EventType.GEAR_4:
+                    self.ui.safe_call(self.ui.set_gear_three, event.value)
+                elif event.code == EventType.GEAR_5:
+                    self.ui.safe_call(self.ui.set_gear_five, event.value)
+                elif event.code == EventType.GEAR_6:
+                    self.ui.safe_call(self.ui.set_gear_six, event.value)
+                elif event.code == EventType.GEAR_7:
+                    self.ui.safe_call(self.ui.set_gear_seven, event.value)
+                elif event.code == EventType.GEAR_8:
+                    self.ui.safe_call(self.ui.set_gear_eight, event.value)
+                elif event.code == EventType.GEAR_R:
+                    self.ui.safe_call(self.ui.set_gear_reverse, event.value)
 
     def input_thread(self):
         while 1:
@@ -484,11 +498,11 @@ class Gui:
             self.minimum_level = self.test.get_minimum_level()
         elif self.test_run == 1:
             self.linear_chart = LinearChart(self.test.get_input_values(), self.test.get_output_values(),
-                    self.device.get_max_range())
+                    self.device.get_rotation())
             self.linear_chart.set_minimum_level(self.minimum_level)
         elif self.test_run == 2:
             self.performance_chart = PerformanceChart(self.test.get_input_values(), self.test.get_output_values(),
-                    self.device.get_max_range())
+                    self.device.get_rotation())
             if self.performance_chart.get_latency() is None:
                 self.ui.error_dialog(_('Steering wheel not responding.'), _('No wheel movement could be registered.'))
                 self.ui.switch_test_panel(None)
@@ -560,9 +574,9 @@ class Gui:
                     perf_input_values.append((float(row[0]), float(row[1])))
                     perf_output_values.append((float(row[2]), float(row[3])))
 
-        self.linear_chart = LinearChart(lin_input_values, lin_output_values, self.device.get_max_range())
+        self.linear_chart = LinearChart(lin_input_values, lin_output_values, self.device.get_rotation())
         self.linear_chart.set_minimum_level(self.minimum_level)
-        self.performance_chart = PerformanceChart(perf_input_values, perf_output_values, self.device.get_max_range())
+        self.performance_chart = PerformanceChart(perf_input_values, perf_output_values, self.device.get_rotation())
         self.combined_chart = CombinedChart(self.linear_chart, self.performance_chart)
 
         self.show_test_results()

@@ -1,0 +1,50 @@
+vendor: 046d
+product: c24f
+rotation: 900
+input_map:
+  EV_ABS:
+    ABS_X:
+      - STEERING
+      - [0, 65535]
+    ABS_Z:
+      - THROTTLE
+      - [0, 255]
+    ABS_RZ:
+      - BRAKES
+      - [0, 255]
+    ABS_Y:
+      - CLUTCH
+      - [0, 255]
+    ABS_HAT0X:
+      - HAT0_X
+      - [-1, 1]
+    ABS_HAT0Y:
+      - HAT0_Y
+      - [-1, 1]
+  EV_KEY:
+    288: GEAR_DOWN
+    289: GEAR_UP
+    290: GEAR_1
+    291: GEAR_2
+    292: GEAR_3
+    293: GEAR_4
+    294: GEAR_5
+    295: GEAR_6
+    296: GEAR_R
+    297: BTN_0
+    298: BTN_1
+    299: BTN_2
+    300: BTN_3
+    301: BTN_4
+    302: BTN_5
+    303: BTN_6
+    704: BTN_7
+    705: BTN_8
+    706: BTN_9
+    707: BTN_10
+    708: BTN_11
+    709: BTN_12
+    710: BTN_13
+    711: BTN_14
+    712: BTN_15
+

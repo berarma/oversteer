@@ -1,12 +1,11 @@
 app_id = 'io.github.berarma.Oversteer'
 
-desktop_conf = configuration_data()
-desktop_conf.set('bindir', join_paths(prefix, get_option('bindir')))
-
 tmp_desktop_file = configure_file(
   input: app_id + '.desktop.in',
   output: app_id + '.desktop.tmp',
-  configuration: desktop_conf
+  configuration: configuration_data({
+    'bindir': join_paths(prefix, get_option('bindir')),
+  })
 )
 
 desktop_file = i18n.merge_file(
@@ -34,6 +33,10 @@ install_data(app_id + '.svg',
 install_subdir('udev',
   install_dir: udev_rules_dir,
   strip_directory: true
+)
+
+install_subdir('definitions',
+  install_dir: pkgdatadir
 )
 
 # ---- Tests ----

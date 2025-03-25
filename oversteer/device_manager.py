@@ -2,57 +2,29 @@ import logging
 import os
 import pyudev
 import time
+import glob
+import yaml
 from .device import Device
-from . import wheel_ids as wid
+from .definition import Definition
+from evdev import ecodes
+from yaml import load
+from yaml import Loader
 
 class DeviceManager:
 
     def __init__(self):
-        self.supported_wheels = {
-            wid.CM_C5: 1080,
-            wid.FT_CSL_DD: 1080,
-            wid.FT_CSL_ELITE: 1080,
-            wid.FT_CSL_ELITE_PS4: 1080,
-            wid.FT_CSV25: 900,
-            wid.FT_CSV2: 900,
-            wid.FT_PDD1: 1080,
-            wid.FT_PDD2: 1080,
-            wid.LG_DF: 270,
-            wid.LG_DFGT: 900,
-            wid.LG_DFP: 900,
-            wid.LG_G25: 900,
-            wid.LG_G27: 900,
-            wid.LG_G29: 900,
-            wid.LG_G920: 900,
-            wid.LG_G923P: 900,
-            wid.LG_G923X: 900,
-            wid.LG_GPRO_PS: 1080,
-            wid.LG_GPRO_XBOX: 1080,
-            wid.LG_MOMO2: 270,
-            wid.LG_MOMO: 270,
-            wid.LG_SFW: 270,
-            wid.LG_WFF: 180,
-            wid.LG_WFFG: 180,
-            wid.LG_WFG: 180,
-            wid.TM_F458: 240,
-            wid.TM_FFRW: 180,
-            wid.TM_T150: 1080,
-            wid.TM_T248: 900,
-            wid.TM_T300RS: 1080,
-            wid.TM_T300RS_FF1: 1080,
-            wid.TM_T300RS_GT: 1080,
-            wid.TM_T500RS: 1080,
-            wid.TM_T80: 240,
-            wid.TM_T80H: 240,
-            wid.TM_TMX: 900,
-            wid.TM_TSXW: 1080,
-            wid.TS_PC: 1080,
-            wid.TM_TX: 900,
-            wid.XX_FFBOARD: 1080,
-            wid.FF_FLASHFIRE_900R: 900, 
-        }
         self.devices = {}
         self.changed = True
+        self.definitions = {}
+        for file in glob.glob("data/definitions/*.yaml"):
+            logging.debug("Reading definitions file: %s", file)
+            with open(file, 'r') as stream:
+                try:
+                    data = load(stream, Loader=Loader)
+                    definition = Definition(data)
+                    self.definitions[definition.vendor + ":" + definition.product] = definition
+                except yaml.YAMLError as exc:
+                    logging.error("Error in definition file: %s", exc)
 
     def start(self):
         context = pyudev.Context()
@@ -103,7 +75,7 @@ class DeviceManager:
             return
 
         usb_id = str(udevice.get('ID_VENDOR_ID')) + ':' + str(udevice.get('ID_MODEL_ID'))
-        if not usb_id in self.supported_wheels:
+        if not usb_id in self.definitions:
             return
 
         logging.debug("update_device_list: %s %s", id, device_node)
@@ -125,7 +97,8 @@ class DeviceManager:
             'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device', 'device')),
             'name': bytes(udevice.get('ID_VENDOR_ENC') + ' ' + udevice.get('ID_MODEL_ENC'),
                           'utf-8').decode('unicode_escape'),
-            'max_range': self.supported_wheels[usb_id],
+            'rotation': self.definitions[usb_id].rotation,
+            'input_map': self.definitions[usb_id].input_map,
             })
 
     def first_device(self):

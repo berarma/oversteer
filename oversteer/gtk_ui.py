@@ -385,6 +385,48 @@ class GtkUi:
     def set_brakes_input(self, value):
         self.brakes_input.set_value(self._round_input((255 - value) / 255, 2))
 
+    def set_handbrake_input(self, value):
+        self.handbrake_input.set_value(self._round_input((255 - value) / 255, 2))
+
+    def set_input(self, widget, enable):
+        if enable:
+            widget.get_style_context().add_class("on")
+        else:
+            widget.get_style_context().remove_class("on")
+
+    def set_gear_up(self, value):
+        self.set_input(self.gear_up, value)
+
+    def set_gear_down(self, value):
+        self.set_input(self.gear_down, value)
+
+    def set_gear_one(self, value):
+        self.set_input(self.gear_1, value)
+
+    def set_gear_two(self, value):
+        self.set_input(self.gear_2, value)
+
+    def set_gear_three(self, value):
+        self.set_input(self.gear_3, value)
+
+    def set_gear_four(self, value):
+        self.set_input(self.gear_4, value)
+
+    def set_gear_five(self, value):
+        self.set_input(self.gear_5, value)
+
+    def set_gear_six(self, value):
+        self.set_input(self.gear_6, value)
+
+    def set_gear_seven(self, value):
+        self.set_input(self.gear_7, value)
+
+    def set_gear_eight(self, value):
+        self.set_input(self.gear_8, value)
+
+    def set_gear_reverse(self, value):
+        self.set_input(self.gear_r, value)
+
     def set_hatx_input(self, value):
         if value < 0:
             self.hat_left_input.set_value(-value)
@@ -619,10 +661,22 @@ class GtkUi:
         self.clutch_input = self.builder.get_object('clutch_input')
         self.accelerator_input = self.builder.get_object('accelerator_input')
         self.brakes_input = self.builder.get_object('brakes_input')
+        self.handbrake_input = self.builder.get_object('handbrake_input')
         self.hat_up_input = self.builder.get_object('hat_up_input')
         self.hat_down_input = self.builder.get_object('hat_down_input')
         self.hat_left_input = self.builder.get_object('hat_left_input')
         self.hat_right_input = self.builder.get_object('hat_right_input')
+        self.gear_up = self.builder.get_object('gear_up')
+        self.gear_down = self.builder.get_object('gear_down')
+        self.gear_1 = self.builder.get_object('gear_1')
+        self.gear_2 = self.builder.get_object('gear_2')
+        self.gear_3 = self.builder.get_object('gear_3')
+        self.gear_4 = self.builder.get_object('gear_4')
+        self.gear_5 = self.builder.get_object('gear_5')
+        self.gear_6 = self.builder.get_object('gear_6')
+        self.gear_7 = self.builder.get_object('gear_7')
+        self.gear_8 = self.builder.get_object('gear_8')
+        self.gear_r = self.builder.get_object('gear_r')
         self.btn_input = [None] * 30
         for i in range(30):
             self.btn_input[i] = self.builder.get_object('btn' + str(i) + '_input')

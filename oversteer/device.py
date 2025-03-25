@@ -6,31 +6,31 @@ import pwd
 import re
 import select
 import time
-from . import wheel_ids as wid
+from .device_event import DeviceEvent
 
 logging.basicConfig(level=logging.DEBUG)
 
 class Device:
 
-    last_axis_value = {
-        ecodes.ABS_X: 0,
-        ecodes.ABS_Y: 0,
-        ecodes.ABS_Z: 0,
-        ecodes.ABS_RZ: 0,
-    }
-
     def __init__(self, device_manager, data):
+        self.last_axis_value = {
+            ecodes.ABS_X: 0,
+            ecodes.ABS_Y: 0,
+            ecodes.ABS_Z: 0,
+            ecodes.ABS_RZ: 0,
+        }
         self.device_manager = device_manager
         self.input_device = None
-        self.id = None
-        self.vendor_id = None
-        self.product_id = None
-        self.usb_id = None
-        self.dev_path = None
-        self.dev_name = None
-        self.name = None
+        self.id = ""
+        self.vendor_id = ""
+        self.product_id = ""
+        self.usb_id = ""
+        self.dev_path = ""
+        self.dev_name = ""
+        self.name = ""
         self.ready = True
-        self.max_range = None
+        self.rotation = 0
+        self.input_map = [] 
 
         self.set(data)
 
@@ -44,7 +44,6 @@ class Device:
             self.input_device = None
 
     def disable(self):
-        self.dev_name = None
         self.ready = False
         self.close()
 
@@ -79,8 +78,8 @@ class Device:
             return True
         return False
 
-    def get_max_range(self):
-        return self.max_range
+    def get_rotation(self):
+        return self.rotation
 
     def list_modes(self):
         path = self.checked_device_file("alternate_modes")
@@ -378,85 +377,9 @@ class Device:
             r, _, _ = select.select({input_device.fd: input_device}, [], [], timeout)
             if input_device.fd in r:
                 for event in input_device.read():
-                    event = self.normalize_event(event)
-                    if event.type == ecodes.EV_ABS:
-                        self.last_axis_value[ecodes.ABS_X] = event.value
-                    yield event
+                    if event.type in self.input_map and event.code in self.input_map[event.type]:
+                        device_event = DeviceEvent(self.input_map[event.type][event.code], event.value)
+                        if event.type == ecodes.EV_ABS:
+                            self.last_axis_value[ecodes.ABS_X] = event.value
+                        yield device_event
 
-    def normalize_event(self, event):
-        #
-        # Oversteer expects axes as follows:
-        #
-        # - Steering wheel direction: ABS_X [0, 65535]
-        # - Throttle: ABS_Z [0, 255]
-        # - Brakes: ABS_RZ [0, 255]
-        # - Clutch: ABS_Y [0, 255]
-        # - Hat X: ABS_HAT0X [-1, 1]
-        # - Hat Y: ABS_HAT0Y [-1, 1]
-        #
-
-        if event.type == ecodes.EV_KEY:
-            if self.usb_id in [wid.LG_WFF]:
-                if event.code in [ecodes.BTN_GEAR_DOWN, ecodes.BTN_GEAR_UP]:
-                    event.code = event.code - ecodes.BTN_GEAR_DOWN + ecodes.BTN_TRIGGER
-
-        if event.type != ecodes.EV_ABS:
-            return event
-
-        if self.usb_id in [wid.LG_WFF]:
-            if event.code == ecodes.ABS_WHEEL:
-                event.code = ecodes.ABS_X
-                event.value = (event.value + 2048) * 16
-            elif event.code == ecodes.ABS_GAS:
-                event.code = ecodes.ABS_Z
-            elif event.code == ecodes.ABS_BRAKE:
-                event.code = ecodes.ABS_RZ
-        if event.code == ecodes.ABS_X:
-            if self.usb_id in [wid.LG_WFG, wid.LG_WFFG]:
-                event.value = event.value * 64
-            elif self.usb_id in [wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP, wid.LG_DFGT, wid.LG_G25, wid.LG_G27]:
-                event.value = event.value * 4
-            elif self.vendor_id == wid.VENDOR_CAMMUS:
-                event.value = event.value + 32768
-            elif self.usb_id in [wid.TM_T80H]:
-                event.value = event.value * 257
-        elif self.usb_id in [wid.LG_WFG, wid.LG_WFFG, wid.LG_SFW, wid.LG_MOMO, wid.LG_MOMO2, wid.LG_DF, wid.LG_DFP,
-                wid.LG_DFGT, wid.LG_G920]:
-            if event.code == ecodes.ABS_Y:
-                event.code = ecodes.ABS_Z
-            elif event.code == ecodes.ABS_Z:
-                event.code = ecodes.ABS_RZ
-            elif event.code == ecodes.ABS_RZ:
-                event.code = ecodes.ABS_Y
-        elif self.usb_id in [wid.TM_T248, wid.TM_T150, wid.TM_TMX]:
-            if event.code == ecodes.ABS_RZ:
-                event.code = ecodes.ABS_Z
-            elif event.code == ecodes.ABS_Y:
-                event.code = ecodes.ABS_RZ
-            elif event.code == ecodes.ABS_THROTTLE:
-                event.code = ecodes.ABS_Y
-        elif self.usb_id in [wid.TM_T80H]:
-            if event.code == ecodes.ABS_Y:
-                event.code = ecodes.ABS_Z
-            elif event.code == ecodes.ABS_Z:
-                event.code = ecodes.ABS_RZ
-        elif self.vendor_id == wid.VENDOR_FANATEC and event.code in [ecodes.ABS_Y, ecodes.ABS_Z, ecodes.ABS_RZ]:
-            event.value = int(event.value + 32768 / 257)
-        elif self.usb_id in [wid.LG_GPRO_PS, wid.LG_GPRO_XBOX]:
-            if event.code in [ecodes.ABS_RX, ecodes.ABS_RY, ecodes.ABS_RZ]:
-                event.value = int(255 - event.value / 257)
-                if event.code == ecodes.ABS_RX:
-                    event.code = ecodes.ABS_Z
-                elif event.code == ecodes.ABS_RY:
-                    event.code = ecodes.ABS_RZ
-                elif event.code == ecodes.ABS_RZ:
-                    event.code = ecodes.ABS_Y
-        elif self.usb_id == wid.LG_G923X:
-            if event.code == ecodes.ABS_Y:
-                event.code = ecodes.ABS_Z
-            elif event.code == ecodes.ABS_RZ:
-                event.code = ecodes.ABS_Y
-            elif event.code == ecodes.ABS_Z:
-                event.code = ecodes.ABS_RZ
-
-        return event

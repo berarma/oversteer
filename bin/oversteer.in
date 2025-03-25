@@ -38,6 +38,8 @@ if builddir:
     if not os.path.exists(os.path.join(builddir, 'data/udev')):
         os.symlink(os.path.join(srcdir, 'data/udev'),
                 os.path.join(builddir, 'data/udev'))
+        os.symlink(os.path.join(srcdir, 'data/definitions'),
+                os.path.join(builddir, 'data/definitions'))
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
