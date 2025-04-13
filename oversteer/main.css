@@ -92,14 +92,25 @@ window#overlay-window .overlay-leds levelbar:nth-child(5) block.filled {
     background-color: #e00000;
 }
 
-.indicators label {
+.gears label {
     padding: 0.3em 0.7em;
     border: 3px double #ccc;
     border-radius: 3px;
 }
 
-.indicators label.on {
+.gears label.on {
     padding: 0.3em 0.7em;
+    border: 3px double #ccc;
+    border-radius: 3px;
+    background-color: #8bf;
+}
+
+.hat label {
+    border: 3px double #ccc;
+    border-radius: 3px;
+}
+
+.hat label.on {
     border: 3px double #ccc;
     border-radius: 3px;
     background-color: #8bf;

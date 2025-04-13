@@ -22,6 +22,7 @@ EventType = IntEnum('EventType', [
     'BTN_0',
     'BTN_1',
     'BTN_2',
+    'BTN_3',
     'BTN_4',
     'BTN_5',
     'BTN_6',

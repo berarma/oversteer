@@ -448,7 +448,7 @@ class Gui:
                 elif event.code == EventType.GEAR_3:
                     self.ui.safe_call(self.ui.set_gear_three, event.value)
                 elif event.code == EventType.GEAR_4:
-                    self.ui.safe_call(self.ui.set_gear_three, event.value)
+                    self.ui.safe_call(self.ui.set_gear_four, event.value)
                 elif event.code == EventType.GEAR_5:
                     self.ui.safe_call(self.ui.set_gear_five, event.value)
                 elif event.code == EventType.GEAR_6:

@@ -937,7 +937,7 @@
                                           <placeholder/>
                                         </child>
                                         <style>
-                                          <class name="indicators"/>
+                                          <class name="gears"/>
                                         </style>
                                       </object>
                                       <packing>
@@ -974,17 +974,15 @@
                                     <child>
                                       <!-- n-columns=3 n-rows=3 -->
                                       <object class="GtkGrid">
-                                        <property name="height-request">60</property>
                                         <property name="visible">True</property>
                                         <property name="can-focus">False</property>
-                                        <property name="valign">center</property>
                                         <property name="row-homogeneous">True</property>
                                         <property name="column-homogeneous">True</property>
                                         <child>
-                                          <object class="GtkLevelBar" id="hat_up_input">
+                                          <object class="GtkLabel" id="hat_up_input">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="orientation">vertical</property>
+                                            <property name="label" translatable="yes">▲</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">1</property>
@@ -992,9 +990,10 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLevelBar" id="hat_left_input">
+                                          <object class="GtkLabel" id="hat_left_input">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">◀</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">0</property>
@@ -1002,9 +1001,10 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLevelBar" id="hat_right_input">
+                                          <object class="GtkLabel" id="hat_right_input">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
+                                            <property name="label" translatable="yes">▶</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">2</property>
@@ -1012,43 +1012,13 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLevelBar" id="hat_down_input">
+                                          <object class="GtkLabel" id="hat_down_input">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
-                                            <property name="orientation">vertical</property>
+                                            <property name="label" translatable="yes">▼</property>
                                           </object>
                                           <packing>
                                             <property name="left-attach">1</property>
-                                            <property name="top-attach">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSeparator">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSeparator">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">2</property>
-                                            <property name="top-attach">0</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkSeparator">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                          </object>
-                                          <packing>
-                                            <property name="left-attach">0</property>
                                             <property name="top-attach">2</property>
                                           </packing>
                                         </child>
@@ -1068,13 +1038,46 @@
                                             <property name="can-focus">False</property>
                                           </object>
                                           <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSeparator">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">0</property>
+                                            <property name="top-attach">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkSeparator">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                          </object>
+                                          <packing>
                                             <property name="left-attach">1</property>
                                             <property name="top-attach">1</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <object class="GtkSeparator">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                          </object>
+                                          <packing>
+                                            <property name="left-attach">2</property>
+                                            <property name="top-attach">0</property>
+                                          </packing>
+                                        </child>
+                                        <style>
+                                          <class name="hat"/>
+                                        </style>
                                       </object>
                                       <packing>
-                                        <property name="expand">True</property>
+                                        <property name="expand">False</property>
                                         <property name="fill">True</property>
                                         <property name="position">1</property>
                                       </packing>

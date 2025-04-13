@@ -22,29 +22,29 @@ input_map:
       - HAT0_Y
       - [-1, 1]
   EV_KEY:
-    288: GEAR_DOWN
-    289: GEAR_UP
-    290: GEAR_1
-    291: GEAR_2
-    292: GEAR_3
-    293: GEAR_4
-    294: GEAR_5
-    295: GEAR_6
-    296: GEAR_R
-    297: BTN_0
-    298: BTN_1
-    299: BTN_2
-    300: BTN_3
-    301: BTN_4
-    302: BTN_5
-    303: BTN_6
-    704: BTN_7
-    705: BTN_8
-    706: BTN_9
-    707: BTN_10
-    708: BTN_11
-    709: BTN_12
-    710: BTN_13
-    711: BTN_14
+    293: GEAR_DOWN
+    292: GEAR_UP
+    300: GEAR_1
+    301: GEAR_2
+    302: GEAR_3
+    303: GEAR_4
+    704: GEAR_5
+    705: GEAR_6
+    706: GEAR_R
+    288: BTN_0
+    289: BTN_1
+    290: BTN_2
+    291: BTN_3
+    294: BTN_4
+    295: BTN_5
+    298: BTN_6
+    299: BTN_7
+    707: BTN_8
+    708: BTN_9
+    709: BTN_10
+    710: BTN_11
+    711: BTN_12
+    296: BTN_13
+    297: BTN_14
     712: BTN_15
 
