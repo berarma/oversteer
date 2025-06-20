@@ -130,14 +130,14 @@ After installing the Flatpak package, permission files have to be installed manu
 
 Copy the contents of
 [https://github.com/berarma/oversteer/tree/master/data/udev](https://github.com/berarma/oversteer/tree/master/data/udev)
-into `/usr/lib/udev/rules.d`.
+into `/etc/rules.d`.
 
 If you're using the terminal, these commands will install the permission files:
 
 ```
-sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-fanatec-wheel-perms.rules -P /usr/lib/udev/rules.d/
-sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-logitech-wheel-perms.rules -P /usr/lib/udev/rules.d/
-sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-thrustmaster-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-fanatec-wheel-perms.rules -P /etc/rules.d/
+sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-logitech-wheel-perms.rules -P /etc/rules.d/
+sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-thrustmaster-wheel-perms.rules -P /etc/rules.d/
 ```
 
 Restart your computer, or reload udev rules with command:
@@ -177,13 +177,13 @@ Accessing the wheel settings requires some permissions.
 to any user in the system after a reboot.**
 
 By default, the udev rules will be installed at
-`/usr/local/lib/udev/rules.d` when installing to prefix `/usr/local` or
-`/lib/udev/rules.d` when installing to any other prefix. The location can
+`/usr/local/etc/rules.d` when installing to prefix `/usr/local` or
+`/etc/rules.d` when installing to any other prefix. The location can
 be changed using meson option `udev_rules_dir` but it shouldn't be
 required except maybe for packagers.
 
 Older rules might be already installed at `/etc/udev/rules.d` or
-`/lib/udev/rules.d`. You may need to remove these files manually in case
+`/etc/rules.d`. You may need to remove these files manually in case
 you're experiencing issues with permissions.
 
 The installed udev rules files will have these names:
