@@ -106,12 +106,10 @@ window#overlay-window .overlay-leds levelbar:nth-child(5) block.filled {
 }
 
 .hat label {
-    border: 3px double #ccc;
-    border-radius: 3px;
+    border: 2px solid #ccc;
 }
 
 .hat label.on {
-    border: 3px double #ccc;
-    border-radius: 3px;
+    border: 2px solid #ccc;
     background-color: #8bf;
 }
