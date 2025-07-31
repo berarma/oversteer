@@ -47,7 +47,7 @@ ATTRS{idProduct}=="c29a", RUN+="/bin/sh -c 'cd %S%p; chmod 666 alternate_modes c
 ATTRS{idProduct}=="c298", RUN+="/bin/sh -c 'cd %S%p; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
 
 # Logitech Driving Force Racing Wheel
-ATTRS{idProduct}=="c294", RUN+="/bin/sh -c 'cd %S%p; chmod 666 combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
+ATTRS{idProduct}=="c294", RUN+="/bin/sh -c 'cd %S%p; chmod 666 alternate_modes combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
 
 # Logitech Momo Force Racing Wheel
 ATTRS{idProduct}=="c295", RUN+="/bin/sh -c 'cd %S%p; chmod 666 combine_pedals range gain autocenter spring_level damper_level friction_level ffb_leds peak_ffb_level'"
