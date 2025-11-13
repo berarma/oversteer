@@ -4,13 +4,13 @@
 # Avoid blanket matching all Logitech devices, as that causes issues with mice,
 # keyboards, and other non-wheel devices.
 
-ACTION!="unbind", ACTION!="remove", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d" GOTO="logitech-rules"
+ACTION!="unbind", ACTION!="remove", SUBSYSTEM=="hid", ATTRS{idVendor}=="046d", GOTO="logitech-rules"
 GOTO="end"
 
 LABEL="logitech-rules"
 
-DRIVER=="logitech" GOTO="logitech-driver"
-DRIVER!="logitech-hidpp-device" GOTO="end"
+DRIVER=="logitech", GOTO="logitech-driver"
+DRIVER!="logitech-hidpp-device", GOTO="end"
 
 # Logitech G PRO Racing Wheel for PlayStation and PC
 ATTRS{idProduct}=="c268", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range leds/*/brightness; chmod 777 leds/ leds/*'"

@@ -4,15 +4,15 @@
 # Avoid blanket matching all Thrustmaster devices, as that causes issues with mice,
 # keyboards, and other non-wheel devices.
 
-ACTION!="unbind", ACTION!="remove", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f" GOTO="thrustmaster-rules"
+ACTION!="unbind", ACTION!="remove", SUBSYSTEM=="hid", ATTRS{idVendor}=="044f", GOTO="thrustmaster-rules"
 GOTO="end"
 
 LABEL="thrustmaster-rules"
 
 DRIVER=="tmff2" GOTO="tmff-new"
-DRIVER=="hid-tmff-new" GOTO="tmff-new"
-DRIVER=="hid-t150" GOTO="t150"
-DRIVER!="t500rs" GOTO="end"
+DRIVER=="hid-tmff-new", GOTO="tmff-new"
+DRIVER=="hid-t150", GOTO="t150"
+DRIVER!="t500rs", GOTO="end"
 
 # Thrustmaster T500RS Racing Wheel (USB)
 ATTRS{idProduct}=="b65e", DRIVER=="t500rs", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
