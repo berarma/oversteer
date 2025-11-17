@@ -192,6 +192,7 @@ class Device:
         with open(path, "r") as file:
             data = file.read()
         autocenter = data.strip()
+
         return int(round((int(autocenter) * 100) / 65535))
 
     def set_autocenter(self, autocenter):
@@ -205,7 +206,8 @@ class Device:
                 file.write(autocenter)
         else:
             input_device = self.get_input_device()
-            input_device.write(ecodes.EV_FF, ecodes.FF_AUTOCENTER, int(autocenter))
+            if input_device:
+                input_device.write(ecodes.EV_FF, ecodes.FF_AUTOCENTER, int(autocenter))
         return True
 
     def get_ff_gain(self):
@@ -334,6 +336,24 @@ class Device:
         time.sleep(1)
         self.set_autocenter(0)
 
+    def get_autocenter_controlled_by_wheel(self):
+        if self.usb_id in [wid.TM_T150]:
+            path = self.checked_device_file("enable_autocenter")
+            if not path:
+                return False
+            with open(path, "r") as file:
+                data = file.read()
+            value = data.strip()
+            return value == 'y'
+
+    def set_autocenter_controlled_by_wheel(self, value):
+        if self.usb_id in [wid.TM_T150]:
+            path = self.checked_device_file("enable_autocenter")
+            if not path:
+                return False
+            with open(path, "w") as file:
+                file.write('y' if value else 'n')
+
     def check_permissions(self):
         logging.debug("check_permissions: %s", self.dev_path)
         if not os.access(self.dev_path, os.F_OK | os.R_OK | os.X_OK):
@@ -347,6 +367,8 @@ class Device:
         if not self.check_file_permissions('gain'):
             return False
         if not self.check_file_permissions('autocenter'):
+            return False
+        if not self.check_file_permissions('enable_autocenter'):
             return False
         if not self.check_file_permissions('spring_level'):
             return False
@@ -365,7 +387,7 @@ class Device:
 
     def get_input_device(self):
         if self.input_device is None or self.input_device.fd == -1:
-            if os.access(self.dev_name, os.R_OK):
+            if self.dev_name and os.access(self.dev_name, os.R_OK):
                 self.input_device = InputDevice(self.dev_name)
         return self.input_device
 
