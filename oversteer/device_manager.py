@@ -10,9 +10,9 @@ class DeviceManager:
     def __init__(self):
         self.supported_wheels = {
             wid.CM_C5: 1080,
-            wid.FT_CSL_DD: 1080,
-            wid.FT_CSL_ELITE: 1080,
-            wid.FT_CSL_ELITE_PS4: 1080,
+            wid.FT_CSL_DD: 2520,
+            wid.FT_CSL_ELITE: 2520,
+            wid.FT_CSL_ELITE_PS4: 2520,
             wid.FT_CSV25: 900,
             wid.FT_CSV2: 900,
             wid.FT_PDD1: 1080,
