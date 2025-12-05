@@ -107,6 +107,11 @@ rights to perform the operation. These commands will make changes to your
 system that should only performed by a system administrator or someone knowing
 what they're doing.
 
+### AppImage
+
+@Samueru-sama has kindly created an [AppImage](https://github.com/pkgforge-dev/Oversteer-AppImage/releases) that can run on any distribution without installing
+anything.
+
 ### Arch
 
 Darvin Delgado (@DNModder) has kindly created an [AUR
