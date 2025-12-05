@@ -38,6 +38,9 @@ ATTRS{idProduct}=="b689", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring
 # Thrustmaster T500RS Racing Wheel (USB)
 ATTRS{idProduct}=="b65e", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
 
+# Thrustmaster TX 458 Italia 
+ATTRS{idProduct}=="b669", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain spring_level damper_level friction_level'"
+
 GOTO="end"
 
 LABEL="t150"

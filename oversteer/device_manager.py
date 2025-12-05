@@ -46,6 +46,7 @@ class DeviceManager:
             wid.TM_T80H: 240,
             wid.TM_TMX: 900,
             wid.TM_TSXW: 1080,
+            wid.TM_TX458: 900,
             wid.TS_PC: 1080,
             wid.TM_TX: 900,
             wid.XX_FFBOARD: 1080,
