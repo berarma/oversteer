@@ -50,7 +50,7 @@ class DeviceManager:
             wid.TS_PC: 1080,
             wid.TM_TX: 900,
             wid.XX_FFBOARD: 1080,
-            wid.FF_FLASHFIRE_900R: 900, 
+            wid.FF_FLASHFIRE_900R: 900,
         }
         self.devices = {}
         self.changed = True
