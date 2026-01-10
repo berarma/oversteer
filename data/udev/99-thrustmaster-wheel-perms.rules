@@ -51,4 +51,7 @@ ATTRS{idProduct}=="b677", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autoce
 # Thrustmaster TMX Racing Wheel (USB)
 ATTRS{idProduct}=="b67f", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
 
+# Thrustmaster TMX Racing Wheel (USB)
+ATTRS{idProduct}=="b67e", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
+
 LABEL="end"
