@@ -155,13 +155,13 @@ Restart your computer, or reload udev rules with command:
 
 Install all dependencies on Debian systems with the following command:
 
-`sudo apt git install python3 python3-distutils python3-gi python3-gi-cairo
+`sudo apt install git python3 python3-distutils python3-gi python3-gi-cairo
 python3-pyudev python3-xdg python3-evdev gettext meson appstream-util
 desktop-file-utils python3-matplotlib python3-scipy`
 
 Install all dependencies on Fedora systems with the following command:
 
-`sudo dnf git install python3 python3-distutils-extra python3-gobject
+`sudo dnf install git python3 python3-distutils-extra python3-gobject
 python3-pyudev python3-pyxdg python3-evdev gettext meson appstream
 desktop-file-utils python3-matplotlib-gtk3 python3-scipy libappstream-glib`
 
