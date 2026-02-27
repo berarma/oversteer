@@ -704,20 +704,34 @@ class GtkUi:
         self.ff_friction_level.add_mark(100, Gtk.PositionType.BOTTOM, '100')
 
     def _set_range_markers(self, max_range):
+        # set the markers for different wheel rotation ranges
+        markers_low = (9, 18, 24, 27)
+        markers_normal = (9, 18, 27, 36, 45, 54, 72, 90, 108)
+        markers_high = (9, 36, 72, 108, 144, 180, 216, 252)
+
+        # mapping max_range to the number of markers we create
+        limit_map = {
+            90:     0,
+            180:    1,
+            240:    2,
+            270:    3,
+            # the upper values are for markers_low
+            # ther lower values are for markers_normal
+            900:    7,
+            1080:   8,
+        }
+        limit = limit_map.get(max_range, -1)
+
+        if max_range <= 270:
+            markers = markers_low
+        elif max_range <= 1080:
+            markers = markers_normal
+        else:
+            markers = markers_high
+
         self.wheel_range.clear_marks()
-        if max_range >= 180:
-            self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')
-        if max_range >= 270:
-            self.wheel_range.add_mark(27, Gtk.PositionType.BOTTOM, '270')
-        if max_range >= 360:
-            self.wheel_range.add_mark(36, Gtk.PositionType.BOTTOM, '360')
-        if max_range >= 450:
-            self.wheel_range.add_mark(45, Gtk.PositionType.BOTTOM, '450')
-        if max_range >= 540:
-            self.wheel_range.add_mark(54, Gtk.PositionType.BOTTOM, '540')
-        if max_range >= 720:
-            self.wheel_range.add_mark(72, Gtk.PositionType.BOTTOM, '720')
-        if max_range >= 900:
-            self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
-        if max_range >= 1080:
-            self.wheel_range.add_mark(108, Gtk.PositionType.BOTTOM, '1080')
+        self.wheel_range.get_adjustment().set_upper(markers[limit])
+        for i, m in enumerate(markers):
+            self.wheel_range.add_mark(m, Gtk.PositionType.BOTTOM, str(m) + '0')
+            if i == limit:
+                break
