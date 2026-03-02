@@ -159,6 +159,12 @@ Install all dependencies on Debian systems with the following command:
 python3-pyudev python3-xdg python3-evdev gettext meson appstream-util
 desktop-file-utils python3-matplotlib python3-scipy`
 
+Install and configure all dependencies on Ubuntu (24.04 LTS) systems with the following command:
+
+`sudo apt install python3-pyudev python3-evdev python3-matplotlib
+python3-gi python3-gi-cairo girl1.2-gtk-3.0`
+`sudo ln -s $(which appstreamcli) /usr/bin/appstream-util`
+
 Install all dependencies on Fedora systems with the following command:
 
 `sudo dnf install git python3 python3-distutils-extra python3-gobject
