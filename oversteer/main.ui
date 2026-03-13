@@ -3496,7 +3496,8 @@ Kim Kuparinen (Finnish)
 Leandro Vergara (Galician)
 Marcel Marusiak (Polish)
 Matthias Müller (German)
-TotalCaesar659 (Russian)</property>
+TotalCaesar659 (Russian)
+Olivier Herau (French)</property>
     <property name="logo-icon-name"/>
     <property name="license-type">gpl-3-0</property>
     <signal name="delete-event" handler="on_about_window_delete_event" swapped="no"/>
