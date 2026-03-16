@@ -46,7 +46,7 @@ GOTO="end"
 LABEL="t150"
 
 # Thrustmaster T150 Racing Wheel (USB)
-ATTRS{idProduct}=="b677", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
+ATTRS{idProduct}=="b677", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter enable_autocenter'"
 
 # Thrustmaster TMX Racing Wheel (USB)
 ATTRS{idProduct}=="b67f", RUN+="/bin/sh -c 'cd %S%p; chmod 666 range gain autocenter'"
