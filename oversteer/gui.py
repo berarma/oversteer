@@ -21,6 +21,7 @@ from .combined_chart import CombinedChart
 from .linear_chart import LinearChart
 from .performance_chart import PerformanceChart
 from .profile_auto_switcher import ProfileAutoSwitcher
+from .auto_switch_ui import setup_auto_switch_widgets
 
 class Gui:
 
@@ -89,6 +90,12 @@ class Gui:
         self.populate_window()
 
         self.ui.start()
+
+        # Inject auto-switch widgets into Tools tab
+        from .gtk_handlers import GtkHandlers
+        handlers = GtkHandlers(self.ui, self)
+        setup_auto_switch_widgets(self.ui, handlers)
+
         self.ui.main()
 
     def sig_int_handler(self, signal, frame):
@@ -359,11 +366,3 @@ class Gui:
 
         self.ui.info_dialog(_("Test data exported."),
             _("Current test data has been exported to a CSV file."))
-
-    def open_test_chart(self):
-        if self.combined_chart is None:
-            return
-
-        canvas = self.combined_chart.get_canvas()
-        toolbar = self.combined_chart.get_navigation_toolbar(canvas)
-        self.ui.show_test_chart(canvas, toolbar)
