@@ -2,11 +2,12 @@ import gi
 from locale import gettext as _
 import threading
 import traceback
-gi.require_version('Gtk', '3.0')
+
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk
 
-class GtkHandlers:
 
+class GtkHandlers:
     @property
     def model(self):
         return self.controller.model
@@ -19,9 +20,7 @@ class GtkHandlers:
         return str(round(value * 10))
 
     def on_main_window_destroy(self, *args):
-        # Stop auto-switcher if running
-        if hasattr(self.controller, 'auto_switcher') and self.controller.auto_switcher:
-            self.controller.auto_switcher.stop()
+        self.controller.stop_auto_switch()
         self.ui.quit()
 
     def on_preferences_window_delete_event(self, *args):
@@ -138,7 +137,9 @@ class GtkHandlers:
         self.model.set_use_buttons(state)
 
     def on_center_wheel_state_set(self, widget, state):
-        threading.Thread(target = self.model.set_center_wheel, args = [state], daemon = True).start()
+        threading.Thread(
+            target=self.model.set_center_wheel, args=[state], daemon=True
+        ).start()
 
     def on_profile_changed(self, combobox):
         self.controller.load_profile(combobox.get_active_id())
@@ -148,7 +149,7 @@ class GtkHandlers:
         self.controller.save_profile(profile_name)
 
     def on_new_profile_clicked(self, widget):
-        self.ui.new_profile_name_entry.set_text('')
+        self.ui.new_profile_name_entry.set_text("")
         self.ui.new_profile_name_entry.show()
         self.ui.new_profile_name_entry.grab_focus()
 
@@ -169,8 +170,10 @@ class GtkHandlers:
         except (KeyboardInterrupt, SystemExit):
             raise
         except Exception as e:
-            if str(e) != '':
-                self.ui.error_dialog(_('Error creating profile'), traceback.format_exc())
+            if str(e) != "":
+                self.ui.error_dialog(
+                    _("Error creating profile"), traceback.format_exc()
+                )
 
     def on_rename_profile_clicked(self, widget):
         row = self.ui.profile_listbox.get_selected_row()
@@ -202,11 +205,12 @@ class GtkHandlers:
             except (KeyboardInterrupt, SystemExit):
                 raise
             except Exception as e:
-                self.ui.error_dialog(_('Error renaming profile'), str(e))
+                self.ui.error_dialog(_("Error renaming profile"), str(e))
+
         entry = Gtk.Entry()
-        entry.connect('activate', on_rename_profile_activate)
-        entry.connect('focus-out-event', on_rename_profile_focus_out)
-        entry.connect('key-release-event', on_rename_profile_key_release)
+        entry.connect("activate", on_rename_profile_activate)
+        entry.connect("focus-out-event", on_rename_profile_focus_out)
+        entry.connect("key-release-event", on_rename_profile_key_release)
         label = row.get_children()[0]
         row.remove(label)
         text = label.get_text()
@@ -227,11 +231,13 @@ class GtkHandlers:
         except (KeyboardInterrupt, SystemExit):
             raise
         except Exception as e:
-            if str(e) != '':
-                self.ui.error_dialog(_('Error deleting profile'), str(e))
+            if str(e) != "":
+                self.ui.error_dialog(_("Error deleting profile"), str(e))
 
     def on_import_profile_clicked(self, widget):
-        profile_file = self.ui.file_chooser(_('Choose profile file to import'), 'open', file_type='ini')
+        profile_file = self.ui.file_chooser(
+            _("Choose profile file to import"), "open", file_type="ini"
+        )
         if profile_file is None:
             return
         try:
@@ -241,14 +247,16 @@ class GtkHandlers:
         except (KeyboardInterrupt, SystemExit):
             raise
         except Exception as e:
-            self.ui.error_dialog(_('Error importing profile'), str(e))
+            self.ui.error_dialog(_("Error importing profile"), str(e))
 
     def on_export_profile_clicked(self, widget):
         row = self.ui.profile_listbox.get_selected_row()
         if row is None:
             return
         profile_name = row.get_children()[0].get_text()
-        export_file = self.ui.file_chooser(_('Export profile to'), 'save', profile_name + '.ini', file_type='ini')
+        export_file = self.ui.file_chooser(
+            _("Export profile to"), "save", profile_name + ".ini", file_type="ini"
+        )
         if export_file is None:
             return
         try:
@@ -256,7 +264,7 @@ class GtkHandlers:
         except (KeyboardInterrupt, SystemExit):
             raise
         except Exception as e:
-            self.ui.error_dialog(_('Error exporting profile'), str(e))
+            self.ui.error_dialog(_("Error exporting profile"), str(e))
 
     def on_test_start_clicked(self, widget):
         self.controller.start_test()
