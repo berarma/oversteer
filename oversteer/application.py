@@ -2,10 +2,13 @@ import argparse
 from locale import gettext as _
 import logging
 import os
+import signal
 import subprocess
+import sys
+import time
 from .device_manager import DeviceManager
 from .model import Model
-import sys
+from .profile_auto_switcher import ProfileAutoSwitcher
 from xdg.BaseDirectory import save_config_path
 
 class Application:
@@ -18,6 +21,7 @@ class Application:
         self.target_dir = '/etc/udev/rules.d/'
         self.profile_path = os.path.join(save_config_path('oversteer'), 'profiles')
         self.device_manager = None
+        self.args = None
 
         if not os.path.isdir(self.udev_path):
             self.udev_path = None
@@ -39,40 +43,45 @@ class Application:
         parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
         parser.add_argument('--center-wheel', action='store_true', default=None, help=_("center wheel"))
         parser.add_argument('--no-center-wheel', dest='center_wheel', action='store_false', default=None, help=_("don't center wheel"))
-        parser.add_argument('--start-manually', action='store_true', default=None, help=_("run command manually"))
-        parser.add_argument('--no-start-manually', dest='start_manually', action='store_false', default=None,
-                help=_("don't run command manually"))
-        parser.add_argument('-p', '--profile', help=_("load settings from a profile"))
-        parser.add_argument('-g', '--gui', action='store_true', help=_("start the GUI"))
-        parser.add_argument('--debug', action='store_true', help=_("enable debug output"))
-        parser.add_argument('--version', action='store_true', help=_("show version"))
+        parser.add_argument('--profile', help=_("load a profile"))
+        parser.add_argument('--list-profiles', action='store_true', help=_("list profiles"))
+        parser.add_argument('--gui', action='store_true', help=_("start the GUI"))
+        parser.add_argument('--start-manually', dest='start_manually', action='store_true', default=None, help=_("start manually"))
+        parser.add_argument('--no-start-manually', dest='start_manually', action='store_false', default=None, help=_("start automatically"))
+        parser.add_argument('--watch', action='store_true', help=_("watch for games and auto-switch profiles (daemon mode)"))
+        parser.add_argument('--watch-interval', type=float, default=2.0, help=_("poll interval in seconds for --watch (default: 2)"))
+        parser.add_argument('--default-profile', help=_("default profile when no game is running (--watch mode)"))
 
         args = parser.parse_args(argv[1:])
-        argc = len(sys.argv[1:])
+        self.args = args
 
-        if args.version:
-            print("Oversteer v" + self.version)
-            exit(0)
-
-        if args.debug:
-            argc -= 1
-        else:
-            logging.disable(level=logging.INFO)
+        logging.basicConfig(level=logging.DEBUG if os.environ.get('OVERSTEER_DEBUG') else logging.INFO,
+                            format='%(asctime)s %(levelname)s %(name)s: %(message)s')
 
         self.device_manager = DeviceManager()
-        self.device_manager.start()
 
         if args.list:
-            argc -= 1
-            devices = self.device_manager.get_devices()
-            print(_("Devices found:"))
-            for device in devices:
-                print("  {}: {}".format(device.dev_name, device.name))
-            exit(0)
+            for device in self.device_manager.get_devices():
+                print(device.name + " " + device.dev_path)
+            return
+
+        if args.list_profiles:
+            if os.path.isdir(self.profile_path):
+                for f in sorted(os.listdir(self.profile_path)):
+                    if f.endswith('.ini'):
+                        print(f[:-4])
+            return
+
+        # --- Watch mode (headless daemon) ---
+        if args.watch:
+            return self._run_watch(args)
+
+        # --- Normal / GUI mode ---
+        argc = len(argv) - 1
 
         if args.profile is not None:
             profile_file = os.path.join(self.profile_path, args.profile + '.ini')
-            if not os.path.exists(profile_file):
+            if not os.path.isfile(profile_file):
                 print(_("This profile doesn't exist."))
                 exit(-1)
 
@@ -136,3 +145,64 @@ class Application:
         if args.command:
             subprocess.Popen(args.command, shell=True)
 
+    def _run_watch(self, args):
+        """Headless daemon: watch for game processes and auto-switch profiles."""
+        device = None
+        if args.device is not None:
+            if os.path.exists(args.device):
+                device = self.device_manager.get_device(os.path.realpath(args.device))
+        else:
+            device = self.device_manager.first_device()
+
+        if not device:
+            print(_("No device available."))
+            sys.exit(1)
+
+        if not device.check_permissions():
+            print(_("You don't have the required permissions to change your wheel settings."))
+            sys.exit(1)
+
+        model = Model(device)
+
+        # Apply initial profile if specified
+        if args.profile is not None:
+            profile_file = os.path.join(self.profile_path, args.profile + '.ini')
+            if os.path.isfile(profile_file):
+                model.load(profile_file)
+                model.flush_device()
+                print(f"Loaded initial profile: {args.profile}")
+
+        print(f"Oversteer watching for games (interval: {args.watch_interval}s)")
+        print(f"Device: {device.name}")
+        print(f"Profile path: {self.profile_path}")
+        if args.default_profile:
+            print(f"Default profile: {args.default_profile}")
+        print()
+
+        stop_event = []
+        def handle_signal(signum, frame):
+            print("\nStopping watch...")
+            stop_event.append(True)
+        signal.signal(signal.SIGINT, handle_signal)
+        signal.signal(signal.SIGTERM, handle_signal)
+
+        switcher = ProfileAutoSwitcher(
+            model=model,
+            profile_path=self.profile_path,
+            poll_interval=args.watch_interval,
+            on_profile_change=lambda name: print(f"Switched to profile: {name}"),
+        )
+
+        if args.default_profile:
+            switcher.set_default_profile(args.default_profile)
+
+        switcher.start()
+
+        try:
+            while not stop_event:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            pass
+
+        switcher.stop()
+        print("Watch stopped.")
