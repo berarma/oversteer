@@ -21,6 +21,7 @@ class Model:
         'use_buttons': None,
         'center_wheel': None,
         'start_app_manually': None,
+        'game_processes': None,
     }
 
     types = {
@@ -38,6 +39,7 @@ class Model:
         'use_buttons': 'boolean',
         'center_wheel': 'boolean',
         'start_app_manually': 'boolean',
+        'game_processes': 'string',
     }
 
     def __init__(self, device = None, ui = None):
@@ -85,6 +87,7 @@ class Model:
             'use_buttons': False if self.device.get_range() is not None else None,
             'center_wheel': False,
             'start_app_manually': False,
+            'game_processes': None,
         }
 
     def update_from_device_settings(self):
@@ -128,6 +131,8 @@ class Model:
         for key, value in self.data.items():
             if value is None:
                 continue
+            if key == 'game_processes':
+                continue  # Handled separately in [profile] section
             if self.types[key] == 'string':
                 data[key] = value
             elif self.types[key] == 'integer':
@@ -139,6 +144,13 @@ class Model:
 
         config = configparser.ConfigParser()
         config['DEFAULT'] = data
+
+        # Write game_processes in a [profile] section for auto-switch
+        if self.data.get('game_processes'):
+            config['profile'] = {
+                'game_processes': self.data['game_processes']
+            }
+
         with open(profile_file, 'w') as configfile:
             config.write(configfile)
 
@@ -246,7 +258,7 @@ class Model:
         return self.data['range_overlay']
 
     def set_use_buttons(self, value):
-        self.set_if_changed('use_buttons', bool(value))
+        self.set_if_if_changed('use_buttons', bool(value))
 
     def get_use_buttons(self):
         return self.data['use_buttons']
@@ -262,6 +274,12 @@ class Model:
 
     def get_start_app_manually(self):
         return self.data['start_app_manually']
+
+    def set_game_processes(self, value):
+        self.set_if_changed('game_processes', value)
+
+    def get_game_processes(self):
+        return self.data['game_processes']
 
     def flush_device(self):
         logging.debug("flush_device")
@@ -305,4 +323,3 @@ class Model:
         self.ui.set_center_wheel(data['center_wheel'])
         self.ui.set_start_app_manually(data['start_app_manually'])
         self.update_save_profile_button()
-
