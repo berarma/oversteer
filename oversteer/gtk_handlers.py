@@ -19,6 +19,9 @@ class GtkHandlers:
         return str(round(value * 10))
 
     def on_main_window_destroy(self, *args):
+        # Stop auto-switcher if running
+        if hasattr(self.controller, 'auto_switcher') and self.controller.auto_switcher:
+            self.controller.auto_switcher.stop()
         self.ui.quit()
 
     def on_preferences_window_delete_event(self, *args):
@@ -66,14 +69,14 @@ class GtkHandlers:
         self.model.set_range(wrange)
         self.ui.overlay_wheel_range.set_label(str(wrange))
 
-    def on_overlay_decrange_clicked(self, widget):
+    def on_overlay_decrange_click(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() - step)
         wrange = int(self.ui.wheel_range.get_value() * 10)
         self.ui.overlay_wheel_range.set_label(str(wrange))
 
-    def on_overlay_incrange_clicked(self, widget):
+    def on_overlay_incrange_click(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
         self.ui.wheel_range.set_value(self.ui.wheel_range.get_value() + step)
@@ -286,3 +289,22 @@ class GtkHandlers:
 
     def on_start_app_clicked(self, widget):
         self.controller.start_app()
+
+    # --- Auto-switch handlers ---
+
+    def on_auto_switch_state_set(self, widget, state):
+        """Toggle the profile auto-switcher on/off."""
+        if state:
+            self.controller.start_auto_switch()
+        else:
+            self.controller.stop_auto_switch()
+
+    def on_game_processes_changed(self, widget):
+        """Update the game_processes model field when the entry changes."""
+        text = widget.get_text().strip()
+        self.model.set_game_processes(text if text else None)
+
+    def on_game_processes_focus_out(self, widget, event):
+        """Sync entry with model on focus loss."""
+        text = widget.get_text().strip()
+        self.model.set_game_processes(text if text else None)
