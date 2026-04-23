@@ -219,7 +219,8 @@ class GtkUi:
         profiles.sort()
 
         for profile_name in profiles:
-            model.append([profile_name])
+            if profile_name != "DEFAULT":
+                model.append([profile_name])
 
         self.profile_combobox.set_model(model)
         self.profile_combobox.set_active_id(active_id)

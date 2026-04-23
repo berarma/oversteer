@@ -129,11 +129,22 @@ class Model:
         self.save_reference_values()
         self.profile = profile_file
 
+    save_defaults = {
+        "spring_level": 0,
+        "damper_level": 0,
+        "friction_level": 0,
+        "autocenter": 0,
+        "combine_pedals": 0,
+    }
+
     def save(self, profile_file):
         data = {}
         for key, value in self.data.items():
             if value is None:
-                continue
+                if key in self.save_defaults:
+                    value = self.save_defaults[key]
+                else:
+                    continue
             if key == "game_processes":
                 continue  # Handled separately in [profile] section
             if self.types[key] == "string":

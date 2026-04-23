@@ -137,7 +137,9 @@ class Gui:
         if os.path.isdir(self.app.profile_path):
             for filename in os.listdir(self.app.profile_path):
                 if filename.endswith(".ini"):
-                    profiles.append(filename[:-4])
+                    name = filename[:-4]
+                    if name != "DEFAULT":
+                        profiles.append(name)
         self.ui.set_profiles(profiles)
         self.ui.set_profile("DEFAULT")
 
