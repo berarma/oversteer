@@ -275,14 +275,15 @@ class Gui:
         else:
             idx = self.pressed_button_count
             self.button_config[idx] = code
-        self.ui.set_define_buttons_text(
-            self.button_labels[self.pressed_button_count + 1]
-        )
         self.pressed_button_count += 1
         if self.pressed_button_count >= len(self.button_labels):
             self.button_setup_step = False
             self.ui.reset_define_buttons_text()
             self.save_buttons_config()
+        else:
+            self.ui.set_define_buttons_text(
+                self.button_labels[self.pressed_button_count]
+            )
 
     def save_buttons_config(self):
         config = configparser.ConfigParser()
