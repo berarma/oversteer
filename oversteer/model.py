@@ -259,7 +259,7 @@ class Model:
         return self.data["range_overlay"]
 
     def set_use_buttons(self, value):
-        self.set_if_if_changed("use_buttons", bool(value))
+        self.set_if_changed("use_buttons", bool(value))
 
     def get_use_buttons(self):
         return self.data["use_buttons"]
