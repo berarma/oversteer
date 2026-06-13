@@ -913,5 +913,24 @@ msgstr "Мастер настройки руля"
 msgid "game;racing;cars;wheels"
 msgstr "игра;гонки;автомобили;рули"
 
+#: oversteer/main.ui:369
+msgid "Power"
+msgstr "Питание"
+
+#: oversteer/main.ui:364
+msgid ""
+"Enable or disable the wheel for the whole system. When disabled, no game or "
+"application can see it."
+msgstr "Включает или отключает руль для всей системы. В отключённом состоянии его не видит ни одна игра или приложение."
+
+#: oversteer/gui.py:178
+#, python-brace-format
+msgid "Re-enable {}"
+msgstr "Снова включить {}"
+
+#: oversteer/gui.py:214
+msgid "You don't have the required permissions to enable or disable the wheel."
+msgstr "У вас нет необходимых разрешений для включения или отключения руля."
+
 #~ msgid "io.github.berarma.Oversteer"
 #~ msgstr "io.github.berarma.Oversteer"

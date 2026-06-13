@@ -27,6 +27,7 @@ class Device:
         self.product_id = None
         self.usb_id = None
         self.dev_path = None
+        self.usb_path = None
         self.dev_name = None
         self.name = None
         self.ready = True
@@ -81,6 +82,35 @@ class Device:
 
     def get_max_range(self):
         return self.max_range
+
+    def authorized_file(self):
+        if self.usb_path is None:
+            return None
+        return os.path.join(self.usb_path, 'authorized')
+
+    def is_authorized(self):
+        path = self.authorized_file()
+        if path is None or not os.access(path, os.F_OK | os.R_OK):
+            return None
+        with open(path, "r") as file:
+            data = file.read()
+        return int(data.strip()) == 1
+
+    def can_set_authorized(self):
+        path = self.authorized_file()
+        if path is None:
+            return False
+        return os.access(path, os.W_OK)
+
+    def set_authorized(self, authorized):
+        path = self.authorized_file()
+        if path is None:
+            return False
+        value = "1" if authorized else "0"
+        logging.debug("Setting authorized: %s (%s)", value, path)
+        with open(path, "w") as file:
+            file.write(value)
+        return True
 
     def list_modes(self):
         path = self.checked_device_file("alternate_modes")

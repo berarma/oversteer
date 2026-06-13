@@ -913,6 +913,25 @@ msgstr "Configurador de Volantes"
 msgid "game;racing;cars;wheels"
 msgstr "xogo;carreiras;coches;volantes"
 
+#: oversteer/main.ui:369
+msgid "Power"
+msgstr "Acendido"
+
+#: oversteer/main.ui:364
+msgid ""
+"Enable or disable the wheel for the whole system. When disabled, no game or "
+"application can see it."
+msgstr "Activa ou desactiva o volante para todo o sistema. Cando está desactivado, ningún xogo ou aplicación pode velo."
+
+#: oversteer/gui.py:178
+#, python-brace-format
+msgid "Re-enable {}"
+msgstr "Reactivar {}"
+
+#: oversteer/gui.py:214
+msgid "You don't have the required permissions to enable or disable the wheel."
+msgstr "Non tes os permisos necesarios para activar ou desactivar o volante."
+
 #~ msgid "io.github.berarma.Oversteer"
 #~ msgstr "io.github.berarma.Oversteer"
 

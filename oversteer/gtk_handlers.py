@@ -52,6 +52,12 @@ class GtkHandlers:
         self.controller.populate_window()
         self.ui.update()
 
+    def on_wheel_power_state_set(self, widget, state):
+        if self.ui._suppress_power_signal:
+            return False
+        self.controller.set_wheel_power(state)
+        return False
+
     def on_change_emulation_mode_clicked(self, widget):
         mode = self.ui.emulation_mode_combobox.get_active_id()
         self.model.set_mode(mode)

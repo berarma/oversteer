@@ -56,6 +56,7 @@ class Gui:
         self.model = model
         self.device_manager = self.app.device_manager
         self.device = None
+        self.disabled_wheel = None
         self.grab_input = False
         self.test = None
         self.linear_chart = None
@@ -155,6 +156,7 @@ class Gui:
                 if device.is_ready():
                     device_list.append((device.get_id(), device.name))
             self.ui.set_devices(device_list)
+            self.update_power_controls()
 
     def populate_profiles(self):
         profiles = []
@@ -166,6 +168,52 @@ class Gui:
     def populate_window(self):
         self.populate_devices()
         self.populate_profiles()
+        self.update_power_controls()
+
+    def update_power_controls(self):
+        # A disabled wheel leaves the device list, so the switch keeps
+        # representing it (off, with a status message) until it's re-enabled.
+        if self.disabled_wheel is not None:
+            self.ui.set_wheel_power(False, True)
+            self.ui.set_wheel_power_status(_("Re-enable {}").format(self.disabled_wheel['name']))
+        elif self.device is not None and self.device.is_authorized() is not None:
+            self.ui.set_wheel_power(self.device.is_authorized(), self.device.can_set_authorized())
+            self.ui.set_wheel_power_status(None)
+        else:
+            self.ui.set_wheel_power(False, False)
+            self.ui.set_wheel_power_status(None)
+
+    def set_wheel_power(self, state):
+        try:
+            if state:
+                if self.disabled_wheel is not None:
+                    # Re-enable the remembered wheel; it's no longer in the list.
+                    if not self.device_manager.authorize_path(self.disabled_wheel['usb_path'], True):
+                        raise PermissionError
+                    self.disabled_wheel = None
+                    self.save_preferences()
+                elif self.device is not None:
+                    self.device.set_authorized(True)
+            else:
+                if self.device is None:
+                    return
+                self.device.set_authorized(False)
+                # Remember the wheel so it can be re-enabled with the switch
+                # after it disappears from the device list.
+                self.disabled_wheel = {
+                    'usb_path': self.device.usb_path,
+                    'name': self.device.name,
+                }
+                self.save_preferences()
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except OSError:
+            if self.app.udev_path:
+                self.install_udev_files()
+            else:
+                self.ui.info_dialog(_("You don't have the required permissions to " +
+                    "enable or disable the wheel."))
+        self.update_power_controls()
 
     def change_device(self, device_id):
         self.device = self.device_manager.get_device(device_id)
@@ -187,6 +235,8 @@ class Gui:
         else:
             self.model = Model(self.device, self.ui)
             self.models[self.device.get_id()] = self.model
+
+        self.update_power_controls()
 
         self.ui.set_max_range(self.device.get_max_range())
         self.ui.set_modes(self.model.get_mode_list())
@@ -265,6 +315,11 @@ class Gui:
                 Locale.setlocale(Locale.LC_ALL, (self.locale, 'UTF-8'))
             if 'check_permissions' in config['DEFAULT']:
                 self.check_permissions = config['DEFAULT']['check_permissions'] == '1'
+            if config['DEFAULT'].get('disabled_wheel_path', '') != '':
+                self.disabled_wheel = {
+                    'usb_path': config['DEFAULT']['disabled_wheel_path'],
+                    'name': config['DEFAULT'].get('disabled_wheel_name', _('wheel')),
+                }
             if 'button_config' in config['DEFAULT'] and config['DEFAULT']['button_config'] != '':
                 if 'button_toggle' not in config['DEFAULT']:
                     self.button_config = list(map(int, config['DEFAULT']['button_config'].split(',')))
@@ -298,6 +353,8 @@ class Gui:
             'check_permissions': '1' if self.check_permissions else '0',
             'button_toggle': ','.join(map(str, self.button_config[0])),
             'button_config': ','.join(map(str, self.button_config[1:])),
+            'disabled_wheel_path': self.disabled_wheel['usb_path'] if self.disabled_wheel else '',
+            'disabled_wheel_name': self.disabled_wheel['name'] if self.disabled_wheel else '',
         }
         config_file = os.path.join(self.config_path, 'config.ini')
         with open(config_file, 'w') as file:

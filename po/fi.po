@@ -909,3 +909,22 @@ msgstr "Rattimanageri"
 #: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "peli;ajo;autot;ratit"
+
+#: oversteer/main.ui:369
+msgid "Power"
+msgstr "Virta"
+
+#: oversteer/main.ui:364
+msgid ""
+"Enable or disable the wheel for the whole system. When disabled, no game or "
+"application can see it."
+msgstr "Ota ratti käyttöön tai poista se käytöstä koko järjestelmässä. Kun se on poistettu käytöstä, mikään peli tai sovellus ei näe sitä."
+
+#: oversteer/gui.py:178
+#, python-brace-format
+msgid "Re-enable {}"
+msgstr "Ota {} uudelleen käyttöön"
+
+#: oversteer/gui.py:214
+msgid "You don't have the required permissions to enable or disable the wheel."
+msgstr "Sinulla ei ole tarvittavia oikeuksia ottaa rattia käyttöön tai poistaa sitä käytöstä."

@@ -117,6 +117,9 @@ class DeviceManager:
         logging.debug("%s: ID_VENDOR_ID: %s ID_MODEL_ID: %s", device_node,
                       udevice.get('ID_VENDOR_ID'), udevice.get('ID_MODEL_ID'))
 
+        usb_device = udevice.find_parent('usb', 'usb_device')
+        usb_path = usb_device.sys_path if usb_device is not None else None
+
         device.set({
             'id': id,
             'vendor_id': udevice.get('ID_VENDOR_ID'),
@@ -124,6 +127,7 @@ class DeviceManager:
             'usb_id': usb_id,
             'dev_name': device_node,
             'dev_path': os.path.realpath(os.path.join(udevice.sys_path, 'device', 'device')),
+            'usb_path': usb_path,
             'name': bytes(udevice.get('ID_VENDOR_ENC') + ' ' + udevice.get('ID_MODEL_ENC'),
                           'utf-8').decode('unicode_escape'),
             'max_range': self.supported_wheels[usb_id],
@@ -143,6 +147,20 @@ class DeviceManager:
         if did in self.devices:
             return self.devices[did]
         return next((item for item in self.devices.values() if item.dev_name == did), None)
+
+    def authorize_path(self, usb_path, authorized):
+        # Re-enable a wheel that is no longer in the device list (it left the
+        # input subsystem when it was deauthorized). The usb_device node and its
+        # 'authorized' attribute still exist while the wheel stays plugged in.
+        if usb_path is None:
+            return False
+        path = os.path.join(usb_path, 'authorized')
+        if not os.access(path, os.F_OK | os.W_OK):
+            return False
+        with open(path, "w") as file:
+            file.write("1" if authorized else "0")
+        self.changed = True
+        return True
 
     def is_changed(self):
         changed = self.changed

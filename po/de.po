@@ -908,5 +908,24 @@ msgstr "Lenkradmanager"
 msgid "game;racing;cars;wheels"
 msgstr "Spiele;Rennen;Autos;Lenkrad"
 
+#: oversteer/main.ui:369
+msgid "Power"
+msgstr "Ein/Aus"
+
+#: oversteer/main.ui:364
+msgid ""
+"Enable or disable the wheel for the whole system. When disabled, no game or "
+"application can see it."
+msgstr "Aktiviert oder deaktiviert das Lenkrad systemweit. Wenn deaktiviert, kann es kein Spiel und keine Anwendung sehen."
+
+#: oversteer/gui.py:178
+#, python-brace-format
+msgid "Re-enable {}"
+msgstr "{} wieder aktivieren"
+
+#: oversteer/gui.py:214
+msgid "You don't have the required permissions to enable or disable the wheel."
+msgstr "Keine Berechtigung, das Lenkrad zu aktivieren oder zu deaktivieren."
+
 #~ msgid "io.github.berarma.Oversteer"
 #~ msgstr "io.github.berarma.Oversteer"

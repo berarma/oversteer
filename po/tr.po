@@ -912,6 +912,25 @@ msgstr "Direksiyon Yöneticisi"
 msgid "game;racing;cars;wheels"
 msgstr "oyun;yarış;arabalar;direksiyonlar"
 
+#: oversteer/main.ui:369
+msgid "Power"
+msgstr "Güç"
+
+#: oversteer/main.ui:364
+msgid ""
+"Enable or disable the wheel for the whole system. When disabled, no game or "
+"application can see it."
+msgstr "Direksiyonu tüm sistem için etkinleştirir veya devre dışı bırakır. Devre dışı bırakıldığında hiçbir oyun veya uygulama onu göremez."
+
+#: oversteer/gui.py:178
+#, python-brace-format
+msgid "Re-enable {}"
+msgstr "{} cihazını yeniden etkinleştir"
+
+#: oversteer/gui.py:214
+msgid "You don't have the required permissions to enable or disable the wheel."
+msgstr "Direksiyonu etkinleştirmek veya devre dışı bırakmak için gerekli izinlere sahip değilsiniz."
+
 #~ msgid "io.github.berarma.Oversteer"
 #~ msgstr "io.github.berarma.Oversteer"
 

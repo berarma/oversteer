@@ -918,3 +918,22 @@ msgstr "Oversteer"
 #: data/io.github.berarma.Oversteer.desktop.in:12
 msgid "game;racing;cars;wheels"
 msgstr "gra;wyścigi;auta;kierownice;"
+
+#: oversteer/main.ui:369
+msgid "Power"
+msgstr "Zasilanie"
+
+#: oversteer/main.ui:364
+msgid ""
+"Enable or disable the wheel for the whole system. When disabled, no game or "
+"application can see it."
+msgstr "Włącza lub wyłącza kierownicę dla całego systemu. Po wyłączeniu żadna gra ani aplikacja jej nie widzi."
+
+#: oversteer/gui.py:178
+#, python-brace-format
+msgid "Re-enable {}"
+msgstr "Włącz ponownie {}"
+
+#: oversteer/gui.py:214
+msgid "You don't have the required permissions to enable or disable the wheel."
+msgstr "Nie masz uprawnień by włączyć lub wyłączyć kierownicę."

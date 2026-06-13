@@ -926,5 +926,24 @@ msgstr "Kormánykerék-kezelő"
 msgid "game;racing;cars;wheels"
 msgstr "game;racing;cars;wheels;játék;verseny;autók;kormánykerék"
 
+#: oversteer/main.ui:369
+msgid "Power"
+msgstr "Be/Ki"
+
+#: oversteer/main.ui:364
+msgid ""
+"Enable or disable the wheel for the whole system. When disabled, no game or "
+"application can see it."
+msgstr "Engedélyezi vagy letiltja a kormánykereket az egész rendszer számára. Letiltva egyetlen játék vagy alkalmazás sem látja."
+
+#: oversteer/gui.py:178
+#, python-brace-format
+msgid "Re-enable {}"
+msgstr "{} újraengedélyezése"
+
+#: oversteer/gui.py:214
+msgid "You don't have the required permissions to enable or disable the wheel."
+msgstr "Nincs jogosultsága a kormánykerék engedélyezéséhez vagy letiltásához."
+
 #~ msgid "io.github.berarma.Oversteer"
 #~ msgstr "io.github.berarma.Oversteer"

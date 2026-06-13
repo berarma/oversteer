@@ -16,6 +16,7 @@ class GtkUi:
         self.ffbmeter_timer = False
         self.current_test_canvas = None
         self.current_test_toolbar = None
+        self._suppress_power_signal = False
 
         Gdk.init(argv)
         style_provider = Gtk.CssProvider()
@@ -167,6 +168,20 @@ class GtkUi:
 
     def set_device_id(self, device_id):
         self.device_combobox.set_active_id(device_id)
+
+    def set_wheel_power(self, state, sensitive = True):
+        # Update the switch without triggering a write back to the device.
+        self._suppress_power_signal = True
+        self.wheel_power.set_sensitive(sensitive and state is not None)
+        self.wheel_power.set_active(bool(state))
+        self._suppress_power_signal = False
+
+    def set_wheel_power_status(self, text):
+        if text:
+            self.wheel_power_status.set_label(text)
+            self.wheel_power_status.show()
+        else:
+            self.wheel_power_status.hide()
 
     def set_devices(self, devices):
         model = self.device_combobox.get_model()
@@ -578,6 +593,8 @@ class GtkUi:
         self.check_permissions = self.builder.get_object('check_permissions')
 
         self.device_combobox = self.builder.get_object('device')
+        self.wheel_power = self.builder.get_object('wheel_power')
+        self.wheel_power_status = self.builder.get_object('wheel_power_status')
         self.profile_combobox = self.builder.get_object('profile')
         self.new_profile_name_entry = self.builder.get_object('new_profile_name')
         self.save_profile_button = self.builder.get_object('save_profile')

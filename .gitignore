@@ -4,3 +4,5 @@
 __pycache__
 /extra
 *~
+/.dev-locale
+/run.py

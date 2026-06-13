@@ -1,0 +1,71 @@
+# Allow regular users to enable/disable supported wheels from Oversteer.
+#
+# Oversteer's power switch writes to the USB device's "authorized" attribute
+# (1 = visible to the system, 0 = hidden from every game/application). That
+# attribute lives at the usb_device node and is owned by root, so this rule
+# grants write access to it for the supported wheels only, avoiding any other
+# USB device (mice, keyboards, etc.).
+#
+# The usb_device node and its "authorized" attribute exist as long as the wheel
+# is plugged in, even while deauthorized, so this single rule covers both
+# disabling and re-enabling.
+
+ACTION=="remove", GOTO="oversteer_power_end"
+SUBSYSTEM!="usb", GOTO="oversteer_power_end"
+ENV{DEVTYPE}!="usb_device", GOTO="oversteer_power_end"
+
+# Logitech wheels
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c294", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c29a", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c298", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c299", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c29b", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c24f", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c262", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c266", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c26e", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c268", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c272", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c295", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="ca03", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c29c", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c291", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c293", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="046d", ATTR{idProduct}=="c20e", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+
+# Thrustmaster wheels
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b677", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b696", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b66e", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b66f", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b66d", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b65e", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b668", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b66a", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b67f", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b664", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b692", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b669", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="044f", ATTR{idProduct}=="b689", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+
+# Other Thrustmaster (different vendor IDs)
+ATTR{idVendor}=="24c6", ATTR{idProduct}=="5b00", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="06f8", ATTR{idProduct}=="0004", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+
+# Fanatec wheels
+ATTR{idVendor}=="0eb7", ATTR{idProduct}=="0020", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="0eb7", ATTR{idProduct}=="0e03", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="0eb7", ATTR{idProduct}=="0005", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="0eb7", ATTR{idProduct}=="0001", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="0eb7", ATTR{idProduct}=="0004", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="0eb7", ATTR{idProduct}=="0006", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="0eb7", ATTR{idProduct}=="0007", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+
+# Cammus
+ATTR{idVendor}=="3416", ATTR{idProduct}=="0301", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+
+# Generic FFBoard / Flashfire
+ATTR{idVendor}=="1209", ATTR{idProduct}=="ffb0", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+ATTR{idVendor}=="2f24", ATTR{idProduct}=="010d", RUN+="/bin/sh -c 'chmod 666 %S%p/authorized'"
+
+LABEL="oversteer_power_end"
