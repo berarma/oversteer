@@ -5,11 +5,12 @@ import logging
 import math
 import os
 from .gtk_handlers import GtkHandlers
-gi.require_version('Gtk', '3.0')
+
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GLib
 
-class GtkUi:
 
+class GtkUi:
     def __init__(self, controller, argv):
         self.controller = controller
 
@@ -19,16 +20,20 @@ class GtkUi:
 
         Gdk.init(argv)
         style_provider = Gtk.CssProvider()
-        style_provider.load_from_path(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.css'))
+        style_provider.load_from_path(
+            os.path.join(os.path.dirname(os.path.realpath(__file__)), "main.css")
+        )
         Gtk.StyleContext.add_provider_for_screen(
             Gdk.Screen.get_default(),
             style_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
         self.builder = Gtk.Builder()
-        self.builder.set_translation_domain('oversteer')
-        self.builder.add_from_file(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'main.ui'))
+        self.builder.set_translation_domain("oversteer")
+        self.builder.add_from_file(
+            os.path.join(os.path.dirname(os.path.realpath(__file__)), "main.ui")
+        )
 
         self._set_builder_objects()
 
@@ -36,20 +41,20 @@ class GtkUi:
 
         cell_renderer = Gtk.CellRendererText()
         self.device_combobox.pack_start(cell_renderer, True)
-        self.device_combobox.add_attribute(cell_renderer, 'text', 1)
+        self.device_combobox.add_attribute(cell_renderer, "text", 1)
         self.device_combobox.set_id_column(0)
 
         cell_renderer = Gtk.CellRendererText()
         self.profile_combobox.pack_start(cell_renderer, True)
-        self.profile_combobox.add_attribute(cell_renderer, 'text', 0)
+        self.profile_combobox.add_attribute(cell_renderer, "text", 0)
         self.profile_combobox.set_id_column(0)
 
         cell_renderer = Gtk.CellRendererText()
         self.emulation_mode_combobox.pack_start(cell_renderer, True)
-        self.emulation_mode_combobox.add_attribute(cell_renderer, 'text', 1)
+        self.emulation_mode_combobox.add_attribute(cell_renderer, "text", 1)
         self.emulation_mode_combobox.set_id_column(0)
 
-        self.set_range_overlay('never')
+        self.set_range_overlay("never")
         self.disable_save_profile()
 
     def reset_view(self):
@@ -74,30 +79,33 @@ class GtkUi:
         GLib.idle_add(callback, *args)
 
     def confirmation_dialog(self, message):
-        dialog = Gtk.MessageDialog(self.window, 0,
-                Gtk.MessageType.WARNING, Gtk.ButtonsType.OK_CANCEL, message)
+        dialog = Gtk.MessageDialog(
+            self.window, 0, Gtk.MessageType.WARNING, Gtk.ButtonsType.OK_CANCEL, message
+        )
         response = dialog.run()
         dialog.destroy()
         return response == Gtk.ResponseType.OK
 
-    def info_dialog(self, message, secondary_text = ''):
-        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.INFO,
-                Gtk.ButtonsType.OK, message)
+    def info_dialog(self, message, secondary_text=""):
+        dialog = Gtk.MessageDialog(
+            self.window, 0, Gtk.MessageType.INFO, Gtk.ButtonsType.OK, message
+        )
         dialog.format_secondary_text(secondary_text)
         dialog.run()
         dialog.destroy()
 
-    def error_dialog(self, message, secondary_text = ''):
-        dialog = Gtk.MessageDialog(self.window, 0, Gtk.MessageType.ERROR,
-                Gtk.ButtonsType.OK, message)
+    def error_dialog(self, message, secondary_text=""):
+        dialog = Gtk.MessageDialog(
+            self.window, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.OK, message
+        )
         dialog.format_secondary_text(secondary_text)
         dialog.run()
         dialog.destroy()
 
-    def file_chooser(self, title, action, default_name = None, file_type = 'all'):
-        if action == 'open':
+    def file_chooser(self, title, action, default_name=None, file_type="all"):
+        if action == "open":
             action = Gtk.FileChooserAction.OPEN
-        elif action == 'save':
+        elif action == "save":
             action = Gtk.FileChooserAction.SAVE
         else:
             return None
@@ -112,15 +120,15 @@ class GtkUi:
 
         file_filter = Gtk.FileFilter()
 
-        if file_type == 'csv':
-            file_filter.set_name('CSV')
-            file_filter.add_pattern('*.csv')
-        elif file_type == 'ini':
-            file_filter.set_name('INI')
-            file_filter.add_pattern('*.ini')
-        elif file_type == 'all':
-            file_filter.set_name(_('All files'))
-            file_filter.add_pattern('*')
+        if file_type == "csv":
+            file_filter.set_name("CSV")
+            file_filter.add_pattern("*.csv")
+        elif file_type == "ini":
+            file_filter.set_name("INI")
+            file_filter.add_pattern("*.ini")
+        elif file_type == "all":
+            file_filter.set_name(_("All files"))
+            file_filter.add_pattern("*")
 
         dialog.add_filter(file_filter)
         dialog.set_filter(file_filter)
@@ -151,7 +159,7 @@ class GtkUi:
     def set_languages(self, languages):
         cell_renderer = Gtk.CellRendererText()
         self.languages_combobox.pack_start(cell_renderer, True)
-        self.languages_combobox.add_attribute(cell_renderer, 'text', 1)
+        self.languages_combobox.add_attribute(cell_renderer, "text", 1)
         self.languages_combobox.set_id_column(0)
         model = self.languages_combobox.get_model()
         model = Gtk.ListStore(str, str)
@@ -198,12 +206,12 @@ class GtkUi:
     def update_profiles_combobox(self):
         model = self.profile_combobox.get_model()
         if model is None:
-            active_id = ''
+            active_id = ""
             model = Gtk.ListStore(str)
         else:
             active_id = self.profile_combobox.get_active_id()
             model.clear()
-        model.append([''])
+        model.append(["DEFAULT"])
 
         profiles = []
         for row in self.profile_listbox.get_children():
@@ -211,7 +219,8 @@ class GtkUi:
         profiles.sort()
 
         for profile_name in profiles:
-            model.append([profile_name])
+            if profile_name != "DEFAULT":
+                model.append([profile_name])
 
         self.profile_combobox.set_model(model)
         self.profile_combobox.set_active_id(active_id)
@@ -348,9 +357,9 @@ class GtkUi:
         self.wheel_range_overlay_never.set_active(False)
         self.wheel_range_overlay_always.set_active(False)
         self.wheel_range_overlay_auto.set_active(False)
-        if sid == 'always':
+        if sid == "always":
             self.wheel_range_overlay_always.set_active(True)
-        elif sid == 'auto':
+        elif sid == "auto":
             self.wheel_range_overlay_auto.set_active(True)
         else:
             self.wheel_range_overlay_never.set_active(True)
@@ -370,11 +379,15 @@ class GtkUi:
 
     def set_steering_input(self, value):
         if value < 32768:
-            self.steering_left_input.set_value(self._round_input((32768 - value) / 32768, 3))
+            self.steering_left_input.set_value(
+                self._round_input((32768 - value) / 32768, 3)
+            )
             self.steering_right_input.set_value(0)
         else:
             self.steering_left_input.set_value(0)
-            self.steering_right_input.set_value(self._round_input((value - 32768) / 32768, 3))
+            self.steering_right_input.set_value(
+                self._round_input((value - 32768) / 32768, 3)
+            )
 
     def set_clutch_input(self, value):
         self.clutch_input.set_value(self._round_input((255 - value) / 255, 2))
@@ -401,9 +414,11 @@ class GtkUi:
             self.hat_up_input.set_value(0)
             self.hat_down_input.set_value(value)
 
-    def set_btn_input(self, index, value, wait = None):
+    def set_btn_input(self, index, value, wait=None):
         if wait is not None:
-            GLib.timeout_add(wait, lambda index=index, value=value: self.set_btn_input(index, value))
+            GLib.timeout_add(
+                wait, lambda index=index, value=value: self.set_btn_input(index, value)
+            )
         else:
             self.btn_input[index].set_value(value)
         return False
@@ -420,27 +435,37 @@ class GtkUi:
     def get_wheel_range_overlay(self):
         wheel_range_overlay = None
         if self.wheel_range_overlay_never.get_active():
-            wheel_range_overlay = 'never'
+            wheel_range_overlay = "never"
         elif self.wheel_range_overlay_always.get_active():
-            wheel_range_overlay = 'always'
+            wheel_range_overlay = "always"
         elif self.wheel_range_overlay_auto.get_active():
-            wheel_range_overlay = 'auto'
+            wheel_range_overlay = "auto"
         return wheel_range_overlay
 
-    def update_overlay(self, auto = False):
+    def update_overlay(self, auto=False):
         ffbmeter_overlay = self.ffbmeter_overlay.get_active()
         wheel_range_overlay = self.get_wheel_range_overlay()
-        if ffbmeter_overlay or wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
+        if (
+            ffbmeter_overlay
+            or wheel_range_overlay == "always"
+            or (wheel_range_overlay == "auto" and auto)
+        ):
             if not self.overlay_window.props.visible:
                 self.overlay_window.show()
-            if not self.ffbmeter_timer and self.overlay_window.props.visible and ffbmeter_overlay:
+            if (
+                not self.ffbmeter_timer
+                and self.overlay_window.props.visible
+                and ffbmeter_overlay
+            ):
                 self.ffbmeter_timer = True
                 GLib.timeout_add(250, self._update_ffbmeter_overlay)
             if ffbmeter_overlay:
                 self._ffbmeter_overlay.show()
             else:
                 self._ffbmeter_overlay.hide()
-            if wheel_range_overlay == 'always' or (wheel_range_overlay == 'auto' and auto):
+            if wheel_range_overlay == "always" or (
+                wheel_range_overlay == "auto" and auto
+            ):
                 self._wheel_range_overlay.show()
             else:
                 self._wheel_range_overlay.hide()
@@ -448,7 +473,7 @@ class GtkUi:
             self.overlay_window.hide()
 
     def enable_save_profile(self):
-        if self.profile_combobox.get_active_id() != '':
+        if self.profile_combobox.get_active_id() != "":
             self.save_profile_button.set_sensitive(True)
 
     def disable_save_profile(self):
@@ -495,7 +520,7 @@ class GtkUi:
             self.test_panel_buttons.set_visible(True)
             self.test_panel_warning.set_visible(True)
 
-    def show_test_running(self, test_id, data = None):
+    def show_test_running(self, test_id, data=None):
         self.test_panel_warning.set_visible(False)
         self.test_panel_buttons.set_visible(False)
         if test_id == 0:
@@ -512,27 +537,30 @@ class GtkUi:
             self.test_container_stack.set_visible_child(self.test_panel_running)
 
     def _update_ffbmeter_overlay(self):
-        if not self.overlay_window.props.visible or not self.ffbmeter_overlay.props.visible:
+        if (
+            not self.overlay_window.props.visible
+            or not self.ffbmeter_overlay.props.visible
+        ):
             self.ffbmeter_timer = False
             return False
         level = self.controller.read_ffbmeter()
-        if level < 2458: # < 7.5%
+        if level < 2458:  # < 7.5%
             led_states = 0
-        elif level < 8192: # < 25%
+        elif level < 8192:  # < 25%
             led_states = 1
-        elif level < 16384: # < 50%
+        elif level < 16384:  # < 50%
             led_states = 3
-        elif level < 24576: # < 75%
+        elif level < 24576:  # < 75%
             led_states = 7
-        elif level < 29491: # < 90%
+        elif level < 29491:  # < 90%
             led_states = 15
-        elif level <= 32768: # <= 100%
+        elif level <= 32768:  # <= 100%
             led_states = 31
-        elif level < 36045: # < 110%
+        elif level < 36045:  # < 110%
             led_states = 30
-        elif level < 40960: # < 125%
+        elif level < 40960:  # < 125%
             led_states = 28
-        elif level < 49152: # < 150%
+        elif level < 49152:  # < 150%
             led_states = 24
         else:
             led_states = 16
@@ -543,8 +571,8 @@ class GtkUi:
         self.overlay_led_4.set_value((led_states >> 4) & 1)
         return True
 
-    def _round_input(self, value, decimals = 0):
-        multiplier = 10 ** decimals
+    def _round_input(self, value, decimals=0):
+        multiplier = 10**decimals
         return math.floor(value * multiplier) / multiplier
 
     def show_test_chart(self, canvas, toolbar):
@@ -566,68 +594,76 @@ class GtkUi:
         self.overlay_window.set_visual(visual)
 
     def _set_builder_objects(self):
-        self.window = self.builder.get_object('main_window')
-        self.about_window = self.builder.get_object('about_window')
-        self.preferences_window = self.builder.get_object('preferences_window')
-        self.overlay_window = self.builder.get_object('overlay_window')
+        self.window = self.builder.get_object("main_window")
+        self.about_window = self.builder.get_object("about_window")
+        self.preferences_window = self.builder.get_object("preferences_window")
+        self.overlay_window = self.builder.get_object("overlay_window")
         self.overlay_window.set_keep_above(True)
         self.overlay_window.connect("screen-changed", self._screen_changed)
         self._screen_changed(self.overlay_window, None)
 
-        self.languages_combobox = self.builder.get_object('languages')
-        self.check_permissions = self.builder.get_object('check_permissions')
+        self.languages_combobox = self.builder.get_object("languages")
+        self.check_permissions = self.builder.get_object("check_permissions")
 
-        self.device_combobox = self.builder.get_object('device')
-        self.profile_combobox = self.builder.get_object('profile')
-        self.new_profile_name_entry = self.builder.get_object('new_profile_name')
-        self.save_profile_button = self.builder.get_object('save_profile')
-        self.new_profile_name = self.builder.get_object('new_profile_name')
-        self.emulation_mode_combobox = self.builder.get_object('emulation_mode')
-        self.change_emulation_mode_button = self.builder.get_object('change_emulation_mode')
-        self.wheel_range = self.builder.get_object('wheel_range')
-        self.wheel_range_setup = self.builder.get_object('wheel_range_setup')
-        self.combine_none = self.builder.get_object('combine_none')
-        self.combine_brakes = self.builder.get_object('combine_brakes')
-        self.combine_clutch = self.builder.get_object('combine_clutch')
-        self.autocenter = self.builder.get_object('autocenter')
-        self.ff_gain = self.builder.get_object('ff_gain')
-        self.ff_spring_level = self.builder.get_object('ff_spring_level')
-        self.ff_damper_level = self.builder.get_object('ff_damper_level')
-        self.ff_friction_level = self.builder.get_object('ff_friction_level')
-        self.ffbmeter_leds = self.builder.get_object('ffbmeter_leds')
-        self.ffbmeter_overlay = self.builder.get_object('ffbmeter_overlay')
-        self.wheel_range_overlay_never = self.builder.get_object('wheel_range_overlay_never')
-        self.wheel_range_overlay_always = self.builder.get_object('wheel_range_overlay_always')
-        self.wheel_range_overlay_auto = self.builder.get_object('wheel_range_overlay_auto')
-        self._ffbmeter_overlay = self.builder.get_object('_ffbmeter_overlay')
-        self._wheel_range_overlay = self.builder.get_object('_wheel_range_overlay')
-        self.overlay_wheel_range = self.builder.get_object('overlay_wheel_range')
-        self.overlay_led_0 = self.builder.get_object('overlay_led_0')
-        self.overlay_led_1 = self.builder.get_object('overlay_led_1')
-        self.overlay_led_2 = self.builder.get_object('overlay_led_2')
-        self.overlay_led_3 = self.builder.get_object('overlay_led_3')
-        self.overlay_led_4 = self.builder.get_object('overlay_led_4')
-        self.wheel_buttons = self.builder.get_object('wheel_buttons')
-        self.center_wheel = self.builder.get_object('center_wheel')
-        self.start_define_buttons = self.builder.get_object('start_define_buttons')
+        self.device_combobox = self.builder.get_object("device")
+        self.profile_combobox = self.builder.get_object("profile")
+        self.new_profile_name_entry = self.builder.get_object("new_profile_name")
+        self.save_profile_button = self.builder.get_object("save_profile")
+        self.new_profile_name = self.builder.get_object("new_profile_name")
+        self.emulation_mode_combobox = self.builder.get_object("emulation_mode")
+        self.change_emulation_mode_button = self.builder.get_object(
+            "change_emulation_mode"
+        )
+        self.wheel_range = self.builder.get_object("wheel_range")
+        self.wheel_range_setup = self.builder.get_object("wheel_range_setup")
+        self.combine_none = self.builder.get_object("combine_none")
+        self.combine_brakes = self.builder.get_object("combine_brakes")
+        self.combine_clutch = self.builder.get_object("combine_clutch")
+        self.autocenter = self.builder.get_object("autocenter")
+        self.ff_gain = self.builder.get_object("ff_gain")
+        self.ff_spring_level = self.builder.get_object("ff_spring_level")
+        self.ff_damper_level = self.builder.get_object("ff_damper_level")
+        self.ff_friction_level = self.builder.get_object("ff_friction_level")
+        self.ffbmeter_leds = self.builder.get_object("ffbmeter_leds")
+        self.ffbmeter_overlay = self.builder.get_object("ffbmeter_overlay")
+        self.wheel_range_overlay_never = self.builder.get_object(
+            "wheel_range_overlay_never"
+        )
+        self.wheel_range_overlay_always = self.builder.get_object(
+            "wheel_range_overlay_always"
+        )
+        self.wheel_range_overlay_auto = self.builder.get_object(
+            "wheel_range_overlay_auto"
+        )
+        self._ffbmeter_overlay = self.builder.get_object("_ffbmeter_overlay")
+        self._wheel_range_overlay = self.builder.get_object("_wheel_range_overlay")
+        self.overlay_wheel_range = self.builder.get_object("overlay_wheel_range")
+        self.overlay_led_0 = self.builder.get_object("overlay_led_0")
+        self.overlay_led_1 = self.builder.get_object("overlay_led_1")
+        self.overlay_led_2 = self.builder.get_object("overlay_led_2")
+        self.overlay_led_3 = self.builder.get_object("overlay_led_3")
+        self.overlay_led_4 = self.builder.get_object("overlay_led_4")
+        self.wheel_buttons = self.builder.get_object("wheel_buttons")
+        self.center_wheel = self.builder.get_object("center_wheel")
+        self.start_define_buttons = self.builder.get_object("start_define_buttons")
         self.define_buttons_text = self.start_define_buttons.get_label()
-        self.start_app = self.builder.get_object('start_app')
-        self.start_app_manually = self.builder.get_object('start_app_manually')
+        self.start_app = self.builder.get_object("start_app")
+        self.start_app_manually = self.builder.get_object("start_app_manually")
 
-        self.steering_left_input = self.builder.get_object('steering_left_input')
-        self.steering_right_input = self.builder.get_object('steering_right_input')
-        self.clutch_input = self.builder.get_object('clutch_input')
-        self.accelerator_input = self.builder.get_object('accelerator_input')
-        self.brakes_input = self.builder.get_object('brakes_input')
-        self.hat_up_input = self.builder.get_object('hat_up_input')
-        self.hat_down_input = self.builder.get_object('hat_down_input')
-        self.hat_left_input = self.builder.get_object('hat_left_input')
-        self.hat_right_input = self.builder.get_object('hat_right_input')
+        self.steering_left_input = self.builder.get_object("steering_left_input")
+        self.steering_right_input = self.builder.get_object("steering_right_input")
+        self.clutch_input = self.builder.get_object("clutch_input")
+        self.accelerator_input = self.builder.get_object("accelerator_input")
+        self.brakes_input = self.builder.get_object("brakes_input")
+        self.hat_up_input = self.builder.get_object("hat_up_input")
+        self.hat_down_input = self.builder.get_object("hat_down_input")
+        self.hat_left_input = self.builder.get_object("hat_left_input")
+        self.hat_right_input = self.builder.get_object("hat_right_input")
         self.btn_input = [None] * 30
         for i in range(30):
-            self.btn_input[i] = self.builder.get_object('btn' + str(i) + '_input')
+            self.btn_input[i] = self.builder.get_object("btn" + str(i) + "_input")
 
-        self.profile_listbox = self.builder.get_object('profile_listbox')
+        self.profile_listbox = self.builder.get_object("profile_listbox")
 
         def sort_profiles(row1, row2):
             text1 = row1.get_children()[0].get_text().lower()
@@ -640,84 +676,86 @@ class GtkUi:
 
         self.profile_listbox.set_sort_func(sort_profiles)
 
-        self.test_container = self.builder.get_object('test_container')
-        self.test_container_stack = self.builder.get_object('test_container_stack')
-        self.test_chart_window = self.builder.get_object('test_chart_window')
-        self.test_chart_container = self.builder.get_object('test_chart_container')
-        self.test_chart_frame = self.builder.get_object('test_chart_frame')
-        self.test_start_button = self.builder.get_object('test_start_button')
-        self.test_open_chart_button = self.builder.get_object('test_open_chart_button')
-        self.test_export_csv_button = self.builder.get_object('test_export_csv_button')
-        self.test_import_csv_button = self.builder.get_object('test_import_csv_button')
+        self.test_container = self.builder.get_object("test_container")
+        self.test_container_stack = self.builder.get_object("test_container_stack")
+        self.test_chart_window = self.builder.get_object("test_chart_window")
+        self.test_chart_container = self.builder.get_object("test_chart_container")
+        self.test_chart_frame = self.builder.get_object("test_chart_frame")
+        self.test_start_button = self.builder.get_object("test_start_button")
+        self.test_open_chart_button = self.builder.get_object("test_open_chart_button")
+        self.test_export_csv_button = self.builder.get_object("test_export_csv_button")
+        self.test_import_csv_button = self.builder.get_object("test_import_csv_button")
         self.test_open_chart_button.set_sensitive(False)
         self.test_export_csv_button.set_sensitive(False)
-        self.test_max_velocity = self.builder.get_object('test_max_velocity')
-        self.test_latency = self.builder.get_object('test_latency')
-        self.test_max_accel = self.builder.get_object('test_max_accel')
-        self.test_max_decel = self.builder.get_object('test_max_decel')
-        self.test_time_to_max_accel = self.builder.get_object('test_time_to_max_accel')
-        self.test_time_to_max_decel = self.builder.get_object('test_time_to_max_decel')
-        self.test_mean_accel = self.builder.get_object('test_mean_accel')
-        self.test_mean_decel = self.builder.get_object('test_mean_decel')
-        self.test_residual_decel = self.builder.get_object('test_residual_decel')
-        self.test_estimated_snr = self.builder.get_object('test_estimated_snr')
-        self.test_minimum_level = self.builder.get_object('test_minimum_level')
-        self.test_panel_empty = self.builder.get_object('test_panel_empty')
-        self.test_panel_start1 = self.builder.get_object('test_panel_start1')
-        self.test_panel_start2 = self.builder.get_object('test_panel_start2')
-        self.test_panel_start3 = self.builder.get_object('test_panel_start3')
-        self.test_panel_running = self.builder.get_object('test_panel_running')
-        self.test_panel_running1 = self.builder.get_object('test_panel_running1')
-        self.test_panel_running1_ready = self.builder.get_object('test_panel_running1_ready')
-        self.test_panel_running1_go = self.builder.get_object('test_panel_running1_go')
-        self.test_panel_results = self.builder.get_object('test_panel_results')
-        self.test_panel_warning = self.builder.get_object('test_panel_warning')
-        self.test_panel_buttons = self.builder.get_object('test_panel_buttons')
-        self.test_panel_back = self.builder.get_object('test_panel_back')
-        self.test_panel_run = self.builder.get_object('test_panel_run')
+        self.test_max_velocity = self.builder.get_object("test_max_velocity")
+        self.test_latency = self.builder.get_object("test_latency")
+        self.test_max_accel = self.builder.get_object("test_max_accel")
+        self.test_max_decel = self.builder.get_object("test_max_decel")
+        self.test_time_to_max_accel = self.builder.get_object("test_time_to_max_accel")
+        self.test_time_to_max_decel = self.builder.get_object("test_time_to_max_decel")
+        self.test_mean_accel = self.builder.get_object("test_mean_accel")
+        self.test_mean_decel = self.builder.get_object("test_mean_decel")
+        self.test_residual_decel = self.builder.get_object("test_residual_decel")
+        self.test_estimated_snr = self.builder.get_object("test_estimated_snr")
+        self.test_minimum_level = self.builder.get_object("test_minimum_level")
+        self.test_panel_empty = self.builder.get_object("test_panel_empty")
+        self.test_panel_start1 = self.builder.get_object("test_panel_start1")
+        self.test_panel_start2 = self.builder.get_object("test_panel_start2")
+        self.test_panel_start3 = self.builder.get_object("test_panel_start3")
+        self.test_panel_running = self.builder.get_object("test_panel_running")
+        self.test_panel_running1 = self.builder.get_object("test_panel_running1")
+        self.test_panel_running1_ready = self.builder.get_object(
+            "test_panel_running1_ready"
+        )
+        self.test_panel_running1_go = self.builder.get_object("test_panel_running1_go")
+        self.test_panel_results = self.builder.get_object("test_panel_results")
+        self.test_panel_warning = self.builder.get_object("test_panel_warning")
+        self.test_panel_buttons = self.builder.get_object("test_panel_buttons")
+        self.test_panel_back = self.builder.get_object("test_panel_back")
+        self.test_panel_run = self.builder.get_object("test_panel_run")
 
     def _set_markers(self):
-        self.autocenter.add_mark(20, Gtk.PositionType.BOTTOM, '20')
-        self.autocenter.add_mark(40, Gtk.PositionType.BOTTOM, '40')
-        self.autocenter.add_mark(60, Gtk.PositionType.BOTTOM, '60')
-        self.autocenter.add_mark(80, Gtk.PositionType.BOTTOM, '80')
-        self.autocenter.add_mark(100, Gtk.PositionType.BOTTOM, '100')
-        self.ff_gain.add_mark(20, Gtk.PositionType.BOTTOM, '20')
-        self.ff_gain.add_mark(40, Gtk.PositionType.BOTTOM, '40')
-        self.ff_gain.add_mark(60, Gtk.PositionType.BOTTOM, '60')
-        self.ff_gain.add_mark(80, Gtk.PositionType.BOTTOM, '80')
-        self.ff_gain.add_mark(100, Gtk.PositionType.BOTTOM, '100')
-        self.ff_spring_level.add_mark(20, Gtk.PositionType.BOTTOM, '20')
-        self.ff_spring_level.add_mark(40, Gtk.PositionType.BOTTOM, '40')
-        self.ff_spring_level.add_mark(60, Gtk.PositionType.BOTTOM, '60')
-        self.ff_spring_level.add_mark(80, Gtk.PositionType.BOTTOM, '80')
-        self.ff_spring_level.add_mark(100, Gtk.PositionType.BOTTOM, '100')
-        self.ff_damper_level.add_mark(20, Gtk.PositionType.BOTTOM, '20')
-        self.ff_damper_level.add_mark(40, Gtk.PositionType.BOTTOM, '40')
-        self.ff_damper_level.add_mark(60, Gtk.PositionType.BOTTOM, '60')
-        self.ff_damper_level.add_mark(80, Gtk.PositionType.BOTTOM, '80')
-        self.ff_damper_level.add_mark(100, Gtk.PositionType.BOTTOM, '100')
-        self.ff_friction_level.add_mark(20, Gtk.PositionType.BOTTOM, '20')
-        self.ff_friction_level.add_mark(40, Gtk.PositionType.BOTTOM, '40')
-        self.ff_friction_level.add_mark(60, Gtk.PositionType.BOTTOM, '60')
-        self.ff_friction_level.add_mark(80, Gtk.PositionType.BOTTOM, '80')
-        self.ff_friction_level.add_mark(100, Gtk.PositionType.BOTTOM, '100')
+        self.autocenter.add_mark(20, Gtk.PositionType.BOTTOM, "20")
+        self.autocenter.add_mark(40, Gtk.PositionType.BOTTOM, "40")
+        self.autocenter.add_mark(60, Gtk.PositionType.BOTTOM, "60")
+        self.autocenter.add_mark(80, Gtk.PositionType.BOTTOM, "80")
+        self.autocenter.add_mark(100, Gtk.PositionType.BOTTOM, "100")
+        self.ff_gain.add_mark(20, Gtk.PositionType.BOTTOM, "20")
+        self.ff_gain.add_mark(40, Gtk.PositionType.BOTTOM, "40")
+        self.ff_gain.add_mark(60, Gtk.PositionType.BOTTOM, "60")
+        self.ff_gain.add_mark(80, Gtk.PositionType.BOTTOM, "80")
+        self.ff_gain.add_mark(100, Gtk.PositionType.BOTTOM, "100")
+        self.ff_spring_level.add_mark(20, Gtk.PositionType.BOTTOM, "20")
+        self.ff_spring_level.add_mark(40, Gtk.PositionType.BOTTOM, "40")
+        self.ff_spring_level.add_mark(60, Gtk.PositionType.BOTTOM, "60")
+        self.ff_spring_level.add_mark(80, Gtk.PositionType.BOTTOM, "80")
+        self.ff_spring_level.add_mark(100, Gtk.PositionType.BOTTOM, "100")
+        self.ff_damper_level.add_mark(20, Gtk.PositionType.BOTTOM, "20")
+        self.ff_damper_level.add_mark(40, Gtk.PositionType.BOTTOM, "40")
+        self.ff_damper_level.add_mark(60, Gtk.PositionType.BOTTOM, "60")
+        self.ff_damper_level.add_mark(80, Gtk.PositionType.BOTTOM, "80")
+        self.ff_damper_level.add_mark(100, Gtk.PositionType.BOTTOM, "100")
+        self.ff_friction_level.add_mark(20, Gtk.PositionType.BOTTOM, "20")
+        self.ff_friction_level.add_mark(40, Gtk.PositionType.BOTTOM, "40")
+        self.ff_friction_level.add_mark(60, Gtk.PositionType.BOTTOM, "60")
+        self.ff_friction_level.add_mark(80, Gtk.PositionType.BOTTOM, "80")
+        self.ff_friction_level.add_mark(100, Gtk.PositionType.BOTTOM, "100")
 
     def _set_range_markers(self, max_range):
         self.wheel_range.clear_marks()
         if max_range >= 180:
-            self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, '180')
+            self.wheel_range.add_mark(18, Gtk.PositionType.BOTTOM, "180")
         if max_range >= 270:
-            self.wheel_range.add_mark(27, Gtk.PositionType.BOTTOM, '270')
+            self.wheel_range.add_mark(27, Gtk.PositionType.BOTTOM, "270")
         if max_range >= 360:
-            self.wheel_range.add_mark(36, Gtk.PositionType.BOTTOM, '360')
+            self.wheel_range.add_mark(36, Gtk.PositionType.BOTTOM, "360")
         if max_range >= 450:
-            self.wheel_range.add_mark(45, Gtk.PositionType.BOTTOM, '450')
+            self.wheel_range.add_mark(45, Gtk.PositionType.BOTTOM, "450")
         if max_range >= 540:
-            self.wheel_range.add_mark(54, Gtk.PositionType.BOTTOM, '540')
+            self.wheel_range.add_mark(54, Gtk.PositionType.BOTTOM, "540")
         if max_range >= 720:
-            self.wheel_range.add_mark(72, Gtk.PositionType.BOTTOM, '720')
+            self.wheel_range.add_mark(72, Gtk.PositionType.BOTTOM, "720")
         if max_range >= 900:
-            self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
+            self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, "900")
         if max_range >= 1080:
-            self.wheel_range.add_mark(108, Gtk.PositionType.BOTTOM, '1080')
+            self.wheel_range.add_mark(108, Gtk.PositionType.BOTTOM, "1080")

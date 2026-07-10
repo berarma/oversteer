@@ -109,7 +109,7 @@
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="relief">none</property>
-                <signal name="clicked" handler="on_overlay_decrange_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_overlay_decrange_click" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -136,7 +136,7 @@
                 <property name="can-focus">True</property>
                 <property name="receives-default">True</property>
                 <property name="relief">none</property>
-                <signal name="clicked" handler="on_overlay_incrange_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_overlay_incrange_click" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

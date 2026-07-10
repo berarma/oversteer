@@ -8,16 +8,7 @@ import select
 import time
 from . import wheel_ids as wid
 
-logging.basicConfig(level=logging.DEBUG)
-
 class Device:
-
-    last_axis_value = {
-        ecodes.ABS_X: 0,
-        ecodes.ABS_Y: 0,
-        ecodes.ABS_Z: 0,
-        ecodes.ABS_RZ: 0,
-    }
 
     def __init__(self, device_manager, data):
         self.device_manager = device_manager
@@ -31,6 +22,12 @@ class Device:
         self.name = None
         self.ready = True
         self.max_range = None
+        self.last_axis_value = {
+            ecodes.ABS_X: 0,
+            ecodes.ABS_Y: 0,
+            ecodes.ABS_Z: 0,
+            ecodes.ABS_RZ: 0,
+        }
 
         self.set(data)
 
@@ -93,6 +90,8 @@ class Device:
         alternate_modes = []
         for line in lines:
             matches = reg.match(line)
+            if matches is None:
+                continue
             mode_id = matches.group(1)
             if mode_id == "native":
                 continue
@@ -117,6 +116,8 @@ class Device:
         reg = re.compile("([^:]+): (.*)")
         for line in lines:
             matches = reg.match(line)
+            if matches is None:
+                continue
             mode_id = matches.group(1)
             if mode_id == "native":
                 continue
@@ -136,11 +137,13 @@ class Device:
         logging.debug("Setting mode: %s", str(emulation_mode))
         with open(path, "w") as file:
             file.write(emulation_mode)
-        # Wait for device ready
-        for i in range(10):
+        # The kernel re-enumerates the input device; the udev hotplug handler
+        # re-enables it. Poll until that happens.
+        for _ in range(20):
             if self.is_ready():
                 return True
-            time.sleep(1)
+            time.sleep(0.5)
+        logging.warning("Timed out waiting for device after mode change")
         return False
 
     def get_range(self):
@@ -365,7 +368,7 @@ class Device:
 
     def get_input_device(self):
         if self.input_device is None or self.input_device.fd == -1:
-            if os.access(self.dev_name, os.R_OK):
+            if self.dev_name and os.access(self.dev_name, os.R_OK):
                 self.input_device = InputDevice(self.dev_name)
         return self.input_device
 
