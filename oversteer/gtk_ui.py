@@ -327,6 +327,41 @@ class GtkUi:
             self.ff_friction_level.set_sensitive(True)
             self.ff_friction_level.set_value(int(level))
 
+    def set_rev_leds(self, enabled, port, shift=None, unit=None):
+        self.rev_leds.set_sensitive(enabled is not None)
+        if enabled is not None:
+            self.rev_leds.set_active(bool(enabled))
+        for w in (self.rev_leds_port, self.rev_leds_shift, self.rev_leds_shift_unit, self.rev_leds_test):
+            w.set_sensitive(enabled is not None)
+        if enabled is not None:
+            # Pre-shift-point profiles carry no unit/value: show the defaults
+            unit = unit or 'percent'
+            if shift is None:
+                shift = 7000 if unit == 'rpm' else 97
+        self.updating_rev_leds = True
+        try:
+            if port is not None:
+                self.rev_leds_port.set_value(int(port))
+            if unit is not None:
+                # The spin button's range follows the unit
+                self.rev_leds_shift.set_adjustment(self.rev_leds_shift_rpm_adjustment if unit == 'rpm'
+                                                   else self.rev_leds_shift_percent_adjustment)
+                self.rev_leds_shift_unit.set_active_id(unit)
+            if shift is not None:
+                self.rev_leds_shift.set_value(int(shift))
+        finally:
+            self.updating_rev_leds = False
+
+    def set_launch_options(self, text):
+        self.launch_options.set_text(text)
+
+    def copy_launch_options(self):
+        clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        clipboard.set_text(self.launch_options.get_text(), -1)
+
+    def set_rev_leds_status(self, text):
+        self.rev_leds_status.set_text(text)
+
     def set_ffb_leds(self, value):
         if value is None:
             self.ffbmeter_leds.set_sensitive(False)
@@ -595,6 +630,16 @@ class GtkUi:
         self.ff_damper_level = self.builder.get_object('ff_damper_level')
         self.ff_friction_level = self.builder.get_object('ff_friction_level')
         self.ffbmeter_leds = self.builder.get_object('ffbmeter_leds')
+        self.rev_leds = self.builder.get_object('rev_leds')
+        self.rev_leds_port = self.builder.get_object('rev_leds_port')
+        self.rev_leds_shift = self.builder.get_object('rev_leds_shift')
+        self.rev_leds_shift_unit = self.builder.get_object('rev_leds_shift_unit')
+        self.rev_leds_shift_percent_adjustment = self.builder.get_object('rev_leds_shift_adjustment')
+        self.rev_leds_shift_rpm_adjustment = self.builder.get_object('rev_leds_shift_rpm_adjustment')
+        self.rev_leds_test = self.builder.get_object('rev_leds_test')
+        self.rev_leds_status = self.builder.get_object('rev_leds_status')
+        self.launch_options = self.builder.get_object('launch_options')
+        self.updating_rev_leds = False
         self.ffbmeter_overlay = self.builder.get_object('ffbmeter_overlay')
         self.wheel_range_overlay_never = self.builder.get_object('wheel_range_overlay_never')
         self.wheel_range_overlay_always = self.builder.get_object('wheel_range_overlay_always')

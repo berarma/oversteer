@@ -16,6 +16,10 @@ class Model:
         'damper_level': None,
         'friction_level': None,
         'ffb_leds': None,
+        'rev_leds': None,
+        'rev_leds_port': None,
+        'rev_leds_shift': None,
+        'rev_leds_shift_unit': None,
         'ffb_overlay': None,
         'range_overlay': None,
         'use_buttons': None,
@@ -33,6 +37,10 @@ class Model:
         'damper_level': 'integer',
         'friction_level': 'integer',
         'ffb_leds': 'integer',
+        'rev_leds': 'boolean',
+        'rev_leds_port': 'integer',
+        'rev_leds_shift': 'integer',
+        'rev_leds_shift_unit': 'string',
         'ffb_overlay': 'boolean',
         'range_overlay': 'string',
         'use_buttons': 'boolean',
@@ -80,6 +88,10 @@ class Model:
             'damper_level': self.device.get_damper_level(),
             'friction_level': self.device.get_friction_level(),
             'ffb_leds': self.device.get_ffb_leds(),
+            'rev_leds': False if self.device.has_rev_leds() else None,
+            'rev_leds_port': 5300 if self.device.has_rev_leds() else None,
+            'rev_leds_shift': 97 if self.device.has_rev_leds() else None,
+            'rev_leds_shift_unit': 'percent' if self.device.has_rev_leds() else None,
             'ffb_overlay': False if self.device.get_peak_ffb_level() is not None else None,
             'range_overlay': 'never' if self.device.get_peak_ffb_level() is not None else None,
             'use_buttons': False if self.device.get_range() is not None else None,
@@ -116,6 +128,12 @@ class Model:
                 data[key] = bool(int(value))
             elif self.types[key] == 'tuple':
                 data[key] = tuple(map(int, value.split(',')))
+
+        # Profiles from before the shift point: keep the old fixed 97 %
+        if data['rev_leds'] is not None:
+            if data['rev_leds_shift_unit'] not in ('percent', 'rpm'):
+                data['rev_leds_shift_unit'] = 'percent'
+            data['rev_leds_shift'] = self._clamp_shift(data['rev_leds_shift_unit'], data['rev_leds_shift'])
 
         self.data = data
         self.save_reference_values()
@@ -233,6 +251,55 @@ class Model:
     def get_ffb_leds(self):
         return self.data['ffb_leds']
 
+    def set_rev_leds(self, value):
+        value = bool(value)
+        if self.set_if_changed('rev_leds', value) and self.ui is not None:
+            self.ui.controller.apply_rev_leds()
+
+    def get_rev_leds(self):
+        return self.data['rev_leds']
+
+    def set_rev_leds_port(self, value):
+        value = int(value)
+        if self.set_if_changed('rev_leds_port', value) and self.ui is not None and self.data['rev_leds']:
+            self.ui.controller.apply_rev_leds()
+
+    def get_rev_leds_port(self):
+        return self.data['rev_leds_port']
+
+    @staticmethod
+    def _clamp_shift(unit, value):
+        """The shift point within its unit's range; None -> the default."""
+        if unit == 'rpm':
+            return max(1000, min(25000, int(value))) if value is not None else 7000
+        return max(50, min(100, int(value))) if value is not None else 97
+
+    def set_rev_leds_shift(self, value):
+        value = self._clamp_shift(self.get_rev_leds_shift_unit(), value)
+        if self.set_if_changed('rev_leds_shift', value) and self.ui is not None and self.data['rev_leds']:
+            self.ui.controller.update_rev_leds_shift()
+
+    def get_rev_leds_shift(self):
+        return self.data['rev_leds_shift']
+
+    def set_rev_leds_shift_unit(self, unit, value=None):
+        """Change the unit of the shift point; `value` is the converted
+        shift point in the new unit (the controller supplies it when the
+        game's max RPM is known), otherwise the unit's default."""
+        unit = 'rpm' if unit == 'rpm' else 'percent'
+        if self.data['rev_leds_shift_unit'] == unit:
+            return
+        # Value first, so the save button reflects both keys
+        self.data['rev_leds_shift'] = self._clamp_shift(unit, value)
+        self.set_if_changed('rev_leds_shift_unit', unit)
+        if self.ui is not None:
+            self.ui.set_rev_leds(self.data['rev_leds'], None, self.data['rev_leds_shift'], unit)
+            if self.data['rev_leds']:
+                self.ui.controller.update_rev_leds_shift()
+
+    def get_rev_leds_shift_unit(self):
+        return self.data['rev_leds_shift_unit'] or 'percent'
+
     def set_ffb_overlay(self, value):
         self.set_if_changed('ffb_overlay', bool(value))
 
@@ -299,6 +366,7 @@ class Model:
         self.ui.set_damper_level(data['damper_level'])
         self.ui.set_friction_level(data['friction_level'])
         self.ui.set_ffb_leds(data['ffb_leds'])
+        self.ui.set_rev_leds(data['rev_leds'], data['rev_leds_port'], data['rev_leds_shift'], data['rev_leds_shift_unit'])
         self.ui.set_ffb_overlay(data['ffb_overlay'])
         self.ui.set_range_overlay(data['range_overlay'])
         self.ui.set_use_buttons(data['use_buttons'])

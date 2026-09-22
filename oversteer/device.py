@@ -360,6 +360,14 @@ class Device:
             return False
         return True
 
+    def has_rev_leds(self):
+        from .telemetry import RevLeds
+        return RevLeds(self.dev_path).available() if self.dev_path else False
+
+    def rev_leds(self):
+        from .telemetry import RevLeds
+        return RevLeds(self.dev_path)
+
     def get_last_axis_value(self, axis):
         return self.last_axis_value[axis]
 

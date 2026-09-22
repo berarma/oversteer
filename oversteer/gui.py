@@ -7,6 +7,7 @@ import locale as Locale
 from locale import gettext as _
 import logging
 import os
+import re
 import shutil
 import signal
 import subprocess
@@ -62,6 +63,8 @@ class Gui:
         self.performance_chart = None
         self.combined_chart = None
         self.button_setup_step = False
+        self.telemetry = None
+        self.telemetry_generation = 0
         self.button_config = [-1] * 9
         self.button_config[0] = [-1]
         self.pressed_button_count = 0
@@ -168,6 +171,9 @@ class Gui:
         self.populate_profiles()
 
     def change_device(self, device_id):
+        if self.telemetry is not None:
+            self.telemetry.stop()
+            self.telemetry = None
         self.device = self.device_manager.get_device(device_id)
 
         if self.device is None or not self.device.is_ready():
@@ -190,12 +196,125 @@ class Gui:
 
         self.ui.set_max_range(self.device.get_max_range())
         self.ui.set_modes(self.model.get_mode_list())
+        self.ui.set_launch_options(self.launch_options())
+        self.apply_rev_leds()
 
         if self.model.get_profile():
             self.ui.set_profile(self.model.get_profile())
         else:
             self.model.flush_device()
             self.model.flush_ui()
+
+    def launch_options(self):
+        """The Steam launch options that run a game with the shared-memory
+        telemetry bridge: the host path of oversteer-run."""
+        in_flatpak = os.path.exists('/.flatpak-info')
+        candidates = []
+        if in_flatpak:
+            # app-path is the versioned deployment; 'current/active' is the
+            # stable alias of the same files, so the string survives updates.
+            app_files = None
+            try:
+                with open('/.flatpak-info') as f:
+                    for line in f:
+                        if line.startswith('app-path='):
+                            app_files = line.split('=', 1)[1].strip()
+            except OSError:
+                pass
+            if app_files:
+                app_files = re.sub(r'/[^/]+/[^/]+/[0-9a-f]{16,}/files$', '/current/active/files', app_files)
+                candidates.append(os.path.join(app_files, 'bin', 'oversteer-run'))
+        else:
+            candidates.append(os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), 'oversteer-run'))
+            source_root = os.environ.get('MESON_SOURCE_ROOT')
+            if source_root:
+                candidates.append(os.path.join(source_root, 'data', 'telemetry', 'oversteer-run'))
+            candidates.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'telemetry', 'oversteer-run'))
+            candidates.append(shutil.which('oversteer-run') or '')
+        for path in candidates:
+            if path and (in_flatpak or os.path.exists(path)):
+                path = os.path.normpath(path)
+                return '"{}" %command%'.format(path) if ' ' in path else '{} %command%'.format(path)
+        return _("oversteer-run was not found: install Oversteer, or run it with scripts/run-dev.sh")
+
+    def apply_rev_leds(self):
+        """Start or stop the telemetry listener to match the model."""
+        from .telemetry import Telemetry
+        if self.telemetry is not None:
+            self.telemetry.stop()
+            self.telemetry = None
+        self.telemetry_generation += 1
+        if self.device is None or not self.model.get_rev_leds():
+            self.ui.set_rev_leds_status('')
+            return
+        leds = self.device.rev_leds()
+        if not leds.available():
+            self.ui.set_rev_leds_status(_("no LEDs"))
+            return
+        self.model.set_ffb_leds(False)        # the meter and the rev lights can't share the LEDs
+        self.ui.set_ffb_leds(False)
+        generation = self.telemetry_generation
+
+        def status(source):
+            text = _("telemetry from {}").format(source) if source else _("waiting for telemetry")
+
+            def show():
+                if self.telemetry is not None and generation == self.telemetry_generation:
+                    self.ui.set_rev_leds_status(text)
+            self.ui.safe_call(show)
+        shift = self.model.get_rev_leds_shift()
+        if self.model.get_rev_leds_shift_unit() == 'rpm':
+            kwargs = {'shift_rpm': shift or 7000}
+        else:
+            kwargs = {'shift': (shift or 97) / 100.0}
+        self.telemetry = Telemetry(leds, self.model.get_rev_leds_port() or 5300, on_status=status, **kwargs)
+        if self.telemetry.start():
+            self.ui.set_rev_leds_status(_("waiting for telemetry on UDP {}").format(self.telemetry.port))
+        else:
+            self.ui.set_rev_leds_status(_("port {} in use").format(self.telemetry.port))
+            self.telemetry = None
+
+    def update_rev_leds_shift(self):
+        """Push a changed shift point to the running listener without
+        restarting it (a restart would blink the LEDs and forget the
+        learnt max RPM)."""
+        if self.telemetry is None:
+            return
+        shift = self.model.get_rev_leds_shift()
+        if self.model.get_rev_leds_shift_unit() == 'rpm':
+            self.telemetry.set_shift(shift_rpm=shift or 7000)
+        else:
+            self.telemetry.set_shift(shift=(shift or 97) / 100.0)
+
+    def change_rev_leds_shift_unit(self, unit):
+        """Switch the shift point between % of max RPM and an RPM figure,
+        converting the value when the game has told us the max RPM."""
+        value = None
+        max_rpm = self.telemetry.last_max_rpm if self.telemetry is not None else 0.0
+        current = self.model.get_rev_leds_shift()
+        if max_rpm and current:
+            if unit == 'rpm' and self.model.get_rev_leds_shift_unit() != 'rpm':
+                value = int(round(current / 100.0 * max_rpm / 50.0) * 50)
+            elif unit != 'rpm' and self.model.get_rev_leds_shift_unit() == 'rpm':
+                value = int(round(current * 100.0 / max_rpm))
+        self.model.set_rev_leds_shift_unit(unit, value)
+
+    def test_rev_leds(self):
+        if self.device is None:
+            return
+        leds = self.device.rev_leds()
+        if not leds.available():
+            self.ui.info_dialog(_("This wheel has no rev LEDs, or they are not accessible."))
+            return
+        was_meter = self.model.get_ffb_leds()
+        if was_meter:
+            self.device.set_ffb_leds(0)
+
+        def run():
+            leds.test()
+            if was_meter:
+                self.device.set_ffb_leds(1)
+        Thread(target=run, daemon=True).start()
 
     def load_profile(self, profile_name):
         if profile_name is None or profile_name == '':
@@ -209,6 +328,7 @@ class Gui:
         self.model.load(profile_file)
         self.model.flush_device()
         self.model.flush_ui()
+        self.apply_rev_leds()
 
     def save_profile(self, profile_name, check_exists = False):
         if self.device is None:

@@ -36,6 +36,16 @@ install_subdir('udev',
   strip_directory: true
 )
 
+# Shared-memory telemetry bridge (runs inside the game's Proton prefix) and
+# the Steam launcher that starts it alongside the game.
+install_data('telemetry/oversteer-run',
+  install_dir: get_option('bindir'),
+  install_mode: 'rwxr-xr-x'
+)
+install_data('telemetry/oversteer-shm-bridge.exe', 'telemetry/oversteer-shm-bridge.c',
+  install_dir: join_paths(get_option('libdir'), 'oversteer')
+)
+
 # ---- Tests ----
 
 appstream_util = find_program('appstream-util', required: false)

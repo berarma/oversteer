@@ -1,0 +1,102 @@
+#!/bin/bash
+# oversteer-run: run a Steam game together with Oversteer's shared-memory
+# telemetry bridge.
+#
+# Steam > game > Properties > Launch options:
+#     oversteer-run %command%
+#
+# The game starts exactly as Steam would start it. Alongside it, with the
+# same Proton and Steam environment and therefore in the same prefix,
+# oversteer-shm-bridge.exe reads the game's shared-memory telemetry
+# (Assetto Corsa, Assetto Corsa Competizione, Assetto Corsa Rally) and
+# sends the engine RPM to Oversteer's rev lights over UDP. Games without
+# shared-memory telemetry are simply run.
+#
+# The bridge is started with Proton directly on the host rather than
+# through the Steam Linux Runtime entry point: a second runtime container
+# for the same app does not start, while Proton on the host attaches to
+# the game's prefix and wineserver. That wineserver lives inside the
+# game's container, where /run/user/<uid> and /tmp are private, so every
+# file the bridge touches (its std handles included: Wine names them
+# through the server at start-up and crashes on a path the server can't
+# resolve) is kept next to the prefix in the game's compatdata directory,
+# which both sides see.
+#
+# A bridge that outlives the game keeps the prefix's wineserver, and with
+# it Steam's "Running" state, alive: it therefore releases the mapping
+# whenever the game stops writing, exits as soon as the mapping is gone,
+# and exits when the game's process is no longer there (--watch).
+#
+# Environment: OVERSTEER_TELEMETRY_PORT (default 5300, must match the port
+# in Oversteer's Rev lights row), OVERSTEER_SHM_BRIDGE (path to the .exe).
+# Logs: <compatdata>/oversteer-run.log (launcher and Proton output) and
+# <compatdata>/oversteer-shm-bridge.log (what the bridge found and sent).
+#
+# This file is part of Oversteer (GPL-3.0-or-later).
+
+here=$(dirname "$(readlink -f "$0")")
+bridge=${OVERSTEER_SHM_BRIDGE:-}
+for candidate in "$here/../lib/oversteer/oversteer-shm-bridge.exe" \
+                 "$here/../data/telemetry/oversteer-shm-bridge.exe" \
+                 "$here/oversteer-shm-bridge.exe"; do
+    if [ -z "$bridge" ] && [ -f "$candidate" ]; then
+        bridge=$(readlink -f "$candidate")
+    fi
+done
+port=${OVERSTEER_TELEMETRY_PORT:-5300}
+
+# Find Proton in the command; the bridge runs through it with the "run"
+# verb (no waiting for the game's wineserver).
+proton_index=-1
+for ((i = 1; i <= $#; i++)); do
+    case "${!i}" in
+        */proton) proton_index=$i; break ;;
+    esac
+done
+
+# Without a compatdata directory Proton can't run anything anyway (and
+# there is nowhere safe for the logs): just run the game.
+if [ "$proton_index" -lt 0 ] || [ -z "$bridge" ] || [ -z "$STEAM_COMPAT_DATA_PATH" ] || [ ! -d "$STEAM_COMPAT_DATA_PATH" ]; then
+    exec "$@"
+fi
+
+log=$STEAM_COMPAT_DATA_PATH/oversteer-run.log
+bridge_log=$STEAM_COMPAT_DATA_PATH/oversteer-shm-bridge.log
+: > "$log"
+: > "$bridge_log"
+# The game executable follows Proton's verb; the bridge exits when no
+# process of that name is left, so a game that never publishes telemetry
+# doesn't leave a bridge (and the prefix's wineserver) behind.
+exe_index=$((proton_index + 2))
+game_exe=$(basename "${!exe_index}")
+bridge_cmd=("${!proton_index}" run "$bridge" --port "$port" --exit-when-gone --log "Z:$bridge_log")
+case "$game_exe" in
+    *.exe|*.EXE) bridge_cmd+=(--watch "$game_exe") ;;
+esac
+
+"$@" &
+game=$!
+
+# The game's Proton is still bringing the prefix up for the first seconds
+# and a bridge started then is shut down with it; keep retrying while the
+# game runs. The bridge exits 0 by itself once it has seen telemetry and
+# it went away (the game quit), anything else is retried.
+(
+    sleep 15
+    while kill -0 "$game" 2> /dev/null; do
+        "${bridge_cmd[@]}" < /dev/null
+        rc=$?
+        echo "oversteer-run: bridge exited with $rc" >&2
+        [ "$rc" -eq 0 ] && break
+        sleep 10
+    done
+) > "$log" 2>&1 &
+bridge_pid=$!
+
+wait "$game"
+status=$?
+kill "$bridge_pid" 2> /dev/null
+# The Windows process outlives its launcher; it also exits by itself once
+# the game's telemetry is gone, this just makes it immediate.
+pkill -f '^Z:.*oversteer-shm-bridge\.exe' 2> /dev/null
+exit "$status"

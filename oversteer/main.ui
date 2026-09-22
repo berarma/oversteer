@@ -12,6 +12,27 @@
     <property name="step-increment">1</property>
     <property name="page-increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="rev_leds_shift_adjustment">
+    <property name="lower">50</property>
+    <property name="upper">100</property>
+    <property name="value">97</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+  </object>
+  <object class="GtkAdjustment" id="rev_leds_shift_rpm_adjustment">
+    <property name="lower">1000</property>
+    <property name="upper">25000</property>
+    <property name="value">7000</property>
+    <property name="step-increment">50</property>
+    <property name="page-increment">500</property>
+  </object>
+  <object class="GtkAdjustment" id="rev_leds_port_adjustment">
+    <property name="lower">1024</property>
+    <property name="upper">65535</property>
+    <property name="value">5300</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">100</property>
+  </object>
   <object class="GtkAdjustment" id="ff_gain_adjustment">
     <property name="upper">100</property>
     <property name="value">100</property>
@@ -2452,6 +2473,208 @@
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="height-request">70</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="activatable">False</property>
+                        <property name="selectable">False</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="tooltip-text" translatable="yes">Use the wheel's rev LEDs as shift lights driven by the game's telemetry: they fill up with engine RPM and flash at the limiter. Turn on the game's UDP telemetry and point it at this computer and this port (Forza: Settings > HUD and gameplay > Data Out; BeamNG: OutGauge; DiRT Rally 2.0: hardware_settings_config.xml, extradata 3). Takes the LEDs away from the FFB meter while active.</property>
+                            <property name="valign">center</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Rev lights from game telemetry</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="rev_leds_status">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="halign">end</property>
+                                <style><class name="dim-label"/></style>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">UDP port</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="rev_leds_port">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="adjustment">rev_leds_port_adjustment</property>
+                                <property name="numeric">True</property>
+                                <signal name="value-changed" handler="on_rev_leds_port_value_changed" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="label" translatable="yes">Shift at</property>
+                                <property name="tooltip-text" translatable="yes">Where the last LED comes on: a percentage of the engine's maximum RPM reported by the game, or an RPM figure. All five LEDs are on at the shift point and flash above it; the other LEDs are spaced below it. Rally and turbo cars usually shift well before the limiter, so set this per profile to where you want to change up.</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="rev_leds_shift">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="adjustment">rev_leds_shift_adjustment</property>
+                                <property name="numeric">True</property>
+                                <signal name="value-changed" handler="on_rev_leds_shift_value_changed" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxText" id="rev_leds_shift_unit">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="valign">center</property>
+                                <property name="active-id">percent</property>
+                                <items>
+                                  <item id="percent" translatable="yes">% of max</item>
+                                  <item id="rpm" translatable="yes">RPM</item>
+                                </items>
+                                <signal name="changed" handler="on_rev_leds_shift_unit_changed" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">6</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="rev_leds_test">
+                                <property name="label" translatable="yes">Test LEDs</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_rev_leds_test_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">7</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSwitch" id="rev_leds">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="valign">center</property>
+                                <signal name="state-set" handler="on_rev_leds_state_set" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">8</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="height-request">70</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="activatable">False</property>
+                        <property name="selectable">False</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="tooltip-text" translatable="yes">Assetto Corsa, Assetto Corsa Competizione and Assetto Corsa Rally publish telemetry only through Windows shared memory, which stays inside the game's Proton prefix. Put this in the game's Steam launch options (Properties &gt; General) and Oversteer's bridge runs next to the game, inside the prefix, forwarding the engine RPM to the rev lights. Other games are unaffected by it.</property>
+                            <property name="valign">center</property>
+                            <property name="spacing">64</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Shared-memory games (Assetto Corsa family): Steam launch options</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkEntry" id="launch_options">
+                                <property name="width-request">420</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="editable">False</property>
+                                <property name="valign">center</property>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="launch_options_copy">
+                                <property name="label" translatable="yes">Copy</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="valign">center</property>
+                                <signal name="clicked" handler="on_launch_options_copy_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
