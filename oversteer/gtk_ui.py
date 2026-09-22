@@ -278,6 +278,13 @@ class GtkUi:
         wrange = str(round(wrange * 10))
         self.overlay_wheel_range.set_label(wrange)
 
+    def set_sensitivity(self, sensitivity):
+        if sensitivity is None:
+            self.wheel_sensitivity.set_sensitive(False)
+            return
+        self.wheel_sensitivity.set_sensitive(True)
+        self.wheel_sensitivity.set_value(int(sensitivity))
+
     def set_combine_pedals(self, combine_pedals):
         if combine_pedals is None:
             self.combine_brakes.set_sensitive(False)
@@ -299,7 +306,65 @@ class GtkUi:
             self.autocenter.set_sensitive(True)
             self.autocenter.set_value(int(autocenter))
 
+    def _set_switch(self, switch, value):
+        self._available[switch] = value is not None
+        if value is None:
+            switch.set_sensitive(False)
+            return
+        switch.set_sensitive(True)
+        switch.set_active(bool(value))
+
+    def set_autocenter_persistent(self, value):
+        self._set_switch(self.autocenter_persistent, value)
+
+    def set_app_gain(self, value):
+        self._set_switch(self.app_gain, value)
+
+    def set_inertia_mode(self, value):
+        self._set_switch(self.inertia_mode, value)
+
+    # invert_pedals bit mask as the driver defines it, by evdev axis
+    INVERT_CLUTCH = 1        # ABS_Y
+    INVERT_ACCELERATOR = 2   # ABS_Z
+    INVERT_BRAKES = 4        # ABS_RZ
+
+    def set_invert_pedals(self, mask):
+        buttons = (self.invert_clutch, self.invert_accelerator, self.invert_brakes)
+        if mask is None:
+            for b in buttons:
+                b.set_sensitive(False)
+            return
+        # set_active emits 'clicked'; don't write partial masks to the device
+        self.updating_invert_pedals = True
+        try:
+            for b, bit in zip(buttons, (self.INVERT_CLUTCH, self.INVERT_ACCELERATOR, self.INVERT_BRAKES)):
+                b.set_sensitive(True)
+                b.set_active(bool(mask & bit))
+        finally:
+            self.updating_invert_pedals = False
+
+    def get_invert_pedals(self):
+        mask = 0
+        if self.invert_clutch.get_active():
+            mask |= self.INVERT_CLUTCH
+        if self.invert_accelerator.get_active():
+            mask |= self.INVERT_ACCELERATOR
+        if self.invert_brakes.get_active():
+            mask |= self.INVERT_BRAKES
+        return mask
+
+    def set_ffb_enabled(self, value):
+        self._set_switch(self.ffb_enabled, value)
+        if value is None:
+            return
+        # Grey the strength controls while off; when on, only re-enable the
+        # ones the device actually has (their own setters record that).
+        enabled = bool(value)
+        for widget in (self.ff_gain, self.ff_spring_level, self.ff_damper_level, self.ff_friction_level, self.ff_rumble_level, self.app_gain, self.inertia_mode):
+            widget.set_sensitive(enabled and self._available.get(widget, False))
+
     def set_ff_gain(self, ff_gain):
+        self._available[self.ff_gain] = ff_gain is not None
         if ff_gain is None:
             self.ff_gain.set_sensitive(False)
         else:
@@ -307,6 +372,7 @@ class GtkUi:
             self.ff_gain.set_value(int(ff_gain))
 
     def set_spring_level(self, level):
+        self._available[self.ff_spring_level] = level is not None
         if level is None:
             self.ff_spring_level.set_sensitive(False)
         else:
@@ -314,6 +380,7 @@ class GtkUi:
             self.ff_spring_level.set_value(int(level))
 
     def set_damper_level(self, level):
+        self._available[self.ff_damper_level] = level is not None
         if level is None:
             self.ff_damper_level.set_sensitive(False)
         else:
@@ -321,11 +388,20 @@ class GtkUi:
             self.ff_damper_level.set_value(int(level))
 
     def set_friction_level(self, level):
+        self._available[self.ff_friction_level] = level is not None
         if level is None:
             self.ff_friction_level.set_sensitive(False)
         else:
             self.ff_friction_level.set_sensitive(True)
             self.ff_friction_level.set_value(int(level))
+
+    def set_rumble_level(self, level):
+        self._available[self.ff_rumble_level] = level is not None
+        if level is None:
+            self.ff_rumble_level.set_sensitive(False)
+        else:
+            self.ff_rumble_level.set_sensitive(True)
+            self.ff_rumble_level.set_value(int(level))
 
     def set_ffb_leds(self, value):
         if value is None:
@@ -566,6 +642,8 @@ class GtkUi:
         self.overlay_window.set_visual(visual)
 
     def _set_builder_objects(self):
+        self._available = {}
+        self.updating_invert_pedals = False
         self.window = self.builder.get_object('main_window')
         self.about_window = self.builder.get_object('about_window')
         self.preferences_window = self.builder.get_object('preferences_window')
@@ -586,14 +664,23 @@ class GtkUi:
         self.change_emulation_mode_button = self.builder.get_object('change_emulation_mode')
         self.wheel_range = self.builder.get_object('wheel_range')
         self.wheel_range_setup = self.builder.get_object('wheel_range_setup')
+        self.wheel_sensitivity = self.builder.get_object('wheel_sensitivity')
         self.combine_none = self.builder.get_object('combine_none')
         self.combine_brakes = self.builder.get_object('combine_brakes')
         self.combine_clutch = self.builder.get_object('combine_clutch')
         self.autocenter = self.builder.get_object('autocenter')
+        self.autocenter_persistent = self.builder.get_object('autocenter_persistent')
+        self.app_gain = self.builder.get_object('app_gain')
+        self.inertia_mode = self.builder.get_object('inertia_mode')
         self.ff_gain = self.builder.get_object('ff_gain')
+        self.ffb_enabled = self.builder.get_object('ffb_enabled')
+        self.invert_clutch = self.builder.get_object('invert_clutch')
+        self.invert_accelerator = self.builder.get_object('invert_accelerator')
+        self.invert_brakes = self.builder.get_object('invert_brakes')
         self.ff_spring_level = self.builder.get_object('ff_spring_level')
         self.ff_damper_level = self.builder.get_object('ff_damper_level')
         self.ff_friction_level = self.builder.get_object('ff_friction_level')
+        self.ff_rumble_level = self.builder.get_object('ff_rumble_level')
         self.ffbmeter_leds = self.builder.get_object('ffbmeter_leds')
         self.ffbmeter_overlay = self.builder.get_object('ffbmeter_overlay')
         self.wheel_range_overlay_never = self.builder.get_object('wheel_range_overlay_never')
@@ -687,6 +774,8 @@ class GtkUi:
         self.ff_gain.add_mark(60, Gtk.PositionType.BOTTOM, '60')
         self.ff_gain.add_mark(80, Gtk.PositionType.BOTTOM, '80')
         self.ff_gain.add_mark(100, Gtk.PositionType.BOTTOM, '100')
+        self.ff_gain.add_mark(125, Gtk.PositionType.BOTTOM, '125')
+        self.ff_gain.add_mark(150, Gtk.PositionType.BOTTOM, '150')
         self.ff_spring_level.add_mark(20, Gtk.PositionType.BOTTOM, '20')
         self.ff_spring_level.add_mark(40, Gtk.PositionType.BOTTOM, '40')
         self.ff_spring_level.add_mark(60, Gtk.PositionType.BOTTOM, '60')
@@ -702,6 +791,8 @@ class GtkUi:
         self.ff_friction_level.add_mark(60, Gtk.PositionType.BOTTOM, '60')
         self.ff_friction_level.add_mark(80, Gtk.PositionType.BOTTOM, '80')
         self.ff_friction_level.add_mark(100, Gtk.PositionType.BOTTOM, '100')
+        for v in (20, 40, 60, 80, 100):
+            self.ff_rumble_level.add_mark(v, Gtk.PositionType.BOTTOM, str(v))
 
     def _set_range_markers(self, max_range):
         self.wheel_range.clear_marks()

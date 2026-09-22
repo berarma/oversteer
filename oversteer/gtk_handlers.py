@@ -66,6 +66,15 @@ class GtkHandlers:
         self.model.set_range(wrange)
         self.ui.overlay_wheel_range.set_label(str(wrange))
 
+    def on_wheel_sensitivity_value_changed(self, widget):
+        self.model.set_sensitivity(widget.get_value())
+
+    def format_wheel_sensitivity_value(self, scale, value):
+        value = int(value)
+        if value == 50:
+            return _("{} (linear)").format(value)
+        return str(value)
+
     def on_overlay_decrange_clicked(self, widget):
         adjustment = self.ui.wheel_range.get_adjustment()
         step = adjustment.get_step_increment()
@@ -89,6 +98,25 @@ class GtkHandlers:
     def on_combine_clutch_clicked(self, widget):
         self.model.set_combine_pedals(2)
 
+    def on_invert_pedals_clicked(self, widget):
+        if self.ui.updating_invert_pedals:
+            return
+        self.model.set_invert_pedals(self.ui.get_invert_pedals())
+
+    def on_ffb_enabled_state_set(self, widget, state):
+        self.model.set_ffb_enabled(state)
+        return False
+
+    def format_ff_gain_value(self, scale, value):
+        value = int(value)
+        if value > 100:
+            return _("{}% (clipping)").format(value)
+        return str(value)
+
+    def on_inertia_mode_state_set(self, widget, state):
+        self.model.set_inertia_mode(state)
+        return False
+
     def on_ff_gain_value_changed(self, widget):
         ff_gain = int(widget.get_value())
         self.model.set_ff_gain(ff_gain)
@@ -111,6 +139,17 @@ class GtkHandlers:
 
     def on_ff_friction_level_value_changed(self, widget):
         self.model.set_friction_level(widget.get_value())
+
+    def on_autocenter_persistent_state_set(self, widget, state):
+        self.model.set_autocenter_persistent(state)
+        return False
+
+    def on_app_gain_state_set(self, widget, state):
+        self.model.set_app_gain(state)
+        return False
+
+    def on_ff_rumble_level_value_changed(self, widget):
+        self.model.set_rumble_level(widget.get_value())
 
     def on_ffbmeter_leds_clicked(self, widget):
         self.model.set_ffb_leds(widget.get_active())

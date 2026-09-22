@@ -29,12 +29,30 @@ class Application:
         parser.add_argument('--list', action='store_true', help=_("list connected devices"))
         parser.add_argument('--mode', help=_("set the compatibility mode"))
         parser.add_argument('--range', type=int, help=_("set the rotation range [40-900]"))
+        parser.add_argument('--sensitivity', type=int, help=_("set the steering sensitivity [0-100, 50 = linear]"))
         parser.add_argument('--combine-pedals', type=int, dest='combine_pedals', help=_("combine pedals [0-2]"))
+        parser.add_argument('--invert-pedals', type=int, dest='invert_pedals',
+                help=_("invert pedals, bit mask: 1 clutch, 2 accelerator, 4 brakes, 7 all"))
+        parser.add_argument('--ffb', dest='ffb_enabled', action='store_true', default=None, help=_("enable force feedback"))
+        parser.add_argument('--no-ffb', dest='ffb_enabled', action='store_false', default=None, help=_("disable force feedback"))
+        parser.add_argument('--inertia-mode', dest='inertia_mode', action='store_true', default=None,
+                help=_("render inertia effects from wheel acceleration"))
+        parser.add_argument('--no-inertia-mode', dest='inertia_mode', action='store_false', default=None,
+                help=_("play inertia effects as a damper (like Windows)"))
         parser.add_argument('--autocenter', type=int, help=_("set the autocenter strength [0-100]"))
-        parser.add_argument('--ff-gain', type=int, help=_("set the FF gain [0-100]"))
+        parser.add_argument('--ff-gain', type=int, help=_("set the FF gain [0-150, above 100 clips]"))
+        parser.add_argument('--autocenter-persistent', dest='autocenter_persistent', action='store_true', default=None,
+                help=_("keep the centering spring on in games"))
+        parser.add_argument('--no-autocenter-persistent', dest='autocenter_persistent', action='store_false', default=None,
+                help=_("let games turn the centering spring off"))
+        parser.add_argument('--app-gain', dest='app_gain', action='store_true', default=None,
+                help=_("let games adjust the FF gain"))
+        parser.add_argument('--no-app-gain', dest='app_gain', action='store_false', default=None,
+                help=_("ignore FF gain changes from games"))
         parser.add_argument('--spring-level', type=int, help=_("set the spring level [0-100]"))
         parser.add_argument('--damper-level', type=int, help=_("set the damper level [0-100]"))
         parser.add_argument('--friction-level', type=int, help=_("set the friction level [0-100]"))
+        parser.add_argument('--rumble-level', type=int, help=_("set the rumble vibration level [0-100]"))
         parser.add_argument('--ffb-leds', action='store_true', default=None, help=_("enable FFBmeter leds"))
         parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
         parser.add_argument('--center-wheel', action='store_true', default=None, help=_("center wheel"))
@@ -109,18 +127,32 @@ class Application:
             model.set_mode(args.mode)
         if args.range is not None:
             model.set_range(args.range)
+        if args.sensitivity is not None:
+            model.set_sensitivity(args.sensitivity)
         if args.combine_pedals is not None:
             model.set_combine_pedals(args.combine_pedals)
+        if args.invert_pedals is not None:
+            model.set_invert_pedals(args.invert_pedals)
+        if args.ffb_enabled is not None:
+            model.set_ffb_enabled(args.ffb_enabled)
         if args.autocenter is not None:
             model.set_autocenter(args.autocenter)
         if args.ff_gain is not None:
             model.set_ff_gain(args.ff_gain)
+        if args.autocenter_persistent is not None:
+            model.set_autocenter_persistent(args.autocenter_persistent)
+        if args.app_gain is not None:
+            model.set_app_gain(args.app_gain)
+        if args.inertia_mode is not None:
+            model.set_inertia_mode(args.inertia_mode)
         if args.spring_level is not None:
             model.set_spring_level(args.spring_level)
         if args.damper_level is not None:
             model.set_damper_level(args.damper_level)
         if args.friction_level is not None:
             model.set_friction_level(args.friction_level)
+        if args.rumble_level is not None:
+            model.set_rumble_level(args.rumble_level)
         if args.ffb_leds is not None:
             model.set_ffb_leds(1 if args.ffb_leds else 0)
         if args.center_wheel is not None:
