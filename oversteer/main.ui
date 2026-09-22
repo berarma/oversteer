@@ -305,9 +305,10 @@
   </object>
   <object class="GtkApplicationWindow" id="main_window">
     <property name="can-focus">False</property>
-    <property name="resizable">False</property>
+    <property name="resizable">True</property>
     <property name="window-position">center</property>
-    <property name="default-width">600</property>
+    <property name="default-width">1000</property>
+    <property name="default-height">760</property>
     <property name="show-menubar">False</property>
     <signal name="destroy" handler="on_main_window_destroy" swapped="no"/>
     <child>
@@ -547,7 +548,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Range in degrees that the wheel will be able to rotate both ways. It will affect the sensitivity.</property>
+                            <property name="tooltip-text" translatable="yes">Total rotation lock to lock, in degrees. 900 is the wheel's full travel (what most sims expect); lower values make the steering quicker and stop the wheel harder at the ends. Games that set their own rotation override this while they run.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -565,6 +566,7 @@
                             </child>
                             <child>
                               <object class="GtkBox">
+                                <property name="orientation">vertical</property>
                                 <property name="width-request">600</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
@@ -586,9 +588,97 @@
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
+                                <child>
+                                  <object class="GtkBox" id="range_presets">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="halign">center</property>
+                                    <property name="spacing">4</property>
+                                    <child>
+                                      <object class="GtkButton" id="range_preset_270">
+                                        <property name="label">270°</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">True</property>
+                                        <property name="relief">none</property>
+                                        <signal name="clicked" handler="on_range_preset_clicked" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="range_preset_360">
+                                        <property name="label">360°</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">True</property>
+                                        <property name="relief">none</property>
+                                        <signal name="clicked" handler="on_range_preset_clicked" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="range_preset_540">
+                                        <property name="label">540°</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">True</property>
+                                        <property name="relief">none</property>
+                                        <signal name="clicked" handler="on_range_preset_clicked" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="range_preset_720">
+                                        <property name="label">720°</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">True</property>
+                                        <property name="relief">none</property>
+                                        <signal name="clicked" handler="on_range_preset_clicked" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">3</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="range_preset_900">
+                                        <property name="label">900°</property>
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="receives-default">True</property>
+                                        <property name="relief">none</property>
+                                        <signal name="clicked" handler="on_range_preset_clicked" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">4</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">2</property>
                               </packing>
@@ -1910,6 +2000,52 @@
                     <property name="activate-on-single-click">False</property>
                     <child>
                       <object class="GtkListBoxRow">
+                        <property name="height-request">50</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="activatable">False</property>
+                        <property name="selectable">False</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="valign">center</property>
+                            <property name="spacing">64</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="halign">start</property>
+                                <property name="label" translatable="yes">Force feedback</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="ffb_reset">
+                                <property name="label" translatable="yes">Reset to defaults</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Gain 100, spring, damper and friction 30, autocenter 0.</property>
+                                <signal name="clicked" handler="on_ffb_reset_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkListBoxRow">
                         <property name="height-request">70</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -1919,7 +2055,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Global strength for all force feedback effects.</property>
+                            <property name="tooltip-text" translatable="yes">Master strength for everything the game sends: road feel, self-aligning torque, kerbs, collisions, engine vibration. 100% is the wheel's full torque; the FFBmeter shows when strong effects flatten at the limit (clipping).</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -1948,9 +2084,25 @@
                                 <signal name="value-changed" handler="on_ff_gain_value_changed" swapped="no"/>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="try_constant">
+                                <property name="label" translatable="yes">Try</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Play this effect on the wheel for two seconds so you can feel what it does. Hands on the wheel.</property>
+                                <signal name="clicked" handler="on_try_effect_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -1968,7 +2120,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Gain applied to spring effects. Higher values may produce more clipping.</property>
+                            <property name="tooltip-text" translatable="yes">Spring: a force that pulls the wheel back to a centre point, stronger the further you turn. Games use it for the tyres' self-aligning torque at speed and for the parked-car weight. This scales how hard the game's springs can pull; too high and the wheel snaps to centre on its own.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -1997,9 +2149,25 @@
                                 <signal name="value-changed" handler="on_ff_spring_level_value_changed" swapped="no"/>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="try_spring">
+                                <property name="label" translatable="yes">Try</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Play this effect on the wheel for two seconds so you can feel what it does. Hands on the wheel.</property>
+                                <signal name="clicked" handler="on_try_effect_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -2017,7 +2185,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Gain applied to damper effects. Higher values may produce more clipping.</property>
+                            <property name="tooltip-text" translatable="yes">Damper: resistance that grows with how fast the wheel is turning, like moving through thick oil. Games use it to stop the wheel oscillating and to add weight when moving slowly. Higher values calm the wheel down but make quick corrections feel heavy.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -2046,9 +2214,25 @@
                                 <signal name="value-changed" handler="on_ff_damper_level_value_changed" swapped="no"/>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="try_damper">
+                                <property name="label" translatable="yes">Try</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Play this effect on the wheel for two seconds so you can feel what it does. Hands on the wheel.</property>
+                                <signal name="clicked" handler="on_try_effect_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -2067,7 +2251,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Gain applied to friction effects. Higher values may produce more clipping.</property>
+                            <property name="tooltip-text" translatable="yes">Friction: a constant resistance whenever the wheel moves, the same at any speed, like a dry bearing. Games use it for the steering rack's own drag and for the front tyres scrubbing at low speed.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -2096,9 +2280,25 @@
                                 <signal name="value-changed" handler="on_ff_friction_level_value_changed" swapped="no"/>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="try_friction">
+                                <property name="label" translatable="yes">Try</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <property name="valign">center</property>
+                                <property name="tooltip-text" translatable="yes">Play this effect on the wheel for two seconds so you can feel what it does. Hands on the wheel.</property>
+                                <signal name="clicked" handler="on_try_effect_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -2128,7 +2328,7 @@
                           <object class="GtkBox">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="tooltip-text" translatable="yes">Continuous autocenter force strength.</property>
+                            <property name="tooltip-text" translatable="yes">A centering spring the driver applies on its own, independent of the game: the wheel returns to centre by itself. Games that send their own forces usually turn it off while they run; keep it at 0 for sims, use it for games without force feedback.</property>
                             <property name="valign">center</property>
                             <property name="spacing">64</property>
                             <child>
@@ -2157,7 +2357,7 @@
                                 <signal name="value-changed" handler="on_autocenter_value_changed" swapped="no"/>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
+                                <property name="expand">True</property>
                                 <property name="fill">True</property>
                                 <property name="position">1</property>
                               </packing>

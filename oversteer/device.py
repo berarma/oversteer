@@ -1,10 +1,11 @@
-from evdev import ecodes, InputDevice
+from evdev import ecodes, ff, InputDevice
 import grp
 import logging
 import os
 import pwd
 import re
 import select
+import threading
 import time
 from . import wheel_ids as wid
 
@@ -358,6 +359,45 @@ class Device:
             return False
         if not self.check_file_permissions('peak_ffb_level'):
             return False
+        return True
+
+    def play_demo(self, kind, level=100, seconds=2.0, on_error=None):
+        """Play one effect type on the wheel for a moment so the user can feel
+        it: 'constant' (a steady push), 'spring', 'damper', 'friction',
+        'inertia', 'rumble'. Runs in a thread; returns False if the device
+        has no force feedback. `on_error(exception)` is called from the
+        thread if the effect could not be uploaded or played."""
+        dev = self.get_input_device()
+        if dev is None or ecodes.EV_FF not in dev.capabilities():
+            return False
+        strength = max(0, min(100, int(level)))
+        ms = int(seconds * 1000)
+        if kind == 'constant':
+            effect = ff.Effect(ecodes.FF_CONSTANT, -1, 0x4000, ff.Trigger(0, 0), ff.Replay(ms, 0),
+                               ff.EffectType(ff_constant_effect=ff.Constant(level=int(0x7fff * strength / 100 * 0.35))))
+        elif kind == 'rumble':
+            effect = ff.Effect(ecodes.FF_RUMBLE, -1, 0, ff.Trigger(0, 0), ff.Replay(ms, 0),
+                               ff.EffectType(ff_rumble_effect=ff.Rumble(strong_magnitude=0xffff, weak_magnitude=0x8000)))
+        else:
+            types = {'spring': ecodes.FF_SPRING, 'damper': ecodes.FF_DAMPER, 'friction': ecodes.FF_FRICTION, 'inertia': ecodes.FF_INERTIA}
+            if kind not in types:
+                return False
+            cond = ff.Condition(right_saturation=0xffff, left_saturation=0xffff, right_coeff=0x7fff, left_coeff=0x7fff,
+                                deadband=0, center=0)
+            effect = ff.Effect(types[kind], -1, 0x4000, ff.Trigger(0, 0), ff.Replay(ms, 0),
+                               ff.EffectType(ff_condition_effect=(cond, cond)))
+
+        def run():
+            try:
+                effect_id = dev.upload_effect(effect)
+                dev.write(ecodes.EV_FF, effect_id, 1)
+                time.sleep(seconds + 0.2)
+                dev.erase_effect(effect_id)
+            except OSError as e:
+                logging.warning("demo effect %s: %s", kind, e)
+                if on_error is not None:
+                    on_error(e)
+        threading.Thread(target=run, daemon=True).start()
         return True
 
     def get_last_axis_value(self, axis):

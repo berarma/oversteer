@@ -167,6 +167,25 @@ class Gui:
         self.populate_devices()
         self.populate_profiles()
 
+    def try_effect(self, kind):
+        if self.device is None:
+            return
+
+        def failed(error):
+            self.ui.safe_call(self.ui.info_dialog, _("Could not play the effect."), str(error))
+        if not self.device.play_demo(kind, on_error=failed):
+            self.ui.info_dialog(_("This device has no force feedback."))
+
+    def reset_ffb_defaults(self):
+        m = self.model
+        for setter, value in ((m.set_ff_gain, 100), (m.set_spring_level, 30), (m.set_damper_level, 30),
+                              (m.set_friction_level, 30), (m.set_autocenter, 0)):
+            try:
+                setter(value)
+            except Exception as e:
+                logging.debug("reset: %s", e)
+        m.flush_ui()
+
     def change_device(self, device_id):
         self.device = self.device_manager.get_device(device_id)
 
