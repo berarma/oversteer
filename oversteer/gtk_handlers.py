@@ -112,7 +112,29 @@ class GtkHandlers:
     def on_ff_friction_level_value_changed(self, widget):
         self.model.set_friction_level(widget.get_value())
 
+    def on_rev_leds_state_set(self, widget, state):
+        self.model.set_rev_leds(state)
+        return False
+
+    def on_rev_leds_port_value_changed(self, widget):
+        if not self.ui.updating_rev_leds:
+            self.model.set_rev_leds_port(widget.get_value_as_int())
+
+    def on_rev_leds_shift_value_changed(self, widget):
+        if not self.ui.updating_rev_leds:
+            self.model.set_rev_leds_shift(widget.get_value_as_int())
+
+    def on_rev_leds_shift_unit_changed(self, widget):
+        if not self.ui.updating_rev_leds:
+            self.controller.change_rev_leds_shift_unit(widget.get_active_id())
+
+    def on_rev_leds_test_clicked(self, widget):
+        self.controller.test_rev_leds()
+
     def on_ffbmeter_leds_clicked(self, widget):
+        if widget.get_active() and self.model.get_rev_leds():
+            self.ui.set_rev_leds(False, None)    # the meter and the rev lights can't share the LEDs
+            self.model.set_rev_leds(False)
         self.model.set_ffb_leds(widget.get_active())
 
     def on_ffbmeter_overlay_clicked(self, widget):

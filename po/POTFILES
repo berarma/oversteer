@@ -1,5 +1,6 @@
 oversteer/application.py
 oversteer/gui.py
+oversteer/telemetry.py
 oversteer/main.ui
 oversteer/combined_chart.py
 data/io.github.berarma.Oversteer.desktop.in
