@@ -380,8 +380,8 @@ class Device:
             if input_device.fd in r:
                 for event in input_device.read():
                     event = self.normalize_event(event)
-                    if event.type == ecodes.EV_ABS:
-                        self.last_axis_value[ecodes.ABS_X] = event.value
+                    if event.type == ecodes.EV_ABS and event.code in self.last_axis_value:
+                        self.last_axis_value[event.code] = event.value
                     yield event
 
     def normalize_event(self, event):
