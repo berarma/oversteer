@@ -5,6 +5,7 @@ import os
 import subprocess
 from .device_manager import DeviceManager
 from .model import Model
+from .device import DEVICE_SETTINGS
 import sys
 from xdg.BaseDirectory import save_config_path
 
@@ -35,6 +36,8 @@ class Application:
         parser.add_argument('--spring-level', type=int, help=_("set the spring level [0-100]"))
         parser.add_argument('--damper-level', type=int, help=_("set the damper level [0-100]"))
         parser.add_argument('--friction-level', type=int, help=_("set the friction level [0-100]"))
+        parser.add_argument('--wheel-setting', action='append', metavar='NAME=VALUE', default=[],
+                help=_("set a setting stored in the wheel, e.g. ffb_strength=8 (repeatable)"))
         parser.add_argument('--ffb-leds', action='store_true', default=None, help=_("enable FFBmeter leds"))
         parser.add_argument('--no-ffb-leds', dest='ffb_leds', action='store_false', default=None, help=_("disable FFBmeter leds"))
         parser.add_argument('--center-wheel', action='store_true', default=None, help=_("center wheel"))
@@ -125,6 +128,12 @@ class Application:
             model.set_ffb_leds(1 if args.ffb_leds else 0)
         if args.center_wheel is not None:
             model.set_center_wheel(1 if args.center_wheel else 0)
+        for setting in args.wheel_setting:
+            name, _sep, value = setting.partition('=')
+            if name not in DEVICE_SETTINGS or not value.lstrip('-').isdigit():
+                print(_("Invalid wheel setting: {}").format(setting))
+                exit(-1)
+            model.set_device_setting(name, int(value))
 
         if start_gui:
             self.args = args

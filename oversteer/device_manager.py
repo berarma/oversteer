@@ -17,6 +17,7 @@ class DeviceManager:
             wid.FT_CSV2: 900,
             wid.FT_PDD1: 1080,
             wid.FT_PDD2: 1080,
+            wid.HORI_TCS: 1800,
             wid.LG_DF: 270,
             wid.LG_DFGT: 900,
             wid.LG_DFP: 900,

@@ -1,0 +1,17 @@
+# HORI Truck Control System (0f0d:017a)
+#
+# Let users change the wheel settings exposed by the HORI drivers:
+# hid-hori-ffb and hid-hori (https://github.com/LinuxGamesTV/hori_control_systems).
+
+ACTION!="unbind", ACTION!="remove", SUBSYSTEM=="hid", ATTRS{idVendor}=="0f0d", ATTRS{idProduct}=="017a", GOTO="hori-rules"
+GOTO="hori-end"
+
+LABEL="hori-rules"
+DRIVER=="hid-hori-ffb", GOTO="hori-settings"
+DRIVER=="hid-hori-control-systems", GOTO="hori-settings"
+GOTO="hori-end"
+
+LABEL="hori-settings"
+RUN+="/bin/sh -c 'cd /sys%p && chmod 666 range wheel_deadzone wheel_sensitivity throttle_sensitivity brake_sensitivity clutch_sensitivity ffb_strength ffb_vibration stick_level 2>/dev/null'"
+
+LABEL="hori-end"
