@@ -31,6 +31,7 @@ class Device:
         self.name = None
         self.ready = True
         self.max_range = None
+        self.hori_wheel_axis = None
 
         self.set(data)
 
@@ -403,6 +404,9 @@ class Device:
         if event.type != ecodes.EV_ABS:
             return event
 
+        if self.usb_id == wid.HORI_TCS:
+            return self.normalize_hori_event(event)
+
         if self.usb_id in [wid.LG_WFF]:
             if event.code == ecodes.ABS_WHEEL:
                 event.code = ecodes.ABS_X
@@ -459,4 +463,47 @@ class Device:
             elif event.code == ecodes.ABS_Z:
                 event.code = ecodes.ABS_RZ
 
+        return event
+
+    def normalize_hori_event(self, event):
+        # The HORI Truck Control System wheel has two Linux drivers with
+        # different axis layouts. Pedals report 0 when released.
+        #
+        #   hid-hori-ffb:  steering ABS_X, throttle ABS_THROTTLE,
+        #                  brake ABS_RUDDER, clutch ABS_RZ,
+        #                  left stick ABS_Z/ABS_Y, right stick ABS_RX/ABS_RY
+        #   hid-hori:      steering ABS_WHEEL, throttle ABS_GAS,
+        #                  brake ABS_BRAKE, clutch ABS_RZ,
+        #                  left stick ABS_X/ABS_Y, right stick ABS_RX/ABS_RY
+        #
+        # The sticks are moved out of the way so they aren't mistaken for
+        # the steering wheel or the pedals.
+        if self.hori_wheel_axis is None:
+            abs_codes = [code for code, _ in self.get_capabilities().get(ecodes.EV_ABS, [])]
+            self.hori_wheel_axis = ecodes.ABS_WHEEL if ecodes.ABS_WHEEL in abs_codes else ecodes.ABS_X
+
+        if self.hori_wheel_axis == ecodes.ABS_WHEEL:
+            mapping = {
+                ecodes.ABS_WHEEL: ecodes.ABS_X,
+                ecodes.ABS_GAS: ecodes.ABS_Z,
+                ecodes.ABS_BRAKE: ecodes.ABS_RZ,
+                ecodes.ABS_RZ: ecodes.ABS_Y,
+                ecodes.ABS_X: ecodes.ABS_HAT1X,
+                ecodes.ABS_Y: ecodes.ABS_HAT1Y,
+            }
+        else:
+            mapping = {
+                ecodes.ABS_THROTTLE: ecodes.ABS_Z,
+                ecodes.ABS_RUDDER: ecodes.ABS_RZ,
+                ecodes.ABS_RZ: ecodes.ABS_Y,
+                ecodes.ABS_Z: ecodes.ABS_HAT1X,
+                ecodes.ABS_Y: ecodes.ABS_HAT1Y,
+            }
+
+        if event.code not in mapping:
+            return event
+        event.code = mapping[event.code]
+        if event.code in [ecodes.ABS_Z, ecodes.ABS_RZ, ecodes.ABS_Y]:
+            # [0 released, 65535 pressed] -> [255 released, 0 pressed]
+            event.value = 255 - event.value // 257
         return event

@@ -69,6 +69,7 @@ work. Please, check the related projects for more information.)**:
 - FANATEC ClubSport Wheel Base V2.5 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
 - FANATEC Podium Wheel Base DD1/DD2 with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
 - FANATEC CSL DD / GT DD Pro Wheel with [hid-fanatecff](https://github.com/gotzl/hid-fanatecff).
+- HORI Force Feedback Truck Control System with [hid-hori](https://github.com/LinuxGamesTV/hori_control_systems).
 
 These wheels are recognized but don't have driver support (Force Feedback and
 other features won't work):
@@ -141,6 +142,7 @@ If you're using the terminal, these commands will install the permission files:
 
 ```
 sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-fanatec-wheel-perms.rules -P /usr/lib/udev/rules.d/
+sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-hori-wheel-perms.rules -P /usr/lib/udev/rules.d/
 sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-logitech-wheel-perms.rules -P /usr/lib/udev/rules.d/
 sudo wget https://github.com/berarma/oversteer/raw/refs/heads/master/data/udev/99-thrustmaster-wheel-perms.rules -P /usr/lib/udev/rules.d/
 ```
@@ -195,6 +197,7 @@ The installed udev rules files will have these names:
 
 - `99-fanatec-wheel-perms.rules`
 - `99-logitech-wheel-perms.rules`
+- `99-hori-wheel-perms.rules`
 - `99-thrustmaster-wheel-perms.rules`
 
 #### Build and install

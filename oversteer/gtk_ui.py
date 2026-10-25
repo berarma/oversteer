@@ -721,3 +721,7 @@ class GtkUi:
             self.wheel_range.add_mark(90, Gtk.PositionType.BOTTOM, '900')
         if max_range >= 1080:
             self.wheel_range.add_mark(108, Gtk.PositionType.BOTTOM, '1080')
+        if max_range >= 1440:
+            self.wheel_range.add_mark(144, Gtk.PositionType.BOTTOM, '1440')
+        if max_range >= 1800:
+            self.wheel_range.add_mark(180, Gtk.PositionType.BOTTOM, '1800')
