@@ -1,5 +1,6 @@
 import configparser
 import logging
+from .device import DEVICE_SETTINGS
 
 class Model:
 
@@ -40,6 +41,11 @@ class Model:
         'start_app_manually': 'boolean',
     }
 
+    for name in DEVICE_SETTINGS:
+        defaults[name] = None
+        types[name] = 'integer'
+    del name
+
     def __init__(self, device = None, ui = None):
         self.ui = ui
         self.reference_values = None
@@ -70,7 +76,7 @@ class Model:
                 self.ui.enable_save_profile()
 
     def read_device_settings(self):
-        return {
+        settings = {
             'mode': self.device.get_mode(),
             'range': self.device.get_range(),
             'ff_gain': self.device.get_ff_gain(),
@@ -86,6 +92,9 @@ class Model:
             'center_wheel': False,
             'start_app_manually': False,
         }
+        for name in DEVICE_SETTINGS:
+            settings[name] = self.device.get_device_setting(name)
+        return settings
 
     def update_from_device_settings(self):
         self.data.update(self.read_device_settings())
@@ -233,6 +242,14 @@ class Model:
     def get_ffb_leds(self):
         return self.data['ffb_leds']
 
+    def set_device_setting(self, name, value):
+        value = int(value)
+        if self.set_if_changed(name, value):
+            self.device.set_device_setting(name, value)
+
+    def get_device_setting(self, name):
+        return self.data[name]
+
     def set_ffb_overlay(self, value):
         self.set_if_changed('ffb_overlay', bool(value))
 
@@ -285,6 +302,9 @@ class Model:
             self.device.set_friction_level(self.data['friction_level'])
         if self.data['ffb_leds'] is not None:
             self.device.set_ffb_leds(self.data['ffb_leds'])
+        for name in DEVICE_SETTINGS:
+            if self.data[name] is not None:
+                self.device.set_device_setting(name, self.data[name])
 
     def flush_ui(self, data = None):
         logging.debug("flush_ui")
@@ -304,5 +324,7 @@ class Model:
         self.ui.set_use_buttons(data['use_buttons'])
         self.ui.set_center_wheel(data['center_wheel'])
         self.ui.set_start_app_manually(data['start_app_manually'])
+        for name in DEVICE_SETTINGS:
+            self.ui.set_device_setting(name, data[name])
         self.update_save_profile_button()
 

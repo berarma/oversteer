@@ -60,6 +60,7 @@ class GtkUi:
     def start(self):
         handlers = GtkHandlers(self, self.controller)
         self.builder.connect_signals(handlers)
+        self._build_device_settings_page(handlers)
         self.window.show_all()
         self.reset_view()
         self._set_range_markers(1080)
@@ -327,6 +328,94 @@ class GtkUi:
             self.ff_friction_level.set_sensitive(True)
             self.ff_friction_level.set_value(int(level))
 
+    def _build_device_settings_page(self, handlers):
+        # Built in code: the rows are identical and only the wheels whose
+        # driver provides these settings show them.
+        # (name, label, tooltip, min, max)
+        widgets = [
+            ('wheel_deadzone', _("Steering dead zone"),
+                _("Dead zone around the center of the wheel. Stored in the wheel."), -3, 3),
+            ('wheel_sensitivity', _("Steering sensitivity"),
+                _("Steering response curve. Stored in the wheel."), -3, 3),
+            ('throttle_sensitivity', _("Accelerator sensitivity"),
+                _("Accelerator pedal response curve. Stored in the wheel."), -3, 3),
+            ('brake_sensitivity', _("Brakes sensitivity"),
+                _("Brake pedal response curve. Stored in the wheel."), -3, 3),
+            ('clutch_sensitivity', _("Clutch sensitivity"),
+                _("Clutch pedal response curve. Stored in the wheel."), -3, 3),
+            ('ffb_strength', _("Force feedback strength"),
+                _("Overall force feedback strength of the wheel. Stored in the wheel."), 1, 10),
+            ('ffb_vibration', _("Vibration effects"),
+                _("Strength of high frequency effects like engine vibration. Stored in the wheel."), -2, 2),
+            ('stick_level', _("Analog stick suppression"),
+                _("Suppresses analog stick input while steering. 0 disables it. Stored in the wheel."), 0, 3),
+        ]
+        listbox = Gtk.ListBox()
+        listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        listbox.set_valign(Gtk.Align.START)
+        listbox.set_border_width(10)
+        listbox.get_style_context().add_class('list')
+
+        self.device_setting_rows = {}
+        self.device_setting_scales = {}
+        for name, label, tooltip, lower, upper in widgets:
+            adjustment = Gtk.Adjustment(value=lower, lower=lower, upper=upper,
+                    step_increment=1, page_increment=1)
+            scale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, adjustment=adjustment)
+            scale.set_size_request(600, -1)
+            scale.set_valign(Gtk.Align.CENTER)
+            scale.set_digits(0)
+            scale.set_round_digits(0)
+            for mark in range(lower, upper + 1):
+                scale.add_mark(mark, Gtk.PositionType.BOTTOM, str(mark))
+            scale.connect('value-changed', handlers.on_device_setting_value_changed, name)
+
+            text = Gtk.Label(label=label)
+            text.set_halign(Gtk.Align.START)
+
+            box = Gtk.Box(spacing=64)
+            box.set_valign(Gtk.Align.CENTER)
+            box.set_tooltip_text(tooltip)
+            box.pack_start(text, True, True, 0)
+            box.pack_start(scale, False, True, 0)
+
+            row = Gtk.ListBoxRow()
+            row.set_size_request(-1, 70)
+            row.set_activatable(False)
+            row.set_selectable(False)
+            row.add(box)
+            row.show_all()
+            row.set_no_show_all(True)
+            row.hide()
+            listbox.add(row)
+
+            self.device_setting_rows[name] = row
+            self.device_setting_scales[name] = scale
+
+        page = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        page.set_margin_start(12)
+        page.set_margin_end(12)
+        page.set_margin_top(12)
+        page.set_margin_bottom(12)
+        page.pack_start(listbox, False, True, 0)
+        page.show_all()
+        page.set_no_show_all(True)
+        page.hide()
+        self.device_settings_page = page
+        self.main_notebook.insert_page(page, Gtk.Label(label=_("Wheel")), 2)
+
+    def set_device_setting(self, name, value):
+        row = self.device_setting_rows[name]
+        if value is None:
+            row.hide()
+        else:
+            self.device_setting_scales[name].set_value(int(value))
+            row.show()
+        if any(row.get_visible() for row in self.device_setting_rows.values()):
+            self.device_settings_page.show()
+        else:
+            self.device_settings_page.hide()
+
     def set_ffb_leds(self, value):
         if value is None:
             self.ffbmeter_leds.set_sensitive(False)
@@ -584,6 +673,7 @@ class GtkUi:
         self.new_profile_name = self.builder.get_object('new_profile_name')
         self.emulation_mode_combobox = self.builder.get_object('emulation_mode')
         self.change_emulation_mode_button = self.builder.get_object('change_emulation_mode')
+        self.main_notebook = self.builder.get_object('main_notebook')
         self.wheel_range = self.builder.get_object('wheel_range')
         self.wheel_range_setup = self.builder.get_object('wheel_range_setup')
         self.combine_none = self.builder.get_object('combine_none')

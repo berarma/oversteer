@@ -10,6 +10,20 @@ from . import wheel_ids as wid
 
 logging.basicConfig(level=logging.DEBUG)
 
+# Settings stored in the wheel itself, which some drivers expose as integer
+# sysfs attributes (currently hid-hori for the HORI Truck Control System).
+# They are shown only when the attribute exists.
+DEVICE_SETTINGS = [
+    'wheel_deadzone',
+    'wheel_sensitivity',
+    'throttle_sensitivity',
+    'brake_sensitivity',
+    'clutch_sensitivity',
+    'ffb_strength',
+    'ffb_vibration',
+    'stick_level',
+]
+
 class Device:
 
     last_axis_value = {
@@ -330,6 +344,24 @@ class Device:
             file.write(peak_ffb_level)
         return True
 
+    def get_device_setting(self, name):
+        path = self.checked_device_file(name)
+        if not path:
+            return None
+        with open(path, "r") as file:
+            data = file.read()
+        return int(data.strip())
+
+    def set_device_setting(self, name, value):
+        path = self.checked_device_file(name)
+        if not path:
+            return False
+        value = str(int(value))
+        logging.debug("Setting %s: %s", name, value)
+        with open(path, "w") as file:
+            file.write(value)
+        return True
+
     def center_wheel(self):
         self.set_autocenter(100)
         time.sleep(1)
@@ -359,6 +391,9 @@ class Device:
             return False
         if not self.check_file_permissions('peak_ffb_level'):
             return False
+        for name in DEVICE_SETTINGS:
+            if not self.check_file_permissions(name):
+                return False
         return True
 
     def get_last_axis_value(self, axis):

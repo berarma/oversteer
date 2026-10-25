@@ -103,6 +103,9 @@ class GtkHandlers:
     def on_languages_changed(self, widget):
         self.controller.set_locale(widget.get_active_id())
 
+    def on_device_setting_value_changed(self, widget, name):
+        self.model.set_device_setting(name, widget.get_value())
+
     def on_ff_spring_level_value_changed(self, widget):
         self.model.set_spring_level(widget.get_value())
 

@@ -100,6 +100,9 @@ When supported by the device and the driver:
 - Change each conditional force feedback effect type gain. (Not supported with in-kernel modules)
 - FFBmeter to monitor FFB clipping using wheel leds or overlay
   window. (Not supported with in-kernel modules)
+- Change settings stored in the wheel itself: steering dead zone and
+  sensitivity, pedal sensitivity, force feedback strength, vibration effects
+  and analog stick suppression. (HORI Truck Control System with hid-hori)
 
 ## Installation
 

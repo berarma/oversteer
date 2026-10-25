@@ -443,7 +443,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkNotebook">
+          <object class="GtkNotebook" id="main_notebook">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <child>
